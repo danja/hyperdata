@@ -7,6 +7,9 @@
     <link rel="stylesheet" type="text/css" media="screen" href="css/trellis.css" />
     <link rel="stylesheet" type="text/css" media="screen" href="css/fonts.css" />
 
+    <link rel="stylesheet" type="text/css" media="screen" href="login/css/login.css" /> <!-- Add this line -->
+
+
     <!-- jQuery/UI scripts -->
     <script type="text/javascript" src="js/jquery-ui-1.10.3/jquery-1.9.1.js"></script>
     <script type="text/javascript" src="js/jquery-ui-1.10.3/ui/jquery.ui.core.js"></script>
@@ -28,6 +31,8 @@
     <script type="text/javascript" src="js/n3-browser.js"></script>
     <script type="text/javascript" src="js/trellis-ui.js"></script>
     <script type="text/javascript" src="js/trellis-comms.js"></script>
+    <script type="text/javascript" src="login/js/scripts.js"></script> <!-- Add this line -->
+
     <script>
         const SPARQL_ENDPOINT = "https://fuseki.hyperdata.it/trellis/";
         const BASE_URI = "https://hyperdata.it/graphs/trellis/";
@@ -64,6 +69,23 @@
     </div>
 
     <div id="menu-box">
+        <!-- Login Form -->
+        <div class="login-container">
+            <h2>Login</h2>
+            <form id="loginForm" action="https://hyperdata.it/users/login" method="POST">
+                <div class="form-group">
+                    <label for="username">Username:</label>
+                    <input type="text" id="username" name="username" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">Password:</label>
+                    <input type="password" id="password" name="password" required>
+                    <span class="toggle-password">Show</span>
+                </div>
+                <button type="submit">Login</button>
+            </form>
+            <div id="error-message"></div>
+        </div>
         <div class="toolbar">
             <ul>
                 <li>
@@ -97,6 +119,8 @@
             </div>
         </div>
     </div>
+
+
 
     <div id="nid-template" class="ts-entry ui-droppable hidden">
         <span class="ts-expander"></span>
