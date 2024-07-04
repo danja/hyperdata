@@ -1,0 +1,15 @@
+{
+  "name": "farelo",
+  "version": "1.0.0",
+  "description": "GTD NG",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "Danny Ayers",
+  "license": "MIT",
+  "dependencies": {
+    "@hyperdata/common": "^1.0.0"
+  }
+}
