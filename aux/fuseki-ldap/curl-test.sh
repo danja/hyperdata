@@ -1,0 +1,1 @@
+curl -v -u service-admin-user:password https://fuseki.hyperdata.it/$/status

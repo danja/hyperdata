@@ -1,0 +1,30 @@
+startLine: 1
+endLine: 22
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="/css/styles.css">
+</head>
+
+<body>
+    <div class="container">
+        <h2>Dashboard</h2>
+        <form id="sparqlForm">
+            <label for="query">SPARQL Query:</label>
+            <textarea id="query" name="query" rows="10" cols="50" required>
+                select * where {?s ?p ?o}
+            </textarea>
+            <button type="submit">Execute</button>
+        </form>
+        <div id="result"></div>
+        <button id="logoutButton">Logout</button>
+        <a href="/login.html">Go to Login</a>
+    </div>
+    <script src="/js/dashboard.js"></script>
+</body>
+
+</html>
