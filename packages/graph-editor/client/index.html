@@ -1,0 +1,112 @@
+﻿<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title>Split panels</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>TurtleEditor</title>
+  <link href="split.css" rel="stylesheet">
+  <link href="css/bootstrap.min.css" rel="stylesheet">
+  <link href="css/codemirror.css" rel="stylesheet">
+  <link href="css/show-hint.css" rel="stylesheet">
+  <link href="css/jquery-ui.min.css" rel="stylesheet">
+  <link href="css/vis.css" rel="stylesheet">
+  <!-- link href="css/split-pane.css" rel="stylesheet" -->
+  <link href="css/main.css" rel="stylesheet">
+  <script src="js/config.js" defer></script>
+  <script data-main="turtle-editor" src="js/lib/require.js" defer></script>
+</head>
+
+<body>
+  <script id="replace_with_navbar" src="/share/nav.js"></script>
+  <!-- div class="container" -->
+  <div class="split vertical">
+    <div class="split horizontal">
+      <div>
+        <div id="right-component" class="split-pane-component">
+          <div class="form-group">
+            <label for="input-contents">Content editor: <span class="current-filename"></span></label>
+            <textarea id="input-contents" placeholder="File content will appear here" rows="24" wrap="hard">@prefix mv: <http://eccenca.com/mobivoc/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix vCard:   <http://www.w3.org/2001/vcard-rdf/3.0#> .
+@prefix geo: <http://www.w3.org/2003/01/geo/wgs84_pos#> .
+
+mv:Country
+	a rdfs:Class , owl:Class ;
+	rdfs:comment "A country is a region identified as a distinct entity in political geography." ;
+	rdfs:isDefinedBy <https://en.wikipedia.org/wiki/Country> ;
+	rdfs:label "Country"@en , "Land"@de .
+
+#Properties
+
+mv:hasFuelTransportationRegulation
+	a rdf:Property , owl:DatatypeProperty ;
+	rdfs:comment "Regulations existing in each country concerning the fuel transportation." ; 
+	rdfs:label "Fuel transportation regulation"@en , "Gas Verkehr Regulierung" @de ;
+	rdfs:domain mv:Country ; 
+	rdfs:range rdfs:Literal .
+	
+mv:hasNumberOfFuelStations
+	a rdf:Property , owl:DatatypeProperty ;
+	rdfs:comment "Represents the number of fuel stations in a specific country." ; 
+	rdfs:label "Number of fuel stations"@en , "Tankstelle Menge" @de ;
+	rdfs:domain mv:Country ; 
+	rdfs:range rdfs:integer .
+	
+mv:hasNumberOfChargingStations
+	a rdf:Property , owl:DatatypeProperty ;
+	rdfs:comment "Represents the number of charging stations in a specific country." ; 
+	rdfs:label "Number of charging stations"@en , "Ladestation Menge" @de ;
+	rdfs:domain mv:Country ; 
+rdfs:range rdfs:integer .
+                        </textarea>
+          </div>
+          <div id="syntax-check">
+            <p id="syntax-check-failed" style="display: none">
+              <img src="img/red_orb.png" alt="A red orb." class="status-icon">
+              <span class="status">Syntax Error</span>
+            </p>
+            <p id="syntax-check-working" style="display: none">
+              <img src="img/yellow_orb.png" alt="A yellow orb." class="status-icon">
+              <span class="status">Syntax checker working.</span>
+            </p>
+            <p id="syntax-check-pending">
+              <img src="img/yellow_orb.png" alt="A yellow orb." class="status-icon">
+              <span class="status">Syntax check pending...</span>
+            </p>
+            <p id="syntax-check-off" style="display: none">
+              <img src="img/yellow_orb.png" alt="A yellow orb." class="status-icon">
+              <span class="status">Syntax checking disabled. Click to enable.</span>
+            </p>
+            <p id="syntax-check-passed" style="display: none">
+              <img src="img/green_orb.png" alt="A green orb." class="status-icon">
+              <span class="status">Syntax OK</span>
+            </p>
+          </div>
+          <!--
+                    <div class="form-group">
+                        <label for="input-message">Commit message</label>
+                        <input type="text" class="form-control" id="input-message" value="Turtle file edited, just for testing the editor.">
+                    </div>
+                    -->
+        </div>
+        <!-- /.col-md-9 -->
+      </div>
+      <div>
+        <div id="left-component" class="split-pane-component"></div>
+      </div>
+    </div>
+    <div>
+      C
+    </div>
+  </div>
+  <!-- /div -->
+
+</body>
+
+</html>
