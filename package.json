@@ -1,6 +1,7 @@
 {
   "name": "hyperdata",
   "version": "1.0.0",
+  "private": true,
   "description": "2024 reboot",
   "workspaces": [
     "packages/*"
