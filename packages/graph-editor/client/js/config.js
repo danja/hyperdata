@@ -1,6 +1,7 @@
 var require = {
   baseUrl: 'js',
   paths: {
+    webFsClient: 'web-fs-client',
     mode: '../mode',
     N3: 'lib/n3-browser-slk',
     jquery: 'lib/jquery-2.1.3.min',
@@ -10,13 +11,13 @@ var require = {
     underscore: 'lib/underscore-min',
     splitPane: 'lib/split-pane',
     waitSeconds: 0
-  }, 
+  },
   shim: { // see http://requirejs.org/docs/api.html#config-shim
     'N3': {
       exports: 'N3'
     },
-	'splitPane': {
-		deps: ['jquery']
-	}
+    'splitPane': {
+      deps: ['jquery']
+    }
   }
 };
