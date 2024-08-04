@@ -72,7 +72,8 @@ for app
 postscript
 
 - local : `/home/danny/github-danny/strandz/docs/strandz.it`
-- server :
+- server : `/home/github/strandz/docs/strandz.it/public/home`
+
 - github :
 
 ---
