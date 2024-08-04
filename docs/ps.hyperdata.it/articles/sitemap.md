@@ -61,6 +61,6 @@ for app
 
 postscript
 
-- local :
+- local : `/home/danny/github-danny/strandz/docs/strandz.it`
 - server :
 - github :
