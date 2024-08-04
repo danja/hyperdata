@@ -46,7 +46,7 @@ postscript
 postscript
 
 - local : `/home/danny/github-danny/foaf-retro/foaf-retro.hyperdata.it`
-- server :
+- server : `/home/github/foaf-retro/foaf-retro.hyperdata.it/public/home`
 - github :
 
 ### elfquake.org
