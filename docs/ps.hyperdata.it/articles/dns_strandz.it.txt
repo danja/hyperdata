@@ -1,0 +1,3 @@
+@ 86400 IN SOA ns1.gandi.net. hostmaster.gandi.net. 1722790677 10800 3600 604800 10800
+@ 10800 IN A 178.79.189.240
+ps 10800 IN CNAME strandz.it.
