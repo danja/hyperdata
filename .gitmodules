@@ -1,0 +1,3 @@
+[submodule "packages/strandz"]
+	path = packages/strandz
+	url = https://github.com/danja/strandz.git
