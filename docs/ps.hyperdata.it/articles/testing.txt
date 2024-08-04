@@ -1,0 +1,38 @@
+echo "hyperdata.it test file" > /home/www/hyperdata.it/test.txt
+
+echo "danny.ayers.name" > /home/danny/github-danny/postcraft/danny.ayers.name/public/home
+
+
+echo "hyperdata.it" > /home/danny/HKMS/hyperdata-static/test.txt
+echo "ps.hyperdata.it" > /home/danny/github-danny/hyperdata/docs/ps.hyperdata.it/public/home/test.txt
+echo "foaf-retro.hyperdata.it" > /home/danny/github-danny/foaf-retro/foaf-retro.hyperdata.it/public/home/test.txt
+echo "elfquake.org" > /home/danny/github-danny/elfquake/elfquake.org/public/home/test.txt
+echo "ps.strandz.it" > /home/danny/github-danny/strandz/docs/strandz.it/public/home/test.txt
+
+# TODO echo "strandz.it" > 
+
+
+/home/danny/HKMS/hyperdata-static
+
+/home/danny/github-danny/hyperdata/docs/ps.hyperdata.it/public/home
+
+
+
+Please create a nodejs ES module style script that will do a HTTP GET on each of the following domains to retrieve test.txt, for example https://danny.ayers.name/test.txt and check that it contains the domain name, eg 'danny.ayers.name'. It should give a verbose output if 'const verbose = true', a one-line output if 'const verbose = false'
+const domains = ['danny.ayers.name', 'hyperdata.it', 'ps.hyperdata.it', 'foaf-retro.hyperdata.it','elfquake.org','strandz.it','ps.strandz.it']
+
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+
+# SIOC 
+
+@prefix trm: <http://purl.org/stuff/transmission/> .
+@prefix fs: <http://purl.org/stuff/filesystem/> .
+@prefix pc: <http://purl.org/stuff/postcraft/> .
+@prefix t: <http://hyperdata.it/transmissions/> . # for custom terms & instances
+
+<https://elfquake.org> a pc:Site ;
+    rdfs:label "ELFQuake" ;
+    dcterms:title "ELFQuake" ;
+    dcterms:description "The ELFQuake Project seeks to predict earthquakes" . 

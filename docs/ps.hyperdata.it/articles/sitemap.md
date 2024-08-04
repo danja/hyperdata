@@ -17,7 +17,7 @@ Domains :
 
 postscript direct
 
-- local : `/home/danny/github-danny/postcraft/danny.ayers.name/`
+- local : `/home/danny/github-danny/postcraft/danny.ayers.name/public/home`
 - server : `/home/github/postcraft/danny.ayers.name/public/home`
 
 └── www
@@ -37,15 +37,15 @@ for now, as previous server
 
 postscript
 
-- local : `/home/danny/github-danny/hyperdata/docs/ps.hyperdata.it`
-- server :
+- local : `/home/danny/github-danny/hyperdata/docs/ps.hyperdata.it/public/home`
+- server : `/home/github/hyperdata/docs/ps.hyperdata.it/public/home`
 - github :
 
 #### foaf-retro.hyperdata.it
 
 postscript
 
-- local : `/home/danny/github-danny/foaf-retro/foaf-retro.hyperdata.it`
+- local : `/home/danny/github-danny/foaf-retro/foaf-retro.hyperdata.it/public/home`
 - server : `/home/github/foaf-retro/foaf-retro.hyperdata.it/public/home`
 - github :
 
@@ -53,7 +53,7 @@ postscript
 
 postscript direct
 
-- local : `/home/danny/github-danny/elfquake/elfquake.org`
+- local : `/home/danny/github-danny/elfquake/elfquake.org/public/home`
 - server :
 - github :
 
@@ -71,7 +71,7 @@ for app
 
 postscript
 
-- local : `/home/danny/github-danny/strandz/docs/strandz.it`
+- local : `/home/danny/github-danny/strandz/docs/strandz.it/public/home`
 - server : `/home/github/strandz/docs/strandz.it/public/home`
 
 - github :
@@ -128,3 +128,7 @@ root@hyperdata:/home# tree -L 2
     └── strandz.it -> git/provolone-piccante/strandz.it
 
 ```
+
+root@hyperdata:/home/github/hyperdata/docs/ps.hyperdata.it/public/home# cd /etc/nginx/sites-available/
+root@hyperdata:/etc/nginx/sites-available# ls
+danny.ayers.name.conf elfquake.org.conf fuseki.conf hyperdata.it.conf solid.conf strandz.it.conf
