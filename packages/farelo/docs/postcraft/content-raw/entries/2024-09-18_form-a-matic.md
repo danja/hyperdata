@@ -84,3 +84,15 @@ Kinda funny, I asked Claude to use RDF-Ext/grapoi for treewalking, but instead h
 ```javascript
 import N3Parser from '@rdfjs/parser-n3'
 ```
+
+After a dogwalk, it's occured to me that some extra hints in the pseudo-Turtle/JSON might be useful for HTML UI construction.
+
+1. multiple values
+2. more distinctly typed values
+3. human language alternatives
+
+Of these 1. is must-have - in the FOAF example, the ability to add multiple `foaf:knows`. Given the logic of RDF this should probably be the default.
+
+What I have in mind for 2. is something that would hint at using checkboxes, or list drop-downs, numeric fields, passwords - scripted validation would be nice. But for now I'll only consider checkboxes.  
+
+Languages might take a bit of setting up on the HTML side, but I guess it's worth including a flag in the pseude-Turtle now, so it'll be available if & when I get to that bit.
