@@ -1,3 +1,6 @@
 [submodule "packages/strandz"]
 	path = packages/strandz
 	url = https://github.com/danja/strandz.git
+[submodule "packages/kia"]
+	path = packages/kia
+	url = https://github.com/danja/kia.git
