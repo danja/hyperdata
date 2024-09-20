@@ -1,0 +1,172 @@
+* processing subject http://xmlns.com/foaf/0.1/Person
+subjectValue = http://xmlns.com/foaf/0.1/person
+creating field for http://xmlns.com/foaf/0.1/person, Person URI,  uri
+* processing subject LITERAL
+subjectValue = literal
+creating field for literal, Person URI,  uri
+* processing subject #URI
+subjectValue = uri
+creating field for uri, Person URI,  uri
+predicateName = Person
+creating field for uri,http://xmlns.com/foaf/0.1/person,Person, Person,  uri
+predicateName = LITERAL
+creating field for uri,literal,LITERAL, LITERAL,  literal
+predicateName = #URI
+creating field for uri,uri,#URI, #URI,  uri
+predicateName = #URI
+creating field for uri,uri,#URI, #URI,  uri
+predicateName = LITERAL
+creating field for uri,literal,LITERAL, LITERAL,  literal
+predicateName = #URI
+creating field for uri,uri,#URI, #URI,  uri
+predicateName = #URI
+creating field for uri,uri,#URI, #URI,  uri
+predicateName = b1
+* processing subject #URI
+subjectValue = uri
+creating field for uri, Person URI,  uri
+predicateName = Person
+creating field for uri,http://xmlns.com/foaf/0.1/person,Person, Person,  uri
+predicateName = LITERAL
+creating field for uri,literal,LITERAL, LITERAL,  literal
+predicateName = #URI
+creating field for uri,uri,#URI, #URI,  uri
+predicateName = #URI
+creating field for uri,uri,#URI, #URI,  uri
+predicateName = LITERAL
+creating field for uri,literal,LITERAL, LITERAL,  literal
+predicateName = #URI
+creating field for uri,uri,#URI, #URI,  uri
+predicateName = #URI
+creating field for uri,uri,#URI, #URI,  uri
+predicateName = b1
+* processing subject LITERAL
+subjectValue = literal
+creating field for literal, Person URI,  uri
+* processing subject #URI
+subjectValue = uri
+creating field for uri, Person URI,  uri
+predicateName = Person
+creating field for uri,http://xmlns.com/foaf/0.1/person,Person, Person,  uri
+predicateName = LITERAL
+creating field for uri,literal,LITERAL, LITERAL,  literal
+predicateName = #URI
+creating field for uri,uri,#URI, #URI,  uri
+predicateName = #URI
+creating field for uri,uri,#URI, #URI,  uri
+predicateName = LITERAL
+creating field for uri,literal,LITERAL, LITERAL,  literal
+predicateName = #URI
+creating field for uri,uri,#URI, #URI,  uri
+predicateName = #URI
+creating field for uri,uri,#URI, #URI,  uri
+predicateName = b1
+* processing subject #URI
+subjectValue = uri
+creating field for uri, Person URI,  uri
+predicateName = Person
+creating field for uri,http://xmlns.com/foaf/0.1/person,Person, Person,  uri
+predicateName = LITERAL
+creating field for uri,literal,LITERAL, LITERAL,  literal
+predicateName = #URI
+creating field for uri,uri,#URI, #URI,  uri
+predicateName = #URI
+creating field for uri,uri,#URI, #URI,  uri
+predicateName = LITERAL
+creating field for uri,literal,LITERAL, LITERAL,  literal
+predicateName = #URI
+creating field for uri,uri,#URI, #URI,  uri
+predicateName = #URI
+creating field for uri,uri,#URI, #URI,  uri
+predicateName = b1
+* processing subject b1
+subjectValue = b1
+predicateName = Person
+creating field for b1,http://xmlns.com/foaf/0.1/person,Person, Person,  uri
+predicateName = LITERAL
+creating field for b1,literal,LITERAL, LITERAL,  literal
+* processing subject http://xmlns.com/foaf/0.1/Person
+subjectValue = http://xmlns.com/foaf/0.1/person
+creating field for http://xmlns.com/foaf/0.1/person, Person URI,  uri
+* processing subject LITERAL
+subjectValue = literal
+creating field for literal, Person URI,  uri
+<form>
+      <label for="person uri">Person URI</label>
+      <input type="text" class="http://xmlns.com/foaf/0.1/person uri" name="person uri" />
+      <label for="person uri">Person URI</label>
+      <input type="text" class="literal uri" name="person uri" />
+      <label for="person uri">Person URI</label>
+      <input type="text" class="uri uri" name="person uri" />
+      <label for="person">Person</label>
+      <input type="text" class="uri_http://xmlns.com/foaf/0.1/person_person uri" name="person" />
+      <label for="literal">LITERAL</label>
+      <input type="text" class="uri_literal_literal literal" name="literal" />
+      <label for="#uri">#URI</label>
+      <input type="text" class="uri_uri_#uri uri" name="#uri" />
+      <label for="#uri">#URI</label>
+      <input type="text" class="uri_uri_#uri uri" name="#uri" />
+      <label for="literal">LITERAL</label>
+      <input type="text" class="uri_literal_literal literal" name="literal" />
+      <label for="#uri">#URI</label>
+      <input type="text" class="uri_uri_#uri uri" name="#uri" />
+      <label for="#uri">#URI</label>
+      <input type="text" class="uri_uri_#uri uri" name="#uri" />
+      <label for="person uri">Person URI</label>
+      <input type="text" class="uri uri" name="person uri" />
+      <label for="person">Person</label>
+      <input type="text" class="uri_http://xmlns.com/foaf/0.1/person_person uri" name="person" />
+      <label for="literal">LITERAL</label>
+      <input type="text" class="uri_literal_literal literal" name="literal" />
+      <label for="#uri">#URI</label>
+      <input type="text" class="uri_uri_#uri uri" name="#uri" />
+      <label for="#uri">#URI</label>
+      <input type="text" class="uri_uri_#uri uri" name="#uri" />
+      <label for="literal">LITERAL</label>
+      <input type="text" class="uri_literal_literal literal" name="literal" />
+      <label for="#uri">#URI</label>
+      <input type="text" class="uri_uri_#uri uri" name="#uri" />
+      <label for="#uri">#URI</label>
+      <input type="text" class="uri_uri_#uri uri" name="#uri" />
+      <label for="person uri">Person URI</label>
+      <input type="text" class="literal uri" name="person uri" />
+      <label for="person uri">Person URI</label>
+      <input type="text" class="uri uri" name="person uri" />
+      <label for="person">Person</label>
+      <input type="text" class="uri_http://xmlns.com/foaf/0.1/person_person uri" name="person" />
+      <label for="literal">LITERAL</label>
+      <input type="text" class="uri_literal_literal literal" name="literal" />
+      <label for="#uri">#URI</label>
+      <input type="text" class="uri_uri_#uri uri" name="#uri" />
+      <label for="#uri">#URI</label>
+      <input type="text" class="uri_uri_#uri uri" name="#uri" />
+      <label for="literal">LITERAL</label>
+      <input type="text" class="uri_literal_literal literal" name="literal" />
+      <label for="#uri">#URI</label>
+      <input type="text" class="uri_uri_#uri uri" name="#uri" />
+      <label for="#uri">#URI</label>
+      <input type="text" class="uri_uri_#uri uri" name="#uri" />
+      <label for="person uri">Person URI</label>
+      <input type="text" class="uri uri" name="person uri" />
+      <label for="person">Person</label>
+      <input type="text" class="uri_http://xmlns.com/foaf/0.1/person_person uri" name="person" />
+      <label for="literal">LITERAL</label>
+      <input type="text" class="uri_literal_literal literal" name="literal" />
+      <label for="#uri">#URI</label>
+      <input type="text" class="uri_uri_#uri uri" name="#uri" />
+      <label for="#uri">#URI</label>
+      <input type="text" class="uri_uri_#uri uri" name="#uri" />
+      <label for="literal">LITERAL</label>
+      <input type="text" class="uri_literal_literal literal" name="literal" />
+      <label for="#uri">#URI</label>
+      <input type="text" class="uri_uri_#uri uri" name="#uri" />
+      <label for="#uri">#URI</label>
+      <input type="text" class="uri_uri_#uri uri" name="#uri" />
+      <label for="person">Person</label>
+      <input type="text" class="b1_http://xmlns.com/foaf/0.1/person_person uri" name="person" />
+      <label for="literal">LITERAL</label>
+      <input type="text" class="b1_literal_literal literal" name="literal" />
+      <label for="person uri">Person URI</label>
+      <input type="text" class="http://xmlns.com/foaf/0.1/person uri" name="person uri" />
+      <label for="person uri">Person URI</label>
+      <input type="text" class="literal uri" name="person uri" /></form>

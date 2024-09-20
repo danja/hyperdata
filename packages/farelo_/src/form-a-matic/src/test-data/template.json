@@ -1,0 +1,54 @@
+{
+  "ROOT": {
+    "properties": [
+      {
+        "term": "name",
+        "type": "LITERAL",
+        "namespace": "http://xmlns.com/foaf/0.1/"
+      },
+      {
+        "term": "mbox",
+        "type": "URI",
+        "namespace": "http://xmlns.com/foaf/0.1/"
+      },
+      {
+        "term": "homepage",
+        "type": "URI",
+        "namespace": "http://xmlns.com/foaf/0.1/"
+      },
+      {
+        "term": "nick",
+        "type": "LITERAL",
+        "namespace": "http://xmlns.com/foaf/0.1/"
+      },
+      {
+        "term": "depiction",
+        "type": "URI",
+        "namespace": "http://xmlns.com/foaf/0.1/"
+      },
+      {
+        "term": "interest",
+        "type": "URI",
+        "namespace": "http://xmlns.com/foaf/0.1/"
+      },
+      {
+        "term": "knows",
+        "type": "BNODE",
+        "namespace": "http://xmlns.com/foaf/0.1/",
+        "children": {
+          "properties": [
+            {
+              "term": "name",
+              "type": "LITERAL",
+              "namespace": "http://xmlns.com/foaf/0.1/"
+            }
+          ],
+          "namespace": "http://xmlns.com/foaf/0.1/",
+          "type": "Person"
+        }
+      }
+    ],
+    "namespace": "http://xmlns.com/foaf/0.1/",
+    "type": "Person"
+  }
+}
