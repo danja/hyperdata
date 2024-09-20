@@ -4,3 +4,6 @@
 [submodule "packages/kia"]
 	path = packages/kia
 	url = https://github.com/danja/kia.git
+[submodule "packages/farelo"]
+	path = packages/farelo
+	url = https://github.com/danja/farelo.git
