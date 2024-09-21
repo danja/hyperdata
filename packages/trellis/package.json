@@ -10,6 +10,6 @@
   "author": "Danny Ayers",
   "license": "MIT",
   "dependencies": {
-    "@hyperdata/common": "^1.0.0"
+
   }
 }

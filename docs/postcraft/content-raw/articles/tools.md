@@ -2,6 +2,7 @@ https://codeium.com/
 
 
 
+[Dugite - JS bindings for Git](https://github.com/desktop/dugite)
 
 https://github.com/pulsar-edit/pulsar
 
