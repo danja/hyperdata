@@ -13,3 +13,6 @@
 [submodule "packages/dogbot"]
 	path = packages/dogbot
 	url = https://github.com/danja/dogbot.git
+[submodule "packages/hyperdata-android"]
+	path = packages/hyperdata-android
+	url = https://github.com/danja/hyperdata-android.git
