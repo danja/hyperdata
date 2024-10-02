@@ -1,0 +1,7 @@
+- [ ] GitHub Discussions
+- [ ] Discord Server
+- [ ] Reddit
+- [ ] Mastodon
+- [ ] Lemmy
+- [ ] email
+- [ ] Twitter
