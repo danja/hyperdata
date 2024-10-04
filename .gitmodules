@@ -19,3 +19,6 @@
 [submodule "packages/sparql-store-lite"]
 	path = packages/sparql-store-lite
 	url = https://github.com/danja/sparql-store-lite.git
+[submodule "packages/progressive-scraper"]
+	path = packages/progressive-scraper
+	url = https://github.com/danja/progressive-scraper.git
