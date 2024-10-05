@@ -22,3 +22,6 @@
 [submodule "packages/progressive-scraper"]
 	path = packages/progressive-scraper
 	url = https://github.com/danja/progressive-scraper.git
+[submodule "packages/server"]
+	path = packages/server
+	url = https://github.com/danja/server.git
