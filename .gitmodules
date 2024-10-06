@@ -25,3 +25,9 @@
 [submodule "packages/server"]
 	path = packages/server
 	url = https://github.com/danja/server.git
+[submodule "packages/open-world-interface"]
+	path = packages/open-world-interface
+	url = https://github.com/danja/open-world-interface.git
+[submodule "packages/store-wrapper"]
+	path = packages/store-wrapper
+	url = https://github.com/danja/store-wrapper.git
