@@ -35,7 +35,7 @@ cp -r ~/github-danny/postcraft/postcraft-template ./docs/postcraft
 
 ```
 
-/home/danny/github-danny/hyperdata/packages/farelo/docs/postcraft/content-raw
+
 
 #:todo revisit locations, local, server, backup
 
@@ -49,22 +49,9 @@ _for now_
 
 ```
 cd ~/workspaces_hyperdata-desktop/postcrafts-raw
+ln -s /home/danny/github-danny/hyperdata/packages/open-world-interface/docs/postcraft/content-raw ./open-world-interface
 
-ln -s ~/github-danny/hyperdata/packages/open-world-interface/docs/postcraft open-world-interface
+cd ~/workspaces_hyperdata-desktop/postcrafts-raw
+ln -s /home/danny/github-danny/hyperdata/packages/store-wrapper/docs/postcraft/content-raw ./store-wrapper
 
-ln -s ~/github-danny/hyperdata/packages/store-wrapper/docs/postcraft store-wrapper
 ```
-
-#:todo write README.md, docs/postcraft/content-raw/articles/about.md
-
-## Init AI
-
-- create system prompt in `docs/postcraft/prompts/system-prompt.md`
-
-* create Claude project
-
-## Wire into #:transmissions #:postcraft
-
-## Publish!
-
-## Test!!
