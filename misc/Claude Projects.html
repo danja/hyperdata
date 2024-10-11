@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en-gb">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="canonical" href="https://simonwillison.net/2024/Jun/25/claude-projects/">
+<title>Claude Projects</title>
+<script defer data-domain="simonwillison.net" src="https://plausible.io/js/plausible.js"></script>
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-1090368-1"></script>
+<script>
+window.dataLayer = window.dataLayer || [];function gtag(){dataLayer.push(arguments)}; gtag('js', new Date());gtag('config', 'UA-1090368-1', {send_page_view: false });
+(function() {
+    var m = /#atom\-(\w+)/.exec(location.hash);
+    if (m) {
+        gtag('event', 'page_view', {dimension1: m[1]});
+        history.replaceState && history.replaceState(null, '', location.href.split('#')[0]);
+    } else {
+        gtag('event', 'page_view');
+    }
+})();
+</script>
+
+<link rel="alternate" type="application/atom+xml" title="Atom" href="/atom/everything/">
+<link rel="stylesheet" type="text/css" href="/static/css/all.css">
+<link rel="webmention" href="https://webmention.io/simonwillison.net/webmention">
+<link rel="pingback" href="https://webmention.io/simonwillison.net/xmlrpc">
+
+
+
+<meta name="twitter:card" content="summary">
+
+<meta name="twitter:creator" content="@simonw">
+<meta property="og:url" content="https://simonwillison.net/2024/Jun/25/claude-projects/">
+<meta property="og:title" content="Claude Projects">
+
+<meta property="og:type" content="article">
+<meta property="og:description" content="New Claude feature, quietly launched this morning for Claude Pro users. Looks like their version of OpenAI&#x27;s GPTs, designed to take advantage of Claude&#x27;s 200,000 token context limit: &gt; You …">
+<meta property="og:updated_time" content="1719331421">
+
+
+<script async src="https://media.ethicalads.io/media/client/ethicalads.min.js"></script>
+
+
+</head>
+<body class="smallhead">
+
+<div id="smallhead">
+  <div id="smallhead-inner">
+    <h1><a href="/">Simon Willison’s Weblog</a></h1>
+    <a id="smallhead-about" href="/about/#subscribe">Subscribe</a>
+  </div>
+</div><!-- #smallhead -->
+
+<div id="wrapper">
+<div id="primary">
+
+<div class="entry entryPage">
+
+
+
+<p><strong><a href="https://support.anthropic.com/en/articles/9517075-what-are-projects">Claude Projects</a></strong>. New Claude feature, quietly launched this morning for Claude Pro users. Looks like their version of OpenAI's GPTs, designed to take advantage of Claude's 200,000 token context limit:</p>
+<blockquote>
+<p>You can upload relevant documents, text, code, or other files to a project’s knowledge base, which Claude will use to better understand the context and background for your individual chats within that project. Each project includes a 200K context window, the equivalent of a 500-page book, so users can add all of the insights needed to enhance Claude’s effectiveness.</p>
+</blockquote>
+<p>You can also set custom instructions, which presumably get added to the system prompt.</p>
+<p>I tried dropping in all of <a href="https://github.com/simonw/datasette/tree/1.0a13/docs">Datasette's existing documentation</a> - 693KB of <code>.rst</code> files (which I had to rename to <code>.rst.txt</code> for it to let me upload them) - and it worked and showed "63% of knowledge size used".</p>
+<p>This is a slightly different approach from OpenAI, where the <a href="https://help.openai.com/en/articles/8843948-knowledge-in-gpts">GPT knowledge feature</a> supports attaching up to 20 files each with up to 2 million tokens, which get ingested into a vector database (<a href="https://twitter.com/altryne/status/1721989500291989585">likely Qdrant</a>) and used for RAG.</p>
+<p>It looks like Claude instead handle a smaller amount of extra knowledge but paste the whole thing into the context window, which avoids some of the weirdness around semantic search chunking but greatly limits the size of the data.</p>
+<p>My big frustration with the knowledge feature in GPTs remains the lack of documentation on what it's actually doing under the hood. Without that it's difficult to make informed decisions about how to use it - with Claude Projects I can at least develop a robust understanding of what the tool is doing for me and how best to put it to work.</p>
+<p>No equivalent (yet) for the <a href="https://platform.openai.com/docs/actions/introduction">GPT actions feature</a> where you can grant GPTs the ability to make API calls out to external systems.</p>
+
+<div class="entryFooter">Posted <a href="/2024/Jun/25/">25th June 2024</a> at 4:03 pm</div>
+
+</div>
+
+<div class="recent-articles">
+<h2>Recent articles</h2>
+<ul class="bullets">
+  
+    <li><a href="/2024/Oct/2/not-digital-god/">OpenAI DevDay: Let’s build developer tools, not digital God</a> - 2nd October 2024</li>
+  
+    <li><a href="/2024/Oct/1/openai-devday-2024-live-blog/">OpenAI DevDay 2024 live blog</a> - 1st October 2024</li>
+  
+    <li><a href="/2024/Sep/30/weeknotes/">Weeknotes: Three podcasts, two trips and a new plugin system</a> - 30th September 2024</li>
+  
+</ul>
+</div>
+
+
+</div> <!-- #primary -->
+
+<div id="secondary">
+
+<div class="metabox">
+
+
+    
+        <a class="item-tag" href="/tags/ai/" rel="tag">
+            ai
+            <span>826</span>
+        </a>
+    
+        <a class="item-tag" href="/tags/openai/" rel="tag">
+            openai
+            <span>197</span>
+        </a>
+    
+        <a class="item-tag" href="/tags/prompt-engineering/" rel="tag">
+            prompt-engineering
+            <span>94</span>
+        </a>
+    
+        <a class="item-tag" href="/tags/chatgpt/" rel="tag">
+            chatgpt
+            <span>122</span>
+        </a>
+    
+        <a class="item-tag" href="/tags/llms/" rel="tag">
+            llms
+            <span>686</span>
+        </a>
+    
+        <a class="item-tag" href="/tags/anthropic/" rel="tag">
+            anthropic
+            <span>74</span>
+        </a>
+    
+        <a class="item-tag" href="/tags/claude/" rel="tag">
+            claude
+            <span>77</span>
+        </a>
+    
+        <a class="item-tag" href="/tags/rag/" rel="tag">
+            rag
+            <span>24</span>
+        </a>
+    
+
+
+<div data-ea-publisher="simonwillisonnet" data-ea-type="text"></div>
+  
+</div> <!-- .metabox -->
+
+</div> <!-- #secondary -->
+</div> <!-- #wrapper -->
+
+
+
+
+
+
+
+
+
+<div id="ft">
+    <ul>
+      <li><a href="/about/#about-site">Colophon</a></li>
+      <li>&copy;</li>
+      <li><a href="/2002/">2002</a></li>
+      <li><a href="/2003/">2003</a></li>
+      <li><a href="/2004/">2004</a></li>
+      <li><a href="/2005/">2005</a></li>
+      <li><a href="/2006/">2006</a></li>
+      <li><a href="/2007/">2007</a></li>
+      <li><a href="/2008/">2008</a></li>
+      <li><a href="/2009/">2009</a></li>
+      <li><a href="/2010/">2010</a></li>
+      <li><a href="/2011/">2011</a></li>
+      <li><a href="/2012/">2012</a></li>
+      <li><a href="/2013/">2013</a></li>
+      <li><a href="/2014/">2014</a></li>
+      <li><a href="/2015/">2015</a></li>
+      <li><a href="/2016/">2016</a></li>
+      <li><a href="/2017/">2017</a></li>
+      <li><a href="/2018/">2018</a></li>
+      <li><a href="/2019/">2019</a></li>
+      <li><a href="/2020/">2020</a></li>
+      <li><a href="/2021/">2021</a></li>
+      <li><a href="/2022/">2022</a></li>
+      <li><a href="/2023/">2023</a></li>
+      <li><a href="/2024/">2024</a></li>
+    </ul>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  document.querySelectorAll('h4[id],h5[id],h6[id]').forEach(el => {
+    const id = el.getAttribute('id');
+    const permalinkContext = el.closest('[data-permalink-context]');
+    if (permalinkContext) {
+      const url = permalinkContext.getAttribute('data-permalink-context');
+      const hashLink = document.createElement('a');
+      hashLink.style.borderBottom = 'none';
+      hashLink.style.color = '#666';
+      hashLink.style.fontSize = '1em';
+      hashLink.style.opacity = 0.8;
+      hashLink.setAttribute('href', url + '#' + id);
+      hashLink.innerText = '#';
+      el.appendChild(document.createTextNode(' '));
+      el.appendChild(hashLink);
+    }
+  });
+});
+</script>
+</body>
+</html>

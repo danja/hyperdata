@@ -1,0 +1,10 @@
+{
+  "appId": "it.hyperdata.danping",
+  "appName": "danping",
+  "webDir": "dist",
+  "plugins": {
+    "SplashScreen": {
+      "launchShowDuration": 0
+    }
+  }
+}

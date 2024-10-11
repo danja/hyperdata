@@ -1,0 +1,19 @@
+# Base: http://purl.org/stuff/2007/9/3/todo.owl#
+@prefix rdfs:    <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix protege:  <http://protege.stanford.edu/plugins/owl/protege#> .
+@prefix default:  <http://purl.org/stuff/2007/9/3/todo.owl#> .
+@prefix owl:     <http://www.w3.org/2002/07/owl#> .
+@prefix xsd:     <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+
+default:Task_1
+      rdf:type <http://purl.org/stuff/project/Task> .
+
+<http://purl.org/stuff/2007/9/3/todo.owl>
+      rdf:type owl:Ontology ;
+      owl:imports <http://purl.org/stuff/project> .
+
+default:Task_2
+      rdf:type <http://purl.org/stuff/project/Task> ;
+      <http://purl.org/stuff/project/helps>
+              default:Task_1 .
