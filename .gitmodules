@@ -31,3 +31,6 @@
 [submodule "packages/store-wrapper"]
 	path = packages/store-wrapper
 	url = https://github.com/danja/store-wrapper.git
+[submodule "packages/danping.git"]
+	path = packages/danping.git
+	url = https://github.com/danja/danping.git
