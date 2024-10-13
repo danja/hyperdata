@@ -11,6 +11,9 @@
 ```
 cd /home/danny/github-danny/hyperdata/packages
 git submodule add https://github.com/danja/store-wrapper.git store-wrapper
+
+cd /home/danny/github-danny/hyperdata/packages
+git submodule add https://github.com/danja/sheltopusik.git sheltopusik
 ```
 
 #:seeAlso [working-with-submodules](https://github.blog/open-source/git/working-with-submodules/)
@@ -34,8 +37,6 @@ mkdir docs
 cp -r ~/github-danny/postcraft/postcraft-template ./docs/postcraft
 
 ```
-
-
 
 #:todo revisit locations, local, server, backup
 

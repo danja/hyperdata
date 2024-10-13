@@ -1,0 +1,14 @@
+{
+	"folders": [
+		{
+			"path": "../github-danny/sparqlpress"
+		},
+		{
+			"path": "../github-other/arc2"
+		},
+		{
+			"path": "../github-other/easyrdf"
+		}
+	],
+	"settings": {}
+}

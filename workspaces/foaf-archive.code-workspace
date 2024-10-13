@@ -1,0 +1,23 @@
+{
+	"folders": [
+		{
+			"path": "../foaf-archive"
+		},
+		{
+			"path": "../HKMS/treadmill"
+		},
+		{
+			"path": "../HKMS/server-setup"
+		},
+		{
+			"path": "../provolone-piccante"
+		},
+		{
+			"path": "../HKMS/postcraft"
+		},
+		{
+			"path": "../foaf-archive-support"
+		}
+	],
+	"settings": {}
+}

@@ -1,0 +1,62 @@
+{
+  "folders": [
+    {
+      "path": "../github-danny/postcraft"
+    },
+    {
+      "path": "../github-danny/hyperdata"
+    },
+    {
+      "path": "../github-danny/strandz"
+    },
+    {
+      "path": "../github-danny/foaf-retro"
+    },
+    {
+      "path": "../github-danny/transmissions"
+    },
+    {
+      "path": "../HKMS/server-setup"
+    },
+    {
+      "path": "../github-danny/trans-apps"
+    },
+    {
+      "path": "../github-danny/sparqlpress"
+    },
+    {
+      "path": "../github-danny/hyperdata/packages/kia"
+    },
+    {
+      "path": "../github-danny/hyperdata/packages/farelo"
+    },
+    {
+      "path": "../github-danny/hyperdata/packages/hyperdata-desktop"
+    },
+    {
+      "path": "../github-danny/hyperdata-static/xmlns/project"
+    },
+    {
+      "path": "../github-danny/server"
+    },
+    {
+      "path": "../github-danny/hyperdata/packages/progressive-scraper"
+    },
+    {
+      "path": "../github-danny/hyperdata/packages/open-world-interface"
+    },
+    {
+      "path": "../github-danny/hyperdata-static/xmlns"
+    },
+    {
+      "path": "../github-danny/hyperdata/packages/ns"
+    },
+    {
+      "path": "../github-danny/hyperdata/packages/danping"
+    },
+    {
+      "path": "../github-danny/hyperdata/packages/sheltopusik"
+    }
+  ],
+  "settings": {}
+}

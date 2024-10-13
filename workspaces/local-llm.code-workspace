@@ -1,0 +1,11 @@
+{
+	"folders": [
+		{
+			"path": "../AI/chatd"
+		},
+		{
+			"path": "../AI/ollama-github"
+		}
+	],
+	"settings": {}
+}

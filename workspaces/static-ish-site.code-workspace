@@ -1,0 +1,20 @@
+{
+  "folders": [
+    {
+      "path": "../HKMS/hyperdata-static"
+    },
+    {
+      "path": "../HKMS/server-setup"
+    },
+    {
+      "path": "../HKMS/makesite/content/blog"
+    },
+    {
+      "path": "../HKMS/hyperdata-static/confs"
+    },
+    {
+      "path": "../HKMS/postcraft"
+    }
+  ],
+  "settings": {}
+}

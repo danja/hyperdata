@@ -1,0 +1,92 @@
+{
+	"folders": [
+		{
+			"path": "../rdf-ext/rdf-elements"
+		},
+		{
+			"path": "../rdf-ext/documentation"
+		},
+		{
+			"path": "../rdf-ext/grapoi"
+		},
+		{
+			"path": "../rdf-ext/housemd"
+		},
+		{
+			"path": "../rdf-ext/housemd.rdf-ext.org"
+		},
+		{
+			"path": "../rdf-ext/rdf-dataset-abstract"
+		},
+		{
+			"path": "../rdf-ext/rdf-dataset-callback"
+		},
+		{
+			"path": "../rdf-ext/rdf-dataset-ext"
+		},
+		{
+			"path": "../rdf-ext/rdf-dataset-indexed"
+		},
+		{
+			"path": "../rdf-ext/rdf-ext"
+		},
+		{
+			"path": "../rdf-ext/rdf-ext.org"
+		},
+		{
+			"path": "../rdf-ext/rdf-ext-cli"
+		},
+		{
+			"path": "../rdf-ext/rdf-ext-examples"
+		},
+		{
+			"path": "../rdf-ext/rdf-ext-tutorial-what"
+		},
+		{
+			"path": "../rdf-ext/rdf-parser-csvw"
+		},
+		{
+			"path": "../rdf-ext/rdf-parser-csvw-xlsx"
+		},
+		{
+			"path": "../rdf-ext/rdf-sparql-builder"
+		},
+		{
+			"path": "../rdf-ext/rdf-store-dataset"
+		},
+		{
+			"path": "../rdf-ext/rdf-store-fs"
+		},
+		{
+			"path": "../rdf-ext/rdf-store-sparql"
+		},
+		{
+			"path": "../rdf-ext/rdf-store-web"
+		},
+		{
+			"path": "../rdf-ext/rdf-stream-filter"
+		},
+		{
+			"path": "../rdf-ext/rdf-test"
+		},
+		{
+			"path": "../rdf-ext/rdf-transform-triple-to-quad"
+		},
+		{
+			"path": "../rdf-ext/rdf-translator"
+		},
+		{
+			"path": "../rdf-ext/rdf-utils-dataset"
+		},
+		{
+			"path": "../rdf-ext/rdf-utils-fs"
+		},
+		{
+			"path": "../rdf-ext/shacl-engine"
+		},
+		{
+			"path": "../rdf-ext/shacl-playground"
+		}
+	],
+	"settings": {}
+}
