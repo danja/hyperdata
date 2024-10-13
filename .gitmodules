@@ -34,3 +34,6 @@
 [submodule "packages/danping.git"]
 	path = packages/danping.git
 	url = https://github.com/danja/danping.git
+[submodule "packages/sheltopusik"]
+	path = packages/sheltopusik
+	url = https://github.com/danja/sheltopusik.git
