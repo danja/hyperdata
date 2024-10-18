@@ -1,0 +1,1 @@
+A promotional poster, like a movie poster,  is needed for the hyperdata-desktop project. Imagine a conceptual  notion that incorporates all the key features  you find in your project knowledge about it. Now, be creative and condense all this into a description of a striking image that even the most stupid graphic designer will understand and be able to paint.
