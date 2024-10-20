@@ -37,3 +37,6 @@
 [submodule "packages/sheltopusik"]
 	path = packages/sheltopusik
 	url = https://github.com/danja/sheltopusik.git
+[submodule "packages/tbox"]
+	path = packages/tbox
+	url = https://github.com/danja/tbox.git
