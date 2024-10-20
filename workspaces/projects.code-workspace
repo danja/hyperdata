@@ -56,6 +56,9 @@
     },
     {
       "path": "../github-danny/hyperdata/packages/sheltopusik"
+    },
+    {
+      "path": "../github-danny/hyperdata/packages/tbox"
     }
   ],
   "settings": {}
