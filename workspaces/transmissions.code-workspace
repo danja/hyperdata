@@ -10,5 +10,9 @@
       "path": "../github-danny/trans-apps"
     }
   ],
-  "settings": {}
+  "settings": {},
+  "launch": {
+    "version": "0.2.0",
+    "configurations": []
+  }
 }
