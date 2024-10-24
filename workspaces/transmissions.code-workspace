@@ -8,6 +8,9 @@
     },
     {
       "path": "../github-danny/trans-apps"
+    },
+    {
+      "path": "../github-danny/server/deploy"
     }
   ],
   "settings": {},
