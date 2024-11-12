@@ -1,5 +1,7 @@
 # Namespaces Next Steps
 
+#:todo #:um terms #:um:spike #um:wave #um:loop ?
+
 ## Common
 
 make trans-app for gathering stuff to stick in Claude Project
