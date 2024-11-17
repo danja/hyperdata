@@ -1,13 +1,13 @@
 {
   "folders": [
     {
-      "path": "../github-danny/transmissions"
+      "path": "../../transmissions"
     },
     {
-      "path": "../github-danny/trans-apps"
+      "path": "../../trans-apps"
     },
     {
-      "path": "../github-danny/server/deploy"
+      "path": "../packages/server/deploy"
     }
   ],
   "settings": {},
