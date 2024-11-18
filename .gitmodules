@@ -7,9 +7,6 @@
 [submodule "packages/farelo"]
 	path = packages/farelo
 	url = https://github.com/danja/farelo.git
-[submodule "packages/hyperdata-desktop"]
-	path = packages/hyperdata-desktop
-	url = https://github.com/danja/hyperdata-desktop.git
 [submodule "packages/dogbot"]
 	path = packages/dogbot
 	url = https://github.com/danja/dogbot.git
