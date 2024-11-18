@@ -59,6 +59,9 @@
     },
     {
       "path": "../packages/server"
+    },
+    {
+      "path": "../packages/semem"
     }
   ],
   "settings": {}
