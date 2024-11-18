@@ -37,9 +37,6 @@
       "path": "/home/danny/github-danny/hyperdata-static/xmlns/project"
     },
     {
-      "path": "/home/danny/github-danny/server"
-    },
-    {
       "path": "/home/danny/github-danny/hyperdata/packages/progressive-scraper"
     },
     {
@@ -59,6 +56,9 @@
     },
     {
       "path": "/home/danny/github-danny/hyperdata/packages/tbox"
+    },
+    {
+      "path": "../packages/server"
     }
   ],
   "settings": {}
