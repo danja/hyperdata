@@ -40,3 +40,6 @@
 [submodule "packages/tbox"]
 	path = packages/tbox
 	url = https://github.com/danja/tbox.git
+[submodule "packages/semem"]
+	path = packages/semem
+	url = https://github.com/danja/semem.git
