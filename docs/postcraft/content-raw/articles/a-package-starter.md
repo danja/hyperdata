@@ -14,13 +14,19 @@ git submodule add https://github.com/danja/store-wrapper.git store-wrapper
 
 cd /home/danny/github-danny/hyperdata/packages
 git submodule add https://github.com/danja/tbox.git tbox
+
+cd /home/danny/github-danny/hyperdata/packages
+git submodule add https://github.com/danja/trans-dev.git trans-dev
 ```
 
 
 
 #:seeAlso [working-with-submodules](https://github.blog/open-source/git/working-with-submodules/)
 
+## Create package.json
+
 ```sh
+cd trans-dev
 npm init -y
 ```
 
