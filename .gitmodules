@@ -40,3 +40,6 @@
 [submodule "packages/semem"]
 	path = packages/semem
 	url = https://github.com/danja/semem.git
+[submodule "packages/trans-dev"]
+	path = packages/trans-dev
+	url = https://github.com/danja/trans-dev.git
