@@ -8,6 +8,12 @@
     },
     {
       "path": "../packages/server/deploy"
+    },
+    {
+      "path": "../packages/trans-dev"
+    },
+    {
+      "path": "../packages/chauvin"
     }
   ],
   "settings": {},
