@@ -43,3 +43,6 @@
 [submodule "packages/trans-dev"]
 	path = packages/trans-dev
 	url = https://github.com/danja/trans-dev.git
+[submodule "packages/chauvin"]
+	path = packages/chauvin
+	url = https://github.com/danja/chauvin.git
