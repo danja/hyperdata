@@ -9,7 +9,6 @@ Please create `src/processors/unsafe/RunCommand.js` such that it will run a shel
 
 Please create unit and integration tests following the pattern of the existing tests in `tests`
 
-
 prompts/mcp-http-xmpp-sparql.md
 
 repopack first!!!
@@ -20,6 +19,16 @@ fix dirwalker, make packer app
 * client
 * proxy
 * server
+
+```prompt
+First read the following, analyse with reference to existing code and create a detailed implementation plan as an artifact.
+The job is to create `src/processors/http/HttpServer.js` which will run an express-based HTTP server. The server will run as a worker thread using `src/core/WorkerPool.js`. A first application will be defined in `src/applications/test_http-server`. The transmission defined in `src/applications/test_http-server/transmissions.ttl` will have a single processor, `:HttpServer`. The configuration of the server will come from `src/applications/test_http-server/config.ttl`, and will serve the static file `src/applications/test_http-server/data/input/index.html` at `http://localhost:4000/transmissions/test/`. The server will continue running until a HTTP POST is received, at which point it should shut down gracefully and the application should exit.
+```
+
+```prompt
+The job, in progress, is to create src/processors/http/HttpServer.js which will run an express-based HTTP server. The server will run as a worker thread using src/core/WorkerPool.js. A first application will be defined in src/applications/test_http-server. The transmission defined in src/applications/test_http-server/transmissions.ttl will have a single processor, :HttpServer. The configuration of the server will come from src/applications/test_http-server/config.ttl, and will serve the static file src/applications/test_http-server/data/input/index.html at http://localhost:4000/transmissions/test/. The server will continue running until a HTTP POST is received, at which point it should shut down gracefully and the application should exit. I attach some relevant docs.
+Please decided on the next steps and carry them out.
+```
 
 
 ## MCP
