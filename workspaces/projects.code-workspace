@@ -65,6 +65,9 @@
     },
     {
       "path": "../packages/trans-dev"
+    },
+    {
+      "path": "../packages/chauvin"
     }
   ],
   "settings": {}
