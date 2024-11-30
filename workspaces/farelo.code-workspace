@@ -2,6 +2,9 @@
   "folders": [
     {
       "path": "../packages/farelo"
+    },
+    {
+      "path": "../packages/tbox"
     }
   ],
   "settings": {}
