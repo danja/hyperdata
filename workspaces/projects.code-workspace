@@ -68,6 +68,9 @@
     },
     {
       "path": "../packages/chauvin"
+    },
+    {
+      "path": "../../mcp-o"
     }
   ],
   "settings": {}
