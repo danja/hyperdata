@@ -71,6 +71,9 @@
     },
     {
       "path": "../../mcp-o"
+    },
+    {
+      "path": "../../hyperdata-static"
     }
   ],
   "settings": {}

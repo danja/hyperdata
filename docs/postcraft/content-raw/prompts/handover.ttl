@@ -1,0 +1,28 @@
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix prj: <http://purl.org/stuff/prj/> .
+[
+    a prj:Pivot, prj:Handover ;
+    dcterms:title "${title}" ;
+    dcterms:description "${description}" ;
+    prj:version "${version}" ;
+    prj:hasGoal
+      [ a prj:Goal;
+        rdfs:label "${goal}" ] ;
+    prj:hasTask (
+      [ a prj:Task ;
+        rdfs:label "${task1}" ] 
+        [ a prj:Task ;
+          rdfs:label "${task2}" ]
+          ) ;
+    dcterms:creator <http://purl.org/stuff/agents/ClaudeAI>, <http://danny.ayers.name/me> ;
+    prj:status "${status}" ;
+    prj:keywords "keyword1, keyword2, ..." ;
+    prov:wasGeneratedBy [
+      a prov:Activity ;
+      prj:includes <http://hyperdata.it/prompts/system-prompt>
+    ]
+] .
