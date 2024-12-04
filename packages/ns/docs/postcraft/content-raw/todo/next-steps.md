@@ -1,5 +1,7 @@
 # Namespaces Next Steps
 
+Check recent docs on phone - Sowa, ontology alignment brainstorming etc
+
 #:todo #:um terms #:um:spike #um:wave #um:loop ?
 
 ## Common
