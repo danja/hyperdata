@@ -26,7 +26,7 @@ The job is to create `src/processors/http/HttpServer.js` which will run an expre
 ```
 
 ```prompt
-The job, in progress, is to create src/processors/http/HttpServer.js which will run an express-based HTTP server. The server will run as a worker thread using src/core/WorkerPool.js. A first application will be defined in src/applications/test_http-server. The transmission defined in src/applications/test_http-server/transmissions.ttl will have a single processor, :HttpServer. The configuration of the server will come from src/applications/test_http-server/config.ttl, and will serve the static file src/applications/test_http-server/data/input/index.html at http://localhost:4000/transmissions/test/. The server will continue running until a HTTP POST is received, at which point it should shut down gracefully and the application should exit. I attach some relevant docs.
+The job, is to create an application will be defined in src/applications/test_http-server. The transmission defined in src/applications/test_http-server/transmissions.ttl will have a single processor, :HttpServer, using `src/processors/http/HttpServer.js` and `src/processors/http/HttpServerWorker.js`. The configuration of the server will come from src/applications/test_http-server/config.ttl, and will serve the static file src/applications/test_http-server/data/input/index.html at http://localhost:4000/transmissions/test/. The server will continue running until a HTTP POST is received, at which point it should shut down gracefully and the application should exit. I attach some docs that may have been superceded, use the current code in your project knowledge as the main reference.
 Please decided on the next steps and carry them out.
 ```
 

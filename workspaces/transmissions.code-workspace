@@ -14,6 +14,9 @@
     },
     {
       "path": "../packages/chauvin"
+    },
+    {
+      "path": "../../postcraft/danny.ayers.name"
     }
   ],
   "settings": {},
