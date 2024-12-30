@@ -1,11 +1,8 @@
 {
-	"folders": [
-		{
-			"path": "../../../github-other/memoripy"
-		},
-		{
-			"path": "../packages/semem"
-		}
-	],
-	"settings": {}
+  "folders": [
+    {
+      "path": "../packages/semem"
+    }
+  ],
+  "settings": {}
 }
