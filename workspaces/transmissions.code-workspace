@@ -4,9 +4,6 @@
       "path": "../../transmissions"
     },
     {
-      "path": "../../trans-apps"
-    },
-    {
       "path": "../packages/server/deploy"
     },
     {

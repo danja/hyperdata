@@ -74,6 +74,9 @@
     },
     {
       "path": "../../hyperdata-static"
+    },
+    {
+      "path": "../packages/hoard"
     }
   ],
   "settings": {}

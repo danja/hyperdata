@@ -8,7 +8,7 @@
 
 - create GitHub repo with README.md etc.
 
-```
+```sh
 cd /home/danny/github-danny/hyperdata/packages
 git submodule add https://github.com/danja/store-wrapper.git store-wrapper
 
@@ -18,8 +18,6 @@ git submodule add https://github.com/danja/tbox.git tbox
 cd /home/danny/github-danny/hyperdata/packages
 git submodule add https://github.com/danja/trans-dev.git trans-dev
 ```
-
-
 
 #:seeAlso [working-with-submodules](https://github.blog/open-source/git/working-with-submodules/)
 
