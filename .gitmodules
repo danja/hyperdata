@@ -46,3 +46,6 @@
 [submodule "packages/chauvin"]
 	path = packages/chauvin
 	url = https://github.com/danja/chauvin.git
+[submodule "packages/hoard"]
+	path = packages/hoard
+	url = https://github.com/danja/hoard.git
