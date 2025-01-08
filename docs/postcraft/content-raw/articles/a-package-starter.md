@@ -17,6 +17,9 @@ git submodule add https://github.com/danja/tbox.git tbox
 
 cd /home/danny/github-danny/hyperdata/packages
 git submodule add https://github.com/danja/trans-dev.git trans-dev
+
+cd /home/danny/github-danny/hyperdata/packages
+git submodule add https://github.com/danja/clients.git clients
 ```
 
 #:seeAlso [working-with-submodules](https://github.blog/open-source/git/working-with-submodules/)
