@@ -49,3 +49,6 @@
 [submodule "packages/hoard"]
 	path = packages/hoard
 	url = https://github.com/danja/hoard.git
+[submodule "packages/clients"]
+	path = packages/clients
+	url = https://github.com/danja/clients.git
