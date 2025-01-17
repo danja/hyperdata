@@ -13,7 +13,10 @@
   "devDependencies": {
     "chai": "^4.3.7",
     "jasmine": "^4.6.0",
-    "jsdoc": "^4.0.2"
+    "jsdoc": "^4.0.2",
+    "@langchain/core": "^0.3.19",
+    "@langchain/openai": "^0.3.14",
+    "faiss-node": "^0.5.1"
   },
   "keywords": [],
   "author": "Danny Ayers",
