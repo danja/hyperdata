@@ -16,6 +16,8 @@ vendor misinformation : AGI
 
 everything in flux - we've got set in our ways. Agile isn't agile enough.
 
+continuous creation - spikes etc
+
 #:todo a recommendation for #:um methodology
 
 In project development you should consider accommodating the following environments (appropriately ringfenced), in decreasing order of stability :

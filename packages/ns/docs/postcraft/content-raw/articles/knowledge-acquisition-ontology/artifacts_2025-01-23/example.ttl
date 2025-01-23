@@ -1,0 +1,48 @@
+@prefix : <http://example.org/kco#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+# Instances
+
+:Claudio rdf:type :HumanAgent ;
+    rdfs:label "Claudio" ;
+    rdfs:comment "A human user of the system" .
+
+:Squirt rdf:type :Tool ;
+    rdfs:label "Squirt" ;
+    rdfs:comment "Bookmark capture tool" .
+
+:Strandz rdf:type :Tool ;
+    rdfs:label "Strandz" ;
+    rdfs:comment "Knowledge storage system" .
+
+:Bookmark123 rdf:type :BookmarkAction ;
+    rdfs:label "Bookmark hyperdata.it" ;
+    rdfs:comment "Action of bookmarking hyperdata.it" ;
+    :performsAction :Claudio ;
+    :usesMediatingTool :Squirt ;
+    :hasTarget :HyperdataResource ;
+    :hasTimestamp "2025-01-23T14:30:00Z"^^xsd:dateTime .
+
+:HyperdataResource rdf:type :Resource ;
+    rdfs:label "hyperdata.it" ;
+    rdfs:comment "The hyperdata.it website" .
+
+:Context123 rdf:type :Context ;
+    rdfs:label "Afternoon browsing session" ;
+    rdfs:comment "Context of the bookmark action" .
+
+:Pattern123 rdf:type :Pattern ;
+    rdfs:label "Semantic Web interest" ;
+    rdfs:comment "Pattern of interest in Semantic Web resources" ;
+    :hasConfidence "0.85"^^xsd:decimal .
+
+:Knowledge123 rdf:type :Knowledge ;
+    rdfs:label "User domain interests" ;
+    rdfs:comment "Knowledge about user's professional interests" .
+
+# Relationships
+
+:Bookmark123 :occursInContext :Context123 ;
+    :revealsPattern :Pattern123 .
+
+:Pattern123 :contributesToKnowledge :Knowledge123 .
