@@ -16,7 +16,7 @@ vendor misinformation : AGI
 
 everything in flux - we've got set in our ways. Agile isn't agile enough.
 
-continuous creation - spikes etc
+**CC : Continuous Creation** - spikes etc
 
 #:todo a recommendation for #:um methodology
 

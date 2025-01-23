@@ -9,6 +9,7 @@
     "license": "MIT",
     "main": "index.js",
     "scripts": {
+        "rp": "repomix -c repomix.config.json . ",
         "start-main": "node server/main.js",
         "start-web-fs": "node server/web-fs.js",
         "start-all": "npm-run-all --parallel start-main start-web-fs",

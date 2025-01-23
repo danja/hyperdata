@@ -1,0 +1,17 @@
+{
+    "output": {
+        "filePath": "./graph-editor-repopack.txt",
+        "headerText": "hyperdata subproject graph-editor",
+        "removeComments": false
+    },
+    "ignore": {
+        "useDefaultPatterns": true,
+        "customPatterns": [
+            "*.log",
+            "**/jsdoc",
+            "**/media",
+            "**/*-repopack.txt",
+            "**/lib"
+        ]
+    }
+}
