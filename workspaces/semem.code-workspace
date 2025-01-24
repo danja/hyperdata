@@ -2,6 +2,9 @@
   "folders": [
     {
       "path": "../packages/semem"
+    },
+    {
+      "path": "../packages/tbox"
     }
   ],
   "settings": {}
