@@ -10,16 +10,41 @@
 
 ```sh
 cd /home/danny/github-danny/hyperdata/packages
-git submodule add https://github.com/danja/store-wrapper.git store-wrapper
+git submodule add https://github.com/danja/hyperdata-package-template.git hyperdata-package-template
+git submodule init hyperdata-package-template
+cd hyperdata-package-template
+
+# npm install
+# npm init -y
+# npm update
+
+```
+
+## Create Workspaces
+
+```
+ln -s ~/github-danny/hyperdata/packages/hyperdata-package-template/docs/postcraft/content-raw ~/github-danny/hyperdata/workspaces/hyperdata-package-template
+
+# mkdir ~/github-danny/hyperdata/packages/tbox/docs
+
+# cp -r ~/github-danny/postcraft/postcraft-template ~/github-danny/hyperdata/packages/tbox/docs/postcraft
+```
+
+init
+
+```sh
+npm install jsdoc --save-dev
+npm install  jasmine jasmine-core jasmine-spec-reporter jasmine-browser-runner webpack webpack-cli webpack-dev-server repomix --save-dev
+
+```
+
+```sh
+cd /home/danny/github-danny/hyperdata/packages
+git submodule add https://github.com/danja/cognitive-composer.git cognitive-composer
+cd cognitive-composer
 
 cd /home/danny/github-danny/hyperdata/packages
 git submodule add https://github.com/danja/tbox.git tbox
-
-cd /home/danny/github-danny/hyperdata/packages
-git submodule add https://github.com/danja/trans-dev.git trans-dev
-
-cd /home/danny/github-danny/hyperdata/packages
-git submodule add https://github.com/danja/clients.git clients
 ```
 
 #:seeAlso [working-with-submodules](https://github.blog/open-source/git/working-with-submodules/)

@@ -52,3 +52,9 @@
 [submodule "packages/clients"]
 	path = packages/clients
 	url = https://github.com/danja/clients.git
+[submodule "packages/cognitive-composer"]
+	path = packages/cognitive-composer
+	url = https://github.com/danja/cognitive-composer.git
+[submodule "packages/hyperdata-package-template"]
+	path = packages/hyperdata-package-template
+	url = https://github.com/danja/hyperdata-package-template.git

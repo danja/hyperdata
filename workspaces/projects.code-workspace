@@ -80,6 +80,12 @@
     },
     {
       "path": "../packages/clients"
+    },
+    {
+      "path": "../packages/cognitive-composer"
+    },
+    {
+      "path": "../packages/hyperdata-package-template"
     }
   ],
   "settings": {}

@@ -1,6 +1,10 @@
 # Danny extras
-old
-**/*repopack* 
+**/old
+**/_*
+**/*repopack*
+**/*repomix*
+docs/postcraft/content-raw/chat-archives*
+
 
 # Logs
 logs
