@@ -1,8 +1,10 @@
 
-## hyperdata-viz
+## Cognitive Composer
 
+get all the files from markor, Claude, Perplexity & OpenAI
 
-#:viz - name?
+Notebook LM?
+
 * update rdf-elements,
 * repomix/terrapack
 * , add elkjs tools
