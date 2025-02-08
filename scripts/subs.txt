@@ -1,0 +1,26 @@
+# mkdir hyperdata
+# cd hyperdata
+
+git clone https://github.com/danja/hyperdata.git
+
+https://github.com/danja/clients.git
+https://github.com/danja/chauvin.git
+https://github.com/danja/cognitive-composer.git
+https://github.com/danja/dogbot.git
+https://github.com/danja/farelo.git
+https://github.com/danja/hoard.git
+https://github.com/danja/hyperdata-android.git
+https://github.com/danja/hyperdata-package-template.git
+https://github.com/danja/kia.git
+https://github.com/danja/open-world-interface.git
+https://github.com/danja/progressive-scraper.git
+https://github.com/danja/semem.git
+https://github.com/danja/server.git
+https://github.com/danja/sheltopusik.git
+https://github.com/danja/sparql-store-lite.git
+https://github.com/danja/store-wrapper.git
+https://github.com/danja/strandz.git
+https://github.com/danja/tbox.git
+https://github.com/danja/trans-dev.git
+
+
