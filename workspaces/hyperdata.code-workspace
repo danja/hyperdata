@@ -5,6 +5,15 @@
     },
     {
       "path": "../../clients"
+    },
+    {
+      "path": "../../semem"
+    },
+    {
+      "path": "../../tbox"
+    },
+    {
+      "path": "../../transmissions"
     }
   ],
   "settings": {}
