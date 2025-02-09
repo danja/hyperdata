@@ -1,8 +1,11 @@
 {
-	"folders": [
-		{
-			"path": "../../transmissions"
-		}
-	],
-	"settings": {}
+  "folders": [
+    {
+      "path": "../../transmissions"
+    },
+    {
+      "path": "../../tbox"
+    }
+  ],
+  "settings": {}
 }
