@@ -1,0 +1,27 @@
+{
+  "folders": [
+    {
+      "path": "../../transmissions"
+    },
+    {
+      "path": "../packages/server/deploy"
+    },
+    {
+      "path": "../packages/trans-dev"
+    },
+    {
+      "path": "../packages/chauvin"
+    },
+    {
+      "path": "../../postcraft/danny.ayers.name"
+    },
+    {
+      "path": "../packages/hoard"
+    }
+  ],
+  "settings": {},
+  "launch": {
+    "version": "0.2.0",
+    "configurations": []
+  }
+}

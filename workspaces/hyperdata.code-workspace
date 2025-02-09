@@ -1,7 +1,10 @@
 {
   "folders": [
     {
-      "path": "../github-danny/hyperdata"
+      "path": ".."
+    },
+    {
+      "path": "../../clients"
     }
   ],
   "settings": {}
