@@ -1,3 +1,0 @@
-repopack it.
-
-find out how to either incoporate web-fs-client.js into requirejs config.js so it sees editor, or refactor out requirejs ...
