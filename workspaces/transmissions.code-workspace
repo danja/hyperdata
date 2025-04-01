@@ -5,6 +5,18 @@
     },
     {
       "path": "../../tbox"
+    },
+    {
+      "path": "../../../github/node-flow"
+    },
+    {
+      "path": "../../viz"
+    },
+    {
+      "path": "../../../sites"
+    },
+    {
+      "path": "../../postcraft/docs/postcraft"
     }
   ],
   "settings": {}
