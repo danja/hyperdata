@@ -2,6 +2,12 @@
 	"folders": [
 		{
 			"path": "../../squirt"
+		},
+		{
+			"path": "../../evb"
+		},
+		{
+			"path": "../../squirt-support"
 		}
 	],
 	"settings": {}
