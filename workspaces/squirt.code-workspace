@@ -4,10 +4,10 @@
 			"path": "../../squirt"
 		},
 		{
-			"path": "../../evb"
+			"path": "../../squirt-support"
 		},
 		{
-			"path": "../../squirt-support"
+			"path": "../../evb"
 		}
 	],
 	"settings": {}

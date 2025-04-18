@@ -1,58 +1,64 @@
 {
-	"folders": [
-		{
-			"path": "../../farelo"
-		},
-		{
-			"path": ".."
-		},
-		{
-			"path": "../../hyperdata-clients"
-		},
-		{
-			"path": "../../mcp-o"
-		},
-		{
-			"path": "../../namespaces"
-		},
-		{
-			"path": "../../node-flow"
-		},
-		{
-			"path": "../../old-diamonds"
-		},
-		{
-			"path": "../../postcraft"
-		},
-		{
-			"path": "../../semem"
-		},
-		{
-			"path": "../../server"
-		},
-		{
-			"path": "../../sheltopusik"
-		},
-		{
-			"path": "../../squirt"
-		},
-		{
-			"path": "../../support"
-		},
-		{
-			"path": "../../tbox"
-		},
-		{
-			"path": "../../tia"
-		},
-		{
-			"path": "../../transmissions"
-		},
-		{
-			"path": "../../viz"
-		},
-		{
-			"path": "../../uve"
-		}
-	]
+  "folders": [
+    {
+      "path": "../../farelo"
+    },
+    {
+      "path": ".."
+    },
+    {
+      "path": "../../hyperdata-clients"
+    },
+    {
+      "path": "../../mcp-o"
+    },
+    {
+      "path": "../../namespaces"
+    },
+    {
+      "path": "../../node-flow"
+    },
+    {
+      "path": "../../old-diamonds"
+    },
+    {
+      "path": "../../postcraft"
+    },
+    {
+      "path": "../../semem"
+    },
+    {
+      "path": "../../server"
+    },
+    {
+      "path": "../../sheltopusik"
+    },
+    {
+      "path": "../../squirt"
+    },
+    {
+      "path": "../../support"
+    },
+    {
+      "path": "../../tbox"
+    },
+    {
+      "path": "../../tia"
+    },
+    {
+      "path": "../../transmissions"
+    },
+    {
+      "path": "../../viz"
+    },
+    {
+      "path": "../../uve"
+    },
+    {
+      "path": "../../a2a-o"
+    },
+    {
+      "path": "../../evb"
+    }
+  ]
 }
