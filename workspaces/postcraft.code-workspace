@@ -1,11 +1,29 @@
 {
   "folders": [
-    {
-      "path": "../../postcraft"
-    },
-    {
-      "path": "../../../sites/strandz.it"
-    }
-  ],
+	{
+		"path": "../../transmissions"
+	},
+	{
+		"path": "../../../sites/danny.ayers.name"
+	},
+	{
+		"path": "../../../sites/hyperdata.it"
+	},
+	{
+		"path": "../../../sites/strandz.it"
+	},
+	{
+		"path": "../../postcraft"
+	},
+	{
+		"path": "../../trans-apps"
+	},
+	{
+		"path": "../../a2a-o"
+	},
+	{
+		"path": "../../mcp-o"
+	}
+],
   "settings": {}
 }

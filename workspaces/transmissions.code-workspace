@@ -2,6 +2,21 @@
   "folders": [
     {
       "path": "../../transmissions"
+    },
+    {
+      "path": "../../../sites/danny.ayers.name"
+    },
+    {
+      "path": "../../../sites/hyperdata.it"
+    },
+    {
+      "path": "../../../sites/strandz.it"
+    },
+    {
+      "path": "../../postcraft"
+    },
+    {
+      "path": "../../trans-apps"
     }
   ],
   "settings": {}
