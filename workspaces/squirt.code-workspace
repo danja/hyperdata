@@ -4,10 +4,16 @@
 			"path": "../../squirt"
 		},
 		{
-			"path": "../../squirt-support"
+			"path": "../../evb"
 		},
 		{
-			"path": "../../evb"
+			"path": "../../atuin"
+		},
+		{
+			"path": "../../trestle"
+		},
+		{
+			"path": "../../hyperdata-clients"
 		}
 	],
 	"settings": {}
