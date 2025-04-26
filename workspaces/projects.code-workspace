@@ -68,6 +68,12 @@
     },
     {
       "path": "../../../sites/hyperdata.it"
+    },
+    {
+      "path": "../../ragno"
+    },
+    {
+      "path": "../../elfquake"
     }
   ]
 }
