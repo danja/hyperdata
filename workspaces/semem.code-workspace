@@ -2,6 +2,9 @@
   "folders": [
     {
       "path": "../../semem"
+    },
+    {
+      "path": "../../hyperdata-clients"
     }
   ],
   "settings": {}
