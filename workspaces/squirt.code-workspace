@@ -5,15 +5,6 @@
 		},
 		{
 			"path": "../../evb"
-		},
-		{
-			"path": "../../atuin"
-		},
-		{
-			"path": "../../trestle"
-		},
-		{
-			"path": "../../hyperdata-clients"
 		}
 	],
 	"settings": {}

@@ -1,11 +1,8 @@
 {
-  "folders": [
-    {
-      "path": "../../transmissions"
-    },
-    {
-      "path": "../../../../../../home/danny/sites/danny.ayers.name"
-    }
-  ],
-  "settings": {}
+	"folders": [
+		{
+			"path": "../../transmissions"
+		}
+	],
+	"settings": {}
 }

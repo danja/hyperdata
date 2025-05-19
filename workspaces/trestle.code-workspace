@@ -2,6 +2,9 @@
 	"folders": [
 		{
 			"path": "../../trestle"
+		},
+		{
+			"path": "../../namespaces"
 		}
 	],
 	"settings": {}
