@@ -5,6 +5,9 @@
 		},
 		{
 			"path": "../../evb"
+		},
+		{
+			"path": "../../atuin"
 		}
 	],
 	"settings": {}
