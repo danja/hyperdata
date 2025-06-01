@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <link rel="stylesheet" href="/css/fonts.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/grid-columns.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/style.css" type="text/css"/>
+        <title>Improving this Blog</title>
+    </head>
+    <!-- POST PAGE TEMPLATE -->
+    <body>
+        <header id="entry-header">
+            <h1 class="post-title h-cinzel">
+                
+            </h1>
+        </header>
+        <h1>Improving this Blog</h1>
+<p>I&#39;ve been away for a week, just long enough to forget where I was up to.</p>
+<pre><code>cd ~/github-danny/transmissions
+./run postcraft /home/danny/github-danny/postcraft/danny.ayers.name
+</code></pre>
+<p>That&#39;s giving me the journal. I want entries.
+That&#39;s in :</p>
+<pre><code>/home/danny/github-danny/postcraft/danny.ayers.name/manifest.ttl
+</code></pre>
+<p>Grrr. It&#39;s in chrono order.
+OK, tweaked :</p>
+<pre><code>src/services/postcraft/FrontPagePrep.js
+</code></pre>
+<p>There are some little todos need doing around there, but it&#39;s good enough for now.</p>
+<p>Permalinks next.</p>
+<pre><code>https://danny.ayers.name/home/2024-08-25_blog-improving.html
+</code></pre>
+<p>needs to be relative.</p>
+<p>files are under</p>
+<pre><code>http://localhost/DANNY.AYERS.NAME/entries/
+</code></pre>
+<p>Sheesh, this thing needs so much refactoring!!</p>
+<p>Found it :</p>
+<pre><code>/home/danny/github-danny/transmissions/src/services/postcraft/PostcraftPrep.js
+
+was
+message.contentBlocks.link = message.siteURL + &#39;/&#39; + message.contentBlocks.relURL
+</code></pre>
+<p>on server</p>
+<pre><code>root@hyperdata:/home/www/danny.ayers.name#
+git pull
+</code></pre>
+<h2>TODO</h2>
+<ul>
+<li>images</li>
+<li>Atom feed</li>
+<li>add articles, journal entries etc</li>
+<li>wipe old versions</li>
+</ul>
+
+        <div class="entry-footer">
+            <h2>About</h2>
+            
+        </div>
+    </body>
+</html>

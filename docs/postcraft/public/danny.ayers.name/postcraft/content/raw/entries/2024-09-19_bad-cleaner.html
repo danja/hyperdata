@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <link rel="stylesheet" href="/css/fonts.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/grid-columns.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/style.css" type="text/css"/>
+        <title>Bad Cleaner</title>
+    </head>
+    <!-- POST PAGE TEMPLATE -->
+    <body>
+        <header id="entry-header">
+            <h1 class="post-title h-cinzel">
+                
+            </h1>
+        </header>
+        <h1>Bad Cleaner</h1>
+<p>Oriana&#39;s just arrived back from Switzerland. When she left she asked a mutual friend to clean her house (my No.7). I checked afterwards, it looked fine to me. But I didn&#39;t look closely, and didn&#39;t realise Oriana had given €30 to do 3 hours cleaning. Among other things, there were clothes left in the washing machine - now mouldy. Oriana left her a voice message asking for some of her money back. So assertive!</p>
+<p>TODO employ Oriana as my PA</p>
+<p>Ok, today I first want to push #form-a-matic along.</p>
+<p>Claude had given me a broken namespace/term URI splitter, but when I described what I wanted it to do, it gave me a much improved version first shot.</p>
+<p>I&#39;ve since realised I do need to carry the ns of each term through into the JSON. Tweaking...</p>
+<p>TODO <a href=\"https://www.digitalglobe.it/lavora-con-noi\">https://www.digitalglobe.it/lavora-con-noi</a></p>
+<p>I tweaked the form-a-matic code, the core stuff is now basically working. The JSON out is now looking much like another RDF serialization, so I went to check on the <a href=\"https://json-ld.org/\">JSON-LD</a> syntaxes. There isn&#39;t one <em>very</em> close, so I reckon I&#39;ll continue as-is.</p>
+<p>I used the <a href=\"https://json-ld.org/playground/\">JSON-LD Playground</a>, which has a graph visualization. That&#39;s been on my todo list forever (I&#39;ve already got several, but all a bit old and/or not quite suitable for #Transmissions).
+So naturally I got distracted and started making one, with the help of Claude, based on the Playground version (it uses <a href=\"https://d3js.org/\">D3.js</a>).</p>
+<p>Ops.</p>
+<p>Dogwalk time.</p>
+<hr>
+<p>The goal today is to create nodejs es modules that will take Turtle syntax RDF and render is as a  graph diagram. The form-a-matic repo contains an example of parsing Turtle syntax, the json-ld-playground repo includes code for rendering a visualization of RDF using the D3 library.</p>
+<p>Please follow these steps :</p>
+<ol>
+<li>identify the code in the json-ld-playground repo that is used to generate visualizations. List the filenames.</li>
+<li>examine the form-a-matic repo to find the JS represention it makes of the RDF model from the Turtle file</li>
+<li>locate whichever point in the json-ld-playground visualization code that is most appropriate to take the the JS representation of Turtle and pass it to the visualizer</li>
+<li>modify and/or create the necessary code to read a Turtle file and render a visualization</li>
+</ol>
+<p>We got quite a way with this, but it looks like it&#39;ll take a good few more cycles. Leave it for now, 19:22 dogwalk 2 time.   </p>
+<hr>
+
+        <div class="entry-footer">
+            <h2>About</h2>
+            
+        </div>
+    </body>
+</html>

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <link rel="stylesheet" href="/css/fonts.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/grid-columns.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/style.css" type="text/css"/>
+        <title>New features can be their own tests</title>
+    </head>
+    <!-- POST PAGE TEMPLATE -->
+    <body>
+        <header id="entry-header">
+            <h1 class="post-title h-cinzel">
+                
+            </h1>
+        </header>
+        <h1>New features can be their own tests</h1>
+<p><em>Something to go in my #:um methodology, as and when I can state it a little more formally</em></p>
+<p>I have the common tendency to rush ahead building the fun new shiny interesting bits, and neglecting the existing <em>working code</em>. It&#39;s kind-of axiomatic in dev that you need tests. Coincidentally, this morning I saw reference to a book <a href=\"https://www.amazon.com/dp/1732102201?ref=blog.pragmaticengineer.com\">A Philosophy of Software Design</a> (John Ousterhout, 2018) which apparently downplays tests in favour of comments. To which I&#39;ll give a resounding <strong><em>wtf?!</em></strong>. I&#39;ve lost the link of a blog post which the not-much-testing aspect more plainly, but Gergely Orosz&#39;s <a href=\"https://blog.pragmaticengineer.com/a-philosophy-of-software-design-review/\">A Philosophy of Software Design: My Take (and a Book Review)</a> answer to mucho-comments rings true.</p>
+<h3>Regarding comments -</h3>
+<p>For sure comments are must have, <em>at the module/class/method levels</em>. Document the API right next to its code, use a tool to extract &amp; publish the formal bits, pad with friendlier text at a different layer. <em>Some</em> inline comments are desirable, but only when operation isn&#39;t immediately evident from the code. This is often the case when lesser-known libs are used, or when an unusual idiom is called into play. I use inline comments a lot, but almost always there with be a <code>// TODO : ...</code> nearby.</p>
+<p>To use the lingo of men with greyer beards than mine, lots of inline comments are a <em>Bad Smell</em>. A strong hint that refactoring is needed. Pull that stuff out into its own functional block, give it a meaningful name.  </p>
+<h3>Back to tests -</h3>
+<p><strong>Impatience is more motivational than Best Practices</strong>.</p>
+<p>I guess this is an instance of a general tendency in human cognition : the <strong>more visceral</strong> an experience is, the <strong>more attention</strong> it will receive.   </p>
+<p>Acknowledge that, find a workaround if its called for. As in this case.</p>
+<h2>Scenario</h2>
+<p>I have wasted lots over the past couple weeks having to backtrack a long way due to <em>more haste...</em> Today I decided to bite the bullet and improve my testing. I&#39;d set up <a href=\"https://jasmine.github.io\">Jasmine</a> right at the start of the project, ready to support both unit and integration tests. Today I got <a href=\"https://github.com/istanbuljs/nyc\">nyc</a> (the CLI of <a href=\"https://istanbul.js.org/\">Istanbul</a>) working after a fashion from <code>npm</code>. This told me what I already knew - my test coverage was ballpark 1%. Not as terrible as it sounds, because I was running the #:postcraft #:transmission most days to publish this blog, and that exercised lots of the code. <em>Errm,</em> and frequently it didn&#39;t work.</p>
+<p>But here&#39;s the thing. Aside from the #:transmissions project&#39;s core engine bits, the application functionality is strongly decomposed. To develop most new features/applications, I start by making a fairly minimal runner for that particular processor. For example, one that is still in a somewhat hacky state is a thing to restructure a message expressed in JSON structure (as preparation for rending in markdown of Claude data export). To get this working I rigged up a little thing where I gave it a small sample JSON file (Claude&#39;s stuff is huge), saving the output to visually check.    </p>
+<p>I&#39;d got a bunch of these. Most with the word <code>test</code> in their name - subtle hint!</p>
+<p>So earlier I did a fresh s/repopack/<a href=\"https://github.com/yamadashy/repomix\">repomix</a> of my codebase, gave this to Claude as project knowledge (I reuse the same project, system prompt stays the same I just update the knowledge, start new chat sessions). Spent 15 mins on a prompt. After a further 30 mins maybe (6 artifact revisions needed), I had a functioning Jasmine test spec that will run through each <code>src/applications/test_*</code> dir, pick up a tiny JSON config file and run the application.</p>
+<p>In the space of an hour I&#39;d effectively upped my test coverage to something like 50%.</p>
+<p>I still need to do a bit of work on the flow &amp; reporting, right now some of the mini-apps do break with exceptions and the runner doesn&#39;t notice.</p>
+<p>But essentially these things can make true integration tests, because the test is totally about a (mini) application setup, without any real artificiality coming in from the test framework.</p>
+<p>So these, as running code, can be a single source of truth on how things work (once they do...). Docs &amp; RDF/OWL descriptions will be generate from there.  
+ </p>
+
+        <div class="entry-footer">
+            <h2>About</h2>
+            
+        </div>
+    </body>
+</html>

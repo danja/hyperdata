@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <link rel="stylesheet" href="/css/fonts.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/grid-columns.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/style.css" type="text/css"/>
+        <title> Plan</title>
+    </head>
+    <!-- POST PAGE TEMPLATE -->
+    <body>
+        <header id="entry-header">
+            <h1 class="post-title h-cinzel">
+                
+            </h1>
+        </header>
+        <h2>Plan</h2>
+<p><em>you can make a silk purse out of a sow&#39;s ear if you have a model that has spent it&#39;s whole life comparing them</em></p>
+<ol>
+<li>extract frames from original vid</li>
+<li>Upscale/improve individual frames</li>
+<li>Interpolate new frames into better video</li>
+</ol>
+<p>pip install -r requirements.txt</p>
+<h3>First Pass</h3>
+<h4>Upscale</h4>
+<p><a href=\"https://huggingface.co/ai-forever/Real-ESRGAN\">https://huggingface.co/ai-forever/Real-ESRGAN</a></p>
+<p><a href=\"https://arxiv.org/abs/2107.10833\">https://arxiv.org/abs/2107.10833</a></p>
+<h4>Interpolate</h4>
+<p><a href=\"https://github.com/nihui/rife-ncnn-vulkan\">https://github.com/nihui/rife-ncnn-vulkan</a></p>
+<p><a href=\"https://arxiv.org/abs/2011.06294\">https://arxiv.org/abs/2011.06294</a></p>
+<p><a href=\"https://github.com/nihui/rife-ncnn-vulkan/releases\">https://github.com/nihui/rife-ncnn-vulkan/releases</a></p>
+<hr>
+<p>I&#39;ve lost the link to the original vid... but do have a video-only download from YouTube using... I forget it&#39;s name, will be in the history on music room machine. It gives a bunch of alternate versions in various formats, presumably I chose the one that looked best...</p>
+<p><code>ffmpeg</code> is probably the tool for pulling out the frames.</p>
+<pre><code>   python src/extract-frames.py
+</code></pre>
+<p>Ok, a little path tweaking and that appears to have worked, maybe. Very quick. Lots of files, final one being <code>frame_19257.png</code>. Doesn&#39;t look like it&#39;s the final frame in the original video, but good enough for now.</p>
+<p>Not sure about this either - it&#39;s 160x120 px. Not entirely implausible, the vid is very old. But still, good enough for now.</p>
+<p>Ok, for upscaling, Real-ESRGAN looked promising. Try that on a single frame.</p>
+<pre><code>   python src/upscale-single.py
+</code></pre>
+<p>Ok, it tried CUDA on my very old GPU card, suggested I get a legacy version build for that. But it&#39;s a rubbish card anyway, CPU good enough for now.</p>
+<p>Yay! That actually worked! <em>insert screenshots</em>.</p>
+<p>Output is 640x480. It&#39;s nicely smoothed some of the image, some is still very chunky, and the text in the image (&quot;O&#39;Reilly&quot;) is <em>less</em> legible, but I reckon it&#39;s worth proceeding, doing a small batch to see how it fares with interpolation.</p>
+<p>Ok, at the point where I should save this elsewhere. Done a <code>backup.sh</code> to copy onto 2nd drive on this machine, plus a GitHub repo. <code>.gitignore</code> includes the data dir, I don&#39;t want to risk hitting the file size limits or whatever.</p>
+<p>Soon I should add a <code>requirements.txt</code></p>
+<p>Ouch. It&#39;s taking about 20s per frame. Sums... about 107 hours for 19257 frames.</p>
+<p>Other models at <a href=\"https://drive.google.com/drive/folders/16PlVKhTNkSyWFx52RPb2hXPIQveNGbxS\">https://drive.google.com/drive/folders/16PlVKhTNkSyWFx52RPb2hXPIQveNGbxS</a> including a x2. Lets do this.</p>
+<p>The example code has :</p>
+<pre><code>model.load_weights(&#39;weights/RealESRGAN_x4.pth&#39;, download=True)
+``
+
+Tweaked to x2, that Just Worked.
+
+Down to ~5s per frame. That seems more feasible, about a day on this CPU. On Colab..?
+
+The result, 320x240px *insert screenshots* is way less pixelated. I *think* the faces have about the same amount of detail, only smoother. Text is again mangled, not a worry.
+
+https://github.com/MSFTserver/colab-convert
+
+Last things for tonight (23:30, 27.6°C in the office, Spain 2, England 1)
+</code></pre>
+<p>pip freeze &gt; requirements.txt</p>
+<pre><code>
+gitty bits...
+
+Food, couch, Hawaii 5-0 (on Rai 4 lingua originale).
+
+---
+
+*...continued 40 hours later...*
+
+Ok, so this upscaling will take a lot of time on my CPU-only office machine, and I expect the interpolation will take at least as long, ie. days in total.
+
+But before planting things on Colab or wherever, it would make sense to figure out the next bit locally too. Just do a few seconds to sanity-check.
+
+I have noted down Linux commands to maximise performance on a machine like this (with the help of Claude), but I won&#39;t bother right now unless I obviously need to.
+
+Hmm. I didn&#39;t note the frame rate...
+
+Ok, the original vid is 40 mins = 2400s. I got 19257 frames. 19257/2400 ~= 8 fps? For a very old camera that does sound ballpark.
+
+Taking 5s for each frame to upscale.
+
+How long would 10s of the original take? 10x8x5 = 400s = ~7 mins. Yeah.
+
+*(I am outrageously bad at basic arithmetic, need to spell things out to stand a chance of getting sums right)*
+
+Er, 80 frames..?
+
+Here we go then, in `upscale-many.py`,
+</code></pre>
+<p>for i in range(1, 80):</p>
+<pre><code>
+*(also rubbish memory, `history| grep python`)*
+</code></pre>
+<p>python src/upscale-many.py</p>
+<pre><code>
+</code></pre>
+<p>Processed 79 frames (7.90%) in 708.31 seconds</p>
+<pre><code>
+*Heh, out by one error. You should see my C code.*
+
+I&#39;d better test by gluing the new frames into a vid.
+
+Ask Claude.
+
+I&#39;d better start by lifting the following out of `extract-frames.py`, note her in case I need it later:
+</code></pre>
+<p>// use absolute paths</p>
+<p>video_path = os.path.abspath(&#39;data/before/orig-vid-only.mp4&#39;)
+output_folder = os.path.abspath(&#39;data/frames&#39;)</p>
+<pre><code>if not os.path.exists(output_folder):
+    os.makedirs(output_folder)
+
+( ... )
+</code></pre>
+<pre><code>
+#### Reglue vid prompt
+
+&gt;&gt; I have used the code below to extract frames from a video file. Can you please generate corresponding code that will join together images 1-80 back into a video in a non-lossy format and save it in the &#39;data/output&#39; directory.
+*[source of src/extract-frames.py]*
+
+Yay! First pass it gave me the result at 25 fps. Claude told me the parameter to change it back to the original 8.
+
+Runs very fast.
+
+I&#39;m not entirely convinced of the other encoding parameters Claude gave me, but they will do for now.
+
+Time for dogwalk #2. I might as well run the upscale script a bit longer while we are out.
+</code></pre>
+<p>for i in range(1, 401):</p>
+<pre><code>
+I&#39;ve not done the sums. Just feels right.
+
+I remixed to vid, that worked.
+
+The result is very Mr.Blobby, but no worse. Is enough time to get an idea if it&#39;s doing any good.
+
+Hmm, I&#39;m confused. I ran `images-vid.py` on the original frames, that looks a lot longer in time.
+
+Yeah, the original comes out at 50s, the upscaled 16s. Repeat.
+
+Ok Claude. Thank you Claude, you remembered markdown format :
+
+# Explanation of Video Length Discrepancy
+
+When creating a video from a series of images, the output video length can vary based on several factors:
+
+1. **Frame Rate**: If you&#39;re not explicitly setting a frame rate, ffmpeg might be inferring one based on the input. Smaller images might be interpreted as having a lower frame rate, resulting in a longer video.
+
+2. **Codec Behavior**: Some codecs might handle different image sizes differently, potentially affecting the output duration.
+
+3. **Container Format**: The container format (like .avi) can influence how the video is packaged and interpreted.
+
+To address these issues and ensure consistent output regardless of image size, while maintaining a lossless quality and using the .avi format, we need to:
+
+1. Explicitly set the input frame rate
+2. Use a lossless codec compatible with .avi
+3. Ensure the output frame rate matches the input frame rate
+
+Here&#39;s an updated script that should produce consistent results:
+
+...
+
+Ok, after a bit of tweaking, and getting confused about which code file I was looking at (at 1:25 on an empty stomach), it is now behaving. Really can&#39;t tell if things are any better.
+
+But you definitely can make a silk purse out of a sow&#39;s ear if you have a model trained on lots of silk purses.
+
+Ok, so far so good.
+
+I now eat.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+### Setup
+
+_in home/danny/foaf-archive-support_
+</code></pre>
+<p>python3 -m venv video-magic</p>
+<pre><code>
+I will want a `.gitignore` soon, just so I can tell Cursor to ignore it when analysing the whole codebase.
+
+I asked Cursor about the environment :
+</code></pre>
+<p>my_project/
+├── src/
+│ └── main.py
+├── venv/
+├── .env
+└── ...</p>
+<p>python3 -m venv venv
+source venv/bin/activate</p>
+<pre><code>  pip install -r requirements.txt
+</code></pre>
+<h1>.env</h1>
+<p>HUB_BASE_URL=<a href=\"https://api.notefile.net\">https://api.notefile.net</a>
+HUB_AUTH_TOKEN=your_auth_token
+HUB_PROJECT_UID=your_project_uid
+HUB_PRODUCT_UID=your_product_uid</p>
+<pre><code>  import os
+</code></pre>
+<p>from dotenv import load_dotenv</p>
+<p>load_dotenv()</p>
+<p>hub_base_url = os.getenv(&#39;HUB_BASE_URL&#39;)
+hub_auth_token = os.getenv(&#39;HUB_AUTH_TOKEN&#39;)
+hub_project_uid = os.getenv(&#39;HUB_PROJECT_UID&#39;)
+hub_product_uid = os.getenv(&#39;HUB_PRODUCT_UID&#39;)</p>
+<p>print(f&quot;Base URL: {hub_base_url}&quot;)
+print(f&quot;Auth Token: {hub_auth_token}&quot;)
+print(f&quot;Project UID: {hub_project_uid}&quot;)
+print(f&quot;Product UID: {hub_product_uid}&quot;)</p>
+<p>pip install python-dotenv</p>
+<p>python src/main.py</p>
+<pre><code>
+AI also suggested, I don&#39;t know if I&#39;ll need this, we&#39;ll see :
+</code></pre>
+<p>pip install python-dotenv</p>
+<pre><code>
+Create a .env file in the root of your project:
+</code></pre>
+<h1>.env</h1>
+<p>HUB_BASE_URL=<a href=\"https://api.notefile.net\">https://api.notefile.net</a>
+HUB_AUTH_TOKEN=your_auth_token
+HUB_PROJECT_UID=your_project_uid
+HUB_PRODUCT_UID=your_product_uid</p>
+<pre><code>
+use as:
+</code></pre>
+<p>import os
+from dotenv import load_dotenv</p>
+<p>load_dotenv()</p>
+<p>hub_base_url = os.getenv(&#39;HUB_BASE_URL&#39;)
+hub_auth_token = os.getenv(&#39;HUB_AUTH_TOKEN&#39;)
+hub_project_uid = os.getenv(&#39;HUB_PROJECT_UID&#39;)
+hub_product_uid = os.getenv(&#39;HUB_PRODUCT_UID&#39;)</p>
+<p>print(f&quot;Base URL: {hub_base_url}&quot;)
+print(f&quot;Auth Token: {hub_auth_token}&quot;)
+print(f&quot;Project UID: {hub_project_uid}&quot;)
+print(f&quot;Product UID: {hub_product_uid}&quot;)</p>
+<pre><code>
+**nota bene** - must be in .gitignore
+
+### ffmpeg
+</code></pre>
+<p>pip install ffmpeg-python</p>
+<pre><code>
+#### Real-ESRGAN
+
+[PyTorch implementation of a Real-ESRGAN model](https://github.com/ai-forever/Real-ESRGAN) on GitHub.
+</code></pre>
+<p>pip install git+<a href=\"https://github.com/sberbank-ai/Real-ESRGAN.git\">https://github.com/sberbank-ai/Real-ESRGAN.git</a></p>
+<pre><code>
+took a very long time, I think it pulled loads of CUDA libs, even though I don&#39;t have a usable GPU in this machine.
+
+---
+</code></pre>
+<p>sudo -i
+QT_QPA_PLATFORM=xcb
+flatpak run io.github.tntwise.REAL-Video-Enhancer</p>
+<pre><code>
+https://github.com/TNTwise/REAL-Video-Enhancer/issues/8
+
+https://askubuntu.com/questions/1086529/how-to-give-a-flatpak-app-access-to-a-directory
+
+https://docs.flatpak.org/en/latest/sandbox-permissions.html
+
+https://docs.flatpak.org/en/latest/flatpak-command-reference.html
+
+---
+
+flatpak-spawn --host cp /run/host/root/Videos/output-video.avi_640x480.mp4 ~/output-video.avi_640x480.mp4
+
+sudo -E flatpak enter 177213 sh
+cp /root/Videos/output-video.avi_640x480.mp4 /home/danny/flatpak-exports/output-video.avi_640x480.mp4
+exit
+</code></pre>
+
+        <div class="entry-footer">
+            <h2>About</h2>
+            
+        </div>
+    </body>
+</html>

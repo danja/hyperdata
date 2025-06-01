@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <link rel="stylesheet" href="/css/fonts.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/grid-columns.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/style.css" type="text/css"/>
+        <title>Semem Ollama</title>
+    </head>
+    <!-- POST PAGE TEMPLATE -->
+    <body>
+        <header id="entry-header">
+            <h1 class="post-title h-cinzel">
+                
+            </h1>
+        </header>
+        <h1>Semem Ollama</h1>
+<p>#:semem, the <strong>Semantic Memory</strong> component of #:hyperdata I&#39;m working on is a high priority for me, there are a lot of places I want to use it.</p>
+<p>I want to try and get the most out of <a href=\"https://en.wikipedia.org/wiki/Large_language_model\">Large Language Model</a> and <a href=\"https://en.wikipedia.org/wiki/Linked_data\">Linked Data</a> integration. It&#39;s a seriously fertile space, huge potential, lots of <strong>blue sky</strong> for research. I&#39;ve got a stack of ideas to try (many roughed out in scattered notes), but I&#39;m following the dev strategy of prioritizing activities for which I have an immediate use. This has led me to <a href=\"https://en.wikipedia.org/wiki/SPARQL\">SPARQL</a> store-backed Graph <a href=\"https://en.wikipedia.org/wiki/Retrieval-augmented_generation\">RAG</a> as the inroad. About a year ago, to help get my head around this, I made a little <a href=\"https://www.llamaindex.ai/\">LlamaIndex</a> extension, <a href=\"https://github.com/danja/nlp/tree/main/GraphRAG\">GraphRAG with SPARQL</a>. This was only a minimal proof-of-concept, but did give me a mental foothold.</p>
+<p>The majority of the current activity in this space seems focused on using LLMs to derive <a href=\"https://en.wikipedia.org/wiki/Resource_Description_Framework\">RDF</a> models from text (this is what the bits above did). For my needs I&#39;m putting the emphasis more on aligning LLM-interpreted text with existing ontologies. Ok, I&#39;m developing ontologies in a just-in-time fashion, but still treating the resources there as &quot;digital&quot; (logically defined) anchor points for the &quot;analog&quot; (probabilistic) shapes around LLMs.</p>
+<p>I made a couple of underlying design choices around my #:hyperdata uber-project. One is to favour Javascript. Not everyone&#39;s preferred language (see <a href=\"https://www.youtube.com/watch?v=03lRzf7iSiU\">What&#39;s Your Least Favourite Programming Language? (2024 soundcheck question) - Computerphile</a>), especially with AI dev being Python-first. But as I need to use JS in the browser it&#39;s a way of reducing my cognitive load (I&#39;m really bad at remembering syntax). Another is to do things kind-of from scratch, avoiding frameworks (libs ok). I&#39;m <a href=\"https://en.wikipedia.org/wiki/Eating_your_own_dog_food\">dogfooding</a> to the max because I want to understand what&#39;s going on.</p>
+<p>A key part of #:semem is embeddings derived from text. A key tool I need asap is a similarity-based search across my scattered docs (so I&#39;m not continually repeating myself). <a href=\"https://github.com/trustgraph-ai/trustgraph\">TrustGraph</a> is broadly the kind of system I&#39;m aiming for, but that&#39;s big and quite blackboxy. While I was still going around in circles at a lower level, trying to decide which <strong>vector DB</strong> tooling to use, I stumbled on <a href=\"https://github.com/caspianmoon/memoripy\">memoripy</a>. As the name suggests, it&#39;s Python. But it&#39;s an understandable size, has the general shape I&#39;m after and uses specific well-known libs (eg. <a href=\"https://github.com/facebookresearch/faiss\">Faiss</a>) that all have <strong>JS APIs</strong>.</p>
+<p>So for an initial setup for #:semem, the other week I got Claude to help me port it to JS. Once I&#39;d got what appeared to be necessary coverage, I left it there, untested.</p>
+<p>Coming back to it today I see most of the examples use the OpenAI API. I don&#39;t have any credit on that right now. But <a href=\"https://github.com/ollama/ollama\">Ollama</a> is also an option. I&#39;ve got that set up locally, should do nicely to kickstart #:semem.</p>
+<p>I had a quick skim of the available small <a href=\"https://ollama.com/search\">models</a>. One I hadn&#39;t noticed before is <a href=\"https://ollama.com/library/nomic-embed-text\">nomic-embed-text</a>. Ok, that looks a good candidate for my embeddings. When playing, I got very promising results with <code>orca</code>, <code>phi</code> and <code>qwen</code>. They still seem to be up there in the populars, so I some have initial LLM candidates already installed.
+I can&#39;t remember when I last update Ollama itself, I&#39;d better do that now.
+The <a href=\"https://github.com/ollama/ollama/blob/main/docs/linux.md\">manual install docs</a> have this :</p>
+<blockquote>
+If you are upgrading from a prior version, you should remove the old libraries with sudo rm -rf /usr/lib/ollama first.
+
+<p>Download and extract the package:   </p>
+<p>curl -L <a href=\"https://ollama.com/download/ollama-linux-amd64.tgz\">https://ollama.com/download/ollama-linux-amd64.tgz</a> -o ollama-linux-amd64.tgz
+sudo tar -C /usr -xzf ollama-linux-amd64.tgz</p>
+</blockquote>
+
+<p>That&#39;ll take a while on this connection.</p>
+<p>Dogwalk time.</p>
+<hr>
+<pre><code class=\"language-sh\">ollama serve
+Error: listen tcp 127.0.0.1:11434: bind: address already in use
+</code></pre>
+<p>Reboot o&#39;clock.</p>
+<pre><code class=\"language-sh\">danny@danny-desktop:~$ ollama run qwen2:1.5b  
+&gt;&gt;&gt; how are you?
+I am an AI language model. How can I assist you today?
+</code></pre>
+<p>Sooo...</p>
+<pre><code class=\"language-sh\">ollama pull nomic-embed-text
+...
+curl http://localhost:11434/api/embeddings -d &#39;{
+  &quot;model&quot;: &quot;nomic-embed-text&quot;,
+  &quot;prompt&quot;: &quot;The sky is blue because of Rayleigh scattering&quot;
+}&#39;
+</code></pre>
+<p>...which produces a lot of numbers. <strong>Yay!</strong></p>
+<p>The <a href=\"https://ollama.com/library/nomic-embed-text\">Ollama page for nomic-embed-text</a> has the cURL line above as well as py &amp; JS snippets. It also links to a <a href=\"https://www.nomic.ai/blog/posts/nomic-embed-text-v1\">nomic blog post</a> about it. <a href=\"https://docs.nomic.ai/reference/api/embed-text-v-1-embedding-text-post\">Nomic have an API</a> for using the model, but I&#39;ll stick with Ollama&#39;s since I want to use it for GPT models as well.</p>
+<p>I believe <a href=\"https://github.com/facebookresearch/faiss\">Faiss</a> has all the similarity search bits I need to get going on that front.</p>
+<h2>Visualization</h2>
+<p>Nomic have a Data Mapping (#:visualization) blog post series, this one&#39;s very handy for me : <a href=\"https://www.nomic.ai/blog/posts/see-your-data-with-dimensionality-reduction\">See Your Data With Dimensionality Reduction</a>. I&#39;ve read papers on various algorithms but could only remember trad <a href=\"https://en.wikipedia.org/wiki/Principal_component_analysis\">PCA</a> off the top of my head. Mentioned here are also <a href=\"https://en.wikipedia.org/wiki/T-distributed_stochastic_neighbor_embedding\">t-SNE</a>, Hinton &amp; co&#39;s algorithm from 2008, <a href=\"https://arxiv.org/abs/1802.03426\">UMAP</a> from 2018 and one which appears to be proprietary, Nomic Project. I&#39;m not sure if I&#39;ve encountered UMAP before, but it sounds like a good choice for my purposes.</p>
+<p>The next post in the series is <a href=\"https://www.nomic.ai/blog/posts/why-are-web-browsers-the-best-data-browsers\">Why Are Web Browsers The Best Data Browsers?</a>, which, after preliminaries goes on to describe their own (open sourced) <a href=\"https://github.com/nomic-ai/deepscatter\">deepscatter</a>. It looks good, but I&#39;ve been around the block a few times with this stuff.</p>
+<p>I&#39;m using <a href=\"https://rdf-ext.org\">RDF-Ext</a> (RDF JS libs) nearby, and in there Bergi has a [RdfNetwork component]<a href=\"https://examples.rdf-ext.org/rdf-elements/\">RDF-Ext</a>. This is built on <a href=\"https://js.cytoscape.org/\">Cytoscape.js</a>, which is a mature renderer from bioinformatics circles, so should be plenty good on scalability and scatterplotty things.</p>
+<p>#:todo what was that cytoscape plugin that looked good for pipelines from somewhere around Eclipse?
+#:todo check out the cytoscape/<a href=\"https://mermaid.js.org/ecosystem/integrations-community.html\">mermaid integrations</a></p>
+<p>Ok, I guess I should actually look at what I&#39;ve got for #:semem code so far...
+ </p>
+
+        <div class="entry-footer">
+            <h2>About</h2>
+            
+        </div>
+    </body>
+</html>

@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <link rel="stylesheet" href="/css/fonts.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/grid-columns.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/style.css" type="text/css"/>
+        <title>Postcraft Cleaner</title>
+    </head>
+    <!-- POST PAGE TEMPLATE -->
+    <body>
+        <header id="entry-header">
+            <h1 class="post-title h-cinzel">
+                
+            </h1>
+        </header>
+        <h1>Postcraft Cleaner</h1>
+<p>A quick job to start the day. I need a #transmission, as part of #Postcraft, that will wipe all rendered files - cache and <code>.html</code>.</p>
+<p>Ideally to run as :</p>
+<pre><code>./trans postcraft clean /home/danny/github-danny/postcraft/danny.ayers.name
+</code></pre>
+<p>The current runner is :</p>
+<pre><code>./run postcraft /home/danny/github-danny/postcraft/danny.ayers.name
+or
+./run postcraft-beta /home/danny/github-danny/postcraft/danny.ayers.name
+</code></pre>
+<p>This will involve addressing more than one transmission in <code>transmission.ttl</code></p>
+<p>TODO rename <code>transmission.ttl</code> to <code>transmissions.ttl</code></p>
+<p>TODO rename <code>trm:Pipeline</code> etc</p>
+<p>Starting point, I need a key for the separate transmissions.<code>rdfs:label</code> will do.</p>
+<pre><code>:clean a trm:Pipeline ;
+    rdfs:label &quot;clean&quot; ;
+    rdfs:comment &quot;directory cleaner&quot; ;
+    trm:pipe (:SC) .
+</code></pre>
+<p>Yuck, so many TODOs!</p>
+<p>Jeez, that took me a very long time. I really need to write those <code>grapoi</code> docs.</p>
+<p><strong>2024-08-30</strong> continued</p>
+<p>That was unpleasant, sorting out the command-line (<code>yargs</code>) handling. Settled on a reasonable neat solution for subtasks/named transmissions, a dot notation :</p>
+<pre><code>./trans postcraft-beta.clean ../postcraft/danny.ayers.name
+</code></pre>
+<p><strong>2024-09-01</strong></p>
+<p>A quick test of this :</p>
+<pre><code>&lt;details&gt;
+&lt;summary&gt;More&lt;/summary&gt;
+&lt;p&gt;
+This should show more.
+&lt;/p&gt;
+&lt;/details&gt;
+</code></pre>
+<details>
+<summary>More</summary>
+<p>
+This should show more.
+</p>
+</details>
+
+<hr>
+<p>Grr. I suppose I&#39;d better do some light tweaking before putting this into place.</p>
+<ul>
+<li>Group the markdown dirs. A <code>raw</code> dir suits me.</li>
+<li>Rename <code>cache</code></li>
+</ul>
+<p>I want to keep the dir structures in places, but pull the content from git so I&#39;ll put a flag in <code>FileRemove</code> to ignore <code>.dotfiles</code>.
+In <code>.gitignore</code> maybe:</p>
+<pre><code>cache/*
+!cache/.*
+</code></pre>
+<p>I also need to copy across static content.</p>
+<pre><code>danny.ayers.name/public/home
+</code></pre>
+<p>Phew! Ok, done all that.</p>
+<p>TODO <code>services/DatasetReader</code> is very hard-coded.
+ </p>
+
+        <div class="entry-footer">
+            <h2>About</h2>
+            
+        </div>
+    </body>
+</html>

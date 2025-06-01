@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <link rel="stylesheet" href="/css/fonts.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/grid-columns.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/style.css" type="text/css"/>
+        <title>trans-dev</title>
+    </head>
+    <!-- POST PAGE TEMPLATE -->
+    <body>
+        <header id="entry-header">
+            <h1 class="post-title h-cinzel">
+                
+            </h1>
+        </header>
+        <h1>trans-dev</h1>
+<p>#:yapp : Yet Another Placeholder Project : <a href=\"https://github.com/danja/trans-dev\">https://github.com/danja/trans-dev</a></p>
+<p><em>Maybe</em> more justifiable than usual...</p>
+<p>Quite early on with #:transmissions it occurred to me that I could do with something like a specialized IDE for the thing. During these stages of dev, it&#39;s convenient to have something that runs on the desktop, for the sake of easy fs access.</p>
+<p>Which led me to play with #:pulsar editor, start making #:hyperdata-desktop. (Which has been troublesome at times, largely due to the fact that Pulsar has to be built with an older version of node. But I&#39;ll be sticking with it for now at least, it seems like it carries less baggage than eg. making VSCode plugins, it feels more manageable somehow).  </p>
+<p>So far I&#39;ve only been using #:hyperdata-desktop as a text editor with <em>General MIDI</em> bells &amp; whistle - markdown, tabs, file tree, search, terminal etc. (I&#39;m typing in it right now). Where I imagined going next with this was adding a few buttons to do #:transmissions-specific operations, comparable to running bash scripts rather than having to remember everything in the regular terminal CLI.</p>
+<p><strong>However</strong>, the past week or two I&#39;ve spent a <em>lot</em> of time bouncing between the raw JS and the declarative bits of #:transmissions. It&#39;s occurred to me that something akin to Jupyter notebooks would be very desirable. I had a chat with Claude about this, with the result that it appears my best approach would be to create a lightweight thing like Jupyter. I can&#39;t deny I often go *<em>Not Invented Here</em> in the way I develop things, but this is mostly motivated by my desire to know what&#39;s going on under the hood, rather that #:link adopting <strong>Yet Another Framework</strong>.</p>
+<p>An extra motivation here is that I want to include #:semweb features from the ground up. Web-native is a requirement.</p>
+<p>Claude helped put together the Jupyter-like requirements (with excellent hints re. libs to look at), my only notable extra bit being an abstraction of storage. I want to be able to use native OS fs, HTTP methods against a suitably-shaped server setup, as well as a SPARQL store. All this lends itself to being built incrementally, as things are needed, with Claude or another of his species doing the grunt work.</p>
+<p>I&#39;ll make it a submodule of #:hyperdata per <code>/home/danny/github-danny/hyperdata/workspaces/hyperdata/articles/a-package-starter.md</code></p>
+<p>It&#39;ll need stuff for npm and its own (#:postcraft) doc bits. I might as well do the same for #:squirt (a posting PWA) now. That will be quasi-standalone, but sits inside #:farelo, docs can go there.</p>
+<pre><code class=\"language-sh\">cd /home/danny/github-danny/hyperdata/packages
+git submodule add https://github.com/danja/trans-dev.git trans-dev
+
+cd trans-dev
+npm init -y
+
+mkdir ~/github-danny/hyperdata/packages/trans-dev/docs
+cp -r ~/github-danny/postcraft/postcraft-template ~/github-danny/hyperdata/packages/trans-dev/docs/postcraft
+ln -s ~/github-danny/hyperdata/packages/trans-dev/docs/postcraft/content-raw ~/github-danny/hyperdata/workspaces/trans-dev
+</code></pre>
+<p>Hmm. Where&#39;s #:farelo again..?</p>
+<p><code>/home/danny/github-danny/hyperdata/packages/farelo</code></p>
+<p>Ok.
+I know I&#39;ve got #:fam under #:farelo, #:squirt should be the same. I guess easiest is :</p>
+<pre><code class=\"language-sh\">cd ~/github-danny/hyperdata/packages/farelo
+cp -r form-a-matic squirt
+</code></pre>
+<p>Then delete unwanted stuff.
+Jeez, cp took a couple of seconds...</p>
+<p>Heh, <code>node_modules</code> innit mate.</p>
+<p>I&#39;d better get the Claude chat into #:trans-dev.</p>
+<p>Export...</p>
+<p>Hmm. What are the odds <code>/home/danny/github-danny/transmissions/src/applications/claude-json-converter</code> still works...</p>
+<pre><code class=\"language-sh\">TypeError: Cannot read properties of undefined (reading &#39;toString&#39;)
+    at MarkdownFormatter.extractMarkdown (file:///home/danny/github-danny/transmissions/src/processors/staging/MarkdownFormatter.js:42:94)
+    at MarkdownFormatter.process (file:///home/danny/github-danny/transmissions/src/processors/staging/MarkdownFormatter.js:21:32)
+</code></pre>
+<p>Yeah, predictable <strong>tests you idiot!</strong></p>
+<p>Though it looks like <code>MarkdownFormatter</code> was called loads of times before it failed.</p>
+<p>Heh, not a difficult one. The bit that listed other <code>key:value</code> in the message was falling over with  <code>key = subtask</code>, when the value was undefined.</p>
+<p><code>MarkdownFormatter</code> has at least one hardcoded path, but I don&#39;t need it for anything else right now so no probs.</p>
+<p>Target path is like
+<code>&quot;filepath&quot;: &quot;/home/danny/github-danny/hyperdata/docs/postcraft/content-raw/chat-archives/md/6de5/2024-11-09_500.m...&quot; </code></p>
+<p>Ok, relevant chat is under <code>/home/danny/github-danny/hyperdata/workspaces/hyperdata/chat-archives/md/2ea9</code></p>
+<p>Doesn&#39;t look like I implemented #:todo artifact saving. Not to worry, only a few to download.</p>
+<p>All placed under <code>/home/danny/github-danny/hyperdata/workspaces/trans-dev/claude-chat</code></p>
+<p>I&#39;ll just do <code>/home/danny/github-danny/hyperdata/workspaces/trans-dev/todo/next-steps.md</code></p>
+<h2>Links</h2>
+<ul>
+<li><a href=\"https://vscodium.com/\">VSCodium</a> is a community-driven, freely-licensed binary distribution of Microsoft’s editor VS Code</li>
+</ul>
+
+        <div class="entry-footer">
+            <h2>About</h2>
+            
+        </div>
+    </body>
+</html>

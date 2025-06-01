@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <link rel="stylesheet" href="/css/fonts.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/grid-columns.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/style.css" type="text/css"/>
+        <title>Hotter</title>
+    </head>
+    <!-- POST PAGE TEMPLATE -->
+    <body>
+        <header id="entry-header">
+            <h1 class="post-title h-cinzel">
+                
+            </h1>
+        </header>
+        <h1>Hotter</h1>
+<p>I spent the morning on #Paperless (mostly struggling with Docker, again), just had a hour or two on fairly grim family stuff. So for a bit of fun, I&#39;ll have a look at #glamouroustoolkit . I&#39;d left it open in a browser tab yesterday.</p>
+<ul>
+<li><a href=\"https://gtoolkit.com/download/\">https://gtoolkit.com/download/</a></li>
+</ul>
+<pre><code>cd ~/Apps
+time curl https://dl.feenk.com/scripts/linux.sh | bash
+</code></pre>
+<p><strong>that script looks great in the terminal!</strong></p>
+<p>I</p>
+<h3>Paperless</h3>
+<p>latest version is at <a href=\"https://github.com/paperless-ngx/paperless-ngx\">https://github.com/paperless-ngx/paperless-ngx</a></p>
+<p><a href=\"https://docs.paperless-ngx.com/administration/#management-commands\">Management utilities</a></p>
+<p>tweaked <code>docker-compose.yml</code> :</p>
+<pre><code>    volumes:
+      - data:/usr/src/paperless/data
+      - media:/usr/src/paperless/media
+      - ./export:/usr/src/paperless/export
+      - /home/danny/Documents/aaaINDEXED:/usr/src/paperless/consume
+</code></pre>
+<pre><code>cd /home/danny/AI/paperless-ngx
+docker-compose down
+docker-compose up -d
+</code></pre>
+<p>This errored. <code>systemctl</code> check - docker was disable!? Enabled, rebooted.</p>
+<p>Paperless docs say :</p>
+<blockquote>
+<p>With Docker Compose, while paperless is running:</p>
+</blockquote>
+<pre><code>$ cd /path/to/paperless
+$ docker compose exec webserver &lt;command&gt; &lt;arguments&gt;
+</code></pre>
+<p>so I tried-</p>
+<pre><code>docker compose exec webserver document_index reindex
+</code></pre>
+<p>That ran, but doesn&#39;t seem to have picked up on my dir changes.</p>
+<pre><code>cd /home/danny/AI/paperless-ngx
+docker-compose down
+docker-compose build
+</code></pre>
+<p><code>docker-ce</code> and <code>docker-compose</code> are in apt repo.</p>
+<pre><code>sudo nano /usr/lib/python3/dist-packages/compose/cli/docker_client.py
+
+  kwargs = kwargs_from_env(environment=environment)
+# kwargs = kwargs_from_env(environment=environment, ssl_version=tls_version) danny
+
+...
+danny@danny-desktop:~/AI/paperless-ngx$ docker-compose build
+broker uses an image, skipping
+db uses an image, skipping
+webserver uses an image, skipping
+</code></pre>
+<pre><code>cd /home/danny/AI/paperless-ngx
+docker-compose down
+docker-compose up -d
+docker compose exec webserver document_index reindex
+</code></pre>
+<p><code>docker-compose.env</code> add :</p>
+<pre><code>PAPERLESS_CONSUMER_RECURSIVE= true
+</code></pre>
+
+        <div class="entry-footer">
+            <h2>About</h2>
+            
+        </div>
+    </body>
+</html>

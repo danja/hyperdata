@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <link rel="stylesheet" href="/css/fonts.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/grid-columns.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/style.css" type="text/css"/>
+        <title>Journal : 2024-10-18</title>
+    </head>
+    <!-- POST PAGE TEMPLATE -->
+    <body>
+        <header id="entry-header">
+            <h1 class="post-title h-cinzel">
+                
+            </h1>
+        </header>
+        <h1>Journal : 2024-10-18</h1>
+<p>handover documents <strong>between projects</strong>, so eg. let KIA introduce/explain itself in terms of hyperdata-desktop.</p>
+<p>This++! Take a view of the projects as agents in their own right. <strong>This will work!</strong>, they have:</p>
+<ul>
+<li>motivations : Goals</li>
+<li><strong>capabilities</strong> : all the metas, including description of <em>Running Code</em></li>
+<li>things they want to hear :  input, stuff they can do things with; help with requirements for tasks</li>
+<li>things to say : output, the results of their operations</li>
+</ul>
+<p>#:todo find a better meta-word for Pivot   </p>
+<hr>
+<p>Ok, quick stab at installing <a href=\"https://trustgraph.ai/\">Trustgraph</a> on office desktop.</p>
+<p>The <a href=\"https://trustgraph.ai/docs/getstarted\">https://trustgraph.ai/docs/getstarted</a> is in a confusing order</p>
+<p>Downloaded, unzipped -</p>
+<p><a href=\"https://github.com/trustgraph-ai/trustgraph/releases/download/v0.13.0/deploy.zip\">https://github.com/trustgraph-ai/trustgraph/releases/download/v0.13.0/deploy.zip</a></p>
+<p>I&#39;ll go for Docker, with : OpenAI API (I&#39;ve only got about $3 left there, but I know it works),	Neo4j,	<code>tg-openai-neo4j.yaml</code></p>
+<p>Can&#39;t remember if I&#39;ve got Neo4j setup on this machine, but I&#39;ve used it before, don&#39;t think I&#39;ve played with Cassandra. But Docker - Neo4j should be in there already.</p>
+<pre><code class=\"language-sh\">export OPENAI_KEY=&lt;TOKEN-GOES-HERE&gt;
+</code></pre>
+<p>Checked my <code>.bashrc</code>, not there already, but this was:</p>
+<pre><code>export GROQ_API_KEY=
+</code></pre>
+<p><strong>Where did I get to with Groq?</strong></p>
+<p>I&#39;d better have a quick look at <code>tg-openai-neo4j.yaml</code>...</p>
+<p>Contains lots. Heh, <code>http://pulsar:8080</code> is bound to clash with something already there. Cross such bridges when I get to them.</p>
+<p>Ok, here we go:</p>
+<pre><code class=\"language-sh\">danny@danny-desktop:~/AI/trustgraph/deploy/docker-compose$ docker compose -f tg-openai-neo4j.yaml up -d
+</code></pre>
+<p>Ok, it&#39;s doing a lot of pulling. Warning that <code>OPENAI_TOKEN</code> isn&#39;t set. Hmm.</p>
+<p><a href=\"https://youtu.be/7TAam7HQWnA?si=6jyfnSP-SL2ZvcZ6\">Let her pull, let her pull pull pull...</a></p>
+<p>That&#39;s taking a good while with my slow net connection, and I&#39;m not sure where I&#39;ve got Docker saving its stuff on this machine. If it&#39;s on the first drive it&#39;ll probably run out of space soon.</p>
+<p>Ok, might as well do the same on my remote server. That&#39;s low memory, probably ok for space, but very fast net (is in Docklands somewhere).</p>
+<pre><code class=\"language-sh\">root@hyperdata:/home/services/trustgraph/docker-compose# docker compose -f tg-openai-neo4j.yaml up -d
+</code></pre>
+<p>Ah, I expected I already had Docker there too, but I have been avoiding it a bit, apparently not needed since the latest server reconstruction started.</p>
+<pre><code class=\"language-sh\">snap install docker
+</code></pre>
+<p>no, wait, rtfm...</p>
+<p><a href=\"https://docs.docker.com/engine/install/ubuntu/#install-using-the-repository\">https://docs.docker.com/engine/install/ubuntu/#install-using-the-repository</a></p>
+<p>ew.</p>
+<p>So I added the repo, did <code>apt upgrade</code> while I was there, apt-installed the Docker bits. <code>docker run hello-world</code> worked.</p>
+<p>Back to :</p>
+<pre><code class=\"language-sh\">root@hyperdata:/home/services/trustgraph/docker-compose# docker compose -f tg-openai-neo4j.yaml up -d
+</code></pre>
+<p><a href=\"https://youtu.be/vCadcBR95oU?si=XEn_NY3mpnQtUsoD\">Ah... pull it! Pull it real good!</a></p>
+<p>Server error:</p>
+<pre><code class=\"language-sh\">Error response from daemon: Range of CPUs is from 0.01 to 1.00, as there are only 1 CPUs available
+</code></pre>
+<p>Ok, there are 52 occurrences of <code>cpu</code> in <code>tg-openai-neo4j.yaml</code> in sections like:</p>
+<pre><code class=\"language-sh\">deploy:
+  resources:
+    limits:
+      cpus: &#39;0.5&#39;
+      memory: 128M
+    reservations:
+      cpus: &#39;0.1&#39;
+      memory: 128M
+      ```
+
+I can never remember the regex syntax, but fortunately Claude can:
+```sh
+cp tg-openai-neo4j.yaml danja-tg-openai-neo4j.yaml
+sed -i &quot;s/cpus: &#39;1.0&#39;/cpus: &#39;0.5&#39;/g&quot; tg-openai-neo4j.yaml danja-tg-openai-neo4j.yaml
+docker compose -f danja-tg-openai-neo4j.yaml up -d
+</code></pre>
+<p>Same error. Ok, lets see how Claude goes on if I provide the error &amp; the yaml...</p>
+<p>Bit too long, Claude only gave me half the modified yaml. Did also offer:</p>
+<pre><code class=\"language-sh\">export PULSAR_DEPLOY_RESOURCES_LIMITS_CPUS=0.6
+export PULSAR_DEPLOY_RESOURCES_RESERVATIONS_CPUS=0.3
+export EMBEDDINGS_DEPLOY_RESOURCES_LIMITS_CPUS=0.4
+export EMBEDDINGS_DEPLOY_RESOURCES_RESERVATIONS_CPUS=0.2
+export GRAFANA_DEPLOY_RESOURCES_LIMITS_CPUS=0.4
+export GRAFANA_DEPLOY_RESOURCES_RESERVATIONS_CPUS=0.2
+</code></pre>
+<p>which still led to the same error. After a couple more cycles I noticed :</p>
+<pre><code class=\"language-sh\">pulsar:
+  command:
+  - bin/pulsar
+  - standalone
+  deploy:
+    resources:
+      limits:
+        cpus: &#39;2.0&#39;
+</code></pre>
+<p>You, my friend, are going down... oh, I might have messed up my c &amp; p. Time for double-down :</p>
+<pre><code class=\"language-sh\">sed -i &quot;s/cpus: &#39;2.0&#39;/cpus: &#39;0.5&#39;/g&quot; danja-tg-openai-neo4j.yaml
+sed -i &quot;s/cpus: &#39;1.0&#39;/cpus: &#39;0.2&#39;/g&quot; danja-tg-openai-neo4j.yaml
+</code></pre>
+<p>Yay! The local install has finished without reporting an error, that sed ^ seems to have worked, ditto on server.</p>
+<p><em>Now what..?</em></p>
+<p>Back to the top of <a href=\"https://trustgraph.ai/docs/getstarted\">https://trustgraph.ai/docs/getstarted</a> :</p>
+<pre><code class=\"language-sh\">https://trustgraph.ai/docs/getstarted
+</code></pre>
+<p>Locally ok, except:</p>
+<pre><code class=\"language-sh\">[notice] A new release of pip is available: 24.1.2 -&gt; 24.2
+[notice] To update, run: pip install --upgrade pip
+</code></pre>
+<p>Done.</p>
+<p>Server isn&#39;t responding. Ok, try again, upgrade pip first. Or not:</p>
+<pre><code class=\"language-sh\">× This environment is externally managed
+╰─&gt; To install Python packages system-wide, try apt install
+    python3-xyz, where xyz is the package you are trying to
+    install.
+...
+</code></pre>
+<p>Try again without upgrade. Ok, looks like it upgraded pip itself, then did the new install.
+<em>Next..?</em></p>
+<p>Would appear to be <a href=\"https://trustgraph.ai/docs/running/docker#load-a-text-corpus\">https://trustgraph.ai/docs/running/docker#load-a-text-corpus</a></p>
+<p>Locally I loaded the pdf given as an example.  Locally :</p>
+<pre><code class=\"language-sh\">tg-graph-show
+</code></pre>
+<p><strong>Triples?</strong></p>
+<p>Nada.</p>
+<p>Server :</p>
+<pre><code class=\"language-sh\">tg-load-pdf sources/Challenger-Report-Vol1.pdf
+tg-load-pdf: command not found
+</code></pre>
+<p>Ok, I&#39;ve had enough for today.</p>
+<p>Git via VSCode reminds me I&#39;ve still got <code>ModularLoader</code> code still in progress. <em>Danny dude, figure out git branches already...</em></p>
+<p>On server, <code>./pull-all.sh</code> reminds me I was going to replace it today.</p>
+<p>Enough. Music room time.
+ </p>
+
+        <div class="entry-footer">
+            <h2>About</h2>
+            
+        </div>
+    </body>
+</html>

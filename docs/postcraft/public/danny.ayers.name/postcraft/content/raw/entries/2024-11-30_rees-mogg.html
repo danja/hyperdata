@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <link rel="stylesheet" href="/css/fonts.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/grid-columns.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/style.css" type="text/css"/>
+        <title>Rees-Mogg</title>
+    </head>
+    <!-- POST PAGE TEMPLATE -->
+    <body>
+        <header id="entry-header">
+            <h1 class="post-title h-cinzel">
+                
+            </h1>
+        </header>
+        <h1>Rees-Mogg</h1>
+<p>Glorious description of Jacob Rees-Mogg from Matthew Parris on BBC Radio 4 just now :</p>
+<pre><code>He was pantomime in the House of Commons.
+Bar staff&#39;s idea of a gentleman.
+A shin-kicker, under the table.
+Basically, he&#39;s the stupid person&#39;s idea of an intelligent person.
+</code></pre>
+<p>Before I got up I did a bit more #:ontops for #:ns related to #:transmissions and <em>all the things</em>. Modeling file access, the aim being to decouple from using a filesystem. Good start, but I&#39;m sick of copy &amp; pasting from Claude. The <code>src/applications/claude-json-converter</code> doesn&#39;t yet handle Claude Artifacts, so I&#39;ve just been moving towards adding support.</p>
+<p>I need to pull out the relevant JSON nodes. It&#39;s looks like the are `` I&#39;d already made <code>src/processors/json/Blanker.js</code> to give a simple view of confusing JSON structure like Claude&#39;s <code>conversations.json</code>. I just got Claude to tweak it to preserve some values. so it&#39;ll
+Ran out of Claude tokens for now. Dogwalk time.</p>
+<p>Where the pre() &amp; post() thing?</p>
+<p>This needs flagging up better :</p>
+<pre><code class=\"language-sh\">| Running &gt;&gt;&gt; :  (SD.p10) BLK a Blanker
+* Warn : Processor.getPropertyFromMyConfig(), property not defined : http://purl.org/stuff/transmission/preserve
+</code></pre>
+<p>Ops, a breakage slipped in :</p>
+<pre><code class=\"language-sh\"> ./trans claude-json-converter.nop
+</code></pre>
+<p>runs all the transmissions.</p>
+<pre><code class=\"language-turtle\">:ccc40 a :JSONWalker ;
+     trm:configKey :messagesConfig .
+
+#####
+
+     t:MessagesWalker a trm:ServiceConfig ;
+         trm:key t:messagesConfig ;
+         trm:pointer &quot;content&quot; .
+</code></pre>
+<p> should be :</p>
+<pre><code class=\"language-turtle\">:ccc40 a :JSONWalker ;
+     trm:config :messagesConfig .
+
+#####
+
+     t:messagesConfig a trm:ProcessorConfig ;
+         trm:pointer &quot;content&quot; .
+</code></pre>
+<ol>
+<li><code>TransmissionsBuilder</code> bits?</li>
+<li>#:xyz rename  <code>trm:ServiceConfig</code> -&gt;  <code>trm:ProcessorConfig</code></li>
+</ol>
+<pre><code class=\"language-turtle\">:xyz a rpp:Refactoring, rpp:Task ;
+     rpp:target :pivotN .
+
+:pivotN a um:Pivot ;
+    um:targetDate &quot;2024-12-05&quot; .
+</code></pre>
+
+        <div class="entry-footer">
+            <h2>About</h2>
+            
+        </div>
+    </body>
+</html>

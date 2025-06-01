@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <link rel="stylesheet" href="/css/fonts.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/grid-columns.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/style.css" type="text/css"/>
+        <title>Sites</title>
+    </head>
+    <!-- POST PAGE TEMPLATE -->
+    <body>
+        <header id="entry-header">
+            <h1 class="post-title h-cinzel">
+                
+            </h1>
+        </header>
+        <h1>Sites</h1>
+<p>I don&#39;t want to break any URLs on my sites as they stand, but I&#39;ve got loads of (currently badly organised) material to add, mostly project docs which will be rendered through #:postcraft. Everything is going on the same Ubuntu server. Right now the material is mostly split per-project in repos on GitHub. I reckon the raw material (mostly markdown) is best left where it is, but the rendered versions can all go all go together. Pretty all the new stuff should go under the umbrella (and domain name) of <a href=\"https://hyperdata.it\">hyperdata.it</a>. The older material I have that&#39;s actually live now is in the repo <code>hyperdata-static</code>, I&#39;ll leave that alone. But I do have a more recent repo <code>hyperdata</code>, with a lot of the current (sub-)projects as git submodules. So to keep things simple, for now I&#39;ll have #:postcraft render the corresponding docs under the local dir :</p>
+<pre><code class=\"language-sh\">~/github-danny/hyperdata/site
+</code></pre>
+<p>Hmm. A slight complication is that I&#39;ve also got non-postcraft docs, <code>jsdoc</code> etc. Postcraft will be providing the index page etc, so I guess the easiest is to go for eg. :</p>
+<pre><code class=\"language-sh\"># postcraft
+~/github-danny/hyperdata/site/transmissions/index.html
+~/github-danny/hyperdata/site/transmissions/entries/2024-12-23_today.html`
+...
+
+# non-postcraft
+~/github-danny/hyperdata/site/transmissions/jsdoc
+~/github-danny/hyperdata/site/transmissions/jsdoc/index.html
+...
+</code></pre>
+<p>Yeah.</p>
+<p>Most of the new material will want the same kind of layout/styling, so I&#39;d better also have a :</p>
+<pre><code class=\"language-sh\">~/github-danny/hyperdata/site/common
+~/github-danny/hyperdata/site/common/css
+...
+</code></pre>
+<p>I can do the routing via symlinks on the server and/or nginx routing. There might be some existing potential conflicts, eg. there could well be a <code>https://hyperdata.it/transmissions</code> already. But I don&#39;t need to worry about that right away. First get the stuff rendering in an organised fashion, figure out the plumbing later.</p>
+<p>Speaking of plumbing, I&#39;ve a toilet cistern over at No.7 to fix today if I can (might need new parts). The power&#39;s off over there at the moment so I should take advantage of the daylight.</p>
+<p>#:todo check ufw status on server</p>
+<p>#:breakpoint
+ </p>
+
+        <div class="entry-footer">
+            <h2>About</h2>
+            
+        </div>
+    </body>
+</html>

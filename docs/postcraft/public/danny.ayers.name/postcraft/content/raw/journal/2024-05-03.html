@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <link rel="stylesheet" href="/css/fonts.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/grid-columns.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/style.css" type="text/css"/>
+        <title>Journal : 2024-05-03</title>
+    </head>
+    <!-- POST PAGE TEMPLATE -->
+    <body>
+        <header id="entry-header">
+            <h1 class="post-title h-cinzel">
+                
+            </h1>
+        </header>
+        <h1>Journal : 2024-05-03</h1>
+<p>I&#39;ve quite a lot of prep for #FOAFarchive but have paused content-collection/generation until I&#39;ve got things in place to organise and present it. I&#39;m on the last mile for those - bottleneck predictably being some of my own code. Yes, it is kinda <a href=\"https://en.wiktionary.org/wiki/yak_shaving\">yak shaving</a>, but the code should be a bean with which I feed a lot more birds (if you&#39;re reading this, that&#39;s one of them fed).</p>
+<p>I set an alarm for 9:00 every morning but takes me a while to get moving. Usually I start with a pee, then back to bed for a bit of BBC Radio 4 Today programme. I rediscovered a thermos flask a couple of days ago, so I&#39;ve been having coffee in bed. Overriding my main reason for getting out of bed. This morning, random YouTube video recommendations.</p>
+<p>Fortuitous. The next task (after resolving current #Transmissions #Unfork issues) for the #Postcraft site generator is to sort out templating. It&#39;s a few years since I last did any in #JavaScript when I used <a href=\"https://github.com/twitter/hogan.js\">Hogan</a>, it did all I needed. Dead easy - moustache-based - relatively small lib. JS native <a href=\"https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_literals\">Template Literals</a> have come along since then, but they still look a bit of a pain. Even though I don&#39;t need much for Postcraft, I&#39;d still have to start going down the path of writing <em>yet another templating engine</em>. So I have been kicking the can down the road.</p>
+<p>Fortuitous random YouTube video recommendation: <a href=\"https://www.youtube.com/watch?v=p81J7G1qFAM\">Eleventy: Key Features and Getting Started</a>. It&#39;s a JS static site generator. I&#39;ve only really skimmed other ones, and my dev of Postcraft has been quite chaotic as I&#39;ve concurrently been figuring out the underlying #Transmissions setup. #Eleventy looks like it has features I may want to lift later. But what caught my eye was mention of <a href=\"https://mozilla.github.io/nunjucks/\">Nunjucks</a> templating, which looks like a good fit for Postcraft. It appears to have everything Hogan had, plus a load more, like template pre-compiling. I won&#39;t need that for Postcraft, which will essentially do server-side rendering using a <a href=\"http://www.aaronsw.com/weblog/000404\">Bake, Don&#39;t Fry</a> strategy, but it&#39;s nice to have in the back pocket.</p>
+<p>Install is the usual :</p>
+<pre><code>$ npm install nunjucks
+</code></pre>
+<p>The first examples use <code>require(&#39;nunjucks&#39;)</code> syntax, I want ES6 <code>import</code> syntax, hopefully that&#39;ll be ok.</p>
+<p>Mari&#39;s helping a friend at the hospital this morning but is going to message me when done.</p>
+<p>The night before last I started a new tune in the music room. I am trying to finish more like what I start, but I&#39;d got a bit blocked so needed something fresh. Stumbled on the tune &#39;Silver Legs&#39;, a cover of that is perfect.</p>
+<p>Weather&#39;s been wet, could go either way today, but I doubt there&#39;s much fun to be had outside. There&#39;s always tidying I <em>should</em> do, but then there&#39;s also putting up some more holds for my kitchen climbing wall, much more fun...</p>
+<p>So now I have :</p>
+<h4>PLAN 2024-05-03</h4>
+<ul>
+<li>[*] Freshen up, find some clean clothes (eek! - there&#39;s still a soggy load in the machine from the other day)</li>
+<li><input disabled=\"\" type=\"checkbox\"> Resolve current #Transmissions #Unfork issues</li>
+<li>[*] Coffee out, shopping</li>
+<li>[*] Try Nunjucks templating in Postcraft</li>
+<li>[*] Dogwalk</li>
+<li>[*] Music room : &#39;Silver Legs&#39;</li>
+</ul>
+<p>PS. When I fired up Transmissions it was failing earlier in the pipeline. Coding when tired, eh. So I went throught it again from the start, step by step. When I got to the Templating service, the placeholder code I&#39;d put in there wasn&#39;t very helpful, so I decided to have a quick go with #Nunjucks. I got it basically working quickly enough, but while looking at the docs saw that I <em>should</em> be able to use it better. So I&#39;m looking again at the structure of my pipeline, better strategy.
+ </p>
+
+        <div class="entry-footer">
+            <h2>About</h2>
+            
+        </div>
+    </body>
+</html>

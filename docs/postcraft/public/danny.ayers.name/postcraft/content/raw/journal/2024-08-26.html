@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <link rel="stylesheet" href="/css/fonts.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/grid-columns.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/style.css" type="text/css"/>
+        <title>2024-08-26.md</title>
+    </head>
+    <!-- POST PAGE TEMPLATE -->
+    <body>
+        <header id="entry-header">
+            <h1 class="post-title h-cinzel">
+                
+            </h1>
+        </header>
+        <p> I have a js array that looks like this :
+{
+&quot;0&quot;: {
+&quot;sourceDir&quot;: &quot;docs&quot;,
+&quot;filepath&quot;: &quot;docs/TODO.md&quot;
+},
+&quot;1&quot;: {
+&quot;sourceDir&quot;: &quot;docs&quot;,
+&quot;filepath&quot;: &quot;docs/async-chat.md&quot;
+},</p>
+<p>I won&#39;t know ahead of time what the keys, &quot;sourceDir&quot;, &quot;filepath&quot; etc will be.
+How do I convert it to the form :</p>
+<p>{
+&quot;sourceDir&quot;: &quot;docs&quot;,
+&quot;filepath&quot;: [&quot;docs/TODO.md&quot;, &quot;docs/async-chat.md&quot;]
+}</p>
+<hr>
+<pre><code>    const originalArray = this.config
+    message.whiteboard = Object.keys(originalArray).reduce((acc, key) =&gt; {
+        const value = originalArray[key];
+        Object.keys(value).forEach((prop) =&gt; {
+            if (!acc[prop]) {
+                acc[prop] = [];
+            }
+            acc[prop].push(value[prop]);
+        });
+        return acc;
+    }, {});
+
+    I get :
+    TypeError: Cannot convert undefined or null to object
+at Function.keys (&lt;anonymous&gt;)
+at file:///home/danny/github-danny/transmissions/src/services/util/WhiteboardToMessage.js:16:20
+at Array.reduce (&lt;anonymous&gt;)
+</code></pre>
+
+        <div class="entry-footer">
+            <h2>About</h2>
+            
+        </div>
+    </body>
+</html>

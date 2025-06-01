@@ -1,0 +1,20 @@
+[
+    {
+        "name": "remote query",
+        "type": "query",
+        "url": "https://fuseki.hyperdata.it/danny.ayers.name/query",
+        "credentials": {
+            "user": "admin",
+            "password": "admin123"
+        }
+    },
+    {
+        "name": "remote update",
+        "type": "update",
+        "url": "https://fuseki.hyperdata.it/danny.ayers.name/update",
+        "credentials": {
+            "user": "admin",
+            "password": "admin123"
+        }
+    }
+]

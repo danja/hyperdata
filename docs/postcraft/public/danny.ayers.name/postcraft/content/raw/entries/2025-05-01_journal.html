@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <link rel="stylesheet" href="/css/fonts.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/grid-columns.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/style.css" type="text/css"/>
+        <title>Journal 2025-05-01</title>
+    </head>
+    <!-- POST PAGE TEMPLATE -->
+    <body>
+        <header id="entry-header">
+            <h1 class="post-title h-cinzel">
+                
+            </h1>
+        </header>
+        <h1>Journal 2025-05-01</h1>
+<h2>Mayday!</h2>
+<p>Yesterday, indirectly prompted by something Inky danbri was working on, I wound up creating <em>yet another project</em>.</p>
+<h2><a href=\"https://github.com/danja/wstore\">wstore</a></h2>
+<p>A simple Node.js HTTP server and command-line client for file storage and retrieval.</p>
+<p>Something I wanted for #:semem was an object store. Like a filesystem interface but with slightly more useful, webbier, addressing. I had looked into <code>minion</code>? something like that - a store you could run locally but has the same interface as something AWS. Too much overhead for my purposes. This made me realise what I wanted was <em>really dumb</em> object store. It should also be <strong>webbier</strong>. <em>D&#39;oh!</em> <strong>Just use HTTP</strong> + filesystem. I&#39;m working in node (ES modules), Express has this pretty much covered out of the box. GET, POST, PUT, DELETE plus HTTP Basic auth will do me. I set Claude at the task.
+As a sanity check, and so I had a clue on how to interface with it programmatically, I also wanted a matching CLI client. Basically a simple <code>curl</code> in node.
+ </p>
+
+        <div class="entry-footer">
+            <h2>About</h2>
+            
+        </div>
+    </body>
+</html>

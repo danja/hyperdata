@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <link rel="stylesheet" href="/css/fonts.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/grid-columns.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/style.css" type="text/css"/>
+        <title>Eat Me</title>
+    </head>
+    <!-- POST PAGE TEMPLATE -->
+    <body>
+        <header id="entry-header">
+            <h1 class="post-title h-cinzel">
+                
+            </h1>
+        </header>
+        <h1>Eat Me</h1>
+<p>I&#39;m sorting out docs, one thing I remembered I don&#39;t have in place yet is a syndication feed for these things. An absolute <strong>didn&#39;t I do that aready?</strong>.</p>
+<p>Like, <strong>I have history</strong> in this space. I caught the tail end of the <a href=\"https://en.wikipedia.org/wiki/History_of_web_syndication_technology\">RSS wars</a>. Such a daft (multi-fronted) war. Initially I was religiously RSS 1.0, the RDF. But despite my dogmatism, I was already aware at the time how awful RDF/XML was as a format in practice. It was an easy one to get sucked into, I was enchanted by the RDF model (still am, a sweetspot IMO, but it did need Turtle syntax and named graphs to properly make it viable for a regular dev). Good folks I knew were on <strong>that side</strong> and <a href=\"https://en.wikipedia.org/wiki/Dave_Winer\">Dave Winer</a> could be such a massively annoying arse. Really really massively.</p>
+<p>In retrospect, respect where it&#39;s due, Winer did push things forward. Ok, a lot of that was in folks thinking about how to do this thing right, to counter his approach, which had an overabundance of ego at it&#39;s heart. That was a bit annoying itself, an intelligent, creative guy, you know I could begrudgingly call him  <strong>visionary</strong>. Except it was overshadowed by narcissism and belligerence.</p>
+<p>Heh, I nearly put &quot;IMHO&quot; there. But that reminds me of an interchange I had with him where he was incredibly dismissive of my points, passive-aggressively using Valley acronyms. I responded with &quot;UYB&quot;. I had made it up on the spur. But apparently it had made it into the urban dics, I lost the high ground.</p>
+<p>But with the naming of <strong>RSS 2.0</strong> he showed some serious genious. Marketing-wise, awesome.     </p>
+<p>Anyway, back to <strong>my</strong> ego. I&#39;ve contributed content to 10 printed books. The only one I was the lead author on was <a href=\"https://www.amazon.com/Beginning-Atom-Programming-Danny-Ayers/dp/0764579169\">Beginning RSS and Atom Programming</a>. Heh, combined rating of 1.6 on reviews there.
+It was probably pretty good. Not through my efforts directly, but Wrox Press at the time had a legion of expert/expert-ish reviewers that forced you to revise, think, revise. Also Andrew was very good at his stuff. I can&#39;t check, I gave all the copies I had away... oh wait, I might have the Turkish translation...(<em>mouldy shelves...</em>)
+Nope. That is <a href=\"https://www.amazon.com/Web-2-0-Teknolojileri-Eric-Vlist/dp/975297855X/\">Web 2.0 Teknolojileri</a>. Wtf did I do for that? Was the same period as the RSS. Probably something with that, shoehorning in RDF somehow.</p>
+<p>Oh yeah. Gorblimey, quite a lot of this looks like my stuff. <strong>FOAF!</strong></p>
+<p>Over the decade or so I was doing the freelance writing stuff, I did learn how to play the publishers somewhat. <strong>Engage the reviewer, not the reader</strong>.  </p>
+<p>Code examples in Python ffs. So I must have learnt a little bit of it at some point before forgetting it again. Also XSLT involved (on RDF/XML, eek!). But XSLT was a good language, despite the horror syntax. <a href=\"https://en.wikipedia.org/wiki/Jeni_Tennison\">Jeni Tennison</a> frequently sent me dizzy with the elegance she pulled out of the hat.  </p>
+<p>It is surprising what still lives. I recently rediscovered this <a href=\"https://hyperdata.it/xmlns/pets/\">Pet Profiles</a> thing I did in, er...2004. Most of the associated code around there is now totally broken. But <a href=\"https://hyperdata.it/xmlns/pets/2004-04-24/sambuca-css.xml\">Sambuca&#39;s Profile</a>, using CSS on RDF/XML, sweet. Has exactly the same little layout probs I didn&#39;t get around to fixing 20 years ago.   </p>
+<h2>I&#39;ve not quite finished with my ego</h2>
+<p>So in this fog of RSS war, some righteous folks came up with a cunning plan: <a href=\"https://en.wikipedia.org/wiki/Atom_(web_standard)\">Atom</a>.</p>
+<p>I get an ack on <a href=\"https://datatracker.ietf.org/doc/html/rfc4287\">RFC4287</a>.</p>
+<p><strong>OK, ego spent.</strong></p>
+<p>I was all-in with Atom Format, but kind-of backstepped out of the <a href=\"https://datatracker.ietf.org/doc/html/rfc5023\">Protocol, RFC5023</a>. I&#39;d love to say it was because I saw the redundancy of that on top of <strong>Fielding-compliant REST</strong>, but really it was because the other folks were shitloads better at protocols, I was out of my depth, had nothing to offer. <em>In retrospect</em>, good move. Now I see the redundancy. And the Web stage has shifted to make absolutely awful practices that have issues dating back to <a href=\"https://en.wikipedia.org/wiki/SOAP\">SOAP</a>. I&#39;m sure, hope and pray (in an atheistic manner)  <a href=\"https://en.wikipedia.org/wiki/Tim_Berners-Lee\">timbl</a> has many years left on this mortal coil, because he has a hella lotta grave-spinning backed up.</p>
+<p>Yeah, in retrospect, Atom was the right idea. The folks around microformats, (hat tip <a href=\"https://en.wikipedia.org/wiki/Tantek_%C3%87elik\">Tantek</a>) had a valid point that HTML could easily carry the same information just as easily, no need for a different content format. But pragmatically, one sliver of a little toenail towards the Winer, it does now make sense to use a different format. I can still get on a high horse about content negotiation being there if you want it, <strong>so merrr!</strong></p>
+<p>#:todo check media types/extensions known by nginx</p>
+<p>Anyway, however long ago I got to desk this session, I had feed on mind. This is a nice little exercise. With my current workflow &amp; tooling, <strong>how long will it take me to add a feed</strong> to this site?</p>
+<p>On my own I would guess maybe 2 very stumbly hours. I have to remember how to use the templater I&#39;ve got here, I&#39;ve not looked at for a few months (<a href=\"https://mozilla.github.io/nunjucks/\">nunjucks</a> - it looked best at the time) and also some of my own code from a day ago... (#:adhd is a thing).</p>
+<p>But I don&#39;t want to waste my own scant cognitive resources on something like this. Claude understands my setup, I made it so for his kind.</p>
+<p>#:timestamp 23:58</p>
+<p><em>(I will need a pee, cigarette and another mug of beer first, dear Countdown Clock)</em>
+ </p>
+
+        <div class="entry-footer">
+            <h2>About</h2>
+            
+        </div>
+    </body>
+</html>

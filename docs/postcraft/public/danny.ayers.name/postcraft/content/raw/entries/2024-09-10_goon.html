@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <link rel="stylesheet" href="/css/fonts.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/grid-columns.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/style.css" type="text/css"/>
+        <title>Goon</title>
+    </head>
+    <!-- POST PAGE TEMPLATE -->
+    <body>
+        <header id="entry-header">
+            <h1 class="post-title h-cinzel">
+                
+            </h1>
+        </header>
+        <h1>Goon</h1>
+<p>I&#39;ve just given myself a headache doing a little bit of real-world admin. I got a little bit of money through yesterday, I&#39;ve been attempting to direct into the best places...</p>
+<p>Including cancelling the €22/month Google One account I&#39;d accidentally signed up for. Grr, only noticed after 3? months. All I need is the €3/m extra storage. I&#39;m actually at 201.03 GB, so am doing a bit of backup in the background right now.</p>
+<hr>
+<p>A deeper headache is due to me getting overwhelmed by TODOs again (it&#39;s an #ADHD thing).</p>
+<p>My long-term solution is the #farelo project. Job One-ish there is capturing descriptions of projects/tasks in #RDF with the <a href=\"https://hyperdata.it/xmlns/project/\">Project Vocabulary</a>. (That needs revising, which I&#39;ve been dipping into occasionally in <a href=\"https://hyperdata.it/xmlns/project/2024/\">2024</a>, but that&#39;s not a big issue today).</p>
+<p>While thinking about <a href=\"https://foaf-retro.hyperdata.it/\">foaf-retro</a>, making a <a href=\"https://danny.ayers.name/entries/2024-08-28_form-a-matic.html\">Form-a-matic</a> seemed a good idea.</p>
+<p>One way of skipping out of the overwhelmedness kind of task paralysis is doing something new. This is in the distraction, #yak direction, but sometimes that&#39;s necessary. If the new thing has clearly defined, nearby, goal, then the sidestep can work.</p>
+<h2>Form-a-matic</h2>
+<p><em>requirements, second pass</em></p>
+<h3>Purpose</h3>
+<p>Generate HTML forms based on RDF shapes<sup><a id=\"footnote-ref-1\" href=\"#footnote-1\" data-footnote-ref aria-describedby=\"footnote-label\">1</a></sup> which, when filled in, will generate RDF instance data. The FOAF-a-matic and DOAP-a-matic being examples.</p>
+<p>This will be an application of #Transmissions.</p>
+<p>I want to get Claude to do most of the work.</p>
+<h3>Process</h3>
+<p>My initial <a href=\"https://danny.ayers.name/entries/2024-08-28_form-a-matic.html\">Form-a-matic</a> process is more general than I need right now. Also it would be nicer for the resulting a-matic-form to be relatively self-contained (ie. not involving a SPARQL store).</p>
+<p>The input is an example of the target RDF data.</p>
+<ol>
+<li>variable fields are identified</li>
+<li>HTML form elements are created corresponding to those fields</li>
+<li>Javascript is attached to a button on on the form to read the field values</li>
+<li>JS functions will generate RDF from the form values</li>
+</ol>
+<p>Possibly the quickest way of achieving most of this would be using generic text templating throughout (a la #SPARQLDiamonds). But I reckon it&#39;ll be neater, and potential more easily extendable if I use an RDF model in the JS.</p>
+<p>I <em>so</em> want to use SPARQL here, but side project in my queue is documenting <a href=\"https://rdf-ext.org/\">RDF-Ext</a>. That includes <a href=\"https://github.com/rdf-ext/grapoi\">grapoi</a>, a &#39;Universal RDF/JS graph traverser&#39;. There are also readers/serializers nearby, and I&#39;ve already been using it around #Transmissions.</p>
+<p>So let&#39;s :</p>
+<ul>
+<li>start with some tweaked <a href=\"https://en.wikipedia.org/wiki/Turtle_(syntax)\">Turtle</a>-format <a href=\"https://en.wikipedia.org/wiki/FOAF\">FOAF</a>. Give the places of interest keyword-style markers</li>
+<li>parse that out and locate those markers with RDF-Ext, recording their path inside the graph</li>
+<li>for each marker, generate a form field</li>
+</ul>
+<p>The end result form will need boilerplate JS functions for taking the form values and the RDF path, constructing the required triples.</p>
+<p>To get Claude to do the drudge work without being stupid I&#39;m going to have to prepare some prompts, some background material to put into a Claude Project and some examples.</p>
+<p>The other day I set up Transmissions&#39; CLI so it could use an application from any file path, so I guess this might be a good point to set up yet another GitHub repo : <a href=\"https://github.com/danja/trans-apps\">trans-apps</a></p>
+<p>TODO allow applications to be loaded from URLs</p>
+<p>Now I&#39;ll publish this and then it&#39;s dogwalk time, then I&#39;m of out for a coffee &amp; shopping with Mari.</p>
+<hr>
+<pre><code class=\"language-turtle\">@prefix rdf: &lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#&gt; .
+@prefix rdfs: &lt;http://www.w3.org/2000/01/rdf-schema#&gt; .
+@prefix foaf: &lt;http://xmlns.com/foaf/0.1/&gt; .
+
+&lt;#URI&gt;
+    a foaf:Person ;
+    foaf:name &quot;LITERAL&quot; ;
+    foaf:mbox &lt;#URI&gt; ;
+    foaf:homepage &lt;#URI&gt; ;
+    foaf:nick &quot;LITERAL&quot; ;
+    foaf:depiction &lt;#URI&gt; ;
+    foaf:interest &lt;#URI&gt; ;
+    foaf:knows [
+        a foaf:Person ;
+        foaf:name &quot;LITERAL&quot;
+    ] .
+</code></pre>
+<section class=\"footnotes\" data-footnotes>
+<h2 id=\"footnote-label\" class=\"sr-only\">Footnotes</h2>
+<ol>
+<li id=\"footnote-1\">
+<p>ultimately <a href=\"https://www.w3.org/TR/shacl/\">SHACL</a> is totally in the frame for this, but this quick-and-dirty approach skipping around SHACL should be simpler to implement as first attempt. (There is a SHACL engine in RDF-Ext, see <a href=\"https://www.bergnet.org/2023/03/2023/shacl-engine/\">https://www.bergnet.org/2023/03/2023/shacl-engine/</a>) <a href=\"#footnote-ref-1\" data-footnote-backref aria-label=\"Back to reference 1\">↩</a></p>
+</li>
+</ol>
+</section>
+
+        <div class="entry-footer">
+            <h2>About</h2>
+            
+        </div>
+    </body>
+</html>

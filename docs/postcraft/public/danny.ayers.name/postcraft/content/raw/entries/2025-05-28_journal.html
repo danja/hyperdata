@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <link rel="stylesheet" href="/css/fonts.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/grid-columns.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/style.css" type="text/css"/>
+        <title>Journal 2025-05-28</title>
+    </head>
+    <!-- POST PAGE TEMPLATE -->
+    <body>
+        <header id="entry-header">
+            <h1 class="post-title h-cinzel">
+                
+            </h1>
+        </header>
+        <h1>Journal 2025-05-28</h1>
+<h2>VNC</h2>
+<ul>
+<li>Client : <code>vinagre</code></li>
+<li>Server : <code>x11vnc</code></li>
+</ul>
+<pre><code class=\"language-sh\">sudo nano /lib/systemd/system/x11vnc.service
+</code></pre>
+<p>Edit <code>USERNAME</code> as appropriate:</p>
+<pre><code class=\"language-sh\">[Unit]
+Description=Start x11vnc at startup.
+After=multi-user.target
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/x11vnc -auth guess -forever -loop -noxdamage -repeat -rfbauth /home/USERNAME/.vnc/passwd -rfbport 5900 -shared
+
+[Install]
+WantedBy=multi-user.target
+</code></pre>
+<pre><code class=\"language-sh\">sudo systemctl daemon-reload
+sudo systemctl enable x11vnc.service
+sudo systemctl start x11vnc
+sudo systemctl status x11vnc
+</code></pre>
+
+        <div class="entry-footer">
+            <h2>About</h2>
+            
+        </div>
+    </body>
+</html>

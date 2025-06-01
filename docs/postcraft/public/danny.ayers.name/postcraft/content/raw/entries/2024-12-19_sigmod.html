@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <link rel="stylesheet" href="/css/fonts.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/grid-columns.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/style.css" type="text/css"/>
+        <title>SigMod</title>
+    </head>
+    <!-- POST PAGE TEMPLATE -->
+    <body>
+        <header id="entry-header">
+            <h1 class="post-title h-cinzel">
+                
+            </h1>
+        </header>
+        <h1>SigMod</h1>
+<p><em>Not that <a href=\"https://sigmod.org/\">SIGMOD</a></em></p>
+<p>Mari gave me a lift into town earlier for a Dr&#39;s appt. We arrived early so waited in the car for a while. Phones out.</p>
+<p>Among the more recent of the 1987 Chrome tabs I had open <sup><a id=\"footnote-ref-1\" href=\"#footnote-1\" data-footnote-ref aria-describedby=\"footnote-label\">1</a></sup> was <a href=\"https://dspy.ai/\">DSPy</a>. It&#39;d buzzed my radar on some previous occasion, when I only did the most cursory of skims. Today it reappeared from a different direction so I had a better look. A line in the page made me laugh out loud.</p>
+<p>I&#39;m sure you&#39;re familiar with :</p>
+<blockquote>
+<p>There are only two hard things in Computer Science: cache invalidation and naming things.</p>
+</blockquote>
+<p>- Phil Karlton (<a href=\"https://martinfowler.com/bliki/TwoHardThings.html\">Martin Fowler</a> has backstory &amp; variants)</p>
+<p>I&#39;ve struggled a lot with naming in my #:transmissions pipeliney-thing <em>sub</em>project. The fine line between getting the correct term <em>semantically</em> but without using a term that is so heavily overloaded as to confuse. A good example was <strong>Service</strong>, which I started with for a particular kind of unit of code. It worked ok for these fairly independent little <strong>node</strong>js chunks that act as processing <strong>node</strong>s in the <del>s/pipeline/graph</del> <strong>Transmission</strong>. But although these things might be implemented as eg. microservices, that term brought the potential implication that some remote-calling protocol (like HTTP) <em>had</em> to be involved (they are identified with URIs, another layer of misdirection). Going in the other direction, <strong>Function</strong> was another candidate. The shape is <code>y = f(x)</code>. But that&#39;s rather a no-no in a language where it&#39;s already a reserved word, not to mention that most won&#39;t be pure functions, hell to pay from the <a href=\"https://en.wikipedia.org/wiki/Alonzo_Church\">Church</a>.</p>
+<p>These things appear in the current and only implementation of #:transmissions as a single function wrapped in a class inside an EcmaScript <strong>module</strong>. But they have a single object as input, a single transformed object as output (not really, but ok as first approx, the rest is tangential). Their purpose (first approx) is to process a message. Name I settled on <strong>Process</strong>.</p>
+<p>I&#39;ve been working on #:transmissions for about a year now. The initial motivation was that I had a variety of things to build, they all shared (at a suitable level of abstraction) the same pipeliney structure. I roughed something out, first just for a static site generator. In the <em>process</em> bringing LLMs into my workflow, serendipity kicked in. It turned out to be fairly optimal for what you can get in an LLM&#39;s <strong>context window</strong>. The <strong>Transmission</strong> at the planning level, and individual <strong>Process</strong>es are all at a level of complexity that the LLM can handle comfortably. It&#39;s also humanly-checkable, programming best practices, testable etc. The structural, nuts &amp; bolts bits of #:transmissions do go beyond. I have actually had to think about things myself there (boo!). Still not nailed down enough to proclaim a v1.0.0, still loads in flux.</p>
+<p>Going back to the naming. So a <strong>Process</strong> has an <strong>input</strong> (message) and <strong>output</strong> (message) as well as internal <strong>behaviour</strong>. To be able to collaborate with the LLM on these things (and for any future use) there needs to be some #:LingueFranche to describe these things. A quasi-formal language, perhaps. I started with a comment block in the code (so it&#39;d work with JSDoc), since going much more RDF (because WWW). I&#39;ve still not got the details ironed out, but early on I settled on a name for these descriptions of process <strong>module</strong>s, things in a space not quite <strong>Contract</strong>s, but different from OO/service <strong>Interface</strong>s : <strong>Signature</strong>.  </p>
+<p>Imagine my delight on finding this line in the <a href=\"https://dspy.ai/\">DSPy</a> docs :</p>
+<blockquote>
+<p>For every AI component in your system, you specify input/output behavior as a signature and select a module to assign a strategy for invoking your LM.</p>
+</blockquote>
+<p>Yeah, I laughed out loud. The context is only slightly different (major overlaps), but I love that I, and the folks behind this had converged on pretty much the same vocab.</p>
+<section class=\"footnotes\" data-footnotes>
+<h2 id=\"footnote-label\" class=\"sr-only\">Footnotes</h2>
+<ol>
+<li id=\"footnote-1\">
+<p>On Android Chrome, click on the Tabs icon (starts as a number, turns into a <code>:D</code> on day one), then click on the (#:todo find Unicode for) 3-dot colon settings icon. This offers Select Tabs. Then you can Select All. It then tells you how many tabs you have open (here, 1991 <sup><a id=\"footnote-ref-2\" href=\"#footnote-2\" data-footnote-ref aria-describedby=\"footnote-label\">2</a></sup>), which you can then Save. <a href=\"#footnote-ref-1\" data-footnote-backref aria-label=\"Back to reference 1\">↩</a></p>
+</li>
+<li id=\"footnote-2\">
+<p><em>Tell me you&#39;re ADHD without telling me you&#39;re ADHD</em>   <a href=\"#footnote-ref-2\" data-footnote-backref aria-label=\"Back to reference 2\">↩</a></p>
+</li>
+</ol>
+</section>
+
+        <div class="entry-footer">
+            <h2>About</h2>
+            
+        </div>
+    </body>
+</html>

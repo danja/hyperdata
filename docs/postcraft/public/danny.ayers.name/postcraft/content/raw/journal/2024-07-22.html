@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <link rel="stylesheet" href="/css/fonts.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/grid-columns.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/style.css" type="text/css"/>
+        <title>Humid</title>
+    </head>
+    <!-- POST PAGE TEMPLATE -->
+    <body>
+        <header id="entry-header">
+            <h1 class="post-title h-cinzel">
+                
+            </h1>
+        </header>
+        <h1>Humid</h1>
+<p>Last week I had a crack at improving the quality of danbri&#39;s old FOAD vid. Got as far as necessary for now : <a href=\"https://github.com/danja/video-magic\">https://github.com/danja/video-magic</a></p>
+<p>Now back to #Transmissions.</p>
+<p>The next code I need is the <code>file-copy-remove-test</code> application, with the necessary service implementations.</p>
+<p>I signed up for Claude about a week ago but haven&#39;t looked into its features yet. It has Projects.</p>
+<ul>
+<li><a href=\"https://www.reddit.com/r/ClaudeAI/comments/1dsudc4/how_to_use_claude_projects_for_coding/\">https://www.reddit.com/r/ClaudeAI/comments/1dsudc4/how_to_use_claude_projects_for_coding/</a></li>
+<li><a href=\"https://github.com/yamadashy/repopack\">https://github.com/yamadashy/repopack</a></li>
+<li><a href=\"https://prompt.16x.engineer/\">16x</a> - looks promising but is pay-for ($18 lifetime)</li>
+</ul>
+<pre><code>npm install -g repopack
+</code></pre>
+<p>added a config</p>
+<pre><code>repopack --verbose -c ./repopack.config.json
+</code></pre>
+<p>(output path isn&#39;t used right)</p>
+<p>I&#39;ve created a project Transmissions on Claude and upload the repopack.</p>
+<h3>Prompt</h3>
+<p>I am working on <code>src/applications/file-copy-remove-test</code> This will do the following :</p>
+<ul>
+<li><p>copy <code>start/one.txt</code> into <code>single-empty/</code></p>
+</li>
+<li><p>copy <code>single-empty/one.txt</code> into <code>single-full/</code></p>
+</li>
+<li><p>remove <code>single-empty/one.txt</code></p>
+</li>
+<li><p>copy everything in <code>start/</code> into <code>several-empty/</code></p>
+</li>
+<li><p>copy everything in <code>several-empty/</code> into <code>several-full/</code></p>
+</li>
+<li><p>remove everything in <code>several-empty/</code>
+I want a test like <code>tests/integration/file-pipeline.spec.js</code> that will first delete files in <code>single-empty/</code>, <code>single-full/</code>, <code>several-empty/</code>, <code>several-full/</code> then execute <code>node run.js file-copy-remove-test</code> then check each of those directories in turn to see if their contents fit the requirements above.</p>
+</li>
+</ul>
+<p>...</p>
+<p>The application <code>src/applications/file-copy-remove-test</code> will use two existing services <code>src/services/fs/FileCopy.js</code> and <code>src/services/fs/FileRemove.js</code> for the operations. This will need <code>src/applications/file-copy-remove-test/transmission.ttl</code> to define the pipeline and <code>src/applications/file-copy-remove-test/services.ttl</code> to define the file and directory paths.
+ </p>
+
+        <div class="entry-footer">
+            <h2>About</h2>
+            
+        </div>
+    </body>
+</html>

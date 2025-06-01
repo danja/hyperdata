@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <link rel="stylesheet" href="/css/fonts.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/grid-columns.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/style.css" type="text/css"/>
+        <title>Indigestion</title>
+    </head>
+    <!-- POST PAGE TEMPLATE -->
+    <body>
+        <header id="entry-header">
+            <h1 class="post-title h-cinzel">
+                
+            </h1>
+        </header>
+        <h1>Indigestion</h1>
+<p><em>Despite in being traditional to overeat at this time of year, it&#39;s not me but my code that&#39;s got tummy ache.</em></p>
+<p>This blog now has an <a href=\"https://danny.ayers.name/atom.xml\">Atom Feed</a>. I&#39;ve only done an eyeball check, but it looks ok.</p>
+<p>The other night I had a quick stab at adding this. Claude gave me some convincing-looking code, which didn&#39;t work. I only had a quick look then, it looked like it might take a while to fix. It turned out to be easy, but only once I&#39;d figured out what my #:postcraft code (from months ago) was doing, which took ages. My bad, I&#39;m not surprised Claude got things wrong, my stuff was well obfuscated.</p>
+<p>The immediate issue was in the handling of <code>manifest.ttl</code>, the purpose of which in this case was to provide <code>danny.ayers.name</code> site-specific information to the <code>postcraft</code> #:transmissions application. I was already well aware that a bunch of <strong>refactoring</strong> was needed around the <code>transmissions.ttl</code>/<code>config.ttl</code>/<code>manifest.ttl</code> <strong>separation of concerns</strong>. It turned out to be worse than I thought : the handling of <code>manifest.ttl</code> was pretty much <strong>hardcoded</strong> in <code>src/processors/rdf/ConfigMap.js</code>. <strong>Ops!</strong></p>
+<p>To get a feed rendering, as a quick workaround I copy &amp; pasted the method that handled the <strong>RDF resource</strong> <code>t:IndexPage</code> and tweaked for <code>t:AtomFeed</code>.</p>
+<p>Not pretty, but it&#39;ll do for now. That was a useful exercise, it added another flag to a specific group of #:todos, pushing up their priority in my head. What it <strong>should</strong> have done is push up the priorities declared in the project description, managed by #:farelo. Which pushes the in-progress #:farelo up priorities (in my head).</p>
+<p>Associated with that is <strong>all project docs</strong>, already high on my priorities.</p>
+<p>I&#39;m not in the mood for being systematic today, but today that&#39;s fine. To get the docs together I need to poke around with all the subprojects, remind myself where I&#39;m at, write down their descriptions, current status &amp; todos (which will ultimately be fed into #:farelo).
+I can pick any part I fancy to play around with and in doing so I&#39;m doing something that will be close to critical paths.</p>
+<p>But right now, #:dogwalk #2 before it gets dark.
+ </p>
+
+        <div class="entry-footer">
+            <h2>About</h2>
+            
+        </div>
+    </body>
+</html>

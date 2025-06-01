@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <link rel="stylesheet" href="/css/fonts.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/grid-columns.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/style.css" type="text/css"/>
+        <title>Giugno</title>
+    </head>
+    <!-- POST PAGE TEMPLATE -->
+    <body>
+        <header id="entry-header">
+            <h1 class="post-title h-cinzel">
+                
+            </h1>
+        </header>
+        <h1>Giugno</h1>
+<p><strong>TL;DR</strong> - today will be about getting ducks lined up for FOAF Retrospective</p>
+<p><em>Note to self : remember the TL;DR on posts, even if they are only notes to self</em></p>
+<p>Yesterday I thought I&#39;d got #Fuseki up and running (not configured). Today a <code>502 Bad Gateway</code>. Hey ho.</p>
+<p>I also resurrected most of the <code>hyperdata-static</code> material on <a href=\"https://hyperdata.it\">https://hyperdata.it</a> - at this very moment a section that weirdly wasn&#39;t actually in that main tree is being git-pushed to github. 5,400 files...</p>
+<p>Right now #FOAFRetrospective is my priority for webby world activities. <em>Like it has been for 3? months...</em> I did slip into some serious #YakShaving with #Transmissions (my pipeliney thing), but I believe I&#39;ve got that under control now.</p>
+<p>My motivation for getting Fuseki and hyperdata.it bits live again is to make use of some of the little tools I&#39;ve got there for FOAF Retrospective. Various bits geared towards information capture and exploitation.</p>
+<p><em>Grr. The <code>git push</code> just stalled. I haven&#39;t checked, but I don&#39;t think I&#39;ve got any huge files in there that GitHub would balk at, probably just my connection being a bit flaky (as usual). Size-wise, altogether the tree isn&#39;t massive, but there is quite a high number of small files. Running from VSCode (where I&#39;m typing this), it was silent, I&#39;ve just set it going again, adding &#39;Show Output&#39;.</em></p>
+<p>Yeah, I made a strategic error with FOAF Retrospective (my working title). Because there was really significant overlap with the things I was working on already, it made sense to fold it in. Fool Danny, I (yet again) forgot I&#39;m really bad at estimating time for projects.
+While there isn&#39;t a hard deadline, <em>before now</em> would be the soft deadline. I&#39;m kicking myself a little because I&#39;m well aware of my own failings in a context like this, and I do have strategies for working around them. The one here is straight out of the <a href=\"https://en.wikipedia.org/wiki/Agile_software_development#Overview\">Agile</a> playbook, to go <strong>iterative, incremental, and evolutionary</strong>. I should have got something quick &amp; dirty up first (corresponding to <em>running code</em> in that playbook), then looked at how to improve it. Instead I went somewhat <a href=\"https://en.wikipedia.org/wiki/Waterfall_model\">waterfall</a>.</p>
+<p>But not to worry. I can flip over to the better strategy now, in a position where I have the tooling the waterfall produced. (That tooling itself isn&#39;t exactly <em>finished</em>, but is at the point where I can incrementally improve it as needed).</p>
+<p><em>Oh FFS, I just got a message saying payment was declined for Linode - my server hosting. Annoying, I thought I&#39;d enough left on my card to cover that. There will be next week some time, do I hope they have a reasonable grace period.</em></p>
+<p>Hmm, server says:</p>
+<pre><code>New release &#39;24.04 LTS&#39; available.
+Run &#39;do-release-upgrade&#39; to upgrade to it.
+</code></pre>
+<p>It&#39;s probably a good time to get that out of the way, once I&#39;ve got the missing <code>hyperdata-static</code> bits back in place.</p>
+<pre><code>&gt; git push origin main:main
+error: RPC failed; HTTP 400 curl 22 The requested URL returned error: 400
+send-pack: unexpected disconnect while reading sideband packet
+fatal: the remote end hung up unexpectedly
+Everything up-to-date
+</code></pre>
+<p>Grr. I&#39;d better check for big files. From a couple of days ago:</p>
+<pre><code>find ./ -type f -printf &#39;%s %p\\n&#39; | sort -nr | head -30 | awk &#39;{print &quot;rm &quot; $2}&#39; &gt; bigfiles.sh
+</code></pre>
+<p>Tweak (thanks ChatGPT!):</p>
+<pre><code>find ./ -type f -exec du -h {} + | sort -rh | head -30
+</code></pre>
+<p>A big <code>.log</code> file, some <code>.jar</code>s, then images and videos.
+Another tweak:</p>
+<pre><code>find ./ -type f -name &#39;*.log&#39; -printf &#39;%s %p\\n&#39; | sort -nr | head -30 | awk &#39;{print &quot;rm &quot; $2}&#39;
+</code></pre>
+<p>The jars aren&#39;t needed (may well be unsafe when used), they and the logs can go.</p>
+<p>Trying a <code>git push</code> from the command line...</p>
+<p>That&#39;s taking some time (to fail?). I&#39;m ready for a break. might as well set <code>do-release-upgrade</code> going.</p>
+<p>Ah wait - backup first.</p>
+<h2>Plan</h2>
+<ul>
+<li>reorg FOAF Retrospective</li>
+<li><code>hyperdata-static</code> bits</li>
+<li></li>
+<li>Get Fuseki running properly, any config necessary for hyperdata tooling</li>
+</ul>
+
+        <div class="entry-footer">
+            <h2>About</h2>
+            
+        </div>
+    </body>
+</html>

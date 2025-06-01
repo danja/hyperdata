@@ -1,29 +1,20 @@
 {
-  "folders": [
-	{
-		"path": "../../transmissions"
-	},
-	{
-		"path": "../../../sites/danny.ayers.name"
-	},
-	{
-		"path": "../../../sites/hyperdata.it"
-	},
-	{
-		"path": "../../../sites/strandz.it"
-	},
-	{
-		"path": "../../postcraft"
-	},
-	{
-		"path": "../../trans-apps"
-	},
-	{
-		"path": "../../a2a-o"
-	},
-	{
-		"path": "../../mcp-o"
-	}
-],
-  "settings": {}
+	"folders": [
+		{
+			"path": "../../transmissions"
+		},
+		{
+			"path": "../../../sites/danny.ayers.name"
+		},
+		{
+			"path": "../../postcraft"
+		},
+		{
+			"path": "../../semem"
+		},
+		{
+			"path": ".."
+		}
+	],
+	"settings": {}
 }

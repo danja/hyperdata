@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <link rel="stylesheet" href="/css/fonts.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/grid-columns.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/style.css" type="text/css"/>
+        <title>Journal 2025-04-03</title>
+    </head>
+    <!-- POST PAGE TEMPLATE -->
+    <body>
+        <header id="entry-header">
+            <h1 class="post-title h-cinzel">
+                
+            </h1>
+        </header>
+        <h1>Journal 2025-04-03</h1>
+<p>My scrappy coding around <code>src/engine</code> in #:transmissions has come back to bite me on the bum.</p>
+<p>After the earliest hacky versions, I did start separating out <code>src/model</code> modules to (primarily) represent the state, <code>src/engine</code> for the operations. But because the system was working I got distracted...</p>
+<pre><code class=\"language-sh\">./trans -v accumulate -m &#39;{&quot;foreach&quot;: [&quot;first TEST_PASSED&quot;, &quot;second TEST_PASSED&quot;, &quot;third TEST_PASSED&quot;]}&#39;
+</code></pre>
+<p>refactoring</p>
+<p>move SlowableProcessor to engine</p>
+<p>rename ProcessorSettings to Configuration</p>
+<p>rename AppResolver to engine/SystemResolver</p>
+<p>When I try running a transmission, eg. <code>src/applications/test/config-setting/transmissions.ttl</code> it&#39;s not picking up the configuration values as it should around line 58 in <code>src/engine/ProcessorSettings.js</code>, the dataset appears to be empty, although it does have the correct content nearby. I&#39;m missing something obvious somewhere. Can you please trace back to see if you can find where it&#39;s getting lost. Here&#39;s some relevant debug log:</p>
+<p>TransmissionBuilder.buildTransmissions
+transmissionConfig =
+<a href=\"http://purl.org/stuff/transmissions/DE\">http://purl.org/stuff/transmissions/DE</a> <a href=\"http://www.w3.org/1999/02/22-rdf-syntax-ns#type\">http://www.w3.org/1999/02/22-rdf-syntax-ns#type</a> <a href=\"http://purl.org/stuff/transmissions/DeadEnd\">http://purl.org/stuff/transmissions/DeadEnd</a> .
+<a href=\"http://purl.org/stuff/transmissions/H\">http://purl.org/stuff/transmissions/H</a> <a href=\"http://www.w3.org/1999/02/22-rdf-syntax-ns#type\">http://www.w3.org/1999/02/22-rdf-syntax-ns#type</a> <a href=\"http://purl.org/stuff/transmissions/Halt\">http://purl.org/stuff/transmissions/Halt</a> .
+<a href=\"http://purl.org/stuff/transmissions/SC\">http://purl.org/stuff/transmissions/SC</a> <a href=\"http://www.w3.org/1999/02/22-rdf-syntax-ns#type\">http://www.w3.org/1999/02/22-rdf-syntax-ns#type</a> <a href=\"http://purl.org/stuff/transmissions/ShowConfig\">http://purl.org/stuff/transmissions/ShowConfig</a> .
+<a href=\"http://purl.org/stuff/transmissions/SM\">http://purl.org/stuff/transmissions/SM</a> <a href=\"http://www.w3.org/1999/02/22-rdf-syntax-ns#type\">http://www.w3.org/1999/02/22-rdf-syntax-ns#type</a> <a href=\"http://purl.org/stuff/transmissions/ShowMessage\">http://purl.org/stuff/transmissions/ShowMessage</a> .
+<a href=\"http://purl.org/stuff/transmissions/N\">http://purl.org/stuff/transmissions/N</a> <a href=\"http://www.w3.org/1999/02/22-rdf-syntax-ns#type\">http://www.w3.org/1999/02/22-rdf-syntax-ns#type</a> <a href=\"http://purl.org/stuff/transmissions/NOP\">http://purl.org/stuff/transmissions/NOP</a> .
+<a href=\"http://purl.org/stuff/transmissions/UF\">http://purl.org/stuff/transmissions/UF</a> <a href=\"http://www.w3.org/1999/02/22-rdf-syntax-ns#type\">http://www.w3.org/1999/02/22-rdf-syntax-ns#type</a> <a href=\"http://purl.org/stuff/transmissions/Unfork\">http://purl.org/stuff/transmissions/Unfork</a> .
+<a href=\"http://purl.org/stuff/transmissions/testSetting\">http://purl.org/stuff/transmissions/testSetting</a> <a href=\"http://www.w3.org/1999/02/22-rdf-syntax-ns#type\">http://www.w3.org/1999/02/22-rdf-syntax-ns#type</a> <a href=\"http://purl.org/stuff/transmissions/Transmission\">http://purl.org/stuff/transmissions/Transmission</a> .
+<a href=\"http://purl.org/stuff/transmissions/testSetting\">http://purl.org/stuff/transmissions/testSetting</a> <a href=\"http://purl.org/stuff/transmissions/pipe\">http://purl.org/stuff/transmissions/pipe</a> _:b1 .
+_:b1 <a href=\"http://www.w3.org/1999/02/22-rdf-syntax-ns#first\">http://www.w3.org/1999/02/22-rdf-syntax-ns#first</a> <a href=\"http://purl.org/stuff/transmissions/ts10\">http://purl.org/stuff/transmissions/ts10</a> .
+_:b1 <a href=\"http://www.w3.org/1999/02/22-rdf-syntax-ns#rest\">http://www.w3.org/1999/02/22-rdf-syntax-ns#rest</a> <a href=\"http://www.w3.org/1999/02/22-rdf-syntax-ns#nil\">http://www.w3.org/1999/02/22-rdf-syntax-ns#nil</a> .
+<a href=\"http://purl.org/stuff/transmissions/ts10\">http://purl.org/stuff/transmissions/ts10</a> <a href=\"http://www.w3.org/1999/02/22-rdf-syntax-ns#type\">http://www.w3.org/1999/02/22-rdf-syntax-ns#type</a> <a href=\"http://purl.org/stuff/transmissions/TestSetting\">http://purl.org/stuff/transmissions/TestSetting</a> .
+<a href=\"http://purl.org/stuff/transmissions/ts10\">http://purl.org/stuff/transmissions/ts10</a> <a href=\"http://purl.org/stuff/transmissions/settings\">http://purl.org/stuff/transmissions/settings</a> <a href=\"http://purl.org/stuff/transmissions/theSettingsNode\">http://purl.org/stuff/transmissions/theSettingsNode</a> .</p>
+<p>transmissionID = <a href=\"http://purl.org/stuff/transmissions/testSetting\">http://purl.org/stuff/transmissions/testSetting</a></p>
+<p>TransmissionBuilder.constructTransmission</p>
+<ul>
+<li>***** Construct Transmission :  <a href=\"http://purl.org/stuff/transmissions/testSetting\">http://purl.org/stuff/transmissions/testSetting</a>
+Creating processor:
+    Node: :ts10
+    Type: :TestSetting
+    SettingsNode: :theSettingsNode</li>
+</ul>
+<p>TransmissionBuilder.createProcessor, config = [object Object]</p>
+<p>Processor constructor :
+        *** Processor TestSettings
+                id = undefined
+                label = undefined
+                type = undefined
+                description = undefined</p>
+<pre><code>            settingsNodeValue = none
+            settings = undefined
+                      config = undefined
+</code></pre>
+<p>parent.app = undefined
+this.appConfig = undefined
+this.transmissionConfig = undefined
+this.config = undefined
+configDataset : <a href=\"http://purl.org/stuff/transmissions/theSettingsNode\">http://purl.org/stuff/transmissions/theSettingsNode</a> <a href=\"http://www.w3.org/1999/02/22-rdf-syntax-ns#type\">http://www.w3.org/1999/02/22-rdf-syntax-ns#type</a> <a href=\"http://purl.org/stuff/transmissions/ConfigSet\">http://purl.org/stuff/transmissions/ConfigSet</a> .
+<a href=\"http://purl.org/stuff/transmissions/theSettingsNode\">http://purl.org/stuff/transmissions/theSettingsNode</a> <a href=\"http://purl.org/stuff/transmissions/theSettingProperty\">http://purl.org/stuff/transmissions/theSettingProperty</a> &quot;the setting value from config TEST_PASSEDTEST_PASSEDTEST_PASSED&quot; .</p>
+<p>sssssssssssssssssssssssssssssssssssss
+.app :
+Instance of Transmission with properties -
+{
+  &quot;processors&quot;: {},
+  &quot;connectors&quot;: [],
+  &quot;parent&quot;: null,
+  &quot;children&quot;: {},
+  &quot;path&quot;: [],
+  &quot;id&quot;: &quot;<a href=\"http://purl.org/stuff/transmissions/testSetting\">http://purl.org/stuff/transmissions/testSetting</a>&quot;,
+  &quot;whiteboard&quot;: {
+    &quot;accumulators&quot;: {}
+  },
+  &quot;label&quot;: &quot;&quot;
+}
+Transmissions has length 1
+**************** Message with merged context:
+transmission =
+Transmission : <a href=\"http://purl.org/stuff/transmissions/testSetting\">http://purl.org/stuff/transmissions/testSetting</a>
+      path: ,
+      depth: 0,
+      children: Processors:</p>
+<ul>
+<li>ts10 a
+*** Processor TestSettings
+        id = <a href=\"http://purl.org/stuff/transmissions/ts10\">http://purl.org/stuff/transmissions/ts10</a>
+        label = undefined
+        type = [object Object]
+        description = undefined
+
+        settingsNodeValue = <a href=\"http://purl.org/stuff/transmissions/theSettingsNode\">http://purl.org/stuff/transmissions/theSettingsNode</a>
+        settings = undefined
+                  config = undefined</li>
+</ul>
+<p>Connectors:</p>
+<p>Transmission.process</p>
+<ul>
+<li>Run Transmission :  <a href=\"http://purl.org/stuff/transmissions/testSetting\">http://purl.org/stuff/transmissions/testSetting</a>
+|-&gt; ts10 a TestSettings
+Processor.getProperty, this.configDataset : <a href=\"http://purl.org/stuff/transmissions/theSettingsNode\">http://purl.org/stuff/transmissions/theSettingsNode</a> <a href=\"http://www.w3.org/1999/02/22-rdf-syntax-ns#type\">http://www.w3.org/1999/02/22-rdf-syntax-ns#type</a> <a href=\"http://purl.org/stuff/transmissions/ConfigSet\">http://purl.org/stuff/transmissions/ConfigSet</a> .
+<a href=\"http://purl.org/stuff/transmissions/theSettingsNode\">http://purl.org/stuff/transmissions/theSettingsNode</a> <a href=\"http://purl.org/stuff/transmissions/theSettingProperty\">http://purl.org/stuff/transmissions/theSettingProperty</a> &quot;the setting value from config TEST_PASSEDTEST_PASSEDTEST_PASSED&quot; .</li>
+</ul>
+<p>ProcessorSettings.getValues, property = <a href=\"http://purl.org/stuff/transmissions/debug\">http://purl.org/stuff/transmissions/debug</a>
+Trying APP dataset
+ undefined
+not found
+Trying TRANSMISSIONS dataset
+ undefined
+not found</p>
+<p>Trying CONFIG dataset
+ [object Object]</p>
+<p>Trying CONFIG dataset
+ [object Object]
+       _size
+       _graphs
+       _id
+       _ids
+       _entities
+       _quads
+Instance of Object with properties -
+{}
+Error getting values for <a href=\"http://purl.org/stuff/transmissions/debug\">http://purl.org/stuff/transmissions/debug</a>: TypeError: ptr.dataset.match is not a function or its return value is not iterable
+not found
+Processor.preProcess, debug = undefined</p>
+<p>TestSetting.process
+Processor.getProperty, this.configDataset : <a href=\"http://purl.org/stuff/transmissions/theSettingsNode\">http://purl.org/stuff/transmissions/theSettingsNode</a> <a href=\"http://www.w3.org/1999/02/22-rdf-syntax-ns#type\">http://www.w3.org/1999/02/22-rdf-syntax-ns#type</a> <a href=\"http://purl.org/stuff/transmissions/ConfigSet\">http://purl.org/stuff/transmissions/ConfigSet</a> .
+<a href=\"http://purl.org/stuff/transmissions/theSettingsNode\">http://purl.org/stuff/transmissions/theSettingsNode</a> <a href=\"http://purl.org/stuff/transmissions/theSettingProperty\">http://purl.org/stuff/transmissions/theSettingProperty</a> &quot;the setting value from config TEST_PASSEDTEST_PASSEDTEST_PASSED&quot; .</p>
+<p>ProcessorSettings.getValues, property = <a href=\"http://purl.org/stuff/transmissions/theSettingProperty\">http://purl.org/stuff/transmissions/theSettingProperty</a>
+Trying APP dataset
+ undefined
+not found
+Trying TRANSMISSIONS dataset
+ undefined
+not found</p>
+<p>Trying CONFIG dataset
+ [object Object]</p>
+<p>Trying CONFIG dataset
+ [object Object]
+       _size
+       _graphs
+       _id
+       _ids
+       _entities
+       _quads
+Instance of Object with properties -
+{}
+Error getting values for <a href=\"http://purl.org/stuff/transmissions/theSettingProperty\">http://purl.org/stuff/transmissions/theSettingProperty</a>: TypeError: ptr.dataset.match is not a function or its return value is not iterable
+not found</p>
+<p>message.settingValue undefined
+0
+ </p>
+
+        <div class="entry-footer">
+            <h2>About</h2>
+            
+        </div>
+    </body>
+</html>

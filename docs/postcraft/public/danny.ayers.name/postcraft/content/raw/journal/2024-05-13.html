@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <link rel="stylesheet" href="/css/fonts.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/grid-columns.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/style.css" type="text/css"/>
+        <title>Journal : 2024-05-13</title>
+    </head>
+    <!-- POST PAGE TEMPLATE -->
+    <body>
+        <header id="entry-header">
+            <h1 class="post-title h-cinzel">
+                
+            </h1>
+        </header>
+        <h1>Journal : 2024-05-13</h1>
+<p>The <strong>90:90</strong> rule : the first 90% of the code accounts for the first 90% of the development time. The remaining 10% of the code accounts for the other 90% of the development time. (I was about to type a different version, but GitHub #Copilot suggested that, it&#39;s a good one).</p>
+<p>I&#39;ve been rather blocked by #Postcraft, it is a major priority for me to have a blogging<sup><a id=\"footnote-ref-1\" href=\"#footnote-1\" data-footnote-ref aria-describedby=\"footnote-label\">1</a></sup> system in place. So I&#39;ll go quick &amp; dirty now to get something up and running, refactor later.</p>
+<p>In the Postcraft transmission, I&#39;ve got Phase 1 working, from markdown to raw HTML (the notion of <em>phases</em> is useful, I&#39;ll use that).</p>
+<p><code>s:ConfigMap</code> pulls in the configuration from <code>manifest.ttl</code>, it&#39;s at the <code>context.sourceDir</code> etc level for Phase 1, but because Phase 2, I&#39;ve got that going into a sub-object <code>entryContentToPage</code>, so after Phase 1 the context includes:</p>
+<pre><code>{
+   &quot;entryContentToPage&quot;: {
+    &quot;sourceDir&quot;: &quot;public/post-content-cache&quot;,
+    &quot;targetDir&quot;: &quot;public/blog&quot;,
+    &quot;templateFilename&quot;: &quot;layouts/mediocre/post-page_template.njk&quot;
+  },
+
+  &quot;contentBlocks&quot;: {
+    &quot;link&quot;: &quot;public/post-content-cache/2024-05-03_two.html&quot;,
+    &quot;title&quot;: &quot; TEST TWO&quot;,
+    &quot;created&quot;: &quot;2024-05-03&quot;,
+    &quot;updated&quot;: &quot;2024-05-13&quot;,
+    &quot;content&quot;: &quot;&lt;h4&gt;TEST TWO&lt;/h4&gt;\\n&lt;p&gt;here is the content of the second post&lt;/p&gt;\\n&quot;
+  },
+
+  &quot;filepath&quot;: &quot;/home/danny/HKMS/postcraft/danny.ayers.name/public/post-content-cache/2024-05-03_two.html&quot;,
+
+  &quot;rootDir&quot;: &quot;/home/danny/HKMS/postcraft/danny.ayers.name&quot;,
+  &quot;filename&quot;: &quot;2024-05-03_two.md&quot;,
+
+}
+</code></pre>
+<p>The value of <code>contentBlocks.link</code> I guess should be the full URL of the page. But before I sort that out, wherever that is assigned is where I need to get the target filepath for the entry page. Also the <a href=\"https://developer.mozilla.org/en-US/docs/MDN/Writing_guidelines/Writing_style_guide#slugs\">Slug</a> (with my own conventions).</p>
+<p><code>s:Template</code> has signature (Good Word!) :</p>
+<ul>
+<li><strong><em>Input</em></strong></li>
+<li>context.templateFilename or if not present,</li>
+<li>context.template</li>
+<li>context.contentBlocks - {title, body...} or whatever</li>
+<li><strong><em>Output</em></strong></li>
+<li>context.content - the templated content</li>
+</ul>
+<p>Ok, quick &amp; dirty, I&#39;ll make an <code>s:EntryContentToPagePrep</code> hardcoded service to do the remapping.</p>
+<p>Ok, <em>nearly</em> working. The link URL that gets templated isn&#39;t quite right : <code>https://danny.ayers.name/blog/2024-05-03_one.html.html.html</code> - oops!</p>
+<h3>Plan</h3>
+<ul>
+<li><input disabled=\"\" type=\"checkbox\"> Bergi &#39;Unified Landscape&#39;</li>
+<li><input disabled=\"\" type=\"checkbox\"> prep phone for return</li>
+</ul>
+<h4>Postcraft</h4>
+<p>NEXT - paths for entry pages/fix errors in PostCraftPrep - can refactor to simplify? check s:ConfigMap</p>
+<h4>Kaggle-Preferences</h4>
+<ul>
+<li><input disabled=\"\" type=\"checkbox\"> get set up, run the demo</li>
+</ul>
+<h4>FOAF-Archive</h4>
+<ul>
+<li><input disabled=\"\" type=\"checkbox\"> Placeholders + <code>a:manifest</code> for FOAF-Archive</li>
+<li><input disabled=\"\" type=\"checkbox\"> FOAF video</li>
+</ul>
+<hr>
+<p>#RELOCATE transmissions topology - multiple lists, series/parallel</p>
+<p><a href=\"mailto:support-it@blackview.it\">support-it@blackview.it</a></p>
+<p>Progress on Postcraft! I believe I&#39;ve got <code>s:Unfork</code> working. I made a <code>s:Fork</code> to test it in isolation with a little test application. Fork/Unfork aren&#39;t very good names, something a like Multicast might be better. Leave that for the Great Refactoring, which I&#39;m do some time after #Postcraft is up and running.</p>
+<p>It&#39;s funny, while I was trying to figure that out, the thought of providing something like a GOTO service crossed my mind. There is a natural progression from pipeline to flowchart-shaped structures, to a little language (with Turtle syntax!). But I have to invoke <strong>YAGNI</strong> here. It will be interesting to see what other steps in that direction I have to take, but the goal right now is to make it easy to get things done. And get them done.</p>
+<p>Oops...I forgot I need to do generate the final entry pages next, before Unforking.</p>
+<p>#RELOCATE pc:ContentGroup might be better as a more general trm:Group</p>
+<h2>to add <code>s:Unfork</code> after the entry content generation phase, then</h2>
+<p>Yesterday I said : Ok, for TODOs, I&#39;ll have a top-level <code>todo/index.md</code> file, plus monthly files like <code>todo/2024-05.md</code>. Then have <strong>Plan</strong> blocks in this journal for daily bits.</p>
+<p>What I&#39;ve got dangling, I&#39;m not sure how best to manage. It would be good to have a <em>Where I&#39;m At</em> <strong>Status</strong> somewhere. And a <strong>Requirements</strong>. And a convention for flagging doc chacteristics in terms of changeability.</p>
+<p>Note to #RELOCATE, re. #GTD : I need to be clearer in demarcating my planning activity and the actual work. I&#39;m revising too much when I hit the code. I need clear plans <em>written down</em> before I start, no matter how long they take. Then code faster.</p>
+<p>context.entryContentToPage = {
+sourceDir: sourceDir,
+targetDir: targetDir,
+templateFilename: templateFilename</p>
+<hr>
+<h3>Plan</h3>
+<h4>Bergi &#39;Unified Landscape&#39;</h4>
+<p><strong>Phone Return!!!</strong></p>
+<h4>Postcraft</h4>
+<ul>
+<li><p>[*] <code>s:Unfork</code> - write a little test application</p>
+</li>
+<li><p>[*] write a little test application <code>t:transmission</code></p>
+</li>
+<li><p><input disabled=\"\" type=\"checkbox\"> 
+visualization : like <a href=\"http://localhost/farelo/src/TurtleEditor/\">http://localhost/farelo/src/TurtleEditor/</a></p>
+</li>
+</ul>
+<p>Fork is more like multicast - rename?</p>
+<h4>Kaggle-Preferences</h4>
+<ul>
+<li><input disabled=\"\" type=\"checkbox\"> get set up, run the demo</li>
+</ul>
+<h4>FOAF-Archive</h4>
+<ul>
+<li><input disabled=\"\" type=\"checkbox\"> Placeholders + <code>a:manifest</code> for FOAF-Archive</li>
+<li><input disabled=\"\" type=\"checkbox\"> FOAF video</li>
+</ul>
+<h4>Unfork</h4>
+<p>Ok, the <strong>Topology</strong> question. Postcraft is quite a good example on which to be thinking about this.</p>
+<ul>
+<li>Phase One : Markdown -&gt; HTML at raw entry level, then raw entries -&gt; final entry pages</li>
+<li>Phase Two : raw entries -&gt; front page etc.</li>
+</ul>
+<p>Phase One forks into multiple processing paths, one for each markdown file. To avoid uneccessary complications, it makes sense to make sure Phase One has completed before starting Phase Two.
+So,</p>
+<p>I believe how I&#39;ve got <code>s:DirWalker</code> means that order is maintained subsequently, even though each path runs independently (parallelism for efficiency isn&#39;t something I need to think about now).</p>
+<hr>
+<ul>
+<li>three semi-independent pipelines defined in transmission.ttl : markdown -&gt; HTML rawEntries; rawEntries -&gt; entries; rawEntries -&gt; front page</li>
+<li>one &#39;continuous&#39;, with an Unfork or some such to bring the control flow down to one path</li>
+<li>one more blocky, with ContentGroups being set up from manifest.ttl in ConfigMap at the start</li>
+</ul>
+<p>All three approaches could be supported, but for now I should just pick the one that seems most suitable for the current task. Considerations :</p>
+<ul>
+<li>keeping it simple, with sensible defaults</li>
+<li>keeping concerns separate :<ul>
+<li><code>transmission.ttl</code> = topology</li>
+<li><code>services.ttl</code> = details of individual service configurations
+together they define the application</li>
+<li><code>manifest.ttl</code> = application instance configuration</li>
+</ul>
+</li>
+</ul>
+<p>I need some fresh air.
+ </p>
+<section class=\"footnotes\" data-footnotes>
+<h2 id=\"footnote-label\" class=\"sr-only\">Footnotes</h2>
+<ol>
+<li id=\"footnote-1\">
+<p>I&#39;m using &#39;blogging&#39; as shorthand for note capture etc etc, a fundamental part of my workflow/personal knowledge management <sup><a id=\"footnote-ref-2\" href=\"#footnote-2\" data-footnote-ref aria-describedby=\"footnote-label\">2</a></sup>. <a href=\"#footnote-ref-1\" data-footnote-backref aria-label=\"Back to reference 1\">↩</a></p>
+</li>
+<li id=\"footnote-2\">
+<p>New to me, <a href=\"https://github.blog/changelog/2021-09-30-footnotes-now-supported-in-markdown-fields/\">(GitHub-flavoured) Markdown footnotes</a> <a href=\"#footnote-ref-2\" data-footnote-backref aria-label=\"Back to reference 2\">↩</a></p>
+</li>
+</ol>
+</section>
+
+        <div class="entry-footer">
+            <h2>About</h2>
+            
+        </div>
+    </body>
+</html>

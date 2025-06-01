@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <link rel="stylesheet" href="/css/fonts.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/grid-columns.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/style.css" type="text/css"/>
+        <title>Journal 2025-03-28</title>
+    </head>
+    <!-- POST PAGE TEMPLATE -->
+    <body>
+        <header id="entry-header">
+            <h1 class="post-title h-cinzel">
+                
+            </h1>
+        </header>
+        <h1>Journal 2025-03-28</h1>
+<p>When I signed up for Claude AI 3.5 I wanted to kick the tyres. I was (am) working on a pipeliney thing that passes messages wrapped as JSON. It must have been 2 years since I last felt to urge to do Lisp. Ok, let&#39;s do a Lisp in JSON (in node Javascript).
+So back then, it put together a very convincing set of source files, very well structured, we even had tests. But it hid a brick wall unwrapping objects. Ok, come back back to that.
+I just had a very frustrating few days, good momentum with my own code, brick wall head banging with real-world things.
+Sorting out dir org, oh yeah, Sheltopusik. I named it in a way that is instantly forgettable so no-one will be tempted to try it.
+Not long with Claude 3.7 (Projects with repomix) :</p>
+<pre><code class=\"language-sh\">danny@danny-desktop:~/hyperdata/sheltopusik$ ./sp examples/fibonacci.sp
+55
+</code></pre>
+<p>Woo-hoo!
+Now how about quicksort?
+Nah. Had about an hour on it. Totally borked.
+REMEMBER TO GIT BRANCH
+What was kinda lovely that Claude was suggested how to do things like the type system <em>properly</em>. Haskell!
+Kinda funny, I&#39;ve completely forgotten how Lisp works anyhow, haven&#39;t tried coding in it for at least a decade and even then it was trying to get my head around SICP again. It&#39;s just the <em>idea</em> of it appeals to me.</p>
+<p>Example of Sheltopusik code below. Just don&#39;t do it boys &amp; girls.</p>
+<p>Incidentally, Claude Code is outstanding, absolutely brilliant. It literally just writes all the code for you. More addictive than crack (and for my part at least, much more expensive). Still flawed, but more subtly.
+I&#39;ll say that again:
+REMEMBER TO GIT BRANCH</p>
+<pre><code class=\"language-json\">[
+  &quot;define&quot;, &quot;fib&quot;,
+  [&quot;lambda&quot;, [&quot;n&quot;],
+    [&quot;if&quot;, [&quot;&lt;&quot;, &quot;n&quot;, 2],
+      &quot;n&quot;,
+      [&quot;+&quot;,
+        [&quot;fib&quot;, [&quot;-&quot;, &quot;n&quot;, 1]],
+        [&quot;fib&quot;, [&quot;-&quot;, &quot;n&quot;, 2]]
+      ]
+    ]
+  ],
+  [&quot;fib&quot;, 10]
+]
+</code></pre>
+<p>Wanna huff butane?
+<a href=\"https://github.com/danja/sheltopusik\">https://github.com/danja/sheltopusik</a></p>
+<p>In Sheltopusik, define is a special form that binds a value to a variable in the current environment, but it doesn&#39;t support internal defines as expressions that return values.
+Could implementing a type system in Sheltopusik help prevent these kinds of issues?
+This inconsistency occurs because the list primitive in Sheltopusik automatically wraps its arguments in SPAtom objects, but the filter function is returning already-wrapped SPAtom objects.
+ The language already has built-in type predicates like list? but lacks an explicit way to check for SPAtom instances.
+ How would you implement proper lexical scoping for nested definitions in the evaluator?
+ q4: Would implementing a proper let-binding form be a better solution than using nested defines or lambdas?</p>
+<p>There are several limitations to the Lisp-like Sheltopusik language I&#39;d like you to help with. These problems should be dealt with one at a time, and a test written for each to ensure functionality isn&#39;t broken.
+I don&#39;t know which is the best sequence in which to develop these features, please think about this carefully before proceeding gently.</p>
+<ul>
+<li>A <code>let</code> special form is need</li>
+<li>proper lexical scoping is needed for nested definitions in the evaluator</li>
+<li>the language lacks lacks an explicit way to check for SPAtom instances</li>
+<li>In Sheltopusik, define is a special form that binds a value to a variable in the current environment, but it doesn&#39;t support internal defines as expressions that return values</li>
+<li>Sheltopusik needs a type system
+Please think deeply about these problems, decide on a plan of action that involves minimal iterative changes, with test, and then provide me with the full source code of source file to change as individual artifacts.</li>
+</ul>
+<p>editor that allows blocks to be selected and sent off to a particular graph/with tags</p>
+<p>~/hyperdata/farelo/temp$ ls
+foolicious  foowiki  gnam  sparql-diamonds  trellis</p>
+<p>kanban
+diced</p>
+<p>dogbot - esm</p>
+<ul>
+<li>connect to home machine</li>
+<li>farelo</li>
+</ul>
+<p>project voting machine
+drop-downs
+farelo</p>
+<h2>Adding repos is in :
+<code>config/scripts/setup-repos.sh</code></h2>
+<p>I have systemd autostart the tbox container on this computer but the image I&#39;ve been using has known problems and I have to manually kill it and use docker-compose to start it again. However the fuseki site provides scripts itself, you can find in the jena-fuseki-docker-5.3.0 dir. So I think it makes sense to create a new image using that. But before starting, note the issues mentioned with the stain image discussed in TDBconcurrenterrorIssue#34stain_jena-docker.txt Can you please take a look and have a deep think about to replace the current fuseki setup with a clean, fault-free new version.</p>
+<pre><code class=\"language-sh\">1. Stop all containers and remove lock files:
+ cd /home/danny/hyperdata/tbox
+ sudo systemctl stop tbox.service
+ docker compose down
+ sudo find ./data/fuseki -name &quot;*.lock&quot; -type f -delete
+ sudo chown -R $(id -u):$(id -g) ./data/fuseki
+
+ 2. Rebuild and start the Fuseki container:
+ cd /home/danny/hyperdata/tbox
+ docker compose build fuseki
+ sudo systemctl start tbox.service
+
+ 3. Check if the container is running properly:
+ docker ps | grep fuseki
+ docker logs $(docker ps -q -f name=tbox_fuseki)
+
+ The key changes I&#39;ve made to fix your Fuseki issues:
+
+ 1. Added proper lock file cleanup in the entrypoint.sh script
+ 2. Set the correct user permissions in docker-compose.override.yml
+ 3. Added the procps package in the Dockerfile
+ 4. Created a cleanup script to fix permissions and remove stale locks
+
+ Try running these commands manually, and you should now have a working Fuseki setup that doesn&#39;t require manual
+ intervention after restart.
+</code></pre>
+
+        <div class="entry-footer">
+            <h2>About</h2>
+            
+        </div>
+    </body>
+</html>

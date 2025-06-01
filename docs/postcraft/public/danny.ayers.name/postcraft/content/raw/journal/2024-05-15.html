@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <link rel="stylesheet" href="/css/fonts.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/grid-columns.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/style.css" type="text/css"/>
+        <title>Journal : 2024-05-15</title>
+    </head>
+    <!-- POST PAGE TEMPLATE -->
+    <body>
+        <header id="entry-header">
+            <h1 class="post-title h-cinzel">
+                
+            </h1>
+        </header>
+        <h1>Journal : 2024-05-15</h1>
+<p>Slow progress on #Postcraft.</p>
+<p>Yesterday I spent a very long time trying to figure out why, although I had <code>s:Unfork</code> working in isolation, it wasn&#39;t working after <code>s:DirWalker</code>. I got it working, but haven&#39;t a clue what the problem was. Note to self : write more tests.</p>
+<p>I just spent 2 hours trying to figure out why my RDF handling code wasn&#39;t working after a <code>switch(x){ case y: ... }</code>.
+Foooolish Danny. I&#39;d forgotten to put <code>return</code> in the <code>case</code> blocks</p>
+<p>I wasn&#39;t getting the properties I needed in the context to render the front page. But now I believe I am.</p>
+<pre><code>{
+  &quot;rootDir&quot;: &quot;/home/danny/HKMS/postcraft/danny.ayers.name&quot;,
+
+  &quot;siteURL&quot;: &quot;https://danny.ayers.name&quot;,
+  &quot;subdir&quot;: &quot;blog&quot;,
+
+  &quot;indexPage&quot;: {
+    &quot;filepath&quot;: &quot;public/blog/index.html&quot;,
+    &quot;templateFilename&quot;: &quot;layouts/mediocre/index-page_template.html&quot;
+  },
+
+  &quot;filepaths&quot;: [
+    &quot;2024-05-03_one.md&quot;,
+    &quot;2024-05-03_two.md&quot;
+  ],
+}
+</code></pre>
+<p>Ok, I&#39;m no longer concerned with the original markdown files, so before going any further I&#39;ll change <code>filepaths</code> to <code>slugs</code>. These will include the local subdirs leading to the slug proper, but no need to worry about that now.
+Especially since I noticed that <code>s:DirWalker</code> isn&#39;t recursing properly.</p>
+<p>Front page is rendering - <strong>Major milestone reached!!!</strong></p>
+<p>TODO include milestone screen shot here</p>
+<p>The code is <em>so</em> buggy &amp; hacky, and the current end result <em>so</em> ugly. But it&#39;s working end-to-end.</p>
+<p>There&#39;s a massive amount of code tidying &amp; refactoring to do, but that&#39;s not one of the priorities right now. They are:</p>
+<ul>
+<li>Make the pages pretty enough to put online, and put online</li>
+<li>Organise the TODOs so that I&#39;m clear what needs doing</li>
+<li>Write the &#39;Hello (again) World!&#39; post</li>
+</ul>
+<p>I&#39;ve done enough prep for these that they shouldn&#39;t take too long.</p>
+<p>Next I need to sort out my plans for #FOAF-Retrospective. I&#39;ll be needing #Transmissions &amp; #Postcraft in various places for that, so all this will still be getting attention.</p>
+<p>I <strong>must avoid yak shaving</strong> but as I&#39;m sorting out all the TODOs, I should keep an eye on the project management project bigger picture.</p>
+<h3>Plan</h3>
+<h4>Postcraft</h4>
+<p><strong>Remember I need to take down the old server</strong></p>
+<ul>
+<li><p><input disabled=\"\" type=\"checkbox\"> 
+upload to server</p>
+</li>
+<li><p><input disabled=\"\" type=\"checkbox\"> 
+make everything work</p>
+</li>
+<li><p><input disabled=\"\" type=\"checkbox\"> 
+Hello World (again) post</p>
+</li>
+<li><p><input disabled=\"\" type=\"checkbox\"> 
+Transmissions/Postcraft overview post</p>
+</li>
+<li><p><input disabled=\"\" type=\"checkbox\"> 
+pinned posts</p>
+</li>
+<li><p><input disabled=\"\" type=\"checkbox\"> 
+Atom feed</p>
+</li>
+</ul>
+<h4>FOAF-Retrospective</h4>
+<ul>
+<li><input disabled=\"\" type=\"checkbox\"> FOAF video</li>
+<li><input disabled=\"\" type=\"checkbox\"> Placeholders + <code>a:manifest</code> for FOAF-Archive</li>
+<li><input disabled=\"\" type=\"checkbox\"> find papers</li>
+</ul>
+<h4>Kaggle-Preferences</h4>
+<ul>
+<li><input disabled=\"\" type=\"checkbox\"> get set up, run the demo</li>
+</ul>
+
+        <div class="entry-footer">
+            <h2>About</h2>
+            
+        </div>
+    </body>
+</html>

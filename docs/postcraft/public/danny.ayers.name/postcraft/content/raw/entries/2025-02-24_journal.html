@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <link rel="stylesheet" href="/css/fonts.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/grid-columns.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/style.css" type="text/css"/>
+        <title>Journal</title>
+    </head>
+    <!-- POST PAGE TEMPLATE -->
+    <body>
+        <header id="entry-header">
+            <h1 class="post-title h-cinzel">
+                
+            </h1>
+        </header>
+        <h1>Journal</h1>
+<p><em>I&#39;m trying to keep my writing here organised, but a recurring problem is the daily raw stuff. I&#39;m going to give up on ahead-of-time org, just accept there&#39;ll usually be a dump page.</em></p>
+<h2>Transmissions Message Cloning Issue</h2>
+<p>in <code>Processor.executeQueue()</code>
+<code>src/model/Processor.js</code></p>
+<pre><code class=\"language-javascript\">/* structuredClone makes a deep copy of the message object
+           *  so that the original message is not modified
+           *  except its depth doesn&#39;t appear to cover internal objects
+           *  so here the app.dataset is passed between messages
+           *  (which is fine)
+           */
+           const dataset = message.app.dataset
+           message = structuredClone(message)
+           message.app.dataset = dataset
+</code></pre>
+<p>This is needed anywhere messages get copied. Right now I need to add it to <code>DirWalker</code> and <code>ForEach</code>. <em>How did I do the JSON treewalker? Maybe there too.</em></p>
+<p>./trans  -v config-setting-manifest tests/applications/config-setting-manifest</p>
+<p>I should really read up more on this (and write it up, it&#39;s a little tarpit that I doubt is well-known). I did look into it briefly a few months ago. <em>Was one approach serializing objects, copying, deserialising</em>.
+This approach is ok for now, but does feel like a kludge. I bet there&#39;s a util in #:lodash. Whatever, I&#39;ll isolate it in <code>src/utils/SysUtils.js</code></p>
+<h2>Integration tests based on applications (and #:simples)</h2>
+<p>Prompted by the issue above.</p>
+<h2>tbox Startup Issue</h2>
+<p><code>docker-compose</code> needs changing for a healthier #:Fuseki</p>
+<p><code>/home/danny/hyperdata/tbox/about.md</code></p>
+<pre><code class=\"language-sh\">sudo systemctl stop tbox
+cd ~/hyperdata/tbox # my local dir
+docker-compose down
+docker-compose up -d
+</code></pre>
+<h2></h2>
+<p>/home/danny/hyperdata/transmissions/src/applications/md-to-sparqlstore</p>
+<pre><code class=\"language-sh\">cd ~/hyperdata/transmissions # my local path
+./trans md-to-sparqlstore
+</code></pre>
+<p>Heh, BBC R4 Woman&#39;s Hour just used the phrase &quot;work-life balance&quot;. I need to mention that in #:adhd notes, it makes as much sense to me as &quot;literature-earthworm balance&quot;. Except I&#39;ve already thought of several ways the latter could be interpreted and realised &quot;earthworm-earthworm balance&quot; would probably be a better equivalent. Work is stuff you do, ie. life. In the <em>job</em> sense, there&#39;s an aspect where you get given money, but that&#39;s tangential to the living. It&#39;s either comparing apples and oranges or comparing <em>this</em> apple with <em>this same</em> apple. No wonder I&#39;m hopeless at getting an income.
+ </p>
+
+        <div class="entry-footer">
+            <h2>About</h2>
+            
+        </div>
+    </body>
+</html>

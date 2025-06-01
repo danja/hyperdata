@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <link rel="stylesheet" href="/css/fonts.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/grid-columns.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/style.css" type="text/css"/>
+        <title>Brrr!</title>
+    </head>
+    <!-- POST PAGE TEMPLATE -->
+    <body>
+        <header id="entry-header">
+            <h1 class="post-title h-cinzel">
+                
+            </h1>
+        </header>
+        <h1>Brrr!</h1>
+<p>It&#39;s chilly in the house, raining outside.</p>
+<p>I worked on some ideas for #:transmissions with Claude on phone in bed, only just got up, 13:30. Coffee was necessary.</p>
+<p>I&#39;ve set myself #:pivot:spooky for 2024-10-31, basically release a v1 alpha of <em>everything</em>. An artificial deadline to help me get things done.</p>
+<p>Big problem now, I need a system for prioritizing tasks in the <strong>massive todo graph</strong>.</p>
+<p>One of my key projects is just such a system : #:farelo. But it&#39;s not yet usable...</p>
+<p>To start it bootstrapping me, I first need to capture project information.</p>
+<h2>Form-a-matic</h2>
+<p>#:fam code generator to make custom forms is <strong>Top Priority</strong></p>
+<p>I&#39;ve got the <em>offline</em> node bits working ok : you provide a pseudo-Turtle template for a given vocab. This is converted to an intermediate (#:yars) JSON representation, next that is used to generate the HTML form.</p>
+<p>After filling out the form and clicking a button, a Turtle representation of the fields should be presented. The form uses a script called <code>extractor.js</code>.</p>
+<p>The issue right now is that I&#39;m using a couple of libs written for node, made browser-friendly by #:tools:webpack. But debugging is really painful. I&#39;ve not been in quite this situation before so I don&#39;t even really know what tooling is available. This might be a one-off, so I can&#39;t really justify the time needed to learn new kit and integrate it into my workflow.</p>
+<p>But my best guess as where the bugs are most likely to be is :</p>
+<ol>
+<li>my code (written with much help from #ai:claude)</li>
+<li>code/lib integration for browser</li>
+<li>libs</li>
+</ol>
+<p>For 1, as it happens, I&#39;ve barely touched one particular first-line approach : tests! Because of the node/browser lib issue, I reckon I&#39;ll try kind-of mocks.</p>
+<p>Unit tests for methods will be needed. But to prepare Claude to make these, a quasi-integration test seems a good place to start.</p>
+<p>Take a rendered HTML form file, fill in sample data as preset values, this is the mock. In node, by read the HTML file into a <code>document</code> model in #:tools:jsdom, check the operation of <code>extractor.js</code> with that.
+Prompt time.
+ </p>
+
+        <div class="entry-footer">
+            <h2>About</h2>
+            
+        </div>
+    </body>
+</html>

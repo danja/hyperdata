@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <link rel="stylesheet" href="/css/fonts.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/grid-columns.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/style.css" type="text/css"/>
+        <title>Project Alignment</title>
+    </head>
+    <!-- POST PAGE TEMPLATE -->
+    <body>
+        <header id="entry-header">
+            <h1 class="post-title h-cinzel">
+                
+            </h1>
+        </header>
+        <h1>Project Alignment</h1>
+<p><em>I&#39;ve loads of notes broadly related to this, scattered around, but I don&#39;t think I&#39;ve written down this specific part yet. I&#39;ll expand later, but a placeholder in a place I can find again is a start.</em></p>
+<p>My perma-meta-project I&#39;ve been working on for about 20 years started as an attempt at a personal knowledgebase, #PKB, but it soon morphed when it occurred to me that what I was after was really a project management system. There were reasons I wanted the PKB, clustered around <em>Getting Things Done</em>. I&#39;ve been through several iterations, and various factors (including LLMs) have led me start again recently.</p>
+<p>I work alone most of the time, with lots of different things on the go. I&#39;m pretty bad at resisting interesting tangents, prone to <a href=\"https://en.wiktionary.org/wiki/yak_shaving\">Yak Shaving</a>, exceptionally good at procrastinating. So one thing I really want this system to do is tell me what I should do next.</p>
+<p>Architecturally, an approach to implementation, I&#39;ve got a lot of that worked out. In short, express each project as a graph, with nodes representing tasks and edges representing dependencies. Weightings, like priorities and any time-related factors go in there too. Traverse the graph, with some lightweight reasoning, find the next task to do. I&#39;ve got a basic <a href=\"https://hyperdata.it/xmlns/project/2024/owldoc/\">project ontology</a>, have got quite comfortable working against a SPARQL store for the data, with custom browser-based UI as needed.</p>
+<p>Right now I&#39;ve got one project I&#39;m running very late to schedule with, working title &#39;FOAF Retrospective&#39;. But for to me to work anything like efficiently on <em>anything</em>, I need good information capture and organisation. Job One there is note-taking. I find a blogging kind of setup works well for me, and that&#39;s what you&#39;re looking at. Next on that list is capturing links, bookmarking. I&#39;ve got the code together (/in-progress), #Transmissions, to give me tooling to make the dev side of these kinds of things easier for me.</p>
+<p>Now I can get to the aspect I&#39;m calling <strong>Project Alignment</strong>. While each of the FOAF, blogging, bookmarking projects can be considered independent, when decomposed into tasks, there is a huge amount of crossover. They have tasks in common. Their details might vary, but there&#39;s a functional requirement at the core of these that is near-enough. Put this way, these 3 projects are part of a larger dependency graph.</p>
+<p>On the surface, despite an explosion in overall complexity in the dependency graph, the next-task question remains the same. In principle at least it&#39;s tractable with classic planner/reasoning algorithms. It is a &#39;simple&#39; special case, in that there is only one agent (me) at work, analogous to a single thread in running code.</p>
+<p>But standing back, it seems pretty apparent that there should be extra optimisations to be had. If component X of system A and component Y of system B are reasonably similar, replacing X &amp; Y with a single component Z might be a win.</p>
+<p>At this point in time I&#39;m doing this very ad hoc, but #Transmissions is designed explicitly with reusability of components in mind. I&#39;m hoping this will inform me of good ways to proceed. I can see LLMs being a big part of this in the near future.</p>
+<p>But first things first, sketch out the general idea in black &amp; white. Done.
+ </p>
+
+        <div class="entry-footer">
+            <h2>About</h2>
+            
+        </div>
+    </body>
+</html>

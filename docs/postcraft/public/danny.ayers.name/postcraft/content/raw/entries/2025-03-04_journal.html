@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <link rel="stylesheet" href="/css/fonts.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/grid-columns.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/style.css" type="text/css"/>
+        <title>Journal 2025-03-04</title>
+    </head>
+    <!-- POST PAGE TEMPLATE -->
+    <body>
+        <header id="entry-header">
+            <h1 class="post-title h-cinzel">
+                
+            </h1>
+        </header>
+        <h1>Journal 2025-03-04</h1>
+<p>Continuing the rendering of SPARQL store content to HTML files for my docs (including this blog).</p>
+<p>I want the content that originated at :</p>
+<pre><code class=\"language-sh\">/home/danny/hyperdata/transmissions/src/applications/md-to-sparqlstore/data/input/input2.md
+</code></pre>
+<p>to be rendered at :</p>
+<pre><code class=\"language-sh\">/home/danny/sites/strandz.it/postcraft/public/data/input/2025-02-11/input2.html
+</code></pre>
+<p>The <code>FileWriter</code> processor uses <code>getProperty(ns.trn.destinationFile)</code></p>
+<p>The <code>StringOps</code> processor should now be able to do the necessary.</p>
+<p>Invoked in the #:transmission with :</p>
+<pre><code class=\"language-turtle\">...
+:p80 a :StringOps ;
+  :settings :filenameConstructor .
+
+:p90 a :FileWriter .
+</code></pre>
+<p>Settings from :</p>
+<pre><code class=\"language-turtle\">:filenameConstructor a :ConfigSet ;
+  :asPath true ;
+  :targetField &quot;destinationFile&quot; ;
+  :values (:a :b :c :d) .
+  :a :field &quot;targetPath&quot; .
+  :b :field &quot;currentItem.relPath.value&quot; .
+  :c :field &quot;currentItem.slug.value&quot; .
+  :d :string &quot;.html&quot; .
+</code></pre>
+<p>Oh, silly me, I get paths like:</p>
+<pre><code class=\"language-json\">&quot;destinationFile&quot;: &quot;/home/danny/sites/strandz.it/postcraft/data/input/2025-02-11/input2/.html&quot;
+</code></pre>
+<p>I&#39;ll have to think about how to do this better, but given that I already put string concat support in <code>StringOps</code>, easy addition should do it:</p>
+<pre><code class=\"language-turtle\">:p80 a :StringOps ;
+  :settings :filenameConstructor .
+
+  :p90 a :StringOps ;
+    :settings :filenameExtension .
+</code></pre>
+<pre><code class=\"language-turtle\">:filenameConstructor a :ConfigSet ;
+  :asPath true ;
+  :targetField &quot;temp&quot; ;
+  :values (:a1 :b1 :c1) .
+  :a1 :field &quot;targetPath&quot; .
+  :b1 :field &quot;currentItem.relPath.value&quot; .
+  :c1 :field &quot;currentItem.slug.value&quot; .
+
+  :filenameExtension a :ConfigSet ;
+    :asPath false ;
+    :targetField &quot;destinationFile&quot; ;
+    :values (:a2 :b2 ) .
+    :a2 :field &quot;temp&quot; .
+    :b2 :string &quot;.html&quot; .
+</code></pre>
+<p>Yay!</p>
+<pre><code class=\"language-json\">&quot;destinationFile&quot;: &quot;/home/danny/sites/strandz.it/postcraft/data/input/2025-02-11/input2.html&quot;
+</code></pre>
+<p>Ok, so when I&#39;m runn
+ </p>
+
+        <div class="entry-footer">
+            <h2>About</h2>
+            
+        </div>
+    </body>
+</html>

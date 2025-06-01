@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <link rel="stylesheet" href="/css/fonts.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/grid-columns.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/style.css" type="text/css"/>
+        <title>Bootstrapping</title>
+    </head>
+    <!-- POST PAGE TEMPLATE -->
+    <body>
+        <header id="entry-header">
+            <h1 class="post-title h-cinzel">
+                
+            </h1>
+        </header>
+        <h1>Bootstrapping</h1>
+<p>#:paliwan</p>
+<p>I spent this morning getting #:transmissions to talk to a SPARQL store (finally!), is basically working. I also did a little side-step to <strong>get Claude to</strong> advise me on how <strong>to get Claude to</strong> build new applications and processors for #:transmissions. I have been using <strong>repomix</strong> to concat pretty much the whole codebase, which fills about 60% of a Project knowledge. For the side-step I added a bunch of docs, which took it to 90%. This really gobbles tokens fast. So I want more efficient prompting, more focused knowledge. (Very soon I want to port repomix to being a #:transmissions application, a step on the way to a DIY alternative to Claude&#39;s web interface).</p>
+<p>I would have continued with that to get #:postcraft to build this blog&#39;s index page <em>and</em> stick the raw markdown in the store, as data for #:semem.
+But...</p>
+<p><img src=\"media/images/2025-01/lazy-claude.png\" alt=\"Claude out of tokens until 5pm\"></p>
+<pre><code class=\"language-sh\">ls -s ~/github-danny/hyperdata/packages/semem/docs/postcraft/content-raw ~/github-danny/hyperdata/workspaces/semem
+</code></pre>
+<ul>
+<li>#:tbox</li>
+<li>#:semem</li>
+<li>#:transmissions</li>
+<li>#:hyperdata-clients</li>
+<li>#:kia</li>
+</ul>
+<p>I&#39;m a fool wasting an hour on asking for Claude&#39;s help on that.</p>
+<p>me:</p>
+<blockquote>
+<p>that&#39;s fixed it. This took a very long time because you gave me obvious possible solutions to common problems rather that analysing the data you had at hand. Try harder next time.</p>
+</blockquote>
+<p>Claude:</p>
+<pre><code>You&#39;re right. I should have:
+
+Immediately checked for invalid package.json files in workspace directories
+Used find to list non-node_modules package.json files
+Spotted zero-byte files that I created during testing
+Removed test files to fix workspace parsing
+
+Instead, I explored many less likely possibilities first. My apologies for the inefficient troubleshooting.
+</code></pre>
+<h2>CAIAs - Cognitive Autonomous Interactive Agents</h2>
+<p>This is the term I&#39;m going to use for #:kia (<em>KIA Intelligence Agency</em>) agents. The concept isn&#39;t as fancy as it sounds. I would have stuck with <strong>agents</strong>, but a big problem with that is that it&#39;s currently used with  acting on another&#39;s behalf, call this the <strong>lower form of agency</strong>. I want to focus more on agents with greater independence, autonomy, call this the <strong>higher form of agency</strong>.</p>
+<p>I started a chat session with Claude with the prompt below (preloaded with a fair bit of relevant Project knowledge and suitable system prompt). After a handful of cycles we got to <strong>CAIA</strong>, which is good enough. Ok, it was the alliteration with <strong>KIA</strong> that got me.</p>
+<blockquote>
+<p>I want a term or phrase to describe a class of agents in the context of AI software but much of the vocabulary there is heavily overloaded. Is there anything in the philosophy or natural science literature that might be suitable? These agents will vary widely, and the term should be suitable for describing anything from a pebble on a beach to a human. Typically, the main characteristics are that they are identifiable, can act autonomously and communicate with other agents, but their specifics capabilities will be in a wide range. The pebble can&#39;t really communicate, but it can be detected by agents with vision. It can&#39;t really act, but it does have affordances, like it can be picked up and thrown. At the other end of the scale, humans are versatile at communication and can carry out a lot of actions. Cognitive ability is another characteristic, but that could range from the pebble that can&#39;t think, through say a database or old-fashioned reasoner through to agents with superhuman intelligence. Any thoughts?</p>
+</blockquote>
+<p>Claude&#39;s first response started with this, definitely felt like the right track :</p>
+<blockquote>
+<p>The term &quot;affective-interactive entity&quot; (AIE) appears promising, drawing from philosophical work on affordances (Gibson) and affect theory (Spinoza, Deleuze).
+ </p>
+</blockquote>
+
+        <div class="entry-footer">
+            <h2>About</h2>
+            
+        </div>
+    </body>
+</html>

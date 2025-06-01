@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <link rel="stylesheet" href="/css/fonts.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/grid-columns.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/style.css" type="text/css"/>
+        <title>Journal 2025-03-06</title>
+    </head>
+    <!-- POST PAGE TEMPLATE -->
+    <body>
+        <header id="entry-header">
+            <h1 class="post-title h-cinzel">
+                
+            </h1>
+        </header>
+        <h1>Journal 2025-03-06</h1>
+<pre><code class=\"language-sh\">cd ~/hyperdata/transmissions # my local path
+./trans md-to-sparqlstore -v ~/sites/strandz.it/postcraft
+./trans sparqlstore-to-html -v ~/sites/strandz.it/postcraft
+</code></pre>
+<pre><code class=\"language-sparql\">PREFIX schema: &lt;http://schema.org/&gt;
+PREFIX xsd: &lt;http://www.w3.org/2001/XMLSchema#&gt;
+PREFIX : &lt;http://purl.org/stuff/transmissions/&gt;
+
+SELECT DISTINCT * WHERE {
+
+  ?article a schema:Article ;
+    :sourcePath ?sourcePath ;
+    :relPath ?relPath ;
+    :slug ?slug ;
+    schema:headline ?title ;
+  #  schema:dateModified ?modified ;
+    schema:articleBody ?content ;
+    schema:creator ?creator .
+
+  ?creator a schema:Person ;
+    schema:name ?creatorName .
+
+OPTIONAL {
+    ?article schema:datePublished ?published ;
+}
+#   FILTER(?published &gt;= &quot;{{startDate}}&quot;^^xsd:dateTime)
+}
+ORDER BY DESC(?published)
+</code></pre>
+<pre><code class=\"language-sparql\">PREFIX schema: &lt;http://schema.org/&gt;
+PREFIX xsd: &lt;http://www.w3.org/2001/XMLSchema#&gt;
+PREFIX : &lt;http://purl.org/stuff/transmissions/&gt;
+
+SELECT DISTINCT * WHERE {
+
+  ?article a schema:Article ;
+  ?p ?o .
+#   FILTER(?published &gt;= &quot;{{startDate}}&quot;^^xsd:dateTime)
+}
+ORDER BY DESC(?published)
+</code></pre>
+
+        <div class="entry-footer">
+            <h2>About</h2>
+            
+        </div>
+    </body>
+</html>

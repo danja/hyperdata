@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <link rel="stylesheet" href="/css/fonts.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/grid-columns.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/style.css" type="text/css"/>
+        <title>Semem Lives!</title>
+    </head>
+    <!-- POST PAGE TEMPLATE -->
+    <body>
+        <header id="entry-header">
+            <h1 class="post-title h-cinzel">
+                
+            </h1>
+        </header>
+        <h1>Semem Lives!</h1>
+<p><em><a href=\"https://github.com/danja/semem\">Semem</a> <del>is</del> will be an LLM-compatible context-aware, open-ended graph knowledgebase system combining the advantages of vector embeddings and Linked Data technologies.</em></p>
+<p><a href=\"https://danny.ayers.name/entries/2024-12-29_semem-ollama.html\">Notes from yesterday</a>, <a href=\"https://danny.ayers.name/entries/2024-12-30_perplexed.html\">this morning</a></p>
+<p><strong>Wow!</strong>, that went remarkably well. I&#39;m pretty familiar with the semweb bits, the embedding/chat interfacing side very inexperienced. So, hard part (for me) first.</p>
+<p>Claude did most of the heavy lifting, a long session about a month ago, a bunch this morning. I only actually <strong>ran it for the first time about an hour ago</strong>. Predictably Claude had left me with a load of manual <em>make-sane</em> refactoring to do. One stumble remaining is down to Faiss libs. The npm package <code>faiss</code> is an empty repo, Claude had hallucinated its API. What I needed was <code>faiss-node</code>. So that&#39;s where it stalls right now. I&#39;ve got the tooling in place to quicky sort this out. But I&#39;d used up my Claude Pro (!) token allowance by 11am, it&#39;s not due to reset for 20 mins and I have at least one tree to cut down before it gets dark...</p>
+<p>Still embryonic, but so pleasing, in <a href=\"https://github.com/danja/semem/blob/main/src/OllamaExample.js\">OllamaExample.js</a> there is :</p>
+<pre><code class=\"language-javascript\">chat: {
+    provider: &#39;ollama&#39;,
+    model: &#39;qwen2:1.5b&#39;
+},
+embedding: {
+    provider: &#39;ollama&#39;,
+    model: &#39;nomic-embed-text&#39;
+}
+...
+    const prompt = &quot;What&#39;s the current state of AI technology?&quot;;
+</code></pre>
+<p><em>...and so...</em></p>
+<pre><code class=\"language-sh\">node src/OllamaExample.js
+
+[INFO] Generating embedding...
+[INFO] No existing interaction history found in JSON. Starting fresh.
+[INFO] Memory initialized with 0 short-term and 0 long-term memories
+[INFO] Extracting concepts...
+[INFO] Extracted concepts: [ &#39;AI technology&#39; ]
+[INFO] No interactions available
+Response: AI (artificial intelligence) technology has come a long way since its inception in the 1950s. It is now a rapidly growing field, and there are numerous advancements being made across various industries.
+
+1. Machine Learning: This involves programming computers to learn from data without being explicitly programmed. It&#39;s used for tasks like recognizing images, identifying voice commands, or predicting customer behavior.
+
+2. Natural Language Processing (NLP): AI systems can understand human language in ways that make them easier to interact with and more efficient. They are used for tasks like chatbots, virtual assistants, and text-based search engines.
+
+3. Robotics: As technology develops further, robots have become better at performing complex tasks autonomously. Some advanced robots now perform jobs such as manufacturing goods or even medical procedures.
+
+4. Computer Vision (CV): This uses AI to help computers understand visual information in images or videos. It&#39;s used for applications like self-driving cars, security cameras, and facial recognition.
+
+5. Deep Learning: This branch of artificial intelligence involves creating algorithms that can learn from data without being explicitly programmed. It&#39;s widely used in image classification tasks, natural language processing, and reinforcement learning.
+
+6. Neural Networks: These are a type of machine learning algorithm inspired by the human brain. They&#39;re used for tasks such as recognizing handwriting, speech recognition, and playing games like chess or Go.
+
+In summary, AI technology is advancing rapidly across various fields, offering more efficient solutions to complex problems. However, there&#39;s still room for improvement in areas like ethical considerations and ensuring that AI systems can be trusted by humans.
+[INFO] Generating embedding...
+[INFO] Extracting concepts...
+[INFO] Extracted concepts: [
+  &#39;Machine Learning&#39;,
+  &#39;Natural Language Processing (NLP)&#39;,
+  &#39;Robotics&#39;,
+  &#39;Computer Vision (CV)&#39;,
+  &#39;Deep Learning&#39;,
+  &#39;Neural Networks&#39;
+]
+[INFO] Adding interaction: &#39;What&#39;s the current state of AI technology?&#39;
+TypeError: Invalid the first argument type, must be an Array.
+</code></pre>
+<p><strong>Tree time.</strong>
+ </p>
+
+        <div class="entry-footer">
+            <h2>About</h2>
+            
+        </div>
+    </body>
+</html>

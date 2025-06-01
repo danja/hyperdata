@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <link rel="stylesheet" href="/css/fonts.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/grid-columns.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/style.css" type="text/css"/>
+        <title>Semem Run</title>
+    </head>
+    <!-- POST PAGE TEMPLATE -->
+    <body>
+        <header id="entry-header">
+            <h1 class="post-title h-cinzel">
+                
+            </h1>
+        </header>
+        <pre><code>node src/SPARQLExample.js
+
+[INFO] Initialized FAISS index with dimension 1536
+[INFO] Loaded 1 short-term and 0 long-term memories from store http://localhost:4030/test/query graph &lt;http://example.org/mcp/memory&gt;
+[INFO] Adding interaction: &#39;What&#39;s the current state of the Semantic Web?&#39;
+[INFO] Memory initialized with 1 short-term and 0 long-term memories
+[INFO] Extracting concepts...
+[INFO] Extracted concepts: [ &#39;Semantic Web technologies&#39;, &#39;AI&#39; ]
+[INFO] Retrieving relevant interactions...
+Response: Semantic Web technologies and Artificial Intelligence (AI) complement each other well, as they are both powerful tools for representing complex data in structured form, facilitating knowledge discovery and enhancing human-computer interaction. Here are some ways in which semantic Web technologies can be integrated with AI:
+
+1. **Knowledge Extraction from Semantically-Structured Data**: Semantic Web technologies provide a standardized way of defining and storing the structured information necessary to build semantic web applications. The use of these tools allows for the extraction of knowledge about large amounts of data, making it easier for AI systems to process this information.
+
+2. **Artificial Intelligence as a Knowledge Broker**: AI can be used to curate and organize vast amounts of data in semantic Web formats. This includes tasks such as categorizing documents, recognizing patterns and relationships within structured data sets, and integrating heterogeneous data sources into a single knowledge base.
+
+3. **Interactive Experience Enhancement through AI-Driven Semantic Web Applications**: AI-driven applications can provide a more personalized user experience by using techniques like recommendation systems to suggest content based on the user&#39;s interests or previous behavior. These systems also use semantic Web technologies to ensure that the information presented is accurate and relevant to the user, enhancing their overall satisfaction with the application.
+
+4. **Machine Learning for Enhanced AI Capabilities**: AI can be trained with data from large volumes of structured web documents, which can then be used to improve AI models’ understanding of context, language, and relationships within web content. This integration allows machines to learn complex patterns in unstructured or semi-structured data, further enhancing their ability to perform tasks that require human-like reasoning.
+
+5. **Integration with Natural Language Processing (NLP) Systems**: Semantic Web technologies can be used with AI NLP systems to extract meaning from unstructured text and improve the understanding of natural language queries by machines. This integration allows for a more effective interaction between humans and computers, as the data is presented in a format that is easier for AI systems to interpret.
+
+6. **Knowledge Management for Autonomous Agents**: Semantic Web technologies can be utilized with artificial intelligence-driven agents to store large volumes of structured information. These agents are capable of processing complex queries, making decisions, and performing tasks based on this knowledge. By integrating semantic web technologies into AI systems, we can create more intelligent autonomous agents that are better equipped to handle complex scenarios.
+
+These integration strategies illustrate how the capabilities of both Semantic Web technologies and Artificial Intelligence can be combined to enhance our ability to process large volumes of information and solve complex problems efficiently.
+[INFO] Extracting concepts...
+[INFO] Extracted concepts: [
+  &#39;Semantic Web technologies&#39;,
+  &#39;Artificial Intelligence (AI)&#39;,
+  &#39;Knowledge Extraction from Semantically-Structured Data&#39;,
+  &#39;Artificial Intelligence as a Knowledge Broker&#39;,
+  &#39;Interactive Experience Enhancement through AI-Driven Semantic Web Applications&#39;,
+  &#39;Machine Learning for Enhanced AI Capabilities&#39;,
+  &#39;Integration with Natural Language Processing (NLP) Systems&#39;,
+  &#39;Knowledge Management for Autonomous Agents&#39;
+]
+[INFO] Adding interaction: &#39;How can Semantic Web technologies be used with AI?&#39;
+[INFO] Saved memory to SPARQL store http://localhost:4030/test/update graph &lt;http://example.org/mcp/memory&gt;. Stats: 2 short-term, 0 long-term memories
+</code></pre>
+<p>This query gives one result, containing the prompt &amp; response from the above :</p>
+<pre><code class=\"language-sparql\">PREFIX mcp: &lt;http://purl.org/stuff/mcp/&gt;
+SELECT ?graph ?id ?prompt ?output ?timestamp
+WHERE {
+  GRAPH ?graph {
+  ?s a mcp:Interaction ;
+     mcp:id ?id ;
+     mcp:prompt ?prompt ;
+     mcp:output ?output ;
+     mcp:timestamp ?timestamp .
+    FILTER regex(str(?prompt), &quot;Semantic&quot;)
+}
+}
+</code></pre>
+<p>This gives 2 results :</p>
+<pre><code class=\"language-sparql\">SELECT *
+WHERE {
+  GRAPH ?graph {
+  ?s ?p ?o
+    FILTER regex(str(?o), &quot;Semantic&quot;)
+}
+}
+</code></pre>
+<p>One is the triple with the prompt, the other the triple with the LLM output.
+ </p>
+
+        <div class="entry-footer">
+            <h2>About</h2>
+            
+        </div>
+    </body>
+</html>

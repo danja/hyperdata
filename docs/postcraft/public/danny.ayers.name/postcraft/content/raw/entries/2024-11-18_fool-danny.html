@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <link rel="stylesheet" href="/css/fonts.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/grid-columns.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/style.css" type="text/css"/>
+        <title>Fool Danny</title>
+    </head>
+    <!-- POST PAGE TEMPLATE -->
+    <body>
+        <header id="entry-header">
+            <h1 class="post-title h-cinzel">
+                
+            </h1>
+        </header>
+        <h1>Fool Danny</h1>
+<p><em><strong>&quot;Doctor doctor! It hurts when I do this...</strong></em></p>
+<p>I&#39;ve had a recurring problem with <code>npm</code> installs etc, because in the bunch of submodules I have below <code>hyperdata/packages</code> I have <code>hyperdata-static</code> which currently needs to be pinned to node v16. Anything nearby chokes on <code>node-gyp rebuild</code>.
+In an idiot-party with Claude, ended up destroying <code>hyperdata-static</code> without fixing the gyp issue.</p>
+<p><em><strong>Stop doing that.</strong></em></p>
+<p>Continuing from <code>/home/danny/github-danny/hyperdata/docs/postcraft/content-raw/journal/2024-11-18.md</code></p>
+<pre><code class=\"language-sh\"># packages/hyperdata-desktop copied elsewhere first, just in case
+cd ~/github-danny/hyperdata/
+git submodule deinit -f packages/hyperdata-desktop
+git rm -f packages/hyperdata-desktop
+git commit -m &quot;Removed submodule&quot;
+rm -rf .git/modules/packages/hyperdata-desktop
+</code></pre>
+<p>Hmm -</p>
+<pre><code class=\"language-sh\">...
+fatal: could not migrate git directory from &#39;/home/danny/github-danny/hyperdata/packages/hyperdata-desktop/.git&#39; to &#39;/home/danny/github-danny/hyperdata/.git/modules/packages/hyperdata-desktop&#39;: Directory not empty
+...
+</code></pre>
+<p>Dunno, try :</p>
+<pre><code class=\"language-sh\">cd ~/github-danny/hyperdata/packages/semem
+npm cache clean --force
+rm -rf node_modules
+npm install jasmine --save-dev
+</code></pre>
+<pre><code class=\"language-sh\">npm WARN ignoring workspace config at /home/danny/github-danny/hyperdata/packages/semem/.npmrc
+</code></pre>
+<p>ffs.</p>
+<pre><code class=\"language-sh\">npm cache clean --force
+rm -rf node_modules
+nvm use default
+npm install -g node-gyp
+ npm install jasmine --save-dev
+</code></pre>
+<p>Finally!</p>
+<p>I can&#39;t be arsed fixing <code>hyperdata-desktop</code> right now. Back to what I was trying to do 12 hours ago...
+ </p>
+
+        <div class="entry-footer">
+            <h2>About</h2>
+            
+        </div>
+    </body>
+</html>

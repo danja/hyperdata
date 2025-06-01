@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <link rel="stylesheet" href="/css/fonts.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/grid-columns.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/style.css" type="text/css"/>
+        <title>2024-05-30 Later...</title>
+    </head>
+    <!-- POST PAGE TEMPLATE -->
+    <body>
+        <header id="entry-header">
+            <h1 class="post-title h-cinzel">
+                
+            </h1>
+        </header>
+        <h1>2024-05-30 Later...</h1>
+<p>Yeah, it&#39;s beyond me to figure this out tonight.</p>
+<p>The #Transmissions thing is kinda like a made-up language, that only I understand, and have difficulty explaining to me a day later.</p>
+<p>But this was the point of me doing the whole #Postcraft thing, so I could organise stuff like this.</p>
+<p>Something that worked perfectly, the output dirs were easy to shift around. But the <em>permalinks</em> are still totally broken. Can&#39;t remember where the hell that&#39;s done. Enough for today.</p>
+<p>I just remembered a Kaggle challenge was on my todo list. On finding an Israeli &#39;talk to the animals&#39; challenge in the Guardian.</p>
+<p>Ok, one last easy thing tonight - Fuseki on the server should be satisfying.</p>
+<p>The auth will take a load more work, but that&#39;s not actually needed right now.</p>
+<p>Their docs aren&#39;t great. I&#39;ve done this several times before, it was never difficult before...</p>
+<p>Ok, I got apache-jena-fuseki-5.0.0.tar.gz</p>
+<p>Oh yeah - it needs a Java runtime.</p>
+<p>NOTE TO JENA TEAM : ELI5</p>
+<p>an AI tells me:</p>
+<p>sudo apt install openjdk-lts</p>
+<p>E: Unable to locate package openjdk-lts</p>
+<p>dick AI.</p>
+<p>A quick google later, best instructions I can find seem to be at <a href=\"https://www.linode.com/docs/guides/how-to-install-openjdk-ubuntu-22-04/\">https://www.linode.com/docs/guides/how-to-install-openjdk-ubuntu-22-04/</a></p>
+<p>the folks who are hosting this thing, ok!</p>
+<p>Not very helpful on which version to choose.</p>
+<p>apt-cache search openjdk</p>
+<p>Search the Jena site - no useful response.</p>
+<p>I guess go for one less than the highest number.</p>
+<p>I like the number 21. Has stable 3 and squewiff 7 in there.</p>
+<p>I don&#39;t <em>think</em> I&#39;ll need the full JDK. So:</p>
+<pre><code>apt-get install openjdk-21-jre
+</code></pre>
+<p>I know what&#39;s coming next. Environment variables. Bound to arrive.</p>
+<p>Hang on,</p>
+<pre><code>root@hyperdata:/home/services/fuseki/apache-jena-fuseki-5.0.0# ./fuseki start
+</code></pre>
+<p>that looked rather promising.</p>
+<pre><code>lynx http://localhost:3030/
+
+   We&#39;re sorry but this app doesn&#39;t work properly without JavaScript enabled. Please enable it to continue.
+</code></pre>
+<p>Oh yeah.</p>
+<p>It appears to be running as a daemon - haven&#39;t a clue how.</p>
+<p>ok, proxy nginx to it.</p>
+<p>Grrr. Where are those config files. Under <code>/etc/nginx</code>. Ok.</p>
+<p>I have a fuseki.conf there, must have planned ahead.
+Has <a href=\"https://fuseki.hyperdata.it\">https://fuseki.hyperdata.it</a> pointing to port 3331.</p>
+<p>Ok, I must have decided which ports to use earlier. Where&#39;s Fuseki&#39;s config?</p>
+<p>Ok. I&#39;ve no idea how that started as a daemon, but in the root dir of the Fuseki install there&#39;s a <code>fuseki.service</code>. I&#39;ll have you.</p>
+<pre><code>cp fuseki.service /etc/systemd/system/
+killall java
+nano /etc/systemd/system/fuseki.service
+</code></pre>
+<p>Ok, semi-understandable for me.</p>
+<ol>
+<li><p>Place this file under /etc/systemd/system/</p>
+</li>
+<li><p>Create a system user called &quot;fuseki&quot; and make sure it has permission to access the Fuseki configuration and databases</p>
+</li>
+<li><p>Adjust the paths and other settings below if necessary</p>
+</li>
+<li><p>Activate using: sudo systemctl enable fuseki.service</p>
+</li>
+<li><p>Hmm. Where are the config &amp; databases. This might be one for AI</p>
+</li>
+</ol>
+<pre><code>sudo useradd -m -s /bin/bash fuseki
+sudo passwd fuseki
+</code></pre>
+<p>Looks legit. (When did I ever use a shell other than bash? Ok, that once with the fish thing.)</p>
+<pre><code>root@hyperdata:/home/services/fuseki/apache-jena-fuseki-5.0.0# ls
+bin  fuseki  fuseki-backup  fuseki-server  fuseki-server.bat  fuseki-server.jar  fuseki.service  LICENSE  log4j2.properties  NOTICE  README  run  webapp
+root@hyperdata:/home/services/fuseki/apache-jena-fuseki-5.0.0# cd ..
+root@hyperdata:/home/services/fuseki# cd ..
+root@hyperdata:/home/services# mv fuseki fuseki_
+root@hyperdata:/home/services# mv fuseki_/apache-jena-fuseki-5.0.0 ./fuseki
+root@hyperdata:/home/services# rmdir fuseki:_
+rmdir: failed to remove &#39;fuseki:_&#39;: No such file or directory
+root@hyperdata:/home/services# rmdir fuseki_
+rmdir: failed to remove &#39;fuseki_&#39;: Directory not empty
+root@hyperdata:/home/services# cd fuseki_
+root@hyperdata:/home/services/fuseki_# ls
+apache-jena-fuseki-5.0.0.tar.gz
+root@hyperdata:/home/services/fuseki_# rm apache-jena-fuseki-5.0.0.tar.gz
+root@hyperdata:/home/services/fuseki_# cd ..
+root@hyperdata:/home/services# rm fuseki_
+rm: cannot remove &#39;fuseki_&#39;: Is a directory
+IT&#39;S GONE MIDNIGHT, BE QUIET
+root@hyperdata:/home/services# rmdir fuseki_
+</code></pre>
+<p>Ok, so these in fuseki.service:</p>
+<pre><code>Environment=FUSEKI_HOME=/home/services/fuseki
+Environment=FUSEKI_BASE=/home/services/fuseki
+# Edit the line below to adjust the amount of memory allocated to Fuseki
+Environment=JVM_ARGS=-Xmx1G  # I don&#39;t think this virtual server has 4 as was. Safe sidery, call it 1.
+ExecStart=/home/services/fuseki/fuseki-server
+</code></pre>
+<p>That might be right. But it will still be useless unless I change the port.</p>
+<p>Hmm. No idea where that&#39;s set. So I&#39;ll ask AI (which will probably suggest a --port option, because it&#39;ll know that&#39;s the way AndyS likes to do things).</p>
+<pre><code>By default, Fuseki listens on port 3030. To change the port number, you can modify the fuseki.properties file.
+
+Here are the steps to change the port number:
+
+Locate the fuseki.properties file:
+sudo find / -name fuseki.properties
+</code></pre>
+<p>Ok as far as 3030. The rest, in Aussie parlance, you&#39;re shittin me.
+It probably is that flag. I&#39;ll try it in the service file.</p>
+<pre><code>ExecStart=/home/services/fuseki/fuseki-server --port=3331
+</code></pre>
+<pre><code>root@hyperdata:/home/services/fuseki# systemctl enable fuseki
+Created symlink /etc/systemd/system/multi-user.target.wants/fuseki.service → /etc/systemd/system/fuseki.service.
+root@hyperdata:/home/services/fuseki# systemctl start fuseki
+root@hyperdata:/home/services/fuseki# systemctl status fuseki
+...
+May 30 22:21:46 hyperdata.it systemd[1]: /etc/systemd/system/fuseki.service:38: Invalid environment assignment, ignoring: #
+May 30 22:21:46 hyperdata.it systemd[1]: /etc/systemd/system/fuseki.service:38: Invalid environment assignment, ignoring: Hmm.
+</code></pre>
+<p>Hee hee.</p>
+<p>Oh, that I wasn&#39;t expecting:</p>
+<pre><code>HTTP ERROR 503 Service Unavailable
+URI:	http://fuseki.hyperdata.it/
+STATUS:	503
+MESSAGE:	Service Unavailable
+</code></pre>
+<p>hang on, it should be on https...</p>
+<p>Nope, it still says http, 503.
+I&#39;m not expecting much, but to see what&#39;s going on:</p>
+<pre><code>lynx http://localhost:3331/
+</code></pre>
+<p>Same 503. Who&#39;s giving me that message, Fuseki or Nginx?</p>
+<p>Ah wait, looking up I see :</p>
+<pre><code>May 30 22:21:15 hyperdata.it fuseki-server[551211]: 22:21:15 INFO  Server          :: Started 2024/05/30 22:21:15 UTC on port 3331
+</code></pre>
+<p>Oh bloody hell, it isn&#39;t nginx because that&#39;s bouncing off 3331.</p>
+<p>Logs?</p>
+<p>Nah, first, anything in fuseki.service? Get rid of those syntaxy warnings at least.</p>
+<p>I&#39;ve reverted this back to the original:</p>
+<pre><code>Environment=JVM_ARGS=-Xmx4G
+</code></pre>
+<p>I can&#39;t imagine I changed that last time I installed this thing. Swap should look after, no?</p>
+<p>Sod it, call it a day.</p>
+<p>Night Fuseki!
+ </p>
+
+        <div class="entry-footer">
+            <h2>About</h2>
+            
+        </div>
+    </body>
+</html>

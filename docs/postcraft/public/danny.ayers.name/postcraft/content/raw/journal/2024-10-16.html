@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <link rel="stylesheet" href="/css/fonts.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/grid-columns.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/style.css" type="text/css"/>
+        <title>Journal 2024-10-16</title>
+    </head>
+    <!-- POST PAGE TEMPLATE -->
+    <body>
+        <header id="entry-header">
+            <h1 class="post-title h-cinzel">
+                
+            </h1>
+        </header>
+        <h1>Journal 2024-10-16</h1>
+<p>Main tasks today:</p>
+<ol>
+<li>#:todo make #:fam usable with #:pivot vocab</li>
+<li>#:todo make GitHub summary transmission #:transmission to list my GitHub repos and download key bits</li>
+<li>#:todo start &#39;what I&#39;ve been up to&#39; doc using 2.</li>
+<li>#:todo #:transmission to run #:postcraft installs to create placeholders as appropriate on <code>hyperdata.it/2004</code>, <code>elfquake.org</code> etc. (<code>server</code> repo?)</li>
+</ol>
+<p>#:todo make server/browser extn for #:hyperdata-desktop</p>
+<p>#:todo make #:t:processor for pulling out dirs of Claude projects, add to corresponding #:postcraft installs  </p>
+<hr>
+<h2>1. FAM</h2>
+<h3>Getting a server/browser into the build workflow</h3>
+<pre><code class=\"language-sh\">npm install --save-dev webpack-dev-server --loglevel verbose
+</code></pre>
+<p>It appeared to stall, turns out :</p>
+<pre><code class=\"language-sh\">...
+npm verbose reify failed optional dependency /home/danny/github-danny/hyperdata/packages/farelo/form-a-matic/node_modules/fsevents
+npm http fetch POST 200 https://registry.npmjs.org/-/npm/v1/security/advisories/bulk 549ms
+npm http fetch GET 200 https://registry.npmjs.org/compressible/-/compressible-2.0.18.tgz 430ms (cache miss)
+...
+</code></pre>
+<p>But finally -</p>
+<pre><code class=\"language-sh\">added 169 packages, and audited 716 packages in 4m
+
+104 packages are looking for funding
+  run `npm fund` for details
+
+found 0 vulnerabilities
+npm verbose cwd /home/danny/github-danny/hyperdata/packages/farelo/form-a-matic
+npm verbose os Linux 6.8.0-45-generic
+npm verbose node v20.11.0
+npm verbose npm  v10.9.0
+npm verbose exit 0
+npm info ok
+</code></pre>
+<p>Set up <code>package.json</code> &amp; <code>webpack.config.js</code></p>
+<p><code>html-webpack-plugin</code> also needed, non-verbose version did the stally thing again, need to check...</p>
+<pre><code class=\"language-sh\">npm install --save-dev html-webpack-plugin --loglevel verbose
+</code></pre>
+<p>Good breakpoint for dogwalk.</p>
+<p>Hang on, it&#39;s installed, got this again :</p>
+<pre><code class=\"language-sh\">npm verbose reify failed optional dependency /home/danny/github-danny/hyperdata/packages/farelo/form-a-matic/node_modules/fsevents
+</code></pre>
+<p>#:todo ignore optionals</p>
+<p>#:todo check <code>webpack --mode production</code>
+#:todo later -</p>
+<blockquote>
+**Key performance optimizations**
+
+<ul>
+<li>Use production mode: webpack --mode production</li>
+<li>Enable code splitting for larger apps</li>
+<li>Implement tree shaking to eliminate dead code</li>
+<li>Use mini-css-extract-plugin for CSS optimization</li>
+<li>Implement caching strategies for faster rebuilds</blockquote></li>
+</ul>
+<p>When I got back to the actual code I made the usual mistake of asking Claude to do too much at once. 2 steps forward, 3 back. But finally moved things along a tiny bit, enough for today.</p>
+<p>So the goal of being able to use it with #:pivot will haveto carry over.</p>
+<h2>2. GitHub summary transmission</h2>
+<p>#:next download, <em>if exists</em> :</p>
+<ul>
+<li><code>README.md</code></li>
+<li><code>package.json</code></li>
+<li><code>about.md</code></li>
+<li><code>about.ttl</code></li>
+<li><code>manifest.ttl</code></li>
+</ul>
+<p>I have a #:t:processor for HTTP GET - did I use <code>axios</code> for client?</p>
+<p>#:todo make a #:transmission to take repo summary raw, send to AI API, create a new <code>about.md</code></p>
+<p>#:todo make #:l{Make link markup resolver}</p>
+<p>#:l{JSP Semtags} <a href=\"https://www-sop.inria.fr/acacia/soft/sewese/api/semtags/tld-summary.html\">https://www-sop.inria.fr/acacia/soft/sewese/api/semtags/tld-summary.html</a>  &quot;SemTags is a semantic web tags library that allows JSP developers to use (and work with) RDF/S and OWL ontologies and annotations in their JSP pages.&quot;</p>
+<p>#:todo check <a href=\"https://www-sop.inria.fr/acacia/soft/sewese/api/semtags/tld-summary.html\">JSP Semtags</a> - there are bits that might be useful in #:t</p>
+<p>#:todo add support for <strong>includes</strong> in #:transmissions&#39;s <code>manifest.ttl</code></p>
+<p>#:todo:ui <a href=\"https://developer.mozilla.org/en-US/docs/Web/HTML/Element/details\">HTML details blocks</a> markdown #:t:processor
+ </p>
+
+        <div class="entry-footer">
+            <h2>About</h2>
+            
+        </div>
+    </body>
+</html>

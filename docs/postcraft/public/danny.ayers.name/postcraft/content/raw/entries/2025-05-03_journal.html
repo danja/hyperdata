@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <link rel="stylesheet" href="/css/fonts.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/grid-columns.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/style.css" type="text/css"/>
+        <title>Journal 2025-05-03</title>
+    </head>
+    <!-- POST PAGE TEMPLATE -->
+    <body>
+        <header id="entry-header">
+            <h1 class="post-title h-cinzel">
+                
+            </h1>
+        </header>
+        <h1>Journal 2025-05-03</h1>
+<p>Here’s the trace of where your message goes and how it should reach ProcessorImpl.getProperty:</p>
+<p>CLI Entry:
+You run:</p>
+<p>This calls the bash script trans, which runs node <a href=\"http://_vscodecontentref_/2\">run.js</a> ....</p>
+<p>Argument Parsing:
+In run.js, yargs parses the --message argument and coerces it to a JS object.</p>
+<p>CommandUtils:
+CommandUtils.handleOptions is called, which calls CommandUtils.parseOrLoadMessage.
+This wraps your message as { payload: { theSettingProperty: ... } }.</p>
+<p>AppManager:
+AppManager.start(message) is called with the message object.
+The message is merged with app context, then passed to each transmission’s process(message).</p>
+<p>Transmission:
+The transmission’s process(message) method is called, which passes the message to each processor in the pipeline.</p>
+<p>Processor (TestSetting):
+The processor’s process(message) is called.
+In TestSetting.js, it calls this.getProperty(ns.trn.theSettingProperty).</p>
+<p>ProcessorImpl.getProperty:</p>
+<p>Checks if the property is in the message (via propertyInMessage).
+If not, checks settings/config.
+ </p>
+
+        <div class="entry-footer">
+            <h2>About</h2>
+            
+        </div>
+    </body>
+</html>

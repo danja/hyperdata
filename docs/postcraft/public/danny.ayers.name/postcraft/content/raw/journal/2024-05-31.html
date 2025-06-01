@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <link rel="stylesheet" href="/css/fonts.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/grid-columns.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/style.css" type="text/css"/>
+        <title>I Got Sunshine</title>
+    </head>
+    <!-- POST PAGE TEMPLATE -->
+    <body>
+        <header id="entry-header">
+            <h1 class="post-title h-cinzel">
+                
+            </h1>
+        </header>
+        <h1>I Got Sunshine</h1>
+<p>The weird weather is continuing. For the past few weeks it&#39;s been lovely &amp; sunny for a few hours then pouring with rain for a few hours. I was woken by a downpour, now it&#39;s nice &amp; bright.</p>
+<p>Ok, <em>Plan</em> the way I&#39;ve been doing it in blog is hopelessly suboptimal. I must devote a few hours to #Farelo, my project for project management stuff, soon. One task is to get the static content I had at <a href=\"https://hyperdata.it\">https://hyperdata.it</a> back online. This was lowish priority, but I keep finding myself wanting to refer to things there, so I might as well get that out of the way. I don&#39;t <em>think</em> there is anything substantive I had on the old server that isn&#39;t in <a href=\"https://github.com/danja/hyperdata-static\">https://github.com/danja/hyperdata-static</a>. I do know there&#39;s a lot of cruft in that, but I can clean that up later. Hopefully a <code>git pull</code>, a revised <code>index.html</code> and a symlink will be enough for now.</p>
+<h2>Plan</h2>
+<ul>
+<li><p>hyperdata-static</p>
+</li>
+<li><p>#Fuseki server</p>
+</li>
+<li><p>blog layout tweaks</p>
+</li>
+<li><p>#FOAFRetrospective</p>
+</li>
+<li><p>TODOs!</p>
+</li>
+<li><p>project top levels</p>
+</li>
+<li><p>server backup</p>
+</li>
+</ul>
+<p>CHECK WHERE I GOT TO WITH FARELO, FOOLICIOUS, FOOWIKI, GRADINO</p>
+<p>danja.gihub.io</p>
+<h3>FOAF Retrospective</h3>
+<ul>
+<li><p>site org</p>
+</li>
+<li><p>#Postcraft setup</p>
+</li>
+<li><p>list of #Transmissions retrieval services etc. needed</p>
+</li>
+<li><p>markmap rendering service</p>
+</li>
+</ul>
+<h3>Fuseki</h3>
+<p>I was getting a 503.</p>
+<p>run from command line with :</p>
+<pre><code>root@hyperdata:/home/services/fuseki# ./fuseki-server --port=3331 &amp;
+</code></pre>
+<p>was ok</p>
+<p>Shiro file: file:///home/services/fuseki/run/shiro.ini
+14:41:40 INFO Server :: Configuration file: /home/services/fuseki/run/config.ttl</p>
+<p>in shiro.ini
+admin=qwe123</p>
+<p>restarted</p>
+<p>root@hyperdata:/var/log# less syslog</p>
+<p>mentioned</p>
+<pre><code> FUSEKI_BASE is not writable: /home/services/fuseki
+</code></pre>
+<p>so</p>
+<pre><code># Change ownership to user fuseki and group fuseki
+
+sudo chown -R fuseki:fuseki /home/services/fuseki
+
+# Set directory permissions to 755
+
+sudo chmod -R 755 /home/services/fuseki
+
+# Verify changes
+
+ls -ld /home/services/fuseki
+</code></pre>
+<p>and <em>It works!</em>
+ </p>
+
+        <div class="entry-footer">
+            <h2>About</h2>
+            
+        </div>
+    </body>
+</html>

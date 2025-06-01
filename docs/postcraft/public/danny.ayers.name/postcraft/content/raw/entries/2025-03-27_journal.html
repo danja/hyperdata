@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <link rel="stylesheet" href="/css/fonts.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/grid-columns.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/style.css" type="text/css"/>
+        <title>Journal 2025-03-27</title>
+    </head>
+    <!-- POST PAGE TEMPLATE -->
+    <body>
+        <header id="entry-header">
+            <h1 class="post-title h-cinzel">
+                
+            </h1>
+        </header>
+        <h1>Journal 2025-03-27</h1>
+<p>Rather convoluted site publishing right now.</p>
+<p>Local:</p>
+<pre><code class=\"language-sh\">cd ~/hyperdata/transmissions # my local path
+
+./trans md-to-sparqlstore ~/sites/danny.ayers.name/postcraft
+./trans postcraft-statics ~/sites/danny.ayers.name/postcraft
+./trans sparqlstore-to-html ~/sites/danny.ayers.name/postcraft
+./trans sparqlstore-to-site-indexes ~/sites/danny.ayers.name/postcraft
+
+danny@danny-desktop:/var/www/html$ ln -s ~/sites/danny.ayers.name/postcraft/public ./danny.ayers.name
+</code></pre>
+<p>Looking good.</p>
+<p>On server :</p>
+<pre><code>su hyperdata
+
+cd /home
+sudo mkdir sites
+sudo chown hyperdata sites
+cd sites
+git clone https://github.com/danja/danny.ayers.name.git
+...
+Cloning into &#39;danny.ayers.name&#39;...
+remote: Enumerating objects: 1054, done.
+remote: Counting objects: 100% (500/500), done.
+remote: Compressing objects: 100% (344/344), done.
+remote: Total 1054 (delta 185), reused 452 (delta 139), pack-reused 554 (from 2)
+Receiving objects: 100% (1054/1054), 52.86 MiB | 47.48 MiB/s, done.
+Resolving deltas: 100% (222/222), done.
+</code></pre>
+<p><code>nginx</code> already pointing at <code>/home/www/danny.ayers.name</code></p>
+<p>Hmm, not ideal, I should really match the server paths to my local one. But I really want the owner of this stuff on both sides to be <code>hyperdata</code>. So I&#39;ll say ok for now. Priority is just getting it up again.</p>
+<pre><code class=\"language-sh\">cd /home/www
+sudo ln -s /home/sites/danny.ayers.name/postcraft/public ./danny.ayers.name
+</code></pre>
+<p>And...my blog&#39;s back!!
+ </p>
+
+        <div class="entry-footer">
+            <h2>About</h2>
+            
+        </div>
+    </body>
+</html>

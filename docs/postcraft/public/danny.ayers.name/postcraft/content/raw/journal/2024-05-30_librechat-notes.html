@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <link rel="stylesheet" href="/css/fonts.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/grid-columns.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/style.css" type="text/css"/>
+        <title>LibreChat Notes 2024-05-30</title>
+    </head>
+    <!-- POST PAGE TEMPLATE -->
+    <body>
+        <header id="entry-header">
+            <h1 class="post-title h-cinzel">
+                
+            </h1>
+        </header>
+        <h1>LibreChat Notes 2024-05-30</h1>
+<p><a href=\"https://www.librechat.ai/\">LibreChat</a> is a front end for conversational AI services. It&#39;s design is not dissimilar to OpenAI&#39;s ChatGPT Web interface, but supports a wide range of services. It&#39;s open source, and can be run locally or wherever. They recommend using Docker, which is what I did. I&#39;m on Ubuntu here, they support all the usual desktop platforms.</p>
+<p><strong>LibreChat is in active development, flux likely, so note the date above.</strong></p>
+<p>For starters I wanted to use models from <a href=\"https://openai.com/index/openai-api/\">OpenAI</a> and <a href=\"https://groq.com/\">Groq</a>. API keys are needed - OpenAI&#39;s is pay-as-you-go, Groq is free but capped usage (and very fast).</p>
+<p>Following the <a href=\"https://www.librechat.ai/docs/local/docker\">Local Installation of LibreChat with Docker</a> will get the thing up and basically running with no fuss. But out of the box there are a few things that might not be immediately obvious.</p>
+<p>For the OpenAI API key, first copy yours to clipboard then click the dropdown labeled <strong>OpenAI</strong> top-left of screen and click the gear icon to the right of OpenAI on the list. That&#39;s it <strong>done</strong>.</p>
+<p>For <strong>Groq</strong> it&#39;s a little more involved.</p>
+<p>I was going around in circles for quite a while until I saw that the instructions for <a href=\"https://www.librechat.ai/docs/configuration/librechat_yaml/setup\">YAML Setup</a> appear <em>after</em> those for <a href=\"https://www.librechat.ai/docs/configuration/librechat_yaml/ai_endpoints\">Custom AI Endpoints</a>. The former tells you a <code>docker-compose.override.yml</code> is needed (a new one from the code on that page worked for me). That points Docker to a <code>librechat.yaml</code> file.
+Conveniently (for me) their <code>librechat.example.yaml</code> file has an entry for Groq, so I just copied &amp; renamed the whole file to <code>librechat.yaml</code>. It contains:</p>
+<pre><code>  custom:
+    # Groq Example
+    - name: &#39;groq&#39;
+      apiKey: &#39;${GROQ_API_KEY}&#39;
+      baseURL: &#39;https://api.groq.com/openai/v1/&#39;
+      ...
+</code></pre>
+<p><em>However</em>, I&#39;m no doubt missing something here, but it didn&#39;t pick up my environment variable set with:</p>
+<pre><code>export GROQ_API_KEY=...
+</code></pre>
+<p>Probably not best practices, but this is on a local install, so I simply pasted my key instead of the <code>${GROQ_API_KEY}</code> bit above.
+<strong>It works!!!</strong></p>
+<p>I intend using this quite a lot, so I created a service file for systemd,</p>
+<p>in <code>/etc/systemd/system/librechat.service</code> :</p>
+<pre><code>[Unit]
+Description=LibreChat
+Requires=docker.service
+After=docker.service
+
+[Service]
+WorkingDirectory=/home/danny/AI/LibreChat
+ExecStart=/usr/bin/docker-compose up
+ExecStop=/usr/bin/docker-compose down
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target
+</code></pre>
+<p><em>Adjust paths to taste</em></p>
+<p>I always get confused about the order of these, it&#39;s something like:</p>
+<pre><code>sudo systemctl daemon-reload
+sudo systemctl enable librechat
+sudo systemctl start librechat
+</code></pre>
+<p>If you run into probs, try all the usual update procedures for Docker, npm, etc. before tearing your hair out.</p>
+<p>I&#39;ll be trying some other services soon (I see they have support for Ollama, so that&#39;s definitely in my queue). If there&#39;s anything useful to share I&#39;ll add it here.
+ </p>
+
+        <div class="entry-footer">
+            <h2>About</h2>
+            
+        </div>
+    </body>
+</html>

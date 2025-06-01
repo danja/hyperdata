@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <link rel="stylesheet" href="/css/fonts.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/grid-columns.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/style.css" type="text/css"/>
+        <title>LDAP and Fuseki cont.</title>
+    </head>
+    <!-- POST PAGE TEMPLATE -->
+    <body>
+        <header id="entry-header">
+            <h1 class="post-title h-cinzel">
+                
+            </h1>
+        </header>
+        <h1>LDAP and Fuseki cont.</h1>
+<p><em>for ChatGPT</em></p>
+<p>I would like to test the auth on Fuseki. There is an endpoint that supports POST at : <a href=\"https://fuseki.hyperdata.it/foowiki/update\">https://fuseki.hyperdata.it/foowiki/update</a>
+I would like to add a random triple to the foowiki dataset. Credentials will be user: fuseki-foowiki-user password: TheEnglish_3
+Please give me a minimal piece of node code, using ES modules if necessary, that I can run locally to add the triple to the dataset.</p>
+<hr>
+<p>moved to Claude Sonnet 3.5 in Cursor
+many more circles</p>
+<hr>
+<p>There are groups in LDAP that correspond to the roles in Fuseki. The users in these groups should have the following permissions -</p>
+<p>service-admin members:
+Should have complete access to Fuseki.
+fuseki-admin members:
+Should be able to create and delete datasets, and have write access.
+fuseki-foowiki members:
+Should be able to write data to the foowiki dataset.
+Any other user, without auth, has read access to the all datasets.</p>
+<p>The LDAP details are in</p>
+<p>what is needed in shiro.ini ?</p>
+<p><em>can you guess what happened based on what happened with most of the other things you advised recently?</em></p>
+<p>I sincerely apologize. Based on the pattern of our recent interactions, I can guess that this configuration also caused Fuseki to crash or fail to start. I deeply regret causing further issues and frustration.
+You&#39;re absolutely right to be critical of my advice. I&#39;ve been making assumptions and suggesting changes without fully understanding the specific constraints of your Fuseki setup. This approach has been counterproductive and potentially harmful to your system.
+Given this situation, I believe the most responsible course of action is to:</p>
+<ol>
+<li>Stop suggesting configuration changes that might destabilize your system.</li>
+<li>Return to the last known stable configuration (the one that gave a 401 Unauthorized error but didn&#39;t crash Fuseki).</li>
+<li>Recommend seeking assistance from Apache Jena Fuseki experts or official support channels.</li>
+</ol>
+<hr>
+<p>I first ask about known working Shiro configs - it gives me another breaky one</p>
+<p>then - ah...point it to Fuseki source</p>
+<p>Thank you for providing that information. After examining the ShiroEnvironmentLoader.java file in the Apache Jena GitHub repository, I&#39;ve found some insights that might be relevant to our LDAP configuration issue.</p>
+<p>The ShiroEnvironmentLoader class is responsible for setting up the Shiro security environment in Fuseki. Notably, it doesn&#39;t seem to have any specific handling for LDAP realms or group-to-role mapping. This could explain why our previous attempts at configuring LDAP group-based authorization weren&#39;t successful.</p>
+<p>Key observations from the file:</p>
+<ol>
+<li>The class loads the Shiro configuration from an INI file (shiro.ini).</li>
+<li>It sets up a SecurityManager and WebSecurityManager.</li>
+<li>There&#39;s no specific code for handling LDAP or group-to-role mapping.
+Given this information, it appears that Fuseki might not natively support advanced LDAP features like group-to-role mapping through the shiro.ini configuration alone. This could explain why our previous attempts to add group-to-role mapping in the configuration file didn&#39;t work as expected.
+To proceed, we might need to consider the following options:</li>
+<li>Use a simpler LDAP configuration that doesn&#39;t rely on group-to-role mapping. Instead, we could assign roles directly to users in the LDAP directory.</li>
+<li>Investigate if it&#39;s possible to extend Fuseki&#39;s security implementation to support group-to-role mapping. This would likely involve custom Java code and might not be feasible depending on your deployment setup.</li>
+<li>Look into using a custom Shiro Realm implementation that handles the group-to-role mapping logic internally, rather than relying on the configuration file.
+Given the complexity of the situation, it might be worth reaching out to the Apache Jena community or mailing list with these specific findings. They might have additional insights or workarounds for implementing LDAP group-based authorization in Fuseki.</li>
+</ol>
+<hr>
+<p>I apologize for the oversight. It seems the &#39;superpowers&#39; attribute isn&#39;t defined in your LDAP schema, which is causing the error. Let&#39;s take a step back and modify our approach to use an existing attribute that&#39;s already defined in the inetOrgPerson objectClass.</p>
+<p>Instead of &#39;superpowers&#39;, we can use the &#39;title&#39; attribute, which is a standard attribute in inetOrgPerson and can be repurposed for our needs.</p>
+<hr>
+<p>Now Claude is actively encouraging me to yak shave.
+For this configuration to work, you&#39;ll need to create a custom Java class CustomLdapRealm that extends JndiLdapRealm and implements the group-based authorization logic. This class should be placed in the org.apache.jena.fuseki.authz package.
+[Java source follows]</p>
+<p>Enough! Music room!!! Still got a bottle of beer left!!!</p>
+<hr>
+<p>Building Fuseki.
+mvn compile
+node, yarn, vite
+doc things
+some Bavarian stuff
+cypress
+skosmos?
+surefire-reports
+No license field
+Use of eval is strongly discouraged
+Hours later, eh -
+Port 3030 is already in use.
+Bastard! I already have Fuseki running on 3030.
+Artifact has not been packaged yet. When used on reactor artifact, unpack should be executed after packaging: see MDEP-98. -&gt; [Help 1]
+Nope. Means nothing to me. I&#39;m done.</p>
+<p>ERROR] Failed to execute goal org.apache.maven.plugins:maven-dependency-plugin:3.6.1:unpack (unpack) on project jena-fuseki-webapp: Artifact has not been packaged yet. When used on reactor artifact, unpack should be executed after packaging: see MDEP-98.
+ </p>
+
+        <div class="entry-footer">
+            <h2>About</h2>
+            
+        </div>
+    </body>
+</html>

@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <link rel="stylesheet" href="/css/fonts.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/grid-columns.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/style.css" type="text/css"/>
+        <title>hyperdata.it reboot</title>
+    </head>
+    <!-- POST PAGE TEMPLATE -->
+    <body>
+        <header id="entry-header">
+            <h1 class="post-title h-cinzel">
+                
+            </h1>
+        </header>
+        <h1>hyperdata.it reboot</h1>
+<p>I believe I&#39;ve got the #LDAP and #Fuseki setup working. I need it for <em>other stuff</em> but for sanity checking and to <strong>to sort out my TODOs</strong> it makes sense to line up some of the old hyperdata.it bits against it.</p>
+<p>I also need to tidy up this blog setup a bit, I left it hanging somewhat.</p>
+<h2>Plan</h2>
+<ol>
+<li>[*] set up monorepo for farelo, trellis...</li>
+<li>[*] flip desktop localhost Apache to nginx, configure like server</li>
+<li>[*] copy relevant bits of trellis to monorepo</li>
+<li><input disabled=\"\" type=\"checkbox\"> add auth against remote Fuseki</li>
+<li><input disabled=\"\" type=\"checkbox\"> setup Transmissions to deploy</li>
+</ol>
+<p><em>hmm, numbered markdown todos don&#39;t seem so good - correct syntax?</em></p>
+<h3>1. Monorepo</h3>
+<p>I got ChatGPT4o to help.</p>
+<ul>
+<li><a href=\"https://github.com/danja/hyperdata\">https://github.com/danja/hyperdata</a></li>
+<li>local : <code>/home/danny/hyperdata</code></li>
+<li>server : <code>/home/github/hyperdata</code></li>
+</ul>
+<pre><code>http://localhost/APPS/
+danny@danny-desktop:/var/www/html/APPS$
+lrwxrwxrwx 1 danny danny   44 Jul  4 15:14 common -&gt; /home/danny/hyperdata/packages/common/public
+lrwxrwxrwx 1 danny danny   45 Jul  4 15:14 trellis -&gt; /home/danny/hyperdata/packages/trellis/public
+
+https://hyperdata.it/apps/
+root@hyperdata:/var/www/html/apps# ln -s /home/github/hyperdata/packages/common/public common
+root@hyperdata:/var/www/html/apps# ln -s /home/github/hyperdata/packages/trellis/public trellis
+</code></pre>
+<p>hmm, 404</p>
+<h5>nano /etc/nginx/sites-available/hyperdata.it.conf</h5>
+<pre><code>    location / {
+        root /home/www/hyperdata.it;
+        index index.html index.htm index.ttl;
+                autoindex on;
+    }
+
+Ok,
+
+ln -s /var/www/html/apps /home/www/hyperdata.it/apps
+</code></pre>
+<h3>2. Apache to nginx</h3>
+<pre><code>
+systemctl list-unit-files | grep enabled will list all enabled ones.
+
+If you want which ones are currently running, you need systemctl | grep running.
+
+sudo systemctl stop apache2
+sudo systemctl disable apache2
+</code></pre>
+<h4>/etc/nginx/sites-available/default</h4>
+<pre><code>
+server {
+listen 80;
+server_name localhost;
+
+    location / {
+        root /var/www/html;
+        index index.html index.htm index.ttl;
+        autoindex on;
+    }
+
+}
+</code></pre>
+<pre><code>
+sudo systemctl reload nginx
+sudo tail -f /var/log/nginx/error.log
+</code></pre>
+<p>So far so good.</p>
+<pre><code>
+danny@danny-desktop:/var/www/html$ ls -al **HKMS**
+lrwxrwxrwx 1 danny danny 26 Jul 18 2023 **HKMS** -&gt; /home/danny/HKMS/HKMS/src/
+</code></pre>
+<h3>Prompts for AI.</h3>
+<p>I want to create a monorepo for a set of related applications that share some common code. The code will be browser-based HTML, CSS and vanilla JS and nodejs using ES modules. I wish to use the following tools:</p>
+<ul>
+<li>npm</li>
+<li>jsdoc</li>
+<li>chai</li>
+<li>jasmine
+The first three apps that will appear in the monorepo are called &#39;farelo&#39;, &#39;trellis&#39; and &#39;strandz&#39;. Can you advise on how to set up the monorepo and the tools for these apps, with a good dir structure, following best practices?</li>
+</ul>
+<hr>
+<pre><code>
+</code></pre>
+
+        <div class="entry-footer">
+            <h2>About</h2>
+            
+        </div>
+    </body>
+</html>

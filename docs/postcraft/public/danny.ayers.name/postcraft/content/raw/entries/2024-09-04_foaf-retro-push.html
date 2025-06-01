@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <link rel="stylesheet" href="/css/fonts.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/grid-columns.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/style.css" type="text/css"/>
+        <title>FOAF Retro Push</title>
+    </head>
+    <!-- POST PAGE TEMPLATE -->
+    <body>
+        <header id="entry-header">
+            <h1 class="post-title h-cinzel">
+                
+            </h1>
+        </header>
+        <h1>FOAF Retro Push</h1>
+<hr>
+<p>A little precursor to the precursors below, a workaround for my setup not yet supporting HTML anchors in markdown. Below is :</p>
+<pre><code>&lt;a id=&quot;yak-hairs&quot; class=&quot;anchor&quot; /&gt;
+
+## Yak Hairs
+</code></pre>
+<a id=\"yak-hairs\" class=\"anchor\" />
+
+<h2>Yak Hairs</h2>
+<ul>
+<li><input checked=\"\" disabled=\"\" type=\"checkbox\"> #Transmissions external app call</li>
+<li><input checked=\"\" disabled=\"\" type=\"checkbox\"> publish FOAF Retro</li>
+</ul>
+<h3>Transmissions external app call</h3>
+<p>In the <code>transmissions</code> dir (on my destop machine, <code>/home/danny/github-danny/transmissions</code>) :</p>
+<pre><code>./trans -d ../foaf-retro/src/applications postcraft ../foaf-retro/docs/postcraft
+</code></pre>
+<p>should run the application <code>postcraft</code> described in the dir <code>../foaf-retro/src/applications</code> with the target <code>../foaf-retro/docs/postcraft</code></p>
+<p>TODO integration tests for eg. :</p>
+<pre><code>./trans postcraft ../postcraft/danny.ayers.name
+
+./trans -d ../foaf-retro/src/applications postcraft.render ../foaf-retro/docs/postcraft
+</code></pre>
+<p>It looks like it&#39;s running ok but the index page isn&#39;t getting properly build.</p>
+<p>Using the single transmission <code>postcraft.render</code> does reduce the material logged, but it would be better if there was a bit more flow control to skip services.</p>
+<p>TODO a <code>GOTO</code> service!</p>
+<p>D&#39;oh! I bet it&#39;s the loop I&#39;ve got going through the most recent posts.</p>
+<p>It was!!!</p>
+<pre><code> for (let i = rangeEnd; i &gt; rangeStart; i--) {
+...
+ for (let i = rangeEnd; i &gt;= rangeStart; i--) {
+</code></pre>
+<p>Fixed.
+ </p>
+
+        <div class="entry-footer">
+            <h2>About</h2>
+            
+        </div>
+    </body>
+</html>

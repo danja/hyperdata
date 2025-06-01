@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <link rel="stylesheet" href="/css/fonts.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/grid-columns.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/style.css" type="text/css"/>
+        <title>Journal 2025-03-19</title>
+    </head>
+    <!-- POST PAGE TEMPLATE -->
+    <body>
+        <header id="entry-header">
+            <h1 class="post-title h-cinzel">
+                
+            </h1>
+        </header>
+        <h1>Journal 2025-03-19</h1>
+<p>A fundamental principle I&#39;m <em>attempting</em> to apply to my current code is that interdependencies should be low. Things should be tied together only as needed, declaratively.</p>
+<p>One practical downside, of this, down to how I&#39;ve got my dev environment set up, is that when something isn&#39;t working, rather than an integrated lump needing debugging, typically two things and their connection need checking. Independent places. Right now for me that means separate tools.</p>
+<p>A paradoxical downside during this way suboptimal phase, whenever the coupling is too tight the problems it causes are amplified. Side effects spread.</p>
+<hr>
+<p>ForEach line 49
+        /////////////////// TODO put back in  this.emit(&#39;message&#39;, message)</p>
+<hr>
+<p>Grr. Fool Danny. SPARQL query, no results. I was looking forsomething before it&#39;d been created.</p>
+<pre><code>  :htmlContent ?html .
+</code></pre>
+<pre><code class=\"language-sparql\">PREFIX schema: &lt;http://schema.org/&gt;
+PREFIX xsd: &lt;http://www.w3.org/2001/XMLSchema#&gt;
+PREFIX : &lt;http://purl.org/stuff/transmissions/&gt;
+
+SELECT DISTINCT ?p WHERE {
+?s ?p ?o
+}
+</code></pre>
+<pre><code class=\"language-csv\">&quot;p&quot; ,
+&quot;http://www.w3.org/1999/02/22-rdf-syntax-ns#type&quot; ,
+&quot;http://purl.org/stuff/transmissions/sourcePath&quot; ,
+&quot;http://purl.org/stuff/transmissions/mediaType&quot; ,
+&quot;http://purl.org/stuff/transmissions/representationType&quot; ,
+&quot;http://purl.org/stuff/transmissions/relPath&quot; ,
+&quot;http://schema.org/articleBody&quot; ,
+&quot;http://schema.org/dateCreated&quot; ,
+&quot;http://schema.org/headline&quot; ,
+&quot;http://purl.org/stuff/transmissions/slug&quot; ,
+&quot;http://schema.org/dateModified&quot; ,
+&quot;http://purl.org/stuff/transmissions/hasRepresentation&quot; ,
+&quot;http://schema.org/creator&quot; ,
+&quot;http://schema.org/name&quot; ,
+</code></pre>
+<pre><code class=\"language-sparql\">PREFIX schema: &lt;http://schema.org/&gt;
+PREFIX xsd: &lt;http://www.w3.org/2001/XMLSchema#&gt;
+PREFIX : &lt;http://purl.org/stuff/transmissions/&gt;
+
+SELECT DISTINCT * WHERE {
+  ?article a schema:Article ;
+    :sourcePath ?sourcePath ;
+    :relPath ?relPath ;
+    :slug ?slug ;
+    schema:headline ?title ;
+ schema:dateModified ?modified ;
+  schema:dateCreated ?created ;
+    schema:creator ?creator ;
+  :htmlContent ?html .
+  ?creator a schema:Person ;
+    schema:name ?creatorName .
+
+}
+ORDER BY DESC(?modified)
+</code></pre>
+
+        <div class="entry-footer">
+            <h2>About</h2>
+            
+        </div>
+    </body>
+</html>

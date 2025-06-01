@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <link rel="stylesheet" href="/css/fonts.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/grid-columns.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/style.css" type="text/css"/>
+        <title>Code Insiders</title>
+    </head>
+    <!-- POST PAGE TEMPLATE -->
+    <body>
+        <header id="entry-header">
+            <h1 class="post-title h-cinzel">
+                
+            </h1>
+        </header>
+        <h1>Code Insiders</h1>
+<h2>VSCode Insiders</h2>
+<p>I just remembered seeing there&#39;s <a href=\"https://code.visualstudio.com/insiders/\">VSCode Insiders</a>, a daily build. Pleasing is :</p>
+<blockquote>
+  Insiders installs next to the Stable build, allowing you to use either independently.
+</blockquote>
+
+<p>Hmm. <strong>apt upgrade</strong> saw a newer kernel for me, but is segfaulting on something to do with the NVIDIA drivers. I&#39;ve only got a really rubbish old GPU in this machine. I&#39;m also still on Ubuntu 24.04, need to upgrade soon.</p>
+<p>Yay, it didn&#39;t segfault on a second run. Lets see what happens on reboot...<strong>no problem</strong>, good-o.</p>
+<p>Running <code>code-insiders</code> brings it up. Yes, independent of the stable instance. Ok, this is nice. I can use Copilot of this one, other AI bits on the other.</p>
+<p>btw I&#39;m using <a href=\"https://pulsar-edit.dev/\">pulsar-edit</a> (formerly Atom) for these docs. Similar tool, different theme, different purpose.</p>
+<h2>Claude Inside</h2>
+<p>#:danbri pointed me towards <a href=\"https://docs.anthropic.com/en/docs/agents-and-tools/claude-code/overview\">Claude Code</a></p>
+<p>CLI, cool.</p>
+<p>│ Select memory to edit:                                                                                                                                                                     │
+│                                                                                                                                                                                            │
+│  ❯ Project memory                 Checked in at ./CLAUDE.md                                                                                                                                │
+│    Project memory (local)         Gitignored in ./CLAUDE.local.md                                                                                                                          │
+│    User memory                    Saved in ~/.claude/CLAUDE.md                                                                                                                             │
+│                                                                                                                                                                                            │
+│ 16 memories in ./CLAUDE.md  </p>
+<p>claude config add ignorePatterns node_modules</p>
+<p>claude config add ignorePatterns &quot;<strong>/node_modules/</strong>&quot;
+claude config add ignorePatterns &quot;<strong>/_*/</strong>&quot;
+claude config add ignorePatterns &quot;<strong>/_*/</strong>&quot;</p>
+<blockquote>
+<p>/cost
+  ⎿  Total cost:            $3.37
+  ⎿  Total duration (API):  11m 55.1s
+  ⎿  Total duration (wall): 1h 8m 50.1s
+  ⎿  Total code changes:    1164 lines added, 68 lines removed
+ </p>
+</blockquote>
+
+        <div class="entry-footer">
+            <h2>About</h2>
+            
+        </div>
+    </body>
+</html>

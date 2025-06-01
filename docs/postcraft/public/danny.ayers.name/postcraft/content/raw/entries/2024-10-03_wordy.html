@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <link rel="stylesheet" href="/css/fonts.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/grid-columns.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/style.css" type="text/css"/>
+        <title>Wordy</title>
+    </head>
+    <!-- POST PAGE TEMPLATE -->
+    <body>
+        <header id="entry-header">
+            <h1 class="post-title h-cinzel">
+                
+            </h1>
+        </header>
+        <h1>Wordy</h1>
+<p>#:next Friday is Collation Day!!!</p>
+<p>#:next proper runner of Fork didn&#39;t quite work, also need to mod all processors for <code>simples</code></p>
+<p>#:next try out <code>engine/ModuleLoader.js</code> (docs inside it) for remote processors</p>
+<p>Because before getting out of bed I was catching up with WordNet.</p>
+<p>I was on a roll yesterday, had a fairly productive coding session until late. Made good progress with #:simples, the minimal #:transmission runner. Main requirement turned out to be trivial, simply return the processed <code>message</code> from <code>processor.execute(message)</code>. For the processors I tried, it Just Worked.</p>
+<p>But after sleeping on it, I&#39;ve realised there&#39;s a little snag - processors that fork, like <code>DirWalker</code> currently spawn lots of pipelines, emitting <code>message</code> to each. But how to cover that with <code>simples</code>.</p>
+<p>But I&#39;ve got processor <code>Fork</code> as a starting point to play with.  </p>
+<p>remember I need videos for Spooky release - and music! #:music:tasty</p>
+<p>I&#39;ve been doing quite a few real-world odd jobs. Now tired &amp; hungry, but still on a roll...</p>
+<hr>
+<h2>3D UI a bit like zz structure</h2>
+<p>Use a games engine?</p>
+<h3>main window :</h3>
+<p>projection of a higher-dimension graph, vector store/LOD</p>
+<p>3D cuboid nodes connected with straight line edges. Each with summary info</p>
+<h3>nav sidebar :</h3>
+<p>pan, move, zoom buttons etc</p>
+<p>when focused on a given node A there is are lists of nearby (vector) and linked (rdf) nodes</p>
+<p>choosing one or more from the list, B, C modifies the viewpoint/axes, making related ones more visible.   </p>
+<h3>tools sidebar</h3>
+<p>rendering styles, with params</p>
+<p>params for weightings, so the vector index has a greater/lesser role than the RDF</p>
+<p>SPARQL to filter visible</p>
+<hr>
+<p>#:md:rdf - thought for #:yars</p>
+<p>Default <code>#:</code> namespace will be defined somewhere locally, but namespaces can be changed/defined in an md doc. Maybe <code>#:ns:http://example.org</code> for <code>#:</code> and <code>#:ns:http://example.org/this:th</code> for prefixes.
+ </p>
+
+        <div class="entry-footer">
+            <h2>About</h2>
+            
+        </div>
+    </body>
+</html>

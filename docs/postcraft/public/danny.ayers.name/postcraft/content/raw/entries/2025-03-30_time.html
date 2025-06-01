@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <link rel="stylesheet" href="/css/fonts.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/grid-columns.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/style.css" type="text/css"/>
+        <title>Time</title>
+    </head>
+    <!-- POST PAGE TEMPLATE -->
+    <body>
+        <header id="entry-header">
+            <h1 class="post-title h-cinzel">
+                
+            </h1>
+        </header>
+        <h1>Time</h1>
+<p><em>Clocks have changed, lost an hour. I&#39;ve lost a few more myself without their help.</em></p>
+<p>Yesterday I wasted ages trying to fix a Dockerized Fuseki in my play container. Querying worked, but there was no admin page. I looked back at the Fuseki docs - the image doesn&#39;t include the admin page.</p>
+<p>But I needed a query front end. I wanted one inside my #:squirt client eventually anyway, ok, today it is. This thing looked easy enough to set up. From the <a href=\"https://docs.triply.cc/yasgui-api/\">yasguidocs </a> :</p>
+<pre><code>&lt;head&gt;
+  &lt;link href=&quot;https://unpkg.com/@triply/yasgui/build/yasgui.min.css&quot; rel=&quot;stylesheet&quot; type=&quot;text/css&quot; /&gt;
+  &lt;script src=&quot;https://unpkg.com/@triply/yasgui/build/yasgui.min.js&quot;&gt;&lt;/script&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;div id=&quot;yasgui&quot;&gt;&lt;/div&gt;
+  &lt;script&gt;
+    const yasgui = new Yasgui(document.getElementById(&quot;yasgui&quot;));
+  &lt;/script&gt;
+&lt;/body&gt;
+</code></pre>
+<p>After about 3 hours using Claude Projects to integrate this into #:squirt, it finally worked. I looked at how Claude had figured it out. Essentially :</p>
+<pre><code class=\"language-javascript\">  const container = document.getElementById(&#39;yasgui-container&#39;);
+  if (container) {
+    container.innerHTML = `
+      &lt;div class=&quot;yasgui-init&quot;&gt;
+        &lt;button type=&quot;button&quot; onclick=&quot;window.initializeYasguiComponent()&quot; class=&quot;button-primary&quot;&gt;
+          Load SPARQL Query Editor
+        &lt;/button&gt;
+      &lt;/div&gt;
+    `;
+  }
+</code></pre>
+<p>All good.
+ </p>
+
+        <div class="entry-footer">
+            <h2>About</h2>
+            
+        </div>
+    </body>
+</html>

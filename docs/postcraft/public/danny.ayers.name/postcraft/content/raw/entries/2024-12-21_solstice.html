@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <link rel="stylesheet" href="/css/fonts.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/grid-columns.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/style.css" type="text/css"/>
+        <title>Solstice</title>
+    </head>
+    <!-- POST PAGE TEMPLATE -->
+    <body>
+        <header id="entry-header">
+            <h1 class="post-title h-cinzel">
+                
+            </h1>
+        </header>
+        <h1>Solstice</h1>
+<p><em>It&#39;s the shortest day!</em></p>
+<p>I&#39;m ambivalent about Christmas, don&#39;t think I&#39;ve ever partaken of any of the other rituals of the season. But I sure do celebrate the <strong>winter solstice</strong>, in spirit if not in much action (I plan to get a few <strong>beers</strong> later). I can explain best by quoting a late friend of mine :    </p>
+<blockquote>
+<p>&quot;Nights are drawing in.&quot;
+- Geoff Beswick of Priestcliffe (every year soon after 21st June)</p>
+</blockquote>
+<p>I&#39;m pretty sure I don&#39;t suffer from <a href=\"https://en.wikipedia.org/wiki/Seasonal_affective_disorder\">Seasonal Affective Disorder</a> in the clinical sense. But I&#39;m a late riser, short days (with the associated unpleasant weather) really do impact my mood, however indirectly. So here, I&#39;ll claim the quote :</p>
+<blockquote>
+<p>&quot;Nights are drawing out!&quot;</p>
+</blockquote>
+<hr>
+<h2>More Postcraft</h2>
+<p>Grrr. Returning to the #:postcraft bits from yesterday, I just discovered a bug that&#39;s crept into #:transmissions. I wanted to check how the paths are allocated, so went to isolate that particular operation. But...</p>
+<p>The command :</p>
+<pre><code class=\"language-sh\">./trans postcraft.copy ../postcraft/danny.ayers.name
+</code></pre>
+<p>should only run the subsection of the application <code>postcraft</code> called <code>copy</code>. This is a single #:transmission (= pipeline) in  <a href=\"/static/artifacts/postcraft/2024-12-20/transmissions.ttl\">transmissions.ttl</a>. I did put the wiring in place for this, but <strong>fool Danny</strong> once again didn&#39;t get around to giving it a corresponding <strong>test</strong>. Or did I..?</p>
+<pre><code class=\"language-sh\">npm run test
+</code></pre>
+<p>-bombs straight out with an error during a test on the <code>FilenameMapper</code> processor (still no idea if there&#39;s a test for the <code>transmissions.sub</code> selector).</p>
+<p>Hah! <strong>Fool Danny</strong> once again forgot to run <strong>tests</strong>.</p>
+<p><em>Bloody hell</em>, all I wanted to do with this when I got to desk yesterday was to fix a trivial CSS bug.</p>
+<p>I suppose I&#39;d best just put a bandaid on the CSS for now, then check the tests. I&#39;ve been meaning to set up <a href=\"https://en.wikipedia.org/wiki/CI/CD\">CI/CD</a> bits on GitHub for a while... (I really want such things embedded in #:transmissions itself, so it can notify of any problems preemptively, declare it&#39;s own status - <a href=\"https://en.wikipedia.org/wiki/Shift-left_testing\">Shift-Left</a> to the max).</p>
+<p>Heh ho. I&#39;ll have to leave that for now, got some jobs to do that require <strong>daylight</strong>.
+ </p>
+
+        <div class="entry-footer">
+            <h2>About</h2>
+            
+        </div>
+    </body>
+</html>

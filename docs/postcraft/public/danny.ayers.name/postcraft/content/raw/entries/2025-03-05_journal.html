@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <link rel="stylesheet" href="/css/fonts.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/grid-columns.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/style.css" type="text/css"/>
+        <title>Journal 2025-03-05</title>
+    </head>
+    <!-- POST PAGE TEMPLATE -->
+    <body>
+        <header id="entry-header">
+            <h1 class="post-title h-cinzel">
+                
+            </h1>
+        </header>
+        <h1>Journal 2025-03-05</h1>
+<p>So I&#39;ve got the #:transmissions applications <code>src/applications/md-to-sparqlstore</code> and <code>src/applications/sparqlstore-to-html</code> approaching what I need. There&#39;s still a bit of hackiness in the JS, but I don&#39;t need to worry about that right now.</p>
+<p>These are for publishing documentation. But the docs I&#39;ve got are very fragmented, my plan is to use #:semem (Semantic Memory) with a little bit of added AI to help organise them. I need to circle back to that very soon.</p>
+<p>But first, the nuts &amp; bolts of these applications.</p>
+<p>The command :</p>
+<pre><code class=\"language-sh\">./trans -v md-to-sparqlstore ~/sites/strandz.it/postcraft
+</code></pre>
+<p>should be picking up <code>strandz.it/postcraft/manifest.ttl</code> and using that for it&#39;s instance config. I can see right way that&#39;s not working correctly, <code>DirWalker</code> is walking <code>/home/danny/hyperdata/transmissions/src/applications/md-to-sparqlstore/data/input</code> rather than what&#39;s in the manifest:</p>
+<pre><code class=\"language-turtle\">:sourceDir &quot;/home/danny/sites/danny.ayers.name/postcraft/content-raw&quot; .
+</code></pre>
+<p>Hmm. I&#39;ve got the <code>--verbose</code>/<code>-v</code> command-line arg to show the <code>logger.debug</code> statements, but that got a bit overwhelming, so moved most, including those in <code>DirWalker</code> to <code>logger.trace</code>. If I flip that in the JS...</p>
+<p>Ew. No, that&#39;s give me the system trace info as well. For now I&#39;ll do a <code>s/trace/debug</code> instead.</p>
+<pre><code class=\"language-sh\">DirWalker sourceDir from config = undefined
+
+DirWalker, message.targetPath = /home/danny/sites/strandz.it/postcraft
+DirWalker, message.rootDir = /home/danny/hyperdata/transmissions/src/applications/md-to-sparqlstore
+DirWalker, message.sourceDir = undefined
+DirWalker resolved dirPath = /home/danny/hyperdata/transmissions/src/applications/md-to-sparqlstore/data
+DirWalker.walkDirectory, dir = /home/danny/hyperdata/transmissions/src/applications/md-to-sparqlstore/data
+DirWalker.walkDirectory, dir = /home/danny/hyperdata/transmissions/src/applications/md-to-sparqlstore/data/input
+DirWalker emitting :
+</code></pre>
+<p>Bum.
+The priority for settings should go like :</p>
+<ol>
+<li>inter-process message</li>
+<li><code>manifest.ttl</code> in the target given as a command-line arg</li>
+<li><code>config.ttl</code> application default-ish values associated with the transmission (pointed to by <code>transmissions.ttl</code>)</li>
+<li>whatever fallbacks I slapped in the code</li>
+</ol>
+<p>Ok, I&#39;d check if this, in transmissions.ttl<code>...</code>config.ttl` will be picked up first :</p>
+<pre><code class=\"language-turtle\">:p10 a :DirWalker ;
+    :settings :dirWalker .
+...
+:dirWalker a :ConfigSet ;
+    :sourceDir &quot;/home/danny/sites/strandz.it/postcraft/content-raw&quot; .
+</code></pre>
+<p>Good-o, that&#39;s fine. The log includes :</p>
+<pre><code class=\"language-sh\">- DirWalker emit 13 : /home/danny/sites/strandz.it/postcraft/content-raw/knowledge/references/about.md
+</code></pre>
+<p>So the problem lies in my precedence code in <code>src/model/Processor.js</code>, that contains the superclass of the processors defined in <code>src/processors/fs/DirWalker.js</code> etc. Which is very annoying, I shouldn&#39;t have to touch the core code at this point in time.</p>
+<p>Dogwalk time.</p>
+<hr>
+<p>PS. A day later, I found the problem. The JS code was actually working correctly, What I was missing was a reference in the transmission the settings node, <code>:dirWalker</code> here:</p>
+<pre><code class=\"language-turtle\">:p10 a :DirWalker ;
+   :settings :dirWalker .
+</code></pre>
+
+        <div class="entry-footer">
+            <h2>About</h2>
+            
+        </div>
+    </body>
+</html>

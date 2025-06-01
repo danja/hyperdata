@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <link rel="stylesheet" href="/css/fonts.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/grid-columns.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/style.css" type="text/css"/>
+        <title>Journal : 2024-05-10</title>
+    </head>
+    <!-- POST PAGE TEMPLATE -->
+    <body>
+        <header id="entry-header">
+            <h1 class="post-title h-cinzel">
+                
+            </h1>
+        </header>
+        <h1>Journal : 2024-05-10</h1>
+<p>Ok, for TODOs, I&#39;ll have a top-level <code>todo/index.md</code> file, plus monthly files like <code>todo/2024-05.md</code>. Then have <strong>Plan</strong> blocks in this journal for daily bits.</p>
+<h3>Plan</h3>
+<h4>Postcraft</h4>
+<ul>
+<li>[*] :PostcraftPrep + tests, get it to rendering the individual post HTML adequately.</li>
+<li><input disabled=\"\" type=\"checkbox\"> :Unfork experiments</li>
+</ul>
+<p>After several hours, I&#39;ve managed to confuse myself...
+I&#39;ve been thinking about different ways of doing Postcraft transmission(s), roughly :</p>
+<ul>
+<li>three semi-independent pipelines defined in transmission.ttl : markdown -&gt; HTML rawEntries; rawEntries -&gt; entries; rawEntries -&gt; front page</li>
+<li>one &#39;continuous&#39;, with an Unfork or some such to bring the control flow down to one path</li>
+<li>one more blocky, with ContentGroups being set up from manifest.ttl in ConfigMap at the start</li>
+</ul>
+<p>All three approaches could be supported, but for now I should just pick the one that seems most suitable for the current task. Considerations :</p>
+<ul>
+<li>keeping it simple, with sensible defaults</li>
+<li>keeping concerns separate :<ul>
+<li><code>transmission.ttl</code> = topology</li>
+<li><code>services.ttl</code> = details of individual service configurations
+together they define the application</li>
+<li><code>manifest.ttl</code> = application instance configuration</li>
+</ul>
+</li>
+</ul>
+<p>I need some fresh air.</p>
+<h4>FOAF-Archive</h4>
+<ul>
+<li><input disabled=\"\" type=\"checkbox\"> Placeholders + manifest.ttl for FOAF-Archive</li>
+<li><input disabled=\"\" type=\"checkbox\"> FOAF video</li>
+</ul>
+<h4>Kaggle-Preferences</h4>
+<ul>
+<li><input disabled=\"\" type=\"checkbox\"> get set up, run the demo</li>
+</ul>
+
+        <div class="entry-footer">
+            <h2>About</h2>
+            
+        </div>
+    </body>
+</html>

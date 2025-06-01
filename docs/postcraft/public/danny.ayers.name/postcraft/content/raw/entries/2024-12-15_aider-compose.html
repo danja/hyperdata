@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <link rel="stylesheet" href="/css/fonts.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/grid-columns.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/style.css" type="text/css"/>
+        <title>Aider Composer</title>
+    </head>
+    <!-- POST PAGE TEMPLATE -->
+    <body>
+        <header id="entry-header">
+            <h1 class="post-title h-cinzel">
+                
+            </h1>
+        </header>
+        <h1>Aider Composer</h1>
+<p>Installing <a href=\"https://github.com/lee88688/aider-composer\">Aider Composer</a> <a href=\"https://code.visualstudio.com/\">VSCode</a> extension.</p>
+<p><em>This took me a silly amount of time, I&#39;d better make a note.</em></p>
+<p>I installed the extension from VSCode&#39;s package section. Nothing showed up, so <strong>RTFM</strong>.</p>
+<p>The instructions were clear (in retrospect):</p>
+<ol>
+<li>Install Python</li>
+<li>Install the required packages using: <code>pip install aider-chat flask</code></li>
+<li>In VSCode, set <code>aider-composer.pythonPath</code></li>
+</ol>
+<p>I&#39;d already got Python, but I&#39;ve had a lot of distractions since I last used it. I know I was using <code>venv</code> for something last time, but can&#39;t remember quite how. So for 2. I just went global, as it&#39;s written above. This took a while and produced <em>lots</em> of output, but on the last few lines I only saw warnings, so went straight on to 3.</p>
+<p>For 3. the docs say :</p>
+<blockquote>
+<p>The directory containing the Python executable (not the Python executable path itself) where aider.chat and flask packages are installed. This setting is required for the extension to activate.</p>
+</blockquote>
+<p>I did a fair bit of hunting, starting with :</p>
+<pre><code class=\"language-sh\">which python3
+...
+/home/danny/.local/bin/python3
+</code></pre>
+<p>Looking around there, it seemed <code>/home/danny/.local/bin</code> contained loads of Python binaries so I put that in. Turned out this was what was needed, although <strong>Aider Composer still wasn&#39;t showing up</strong>. Backtrack...</p>
+<p>The <code>pip install aider-chat flask</code> hadn&#39;t worked. Not even close. Two root issues : I&#39;d already got an <strong>older version</strong> of <a href=\"https://aider.chat\">Aider</a> (command line) installed; <strong>dependency hell</strong>.</p>
+<p>So I started by following instructions to update Aider, which failed, but did give some clues.
+<strong>The fix</strong> I found was to run this :</p>
+<pre><code class=\"language-sh\">python -m pip install aider-chat --force
+</code></pre>
+<p>  - which would fail with dependency errors. So I went through each of those using this syntax pattern:</p>
+<pre><code class=\"language-sh\">pip install &quot;matplotlib&gt;=3.8&quot;
+</code></pre>
+<p>- trying the <code>aider-chat</code> install again, fixing next error. Finally success.</p>
+<p>Back into <strong>VSCode</strong>, and the extension was now showing up. <strong>Woo-hoo!</strong> But the output log had this :</p>
+<pre><code class=\"language-sh\">2024-12-15 13:39:00.883 [info] Starting aider-chat service...
+2024-12-15 13:39:00.883 [warning] Multiple workspace folders found, skip starting aider-chat service.
+</code></pre>
+<p>Took me a while to twig. The workspace I had open had 4 or 5 project folders in it. When I did <code>Open Folder...</code> on a <strong>single project</strong>, the service started up ok.</p>
+<p>Next, <strong>Aider Composer settings</strong>. Which API/model? I&#39;ve got a few $s left on the Anthropic API (<em>few</em>, because <a href=\"https://github.com/cline/cline\">Cline</a> had been very greedy last time I was there). I didn&#39;t know how to name the model, but googling took me to the <a href=\"https://aider.chat/docs/leaderboards/\">aider leaderboard</a>. I went with the top one today, <code>claude-3-5-sonnet-20241022</code>.</p>
+<p>Next I needed an API key. I knew roughly where I&#39;d put one, but it still took a few minutes to find. My dog is called Claudio, I&#39;ve been chatting with ClaudioB recently (who coincidentally recommended to me a few weeks ago). I also had some keep-safe material relating to a couple of prints by the <strong>French</strong> (note that) painter <a href=\"https://en.wikipedia.org/wiki/Claude_Lorrain\">Claude</a> I was trying to sell a couple of years ago.</p>
+<p>Anyway, I found the API key, put it in, saved settings. All looked good. <strong>Aider Composer chat window</strong>, ok try :</p>
+<blockquote>
+<p>Please give a brief description of the current project.</p>
+</blockquote>
+<p><em>Aider Composer Claude</em> responded :</p>
+<blockquote>
+<p>Je ne vois pas encore de code partagé, donc je ne peux pas donner de description du projet pour le moment. Une fois que vous aurez partagé des extraits de code avec moi, je pourrai analyser le projet et vous fournir une description détaillée.</p>
+</blockquote>
+<p>My <strong>French</strong> ain&#39;t tres bonny, but I understood that.</p>
+<p>In the source folder I had a concat file of the project made with <a href=\"https://github.com/yamadashy/repomix\">repomix</a>. So I pointed the chat at that and repeated the request above.</p>
+<p><em>Really</em> good response. I was a bit confused when it ended with :</p>
+<blockquote>
+<p>Q1: Would you like more details about any specific aspect of the architecture? Q2: Are you interested in the RDF/Semantic Web features specifically? Q3: Would you like to know more about the development setup and workflow?</p>
+</blockquote>
+<p>Very familiar. Ah... The repomix file included a <strong>system prompt</strong> I&#39;d used elsewhere, which included :</p>
+<blockquote>
+<p>After each response, provide three short follow-up questions worded as if I&#39;m asking you. These should help clarify the original topic and identify more detailed avenues of research. Label as Q1, Q2, and Q3. If I say Q1, Q2 or Q3, address the corresponding question. If I say Q0, repeat the previous request.</p>
+</blockquote>
+<p><em>That&#39;s quite an old version, Ive tweaked since then, but you get the gist.</em></p>
+<p>Kinda cool that Claude read the prompt as a prompt.</p>
+<p>It&#39;s all looking good, time for a break.
+ </p>
+
+        <div class="entry-footer">
+            <h2>About</h2>
+            
+        </div>
+    </body>
+</html>

@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <link rel="stylesheet" href="/css/fonts.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/grid-columns.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/style.css" type="text/css"/>
+        <title>Journal 2025-05-26</title>
+    </head>
+    <!-- POST PAGE TEMPLATE -->
+    <body>
+        <header id="entry-header">
+            <h1 class="post-title h-cinzel">
+                
+            </h1>
+        </header>
+        <h1>Journal 2025-05-26</h1>
+<h2>Bootstrapping, abstraction and context size</h2>
+<p>So <a href=\"https://github.com/danja/transmissions\">Transmissions</a>, my pipeliney thing is intended to simplify the creation of (relatively) complex data processing workflows. This is both for my benefit (as a mediocre coder) and that of AI. In both cases, the overarching issue is that when presented with a large codebase, it can be hard to see the wood for the trees, and vice versa.</p>
+<p>At an abstract level, the steps may be relatively simple : things like &quot;1. read a file; 2. send this prompt to an API...&quot;. At a code level, each of those is relatively simple. But the complete functioning system involves all levels of granularity. It gets overwhelming for both AI and mere mortals.</p>
+<p>I&#39;ll expand my views on this elsewhere in the near future, but in short : the answer is task decomposition <strong>and lossy composition</strong>. Decomposition is pretty straightforward: break complex steps into simpler ones. The lossy composition is how I&#39;ll describe the abstraction today. The sequence (/DAG) of the simpler tasks, all lined as necessary, but without the detail.</p>
+<p>We have limited working memory. We want to avoid filling it.</p>
+<p><em>...to be continued</em>    </p>
+<p>Here, have the #:transmission I&#39;m currently working on (to package up a subset of content in a dir tree in a form that AI likes - <code>cat</code> with bells &amp; whistles) :</p>
+<pre><code class=\"language-turtle\">@prefix rdf: &lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#&gt; .
+@prefix rdfs: &lt;http://www.w3.org/2000/01/rdf-schema#&gt; .
+@prefix : &lt;http://purl.org/stuff/transmissions/&gt; .
+
+#############################################################
+# insert into pipe for debugging - one instance only like this
+:DE a :DeadEnd . # ends the current pipe quietly
+:H  a :Halt . # kills everything
+:SC a :ShowConfig . # verbose report, continues pipe
+:SM a :ShowMessage . # verbose report, continues pipe
+:N  a :NOP . # no operation (except for showing stage in pipe)
+:UF a :Unfork . # collapses all pipes but one
+#############################################################
+
+:terrapack a :Transmission ;
+    rdfs:label &quot;Repository terrapack&quot; ;
+    :pipe (:p10 :p20 :p30 :p40 :p50 :p60 :p65 :p70 :p80 :p90 :p100 :SM  :p110) .
+
+:p10 a :FileReader ;
+     :settings [
+          :sourceFile &quot;input/files.spec.json&quot; ;
+          :mediaType &quot;application/json&quot; ;
+          :targetField &quot;fileSpec&quot;
+     ] .
+
+:p20 a :Restructure ;
+     :settings :shiftTarget .
+
+:p30 a :DirWalker .
+
+:p40 a :FileFilter .
+
+:p50 a :FileReader ;
+     :settings[
+          :processWhenDone &quot;true&quot;
+     ] .
+
+:p60 a :Restructure ;
+     :settings :templateFields .
+
+:p65 a :SetField ;
+     :settings [
+          :field &quot;templateFilename&quot; ;
+          :value &quot;input/file-template.njk&quot; ;
+     ] .
+
+:p70 a :Templater .
+
+:p80  a :Accumulate ;
+    :settings :accumulator .
+
+:p90 a :Restructure ;
+     :settings :accToContent .
+
+  # Accumulate does unfork!   
+# :p100 a :Unfork .
+
+:p100 a :SetField ;
+     :settings [
+          :field &quot;destinationFile&quot; ;
+          :value &quot;terrapack-output.txt&quot; ;
+     ] .
+
+:p110 a :FileWriter  .
+</code></pre>
+
+        <div class="entry-footer">
+            <h2>About</h2>
+            
+        </div>
+    </body>
+</html>

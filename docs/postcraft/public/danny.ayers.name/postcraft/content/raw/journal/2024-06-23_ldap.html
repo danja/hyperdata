@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <link rel="stylesheet" href="/css/fonts.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/grid-columns.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/style.css" type="text/css"/>
+        <title>LDAP bits</title>
+    </head>
+    <!-- POST PAGE TEMPLATE -->
+    <body>
+        <header id="entry-header">
+            <h1 class="post-title h-cinzel">
+                
+            </h1>
+        </header>
+        <h1>LDAP bits</h1>
+<p>Main objective today is to put #LDAP authentication on a #Fuseki server.</p>
+<p>I&#39;ve already got both running, apparently ok, on hyperdata.it</p>
+<p><a href=\"https://directory.apache.org/studio/\">Apache Directory Studio</a> seemed the obvious management client. Running locally, it looks like it&#39;s seeing the server fine.</p>
+<p>Ok, I&#39;ll start at the LDAP end, I do need to refresh my memory on this stuff. Something simple in relative isolation before I think about Fuseki. A signup/login form.</p>
+<p><em>Copilot autosuggested from my miskeying: Chtulu, I mean Fuseki, is running on port 3331. I&#39;ll try to get a simple LDAP client running on the same machine.</em></p>
+<blockquote>
+<p>I have an Ubuntu server with LDAP running. I also have nginx running on the same machine. I&#39;d like to make a simple sign-up login form, using nodejs on the server. I have Apache Directory Studio running locally for LDAP management.
+Where do I start?</p>
+</blockquote>
+<p>ChatGPT gave me a reasonable-looking starting point.</p>
+<p>I&#39;ve stuck it on GitHub at <a href=\"https://github.com/danja/hyperdata-node\">https://github.com/danja/hyperdata-node</a>, locally :</p>
+<p><code>~/HKMS/hyperdata-node</code></p>
+<p>on server</p>
+<p><code>root@hyperdata:/home/www/hyperdata.it# ln -s /home/github/hyperdata-node ./nodes</code></p>
+<p>Oops, I&#39;ve already got a <code>~/HKMS/node-services</code>, has <code>.git</code>. Hey ho, merge them later.</p>
+<p>I just remembered <a href=\"https://pm2.keymetrics.io/\">PM2</a> for managing nodejs services. Used it before, was straightforward.</p>
+<hr>
+<p><strong>2024-06-28</strong></p>
+<p>I had another look at the bits above, it seems there was a better approach than <code>ldapjs</code>, not least because that&#39;s deprecated.</p>
+<p><a href=\"http://www.passportjs.org/\">Passport.js</a> seems to be the way to go.</p>
+<p>This time I&#39;ll use my earlier <code>~/HKMS/node-services</code>, wipe that newer one.</p>
+<p><strong>2024-06-29</strong></p>
+<p>Hooray! after another hour with Cursor I&#39;ve got LDAP signup &amp; login forms that work.</p>
+<p>Boo! It&#39;s still inserted the deprecated <code>ldapjs</code> library.</p>
+<p>It&#39;s possible that the <code>passport-ldapauth</code> lib depends on <code>ldapjs</code>, but whatever, this&#39;ll do for now.
+ </p>
+
+        <div class="entry-footer">
+            <h2>About</h2>
+            
+        </div>
+    </body>
+</html>

@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <link rel="stylesheet" href="/css/fonts.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/grid-columns.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/style.css" type="text/css"/>
+        <title>Journal 2025-03-03</title>
+    </head>
+    <!-- POST PAGE TEMPLATE -->
+    <body>
+        <header id="entry-header">
+            <h1 class="post-title h-cinzel">
+                
+            </h1>
+        </header>
+        <h1>Journal 2025-03-03</h1>
+<p>I&#39;m battling with my tendency to get overwhelmed by stuff. So much to do... Hey ho, keep breathing, get on with it.</p>
+<p>The irony is, a major motivation behind what I&#39;m working on at desk is to get the computer to reduce the amount of stuff I have to do. C&#39;est la vie.</p>
+<p>Ok. Apart from the stack of real-world admin paperwork staring at me from the big table, my main priority is getting my documentation setup sorted (again). I think I&#39;m overcome some bits that were blocking me, yesterday I had a bit of new code dev go very smoothly.  </p>
+<h2>Postcraft Transmissions</h2>
+<p>So I&#39;ve called my doc setup #:postcraft, tagline <em>the most over-engineered static site builder ever!</em> Let me review how far I&#39;ve got. Two separate #:transmissions right now - pipeliney things expressed in Turtle RDF.
+The first one walks the local filesystem, reads the markdown format docs, templates them into SPARQL <code>UPDATE</code> queries, posts them off to a store :</p>
+<pre><code class=\"language-turtle\"># src/applications/test/file-to-sparqlstore/transmissions.ttl
+
+@prefix rdf: &lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#&gt; .
+@prefix : &lt;http://purl.org/stuff/transmissions/&gt; .
+
+:md-to-sparqlstore a :Transmission ;
+     :pipe (:p10 :p20 :p30 :p40) .
+
+:p10 a :DirWalker ;
+    :settings :dirWalker .
+
+:p20 a :FileReader ;
+     :settings :readerSet .
+
+:p30 a :MakeEntry ;
+     :settings :entryDefaults .
+
+:p40 a :SPARQLUpdate ;
+     :settings :sparqlUpdate .
+</code></pre>
+<p>The config is mostly declared in another Turtle file, statements referred to by the <code>:settings</code> properties above.</p>
+<p>The other will run queries over the SPARQL store, template the results into HTML :</p>
+<pre><code class=\"language-turtle\">...
+:sparqlstore-to-html a :Transmission ;
+ :pipe (:p10 :p20 :p30  :p40 :p50 :p70 :p80) .
+
+:p10 a :SPARQLSelect ;
+     :settings :sparqlSelect .
+
+:p20 a :ForEach ;
+    :settings :resultIterator .
+
+:p30 a :Restructure ;
+    :settings :prepArticle .
+
+:p40 a :MarkdownToHTML ;
+    :settings :mdHTML .
+
+:p50 a :Templater ;
+    :settings :articleContentTemplate .
+
+:p70 a :Templater ;
+    :settings :articlePageTemplate .
+
+:p80 a :Restructure ;
+    :settings :resolveFilepath .
+
+:p90 a :FileWriter ;
+    :settings :saveArticlePage .
+</code></pre>
+<p>Aha! I remember where I was up to. Thank you <strong>Rubber Duck Journaling</strong>.</p>
+<p>The last couple of processes in that pipeline didn&#39;t support what was needed for determining the file path/name. But last coding I did was implement a new process for that (<code>src/processors/json/StringOps.js</code> - it might well get renamed/moved to something better later, but is ok for now) along with a integration test app for it (<code>src/applications/test/stringops</code>).</p>
+<p>Used in a #:transmission like :</p>
+<pre><code class=\"language-turtle\">:pFilename a :StringOps ;
+  :settings :filenameConstructor .
+</code></pre>
+<p>With statements in an associated <code>config.ttl</code> :</p>
+<pre><code class=\"language-turtle\">:filenameConstructor a :ConfigSet ;
+  :asPath true ;
+  :targetField &quot;aFilepath&quot; ;
+  :values (:a :b :c :d) .
+  :a :string &quot;TEST_PASSED&quot; .
+  :b :field &quot;fields.fieldB&quot; .
+  :c :field &quot;fields.fieldC&quot; .
+  :d :string &quot;TEST_PASSED&quot; .
+</code></pre>
+<p>The <code>:field</code> properties refer to JSON paths in the message flowing through the transmission. The objects indicated get joined into a fs-compatible path. So when invoked with a message at command line :</p>
+<pre><code class=\"language-sh\">cd ~/hyperdata/transmissions # my local path
+./trans stringops -m &#39;{&quot;fields&quot;: {&quot;fieldB&quot; : &quot;TEST&quot;,&quot;fieldC&quot;:&quot;_PASSED&quot;}}&#39;
+</code></pre>
+<p>The resulting message will contain :</p>
+<pre><code class=\"language-json\">{
+  &quot;aFilepath&quot;: &quot;TEST_PASSED/TEST/_PASSED&quot;
+}
+</code></pre>
+<p>Oops. It&#39;s missing <code>:d</code>. Grr.</p>
+<p>This is puzzling, the config dataset contains :</p>
+<pre><code class=\"language-turtle\">&lt;http://purl.org/stuff/transmissions/d&gt; &lt;http://purl.org/stuff/transmissions/string&gt; &quot;TEST_PASSED&quot; .
+&lt;http://purl.org/stuff/transmissions/d&gt; &lt;http://purl.org/stuff/transmissions/string&gt; &quot;.html&quot; .
+</code></pre>
+<p>Hah, fool danny. I&#39;d got another block in the config for testing the processor when <code>:asPath</code> was false, when the values should be treated as simple strings and concatanated rather than using <code>path.join()</code>. I&#39;d used the same names : <code>:a :b :c :d</code>, thus making pairs of statements for each of those subjects.</p>
+<p>The JS code was fine, after renaming the nodes in the Turtle to <code>:a2 :b2 :c2 :d2</code> it now produces:</p>
+<pre><code class=\"language-sh\">&quot;aFilepath&quot;: &quot;TEST_PASSED/TEST/_PASSED/TEST_PASSED&quot;,
+</code></pre>
+<p>Dogwalk time.
+ </p>
+
+        <div class="entry-footer">
+            <h2>About</h2>
+            
+        </div>
+    </body>
+</html>

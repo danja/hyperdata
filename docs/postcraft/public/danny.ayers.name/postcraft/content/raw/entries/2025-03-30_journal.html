@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <link rel="stylesheet" href="/css/fonts.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/grid-columns.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/style.css" type="text/css"/>
+        <title>Journal 2025-03-30</title>
+    </head>
+    <!-- POST PAGE TEMPLATE -->
+    <body>
+        <header id="entry-header">
+            <h1 class="post-title h-cinzel">
+                
+            </h1>
+        </header>
+        <h1>Journal 2025-03-30</h1>
+<pre><code class=\"language-prompt\">The view src/js/ui/views/yasgui-view.js works nicely with a remote sparql store. We need src/js/ui/views/wiki-editor.js to interact with a remote store too. Some of the code is already in place. The functionality should be that if, when the Save button is clicked, the SPARQL endpoint is available
+
+Note how src/js/ui/views/yasgui-view.js interacts with a sparql endpoint.
+
+
+Please add a little LED-style indicator in the top of the main screen (the opposite side to the hamburger in the mobile view) to indicate whether the configured sparql endpoint is available or now. Green for available, grey for not. A tooltip should show the curently configured URLs and their statuses. There is already a function in src/js/services/sparql/endpoints.js that does a non-blocking check to see if the query and update endpoints are live. A first pass at the indicator has been made in src/js/ui/components/endpoint-indicator.js and the css but this may be totally broken, please check. It is crucial that the indicator is non-blocking.
+ 
+</code></pre>
+
+        <div class="entry-footer">
+            <h2>About</h2>
+            
+        </div>
+    </body>
+</html>

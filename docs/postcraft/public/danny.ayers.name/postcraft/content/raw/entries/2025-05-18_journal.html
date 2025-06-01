@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <link rel="stylesheet" href="/css/fonts.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/grid-columns.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/style.css" type="text/css"/>
+        <title>Journal 2025-05-18</title>
+    </head>
+    <!-- POST PAGE TEMPLATE -->
+    <body>
+        <header id="entry-header">
+            <h1 class="post-title h-cinzel">
+                
+            </h1>
+        </header>
+        <h1>Journal 2025-05-18</h1>
+<h2>Front-end Joys</h2>
+<p><a href=\"https://github.com/danja/trestle\">Trestle</a> is the latest incarnation of my browser-based outliner, formally known as <em>Trellis</em>. It&#39;s <em>heavily</em> influenced by <a href=\"https://workflowy.com\">Workflowy</a>, a great online tool I&#39;ve been using on &amp; off for years.  </p>
+<p>But the idea is that it&#39;s simply <em>Yet Another</em> view of RDF data in a SPARQL store. It just happens to focus on tree-shaped stuff.</p>
+<p><img src=\"/images/2025-05/front-end.png\" alt=\"Front End\"></p>
+<p>Trellis had gone stale so I updated it a few months back. Decided to rename #:trestle because it did sound rather like Trello, which is in a similar space. I swapped out a heap of JQuery based code for more recent vanilla JS, totally rebuilt the architecture (now solidly MVC with added #:evb, my minimal event bus).</p>
+<p>Right now it only captures root + parent-child relationships (with the children indexed to make the RDF easier). I want to add typing on nodes, a <em>very-soon</em> use case being sorting out my TODOs, using terms from the <a href=\"http://purl.org/stuff/project\">project vocab</a> I threw together 20 years ago.</p>
+<p>But before that, there was a bunch of little UI bits I hadn&#39;t implemented. Hamburger menu, breadcrumbs etc.</p>
+<p>I thought this would be a quick job with AI. Nah. Took several hours with little progress. Interestingly 3 different LLMs got themselves stuck in the exact same create-break-<em>fix-no-fix-no</em>... loop (Claude Sonnet, GPT-4.1 &amp; SWI-1, whatever that is, in <a href=\"https://windsurf.com/editor\">Windsurf formerly Codium</a>).</p>
+<p>But I found it educational, I don&#39;t really do <em>proper</em> front-end stuff very often. GPT-4.1 had me poking around for computed layout bits, posting code into the browser console.</p>
+<p>This does seem like an obvious job for MCP. I did have a quick look at a <a href=\"https://github.com/modelcontextprotocol/servers/tree/main/src/puppeteer\">server for Puppeteer</a> the other day but couldn&#39;t get it working. I mentioned it to <a href=\"http://danbri.org\">danbri</a>, he found <a href=\"https://github.com/robertheadley/chrome-debug-mcp\">Chrome Debug MCP</a> and <a href=\"https://github.com/lxe/chrome-mcp\">Chrome MCP</a>.
+Next time.
+ </p>
+
+        <div class="entry-footer">
+            <h2>About</h2>
+            
+        </div>
+    </body>
+</html>

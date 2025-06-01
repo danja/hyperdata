@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <link rel="stylesheet" href="/css/fonts.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/grid-columns.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/style.css" type="text/css"/>
+        <title>Perplexed</title>
+    </head>
+    <!-- POST PAGE TEMPLATE -->
+    <body>
+        <header id="entry-header">
+            <h1 class="post-title h-cinzel">
+                
+            </h1>
+        </header>
+        <h1>Perplexed</h1>
+<p><em>Before getting out of bed, I signed up for a free month of <a href=\"https://www.perplexity.ai/\">Perplexity</a> and perplexed Claude</em></p>
+<h2>Paths</h2>
+<p> A note-to-self before I forget.</p>
+<p> #:todo check how the <a href=\"https://eyereasoner.github.io/eye/\">EYE</a> reasoner uses <a href=\"https://en.wikipedia.org/wiki/Leonhard_Euler\">Euler</a> paths for #:semem</p>
+<p> I had a few overlapping requirements for a classical reasoner. Long story short, I found <a href=\"https://eyereasoner.github.io/eye/\">EYE</a> ticked many boxes. Notably it&#39;s <a href=\"https://en.wikipedia.org/wiki/Semantic_Web\">semantic Web</a>-friendly.</p>
+<p>I have a lot of unknowns (in the <a href=\"https://en.wikipedia.org/wiki/There_are_unknown_unknowns\">Donald Rumsfeld senses</a>) around #:semem. I might have a short summary of what I&#39;m after :</p>
+<p><strong>Semem is an LLM-compatible context-aware, open-ended graph knowledgebase combining the advantages of vector embeddings and Linked Data technologies.</strong></p>
+<p>Right now I&#39;m still on the nuts &amp; bolts, I&#39;ve got fairly straightforward next steps to implement before the fun starts. The fun has many dimensions. From the above,</p>
+<ul>
+<li><strong>LLM-compatible</strong> - this starts with boilerplate connectors to Ollama, the OpenAI API, the <a href=\"https://www.anthropic.com/news/model-context-protocol\">Model Context Protocol</a> etc. But an aspect of the <em>open-ended</em> I have in mind more broadly is exploring connectivity from a different perspective, that of inter-agent comms. This will go under the umbrella of #:LinguaFranche.  </li>
+<li><strong>open-ended graph</strong> - this is the Web. Low-hanging fruit is hooking into existing SPARQL endpoints, eg. WikiData</li>
+<li><strong>context-aware</strong> - I&#39;m working on the vocabulary around this to express it more clearly, but the general idea is that you want more relevant knowledge getting more attention</li>
+</ul>
+<p>Vector embeddings offer similarity measures, but the RDF (Web) model offers a whole different dimension.</p>
+<p>Grrr! I went to LinkedIn to find a ref. related to this, instant distractions :</p>
+<ul>
+<li><a href=\"https://arxiv.org/abs/2411.03252\">Spontaneous Emergence of Agent Individuality through Social Interactions in LLM-Based Communities</a> [sent to printer for later]</li>
+<li><a href=\"https://chimezie.medium.com/declarative-prompts-llm-agents-and-their-programs-oh-my-aab1d0da6fef\">Declarative Prompts, LLM Agents, and their Programs. Oh my…</a> [from Chimezie, left open in tab for sooner]</li>
+</ul>
+<p>A ref I can remember offhand is Bergi&#39;s material :</p>
+<ul>
+<li><a href=\"https://www.bergnet.org/2024/05/unified-landscape/\">Unveiling the Unified Landscape: Bridging Knowledge Graphs and Machine Learning</a>  </li>
+<li><a href=\"https://www.bergnet.org/2024/09/llm-kg-wombat/\">Language Models Meet Knowledge Graphs - A Powerful Duo (plus a Wombat)</a></li>
+<li><em>linked from there</em> <a href=\"https://towardsdatascience.com/how-to-implement-graph-rag-using-knowledge-graphs-and-vector-databases-60bb69a22759\">How to Implement Graph RAG Using Knowledge Graphs and Vector Databases</a> - Steve Hedden</li>
+</ul>
+<p>#:todo put some FOAF where <a href=\"https://www.bergnet.org/people/bergi/card\">Bergi&#39;s card</a> links to it : <a href=\"http://danny.ayers.name/index.rdf#me\">http://danny.ayers.name/index.rdf#me</a>
+#:todo W6 link on <a href=\"https://hyperdata.it/xmlns/\">https://hyperdata.it/xmlns/</a> is broken - make broken link finder #:transmission?</p>
+<p>Enough gab, I&#39;d better get on with this thing.
+ </p>
+
+        <div class="entry-footer">
+            <h2>About</h2>
+            
+        </div>
+    </body>
+</html>

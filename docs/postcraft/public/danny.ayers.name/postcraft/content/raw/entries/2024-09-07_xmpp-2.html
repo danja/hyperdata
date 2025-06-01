@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <link rel="stylesheet" href="/css/fonts.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/grid-columns.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/style.css" type="text/css"/>
+        <title>Setting up XMPP pt.2</title>
+    </head>
+    <!-- POST PAGE TEMPLATE -->
+    <body>
+        <header id="entry-header">
+            <h1 class="post-title h-cinzel">
+                
+            </h1>
+        </header>
+        <h1>Setting up XMPP pt.2</h1>
+<p>Yesterday I got to this:</p>
+<pre><code class=\"language-bash\">nano /etc/ejabberd/ejabberd.yml
+ejabberdctl reload_config
+ejabberdctl request-certificate all
+</code></pre>
+<p>When I hit ACME rate limiting. I just tried again:</p>
+<pre><code class=\"language-bash\">root@hyperdata:~# ejabberdctl request-certificate all
+Error: error
+Error: &quot;Challenge failed for domain conference.hyperdata.it: ACME server reported: 178.79.189.240: Invalid response from http://conference.hyperdata.it/.well-known/acme-challenge/XqMA-5eKaFy4hEmuP8jO7TUOzp_wmlvbR4DpuRpMqFY: 404 (error type: unauthorized)&quot;
+</code></pre>
+<p>At <a href=\"https://docs.ejabberd.im/admin/configuration/basic/#setting-up-acme\">ejabberd setting up ACME</a>:</p>
+<pre><code class=\"language-yaml\">listen:
+  - module: ejabberd_http
+    port: 5280
+    tls: false
+    request_handlers:
+      /.well-known/acme-challenge: ejabberd_acme
+</code></pre>
+<p>Hah!</p>
+<p>I just went to see what was happening on the server with:</p>
+<pre><code class=\"language-bash\">lynx http://localhost:5280
+</code></pre>
+<p>And it gave me a sensible response. Then tried with <code>http://localhost:5280/admin</code> and it was asking for a login.</p>
+<p>Ok, so, how about in a desktop browser with <code>https://xmpp.hyperdata.it/admin/</code></p>
+<p>Yes! It let me log in as admin.</p>
+<p>But,</p>
+<blockquote>
+<p>Apparently your account has no administration rights in this server. Please check how to grant admin rights in: <a href=\"https://docs.ejabberd.im/admin/installation/#administration-account\">https://docs.ejabberd.im/admin/installation/#administration-account</a></p>
+</blockquote>
+<p>Docs better at <a href=\"https://docs.ejabberd.im/admin/install/next-steps/#administration-account\">https://docs.ejabberd.im/admin/install/next-steps/#administration-account</a></p>
+<p>Added:</p>
+<pre><code class=\"language-bash\">acl:
+  admin:
+     user: admin@hyperdata.it
+</code></pre>
+<p>and the web interface is showing me stuff.</p>
+<p>The Dino XMPP client running on desktop isn&#39;t connecting. Checking my old notes... I mentioned <a href=\"https://mcabber.com/\">mcabber</a> client, but nothing more.</p>
+<p>Downloaded Android monocle client to phone (from F-Droid)</p>
+<pre><code class=\"language-bash\">ejabberdctl live
+...
+ERROR: The ejabberd node &#39;ejabberd@localhost&#39; is already running.
+
+
+ps -aux | grep -i &#39;ejabberd&#39;
+
+kill 1234
+</code></pre>
+<p>I changed the static fs location in nginx conf to proxy instead. Got another rate limit. Grr.</p>
+<p>It was trying to set up certs on <code>hyperdata.it</code>.</p>
+<pre><code class=\"language-bash\">hosts:
+  - localhost
+#  - hyperdata.it
+  - xmpp.hyperdata.it
+  ejabberdctl reload_config
+</code></pre>
+
+        <div class="entry-footer">
+            <h2>About</h2>
+            
+        </div>
+    </body>
+</html>

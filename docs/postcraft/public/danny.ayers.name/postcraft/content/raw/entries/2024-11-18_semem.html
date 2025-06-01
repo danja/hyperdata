@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <link rel="stylesheet" href="/css/fonts.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/grid-columns.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/style.css" type="text/css"/>
+        <title>Semem</title>
+    </head>
+    <!-- POST PAGE TEMPLATE -->
+    <body>
+        <header id="entry-header">
+            <h1 class="post-title h-cinzel">
+                
+            </h1>
+        </header>
+        <h1>Semem</h1>
+<p><em>a new subproject seeded</em></p>
+<p>The stuff below got messed up.</p>
+<p>Recovered enough to continue, but to clear my head, a little timesaver -</p>
+<p>hmm, wait - need a <code>cat</code> of my nginx sites-enabled...</p>
+<p>There are #:todo bits I need to pull out of the past few day&#39;s entries here to go in their correct todo areas...</p>
+<p>Today, something like :</p>
+<ol>
+<li>#:todo #:semem #:spike</li>
+<li>#:todo <code>/home/danny/github-danny/hyperdata/workspaces/transmissions/todo/next-steps.md</code></li>
+<li>#:todo Verbo photo</li>
+<li>#:todo carving prep</li>
+<li>#:todo 1-page docs (Transmissions urgent)</li>
+</ol>
+<p>I need to be keeping ClaudioB informed of what I&#39;m working on, so around those #:transmissions next steps I need to bear that in mind.
+Also notes on AI tools I&#39;m using/trying :</p>
+<ul>
+<li>OpenAI API</li>
+<li>Claude projects + API</li>
+<li>Mistral API</li>
+<li><a href=\"https://github.com/cline/cline\">cline</a></li>
+<li><a href=\"https://github.com/Aider-AI/aider\">aider</a></li>
+<li>[]</li>
+</ul>
+<p>etc.</p>
+<p>Grr, lost a lot of time with node module stupidity.</p>
+<p>#:todo add rule to #:um - failure is part of the process, but a goal is that things shouldn&#39;t fail more than once for the same reason</p>
+<p>A thought crossed my mind on dogwalk, must-have base functions for processors :</p>
+<pre><code class=\"language-javascript\">message = expandLD(message, options); // enlarge the Logical Dimension/Linked Data
+message = contractLD(message, options);
+message = expandLM(message, options); // enlarge the Language Model dimension
+message = contractLM(message, options);
+</code></pre>
+<h2>Semem</h2>
+<p>#:semem</p>
+<p>This morning Google&#39;s &#39;Discover&#39; (on Chrome on Android) shortcircuited my morning reading in bed with a link to this from MarkTechPost : <a href=\"https://www.marktechpost.com/2024/11/17/meet-memoripy-a-python-library-that-brings-real-memory-capabilities-to-ai-applications/\">Meet Memoripy: A Python Library that Brings Real Memory Capabilities to AI Applications</a> which led me to this on GitHub :</p>
+<blockquote>
+<p><a href=\"https://github.com/caspianmoon/memoripy\">Memoripy</a> is a Python library designed to manage and retrieve context-aware memory interactions using both short-term and long-term storage. It supports AI-driven applications requiring memory management, with compatibility for OpenAI and Ollama APIs. Features include contextual memory retrieval, memory decay and reinforcement, hierarchical clustering, and graph-based associations.</p>
+</blockquote>
+<p>Long story short, it gives me a nice inroad into the <em>practicals</em> of the hybrid SPARQL+vector store bits high on my todo list.</p>
+<p>First job, give this a place of its own. I&#39;ve got lots of material related to the hybrid store scattered around, best I make an anchor. I&#39;ve made a GitHub repo, now pop that in here :</p>
+<pre><code class=\"language-sh\">cd /home/danny/github-danny/hyperdata/packages
+git submodule add https://github.com/danja/semem.git semem
+</code></pre>
+<p>I&#39;ll put dev notes &amp; docs as they emerge over on #:hyperdata.</p>
+<p>First I need a plan, then port Memoripy from Python into Javascript.
+ </p>
+
+        <div class="entry-footer">
+            <h2>About</h2>
+            
+        </div>
+    </body>
+</html>

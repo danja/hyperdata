@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <link rel="stylesheet" href="/css/fonts.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/grid-columns.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/style.css" type="text/css"/>
+        <title>Setting up XMPP pt.3</title>
+    </head>
+    <!-- POST PAGE TEMPLATE -->
+    <body>
+        <header id="entry-header">
+            <h1 class="post-title h-cinzel">
+                
+            </h1>
+        </header>
+        <h1>Setting up XMPP pt.3</h1>
+<p><a href=\"https://github.com/mathiasertl/xmpp-test\">https://github.com/mathiasertl/xmpp-test</a></p>
+<pre><code class=\"language-bash\">cd /home/github-other
+
+apt install python-is-python3
+
+git clone https://github.com/mathiasertl/xmpp-test.git
+
+cd xmpp-test
+
+python3 -m venv .venv
+
+source .venv/bin/activate
+
+cd xmpp-test# pip install -r requirements.txt
+
+pip install -r requirements.txt
+</code></pre>
+<p>deactivate</p>
+<p>grrr. Incompatible dependency.</p>
+<p><a href=\"https://stackoverflow.com/questions/72032032/importerror-cannot-import-name-iterable-from-collections-in-python\">https://stackoverflow.com/questions/72032032/importerror-cannot-import-name-iterable-from-collections-in-python</a></p>
+<p>I could fork &amp; tweak...</p>
+<p>but my own code can probably do the same.</p>
+<p>I think <a href=\"https://github.com/danja/dogbot\">https://github.com/danja/dogbot</a> was my latest.</p>
+<p>Later.</p>
+<p>// ejabberdctl register dogbot hyperdata.it
+// ejabberdctl change_password dogbot hyperdata.it doggy</p>
+<p>nano /etc/ejabberd/ejabberd.yml
+ejabberdctl reload_config
+ </p>
+
+        <div class="entry-footer">
+            <h2>About</h2>
+            
+        </div>
+    </body>
+</html>

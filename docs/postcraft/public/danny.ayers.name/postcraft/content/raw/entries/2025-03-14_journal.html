@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <link rel="stylesheet" href="/css/fonts.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/grid-columns.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/style.css" type="text/css"/>
+        <title>Journal 2025-03-14</title>
+    </head>
+    <!-- POST PAGE TEMPLATE -->
+    <body>
+        <header id="entry-header">
+            <h1 class="post-title h-cinzel">
+                
+            </h1>
+        </header>
+        <h1>Journal 2025-03-14</h1>
+<p><strong>Pi Day!</strong></p>
+<p>Ok, I hit an issue with nesting in #:transmissions. Can leave that for now.</p>
+<p>Grrr. Might have to dive back into the core : the settings precedence doesn&#39;t seem quite right. It appears to be putting <code>config.ttl</code> above <code>manifest.ttl</code> rather than vice versa (if a manifest is given).</p>
+<p>This is right at the limit of what I ccan remember (why I need #:semem). Ok, curiosity :</p>
+<pre><code class=\"language-sh\">danny@danny-desktop:~/hyperdata/transmissions$ cloc --vcs=git --md .
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>cloc</th>
+<th>github.com/AlDanial/cloc v 1.98  T=3.18 s (216.4 files/s, 56724.5 lines/s)</th>
+</tr>
+</thead>
+</table>
+<table>
+<thead>
+<tr>
+<th align=\"left\">Language</th>
+<th align=\"right\">files</th>
+<th align=\"right\">blank</th>
+<th align=\"right\">comment</th>
+<th align=\"right\">code</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align=\"left\">Markdown</td>
+<td align=\"right\">252</td>
+<td align=\"right\">16302</td>
+<td align=\"right\">14</td>
+<td align=\"right\">56817</td>
+</tr>
+<tr>
+<td align=\"left\">HTML</td>
+<td align=\"right\">84</td>
+<td align=\"right\">16542</td>
+<td align=\"right\">536</td>
+<td align=\"right\">22546</td>
+</tr>
+<tr>
+<td align=\"left\">Text</td>
+<td align=\"right\">32</td>
+<td align=\"right\">4217</td>
+<td align=\"right\">0</td>
+<td align=\"right\">19251</td>
+</tr>
+<tr>
+<td align=\"left\">JSON</td>
+<td align=\"right\">43</td>
+<td align=\"right\">0</td>
+<td align=\"right\">0</td>
+<td align=\"right\">16403</td>
+</tr>
+<tr>
+<td align=\"left\">SVG</td>
+<td align=\"right\">17</td>
+<td align=\"right\">0</td>
+<td align=\"right\">11</td>
+<td align=\"right\">11039</td>
+</tr>
+<tr>
+<td align=\"left\">JavaScript</td>
+<td align=\"right\">215</td>
+<td align=\"right\">2197</td>
+<td align=\"right\">1788</td>
+<td align=\"right\">9880</td>
+</tr>
+<tr>
+<td align=\"left\">CSS</td>
+<td align=\"right\">18</td>
+<td align=\"right\">218</td>
+<td align=\"right\">98</td>
+<td align=\"right\">1216</td>
+</tr>
+<tr>
+<td align=\"left\">Nunjucks</td>
+<td align=\"right\">19</td>
+<td align=\"right\">98</td>
+<td align=\"right\">0</td>
+<td align=\"right\">735</td>
+</tr>
+<tr>
+<td align=\"left\">YAML</td>
+<td align=\"right\">1</td>
+<td align=\"right\">5</td>
+<td align=\"right\">0</td>
+<td align=\"right\">116</td>
+</tr>
+<tr>
+<td align=\"left\">TypeScript</td>
+<td align=\"right\">2</td>
+<td align=\"right\">12</td>
+<td align=\"right\">5</td>
+<td align=\"right\">102</td>
+</tr>
+<tr>
+<td align=\"left\">Bourne Shell</td>
+<td align=\"right\">3</td>
+<td align=\"right\">19</td>
+<td align=\"right\">21</td>
+<td align=\"right\">92</td>
+</tr>
+<tr>
+<td align=\"left\">Python</td>
+<td align=\"right\">1</td>
+<td align=\"right\">8</td>
+<td align=\"right\">37</td>
+<td align=\"right\">46</td>
+</tr>
+<tr>
+<td align=\"left\">Bourne Again Shell</td>
+<td align=\"right\">1</td>
+<td align=\"right\">2</td>
+<td align=\"right\">2</td>
+<td align=\"right\">2</td>
+</tr>
+<tr>
+<td align=\"left\">--------</td>
+<td align=\"right\">--------</td>
+<td align=\"right\">--------</td>
+<td align=\"right\">--------</td>
+<td align=\"right\">--------</td>
+</tr>
+<tr>
+<td align=\"left\">SUM:</td>
+<td align=\"right\">688</td>
+<td align=\"right\">39620</td>
+<td align=\"right\">2512</td>
+<td align=\"right\">138245</td>
+</tr>
+</tbody></table>
+<p>Only a fraction of the files in the top 3 types are relevant, most is test data etc. But I think there&#39;s a lot of important Turtle classified as text.</p>
+<p>I&#39;m happy with the JS figures at this point in time. When <em>finished</em> (as much as it&#39;ll ever be), I reckon there should be about 50 &#39;active&#39; JS files, maybe 20 in the core (model, api, engine), 30 key processors. The same number of &#39;passive&#39; - tests.
+The ratio of JS file count and LOC isn&#39;t great IMHO. Average is about 50, I&#39;d rather have that around the max (hmm, the Jasmine tests are long-winded, not a big deal, so maybe it&#39;s not as bad as it seems).</p>
+<h2>Transmission nesting issue</h2>
+<p>#:todo move to #:transmissions docs</p>
+<p>#:todo alsomake test for command-line named transmission calls</p>
+<p>The <code>sparqlstore-to-site-indexes</code> #transmissions application should be a good place to use nested transmissions. I set them up, but didn&#39;t fully test. With :</p>
+<pre><code class=\"language-turtle\">:sparqlstore-to-indexes a :Transmission ;
+  :pipe (:p10 :p20 :p30 :p40 :p50) .
+  ...
+:p40 a :Accumulate ;
+      :settings :accumulator .
+
+:p50 a :make-html-index .
+
+# HTML
+:make-html-index a :Transmission ;
+  :pipe (:p100 :SM2) .
+  ...
+</code></pre>
+<p>It falls ove3r trying to make the processor connection,</p>
+<pre><code class=\"language-sh\">TypeError: Cannot read properties of undefined (reading &#39;receive&#39;)
+    at Accumulate.&lt;anonymous&gt; (file:///home/danny/hyperdata/transmissions/src/model/Connector.js:28:33)
+...
+</code></pre>
+<p>Somewhere around, in <code>Transmission.js</code> :</p>
+<pre><code class=\"language-javascript\">getFirstNode() { // used for nested transmissions
+  logger.log(this)
+  logger.log(this.processors[0])
+  return this.processors[0]
+}
+</code></pre>
+
+        <div class="entry-footer">
+            <h2>About</h2>
+            
+        </div>
+    </body>
+</html>

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <link rel="stylesheet" href="/css/fonts.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/grid-columns.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/style.css" type="text/css"/>
+        <title>Postcraft Sidebars</title>
+    </head>
+    <!-- POST PAGE TEMPLATE -->
+    <body>
+        <header id="entry-header">
+            <h1 class="post-title h-cinzel">
+                
+            </h1>
+        </header>
+        <h1>Postcraft Sidebars</h1>
+<p>I&#39;ve got a #Postcraft instance for <a href=\"https://foaf-retro.hyperdata.it/\">FOAF-Retro</a> ok now.</p>
+<p>It needs populating. Placeholders for content will be useful.</p>
+<p>Sidebars. Mostly links.</p>
+<p>These could be :</p>
+<ol>
+<li>hardcoded in the (nunjucks) templates</li>
+<li>specified in <code>manifest.ttl</code></li>
+<li>specified in markdown files</li>
+</ol>
+<p>First pass, a combination of 2. and 3.</p>
+<p>While I&#39;m looking at this, it makes sense to also consider :</p>
+<p>TODO to ignore files who&#39;s name begins with an underscore. That seems the easiest way of managing drafts.</p>
+<p>TODO some way of making a list of (most) posts in a dir.</p>
+<p>Ew. <code>src/services/rdf/ConfigMap.js</code> is <em>very</em> specific. Hardcoded.</p>
+<p>TODO little change in <code>manifest.ttl</code></p>
+<pre><code>  fs:targetDirectory &quot;cache/entries&quot; ;
+</code></pre>
+
+        <div class="entry-footer">
+            <h2>About</h2>
+            
+        </div>
+    </body>
+</html>

@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <link rel="stylesheet" href="/css/fonts.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/grid-columns.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/style.css" type="text/css"/>
+        <title>Journal 2025-03-26</title>
+    </head>
+    <!-- POST PAGE TEMPLATE -->
+    <body>
+        <header id="entry-header">
+            <h1 class="post-title h-cinzel">
+                
+            </h1>
+        </header>
+        <h1>Journal 2025-03-26</h1>
+<p><strong>Yay!</strong></p>
+<p>I spent much of the last couple of weeks paying off technical debt. A blocker was my doc management setup #:postcraft, an application of #:transmissions. On the surface (and my immediate need is), the world&#39;s most over-engineered static site builder for my blog.</p>
+<p>The last 5 yards was really frustrating. But now I have the trickiest parts good-enough for now, the transmissions being (source on GitHub) :</p>
+<ul>
+<li><a href=\"https://github.com/danja/transmissions/tree/main/src/applications/md-to-sparqlstore\">md-to-sparqlstore</a> - walks local dirs, pushes markdown docs (with metadata) to a SPARQL store</li>
+<li><a href=\"https://github.com/danja/transmissions/tree/main/src/applications/sparqlstore-to-html\">sparqlstore-to-html</a> - pulls docs from SPARQL store and renders as HTML pages</li>
+<li><a href=\"https://github.com/danja/transmissions/tree/main/src/applications/sparqlstore-to-site-indexes\">sparqlstore-to-site-indexes</a> - this renders a <code>index.html</code> and a <code>atom.xml</code> for the most recent entries.</li>
+</ul>
+<p>The site-specific configuration for all of these is contained in a <a href=\"https://github.com/danja/strandz.it/blob/main/postcraft/manifest.ttl\">manifest.ttl</a> (this one currently only being used for testing).</p>
+<p>All this is provisional, there&#39;s a lot of tweaking to do in the #:postcraft application, loads of refactoring needed in #:transmissions along with masses of minor bugfixes and small feature additions. But I&#39;m thinking I&#39;m just about ready to publish a 0.9.0 version of #:transmissions as an npm, #:postcraft very soon as a release.</p>
+<p>Get my blog publishing again first. This needs the static site support stuff - CSS etc - copying in place. Right now the above works by processing <em>everything</em>, but I know how to make it more sensible. Easiest way I can tell it is working is by cleaning up first.
+I believe I&#39;ve got all the necessary to do this more-or-less in place, I just need to create the transmission.</p>
+<p>So I&#39;ve copied <a href=\"https://github.com/danja/transmissions/tree/main/src/applications/example-application\">example-application</a> and renamed to <a href=\"https://github.com/danja/transmissions/tree/main/src/applications/postcraft-statics\">postcraft-statics</a>.</p>
+<p>It needs to :</p>
+<ol>
+<li>delete current site material - maybe not all at once, so I can be more selective if need be</li>
+<li>copy layouts across</li>
+<li>publish to host</li>
+</ol>
+<p>I think I will leave 3. for now. I have been using GitHub as a transfer mechanism - push from my desktop, pull from the server.</p>
+<p>For 1. I have <a href=\"https://github.com/danja/transmissions/blob/main/src/processors/fs/FileRemove.js\">src/processors/fs/FileRemove.js</a>. On a skim that looks current with the engine now (comments/docs need doing - later).
+For 2. <a href=\"https://github.com/danja/transmissions/blob/main/src/processors/fs/FileCopy.js\">src/processors/fs/FileCopy.js</a> grrr, that isn&#39;t up-to-date. But it looks easily fixable.</p>
+<p>Oh, I also have to update the #:postcraft template dir layout to the latest conventions I&#39;m going for:</p>
+<pre><code class=\"language-sh\">danny@danny-desktop:~/sites/strandz.it$ tree -L 2 --filesfirst postcraft/
+
+postcraft/
+├── about.md
+├── manifest.ttl
+├── content
+│   ├── media
+│   ├── raw
+│   └── static
+├── layout
+│   ├── base
+│   └── logos
+├── public
+│   ├── atom.xml
+│   ├── index.html
+│   └── blog
+└── system
+    ├── endpoints.json
+    └── sparql-templates
+</code></pre>
+<p>Under <code>content</code> I&#39;ve got :</p>
+<pre><code class=\"language-sh\">├── content
+│   ├── media
+│   │   └── images
+│   ├── raw
+│   │   ├── articles
+│   │   ├── entries
+│   │   ├── journal
+│   │   ├── knowledge
+│   │   └── todo
+│   └── static
+│       └── references
+</code></pre>
+<p>Hmm. Ditch <code>journal</code>, it&#39;s been easier to put these under <code>entries</code>, I can tag/filter later.
+ </p>
+
+        <div class="entry-footer">
+            <h2>About</h2>
+            
+        </div>
+    </body>
+</html>

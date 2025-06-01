@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <link rel="stylesheet" href="/css/fonts.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/grid-columns.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/style.css" type="text/css"/>
+        <title>Tinge</title>
+    </head>
+    <!-- POST PAGE TEMPLATE -->
+    <body>
+        <header id="entry-header">
+            <h1 class="post-title h-cinzel">
+                
+            </h1>
+        </header>
+        <h1>Tinge</h1>
+<p>&#39;Tinge&#39; was the solution to the clue &#39;Hint&#39; in today&#39;s Guardian Quick Crossword, the one I got a little stuck on - shoddy clue, imho.</p>
+<p>I completed it in 8 minutes - a personal best, I believe. I think I got it down to 10 when I was doing it pretty much every day in Buxton, in the pub after work. Now I only try every few week.</p>
+<p>This was after getting Wordle in 3 really quickly.</p>
+<p>I have slight mania. Known, controlled, environmental cause. I was up all night coding, only got an hour or so&#39;s sleep before the alarm went off (at 9:57). I actually felt reasonably rested, soon got on with things. I have drifted off on tangents 3 or 4 times, but no worries, flights of fancies are fine, I was very aware being a bit fugueish.</p>
+<p>Drifting a bit now.</p>
+<p>So. Couple of hour&#39;s job: get all my #:postcraft instances processed and bunged where they should be. Locally first, but it&#39;ll be the same structure on the server.</p>
+<p>I&#39;m struggling to focus on this - the #:tbox container thing is calling me. After spending a lot of time getting #:t to load (ES) modules from arbitrary location, I really want to stick all this code in a SPARQL store. The assumption that source code should exist in files on a filesystem is very deeply wired into anyone born after maybe 1940. It&#39;s only a bloody persistence mechanism. I want my code up there in the Giant Global Graph.</p>
+<p>Loads of security hazards, mostly because it&#39;s not the usual way of doing things, fs stuff has been pentested to buggery.</p>
+<p>Where was I?</p>
+<h2>Postcraft Instances Go Go!</h2>
+<p>I reckon I need a root <code>manifest.ttl</code> (in <code>server/deploy</code>) that has a list of includes to pick up and run the individual instances.</p>
+<p>Where&#39;s that ns?</p>
+<p>Oh dear. I was thinking separation of concerns but this is something like the bastard child of premature disoptimisation and NAGNI.</p>
+<pre><code class=\"language-turtle\">@prefix trm: &lt;http://purl.org/stuff/transmission/&gt; .
+@prefix fs: &lt;http://purl.org/stuff/filesystem/&gt; .
+@prefix pc: &lt;http://purl.org/stuff/postcraft/&gt; .
+@prefix t: &lt;http://hyperdata.it/transmissions/&gt; . # for custom terms &amp; instances
+</code></pre>
+<p>From now on, stick everything under :</p>
+<pre><code class=\"language-turtle\">@prefix tns: &lt;http://purl.org/stuff/transmissions/&gt; .
+</code></pre>
+<p>Flip that lot ^ later.</p>
+<p>What does this root manifest need to say?</p>
+<blockquote>
+<p>A set of relative URLs that contain the <code>manifest.ttl</code>s of each of the #:postcraft instances.</p>
+</blockquote>
+<p>#:todo I should get #:vb VocBench running soon.</p>
+<p>#:todo Grr. Need to modify all the Turtle.</p>
+<p>Ok, I&#39;ve got things like :</p>
+<pre><code class=\"language-turtle\">@prefix trm: &lt;http://purl.org/stuff/transmission/&gt; .
+
+:clean a trm:Pipeline ;
+    rdfs:label &quot;clean&quot; ;
+    rdfs:comment &quot;directory cleaner&quot; ;
+    trm:pipe (:r10 :r20 :r30 :r40 :r50 :r60) .
+</code></pre>
+<p>Each of those <code>transmissions.ttl</code> can hold multiple transmissions.</p>
+<p>Ops. It&#39;s the <code>manifest.ttl</code> I&#39;m meant to be looking at.</p>
+<p>Simplest thing that could possibly work?</p>
+<p>JSON guff.</p>
+<p>Hmm. I want those files to be treated as named graphs, but also try and avoid flipping to nquads just yet if I can help it.</p>
+<p>REview -</p>
+<pre><code class=\"language-sh\">cd ~/github-danny/transmissions
+ ./trans postcraft ../server/docs/postcraft
+</code></pre>
+<p> So I guess the child manifests should have an association with the application that uses them.</p>
+<p> I can&#39;t be bothered diving into local fs vs. global URLs right now, just give them a path.</p>
+<p> The manifests as they stand are instancy, many share the same <strong>application</strong>, just different details.</p>
+<p> How have I been doing fs paths in them so far!?</p>
+<p>Crudely.</p>
+<pre><code class=\"language-turtle\">t:CSS a pc:StaticGroup ;
+    pc:site &lt;https://danny.ayers.name/&gt; ;
+    fs:sourceDirectory &quot;layouts/mediocre/css&quot; ;
+    fs:targetDirectory &quot;public/home/css&quot; .
+</code></pre>
+<p>I think this is when SKOS is called for. But for now, simplest thing....</p>
+<p>Naming. Saigon, shit.</p>
+<p><code>realm</code> would probably be more accurate, but that&#39;s so overloaded. Go with <code>space</code></p>
+<p>Prefix <code>tran</code> looks ok.</p>
+<pre><code class=\"language-turtle\"># server/deploy/manifest.ttl
+
+@prefix rdf: &lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#&gt; .
+@prefix rdfs: &lt;http://www.w3.org/2000/01/rdf-schema#&gt; .
+@prefix dct: &lt;http://purl.org/dc/terms/&gt; .
+@prefix : &lt;http://purl.org/stuff/transmissions/&gt; .
+
+&lt;http://danny.ayers.name/space&gt; a :Space ;
+  rdfs:label &quot;danny.ayers.name&quot;
+      :app :postcraft;
+      :defPath &quot;../postcraft/danny.ayers.name&quot;; # definition path?
+      :targetPath &quot;../server/2024/danny-ayers.name&quot; .
+</code></pre>
+<p>Ok, that might be enough of a starter. But better try it first with the new spaces-</p>
+<pre><code class=\"language-turtle\"># server/deploy/manifest.ttl
+
+@prefix rdf: &lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#&gt; .
+@prefix rdfs: &lt;http://www.w3.org/2000/01/rdf-schema#&gt; .
+@prefix dct: &lt;http://purl.org/dc/terms/&gt; .
+@prefix : &lt;http://purl.org/stuff/transmissions/&gt; .
+
+&lt;http://hyperdata.it/server/space&gt; a :Space ;
+  rdfs:label &quot;server&quot;
+      :app :postcraft;
+      :defPath &quot;../server/docs/postcraft&quot;; # definition path
+      :targetPath &quot;../server/2024/server&quot; .
+
+&lt;http://hyperdata.it/transmissions/space&gt; a :Space ;
+  rdfs:label &quot;transmissions&quot;
+      :app :postcraft;
+      :defPath &quot;../transmission/docs/postcraft&quot;; # definition path
+      :targetPath &quot;../server/2024/transmissions&quot; .
+</code></pre>
+<p>Heh, I&#39;d got a note-to-self in there mentioning SIOC. I bet that has some of these things.</p>
+<p>So the runner will be something like :</p>
+<pre><code class=\"language-sh\">cd ~/github-danny/transmissions
+./trans ../server/deploy
+</code></pre>
+<p>Ok,that works. But how do I get at the Dataset?</p>
+<pre><code class=\"language-sh\">| Running :  (SM) p10 a DatasetReader
+DatasetReader, datasetName = dataset
+DatasetReader, message[datasetName] =
+</code></pre>
+<p>Enough on that.</p>
+<p>Next job was to check how far I&#39;d got with #:fam</p>
+<p>Wait, do the repopacks in case I feel inspired in bed on the phone in the morning
+ </p>
+
+        <div class="entry-footer">
+            <h2>About</h2>
+            
+        </div>
+    </body>
+</html>

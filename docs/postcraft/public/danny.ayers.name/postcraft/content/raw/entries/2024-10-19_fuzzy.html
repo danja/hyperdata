@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <link rel="stylesheet" href="/css/fonts.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/grid-columns.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/style.css" type="text/css"/>
+        <title>Fuzzy</title>
+    </head>
+    <!-- POST PAGE TEMPLATE -->
+    <body>
+        <header id="entry-header">
+            <h1 class="post-title h-cinzel">
+                
+            </h1>
+        </header>
+        <h1>Fuzzy</h1>
+<p>My head&#39;s a bit fuzzy this morning. I&#39;ve a vague memory of coughing a lot in the night, my lungs don&#39;t feel 100%. Smoking too much plus wet weather.</p>
+<p>#:next postcrafts - make a combined runner so all instances get rendered to where I want them (locally)</p>
+<p>#:next
+#:next #:fam move it along a bit</p>
+<h2>Server</h2>
+<p>My notes about #:postcraft deployment etc should go under <code>~/github-danny/server</code>, but apparently I haven&#39;t got a postcraft instance there. Which is kinda convenient, I&#39;ll set that up. Being empty it&#39;ll make a good starting point for the rest.</p>
+<p>#:todo add comments to these, it&#39;ll help with figuring out automation</p>
+<ol>
+<li><p>copy <code>postcraft/postcraft-template</code> to <code>server/docs/postcraft</code></p>
+</li>
+<li><p>add symlink for #:hyperdata-desktop</p>
+</li>
+</ol>
+<pre><code class=\"language-sh\">danny@danny-desktop:~/github-danny/hyperdata/workspaces$ ln -s /home/danny/github-danny/server/docs/postcraft/content-raw server
+</code></pre>
+<ol start=\"3\">
+<li><p>add symlink as project in #:hyperdata-desktop</p>
+</li>
+<li><p>add <code>server</code> as project in VSCode</p>
+</li>
+</ol>
+<p>Ok, now I can make some placeholder docs there.</p>
+<ul>
+<li><code>server/articles/deploy/build-site-transmission.md</code></li>
+<li><code>server/entries/server-setup_2024-10-19.md</code></li>
+<li><code>server/journal/2024-10-19.md</code></li>
+<li><code>server/todo/next-steps.md</code></li>
+</ul>
+
+        <div class="entry-footer">
+            <h2>About</h2>
+            
+        </div>
+    </body>
+</html>

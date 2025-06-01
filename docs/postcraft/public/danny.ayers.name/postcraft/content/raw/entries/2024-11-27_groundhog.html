@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <link rel="stylesheet" href="/css/fonts.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/grid-columns.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/style.css" type="text/css"/>
+        <title>Groundhog</title>
+    </head>
+    <!-- POST PAGE TEMPLATE -->
+    <body>
+        <header id="entry-header">
+            <h1 class="post-title h-cinzel">
+                
+            </h1>
+        </header>
+        <h1>Groundhog</h1>
+<p><em>I want to avoid those days.</em></p>
+<p>I really want to get on with new code while the plan details are still in my head. But I&#39;d better do a little to solidify #:transmissions. Started as below. Very quickly semi-distracted.</p>
+<p>For #:postcraft docs, I want to get past the <em>build-everything</em> setup I&#39;ve got currently. I want the system to watch for fs changes and update in near real time.</p>
+<p>I have an approach I think will work. It&#39;s something Claude should be good at building, but I need to check for refactorings that would be useful to do first.</p>
+<p>The two main components are general-purpose, but the #:postcraft docs  :</p>
+<ol>
+<li>#:transmissions running as a daemon (quasi-micro) service with a HTTP API</li>
+<li>a #:transmission running as a client that will post job descriptions to the server</li>
+</ol>
+<p><em>Remember requirements for #:kia - this should be able to act as an agent.</em></p>
+<h2>Service</h2>
+<p>I&#39;ve had success with running node services under pm2, but I can start and stop things manually for now.</p>
+<p>It might be useful to use the (unsafe) system call processor I started for service runtime updating.</p>
+<h2>Client</h2>
+<p>A big requirement here is a clear description of the description - for this I need to clarify the #:transmissions system structure.</p>
+<p>The #:postcraft use case is a nice one though. To watch for fs changes it&#39;ll need to operate as a local service, ie. pretty much the same as the server component. But I can start with a very much reduced form.</p>
+<p>a transmissions service is running continually.</p>
+<p>It watches for filesystem changes in a given directory</p>
+<hr>
+<p>#:ops. While building up some tests I hit Claude&#39;s message limit. Ok, for 7pm (it&#39;s now 3:15pm) :</p>
+<pre><code class=\"language-ho\">Can you please create a ho doc, as well as step-by-step instructions on how to create a test application, together with a set of files that can act as a template, following the style of test_fs-rw . Please give me complete individual artifacts for each of these
+</code></pre>
+<hr>
+<h2>Solidify...</h2>
+<ol>
+<li>test coverage</li>
+<li>docs</li>
+<li>GitHub CI/CD</li>
+<li>refactoring</li>
+</ol>
+<h2>1. Test Coverage</h2>
+<p>I <strong>really</strong> need proper coverage.</p>
+<p>Ok, now nyc is mostly working : <code>http://localhost/GITHUB-DANNY/transmissions/spec/coverage/lcov-report/</code></p>
+<h2>2. Docs</h2>
+<h3>jsdocs</h3>
+<p>Ew. I want to customise quite a lot, come back to this later.</p>
+<h3>#:postcraft</h3>
+<h2>3. GitHub CI/CD</h2>
+<p>I have looked into it before...completely forgotten.</p>
+<h2>4. Refactoring</h2>
+<p>I sketched out a plan last week, need to revisit.</p>
+<h2>5. Tests</h2>
+<p>I need some integration tests that start with CLI calls.</p>
+<h3>CLI Core Tests</h3>
+<p>Did I make a <code>ConditionTest</code> processor? Compare the <code>message</code> with a pattern, match/no match for test result.</p>
+<p>Hmm.</p>
+<pre><code class=\"language-prompt\">I would like an integration test runner `tests/integration/test_apps.spec.js` in a similar form to `tests/integration/fs-rw.spec.js` that will do the following :
+
+* scan for directories that match `src/applications/test_*`, eg. `src/applications/test_fs-rw`
+then for each of these :
+* set up test data as necessary in `src/applications/*/data/input`, eg. `src/applications/test_fs-rw/data/input/input-01.md`
+* run them : eg. `./trans test_fs-rw`
+* compare the output message with what is expected, which (if necessary) will appear in a file eg. `src/applications/test_fs-rw/data/output/required-01.md`
+
+Provision should be included to support trying different command-line arguments, so eg. an input message may be given via a string or filename, and/or a target (where a `manifest.ttl` and/or modules may be found), eg :
+` ./trans ../trans-apps/applications/test_module-load -m &#39;{&quot;first&quot;:&quot;one&quot;,&quot;second&quot;:&quot;two&quot;}&#39;`
+
+Please create the necessary code as complete artifacts.
+</code></pre>
+<p>Yay! That worked a treat (by the 6th cycle).</p>
+<ul>
+<li><code>(:DatasetReader :FileWriter)</code></li>
+<li></li>
+</ul>
+<h3>FS Remote App Test</h3>
+<pre><code class=\"language-sh\">./trans ../trans-apps/applications/test_module-load -m &#39;{&quot;first&quot;:&quot;one&quot;,&quot;second&quot;:&quot;two&quot;}&#39;
+</code></pre>
+
+        <div class="entry-footer">
+            <h2>About</h2>
+            
+        </div>
+    </body>
+</html>

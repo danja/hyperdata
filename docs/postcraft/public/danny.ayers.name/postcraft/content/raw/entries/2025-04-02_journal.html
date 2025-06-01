@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <link rel="stylesheet" href="/css/fonts.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/grid-columns.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/style.css" type="text/css"/>
+        <title>Journal 2025-04-02</title>
+    </head>
+    <!-- POST PAGE TEMPLATE -->
+    <body>
+        <header id="entry-header">
+            <h1 class="post-title h-cinzel">
+                
+            </h1>
+        </header>
+        <h1>Journal 2025-04-02</h1>
+<h2>Postcrafts</h2>
+<h2>#:Transmissions</h2>
+<ul>
+<li>settings from <code>transmissions.ttl</code></li>
+<li>types</li>
+<li>remote applications</li>
+<li>test endpoint support</li>
+<li>.log remover</li>
+<li>cloc pie chart</li>
+<li>simples</li>
+</ul>
+<p>&quot;typescript.validate.enable&quot;: false,
+&quot;javascript.validate.enable&quot;: false,</p>
+<h2>#:NS</h2>
+<ul>
+<li>org docs</li>
+<li>standard vocabs</li>
+<li>MCP crossover</li>
+<li>postcraft conventions</li>
+</ul>
+<h2>#:semem</h2>
+<ul>
+<li>attach endpoints to services with transmissions</li>
+<li>incorporate clients</li>
+<li>threejs spike</li>
+<li>concepts into skos</li>
+</ul>
+<pre><code class=\"language-prompt\">When I run a transmission and wish to examine the state of a Processor, eg. in `src/processors/flow/NOP.js` I call the `reveal(this)` function in  `src/utils/Logger.js`. But currently this is telling me :
+</code></pre>
+<p>TypeError: Converting circular structure to JSON
+    --&gt; starting at object with constructor &#39;Transmission&#39;
+    |     property &#39;processors&#39; -&gt; object with constructor &#39;Object&#39;
+    |     property &#39;<a href=\"http://purl.org/stuff/transmissions/p10\">http://purl.org/stuff/transmissions/p10</a>&#39; -&gt; object with constructor &#39;ShowMessage&#39;
+    --- property &#39;transmission&#39; closes the circle
+    at JSON.stringify (<anonymous>)
+    at logger.reveal (file:///home/danny/hyperdata/transmissions/src/utils/Logger.js:172:24)
+    at NOP.process (file:///home/danny/hyperdata/transmissions/src/processors/flow/NOP.js:15:8)
+    at NOP.executeQueue (file:///home/danny/hyperdata/transmissions/src/model/Processor.js:153:24)</p>
+<pre><code>But I can&#39;t see where that circle is created in the code. Please find which lines where do that. Is there any reason to want the circular ref?  
+</code></pre>
+<p>I&#39;m trying to get a node in a transmission to get its setting config values from the transmission (if they are there). I believe a  ref is being passed along, lines 58 and 113 in src/engine/TransmissionBuilder.js then from the <code>/home/danny/hyperdata/transmissions/src/model/Processor.js</code> to <code>src/engine/ProcessorSettings.js</code>. But when I run <code>src/applications/trial/transmissions.ttl</code> (with a call in <code>src/processors/flow/NOP.js</code>) it isn&#39;t picking up the value.
+ </p>
+
+        <div class="entry-footer">
+            <h2>About</h2>
+            
+        </div>
+    </body>
+</html>

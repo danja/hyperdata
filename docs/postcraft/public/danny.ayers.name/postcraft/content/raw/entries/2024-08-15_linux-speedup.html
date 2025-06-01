@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <link rel="stylesheet" href="/css/fonts.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/grid-columns.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/style.css" type="text/css"/>
+        <title>Linux Performance Tips</title>
+    </head>
+    <!-- POST PAGE TEMPLATE -->
+    <body>
+        <header id="entry-header">
+            <h1 class="post-title h-cinzel">
+                
+            </h1>
+        </header>
+        <h1>Linux Performance Tips</h1>
+<p>I think most of these will work in most distros, but I&#39;ve only tried on Ubuntu, ymmv.</p>
+<p><a href=\"https://www.zabbix.com/\">https://www.zabbix.com/</a> - big monitoring app</p>
+<p><a href=\"https://nicolargo.github.io/glances/\">https://nicolargo.github.io/glances/</a> - looks like htop with more features</p>
+<h1>Linux Commands to Optimize Application Performance</h1>
+<h2>Process Priority</h2>
+<ul>
+<li><code>nice</code>: Set the priority of a new process</li>
+<li><code>renice</code>: Alter the priority of an existing process</li>
+</ul>
+<h2>CPU Core Usage</h2>
+<ul>
+<li><code>taskset</code>: Set or retrieve a process&#39;s CPU affinity</li>
+<li><code>cgroups</code>: Control groups for resource allocation</li>
+</ul>
+<h2>I/O Throughput</h2>
+<ul>
+<li><code>ionice</code>: Set or change the I/O scheduling class and priority</li>
+<li><code>iotop</code>: Monitor I/O usage by processes</li>
+</ul>
+<h2>Memory Management</h2>
+<ul>
+<li><code>ulimit</code>: Set or get user limits for system resources</li>
+<li><code>vmstat</code>: Report virtual memory statistics</li>
+<li><code>free</code>: Display amount of free and used memory in the system</li>
+</ul>
+<h2>Additional Tools</h2>
+<ul>
+<li><code>top</code> / <code>htop</code>: Monitor system processes and resource usage</li>
+<li><code>perf</code>: Linux profiling tool for performance analysis</li>
+</ul>
+<hr>
+<h1>Detailed Linux Commands for Performance Optimization</h1>
+<h2>Process Priority</h2>
+<h3>nice</h3>
+<p>Description: Starts a process with a modified scheduling priority.
+Example:
+<code>nice -n 10 ./my_script.sh</code>
+This runs <code>my_script.sh</code> with a lower priority (nice value of 10).</p>
+<h3>renice</h3>
+<p>Description: Alters the scheduling priority of a running process.
+Example:
+<code>renice -n -5 -p 1234</code>
+This increases the priority of process with PID 1234 (nice value of -5).</p>
+<h2>CPU Core Usage</h2>
+<h3>taskset</h3>
+<p>Description: Sets or retrieves a process&#39;s CPU affinity.
+Example:
+<code>taskset -c 0,1 ./my_app</code>
+This runs <code>my_app</code> on CPU cores 0 and 1 only.</p>
+<h3>cgroups</h3>
+<p>Description: Control groups for resource allocation (more complex, typically configured via system files).
+Example:
+<code>echo 950000 &gt; /sys/fs/cgroup/cpu/my_group/cpu.cfs_quota_us</code>
+This limits processes in <code>my_group</code> to 95% of one CPU core.</p>
+<h2>I/O Throughput</h2>
+<h3>ionice</h3>
+<p>Description: Sets or changes the I/O scheduling class and priority of a process.
+Example:
+<code>ionice -c 2 -n 0 -p 1234</code>
+This sets process 1234 to use the best-effort I/O scheduling class with highest priority.</p>
+<h3>iotop</h3>
+<p>Description: Monitors I/O usage by processes.
+Example:
+<code>iotop -o</code>
+This shows only processes or threads actually doing I/O.</p>
+<h2>Memory Management</h2>
+<h3>ulimit</h3>
+<p>Description: Sets or gets user limits for system resources.
+Example:
+<code>ulimit -v 1000000</code>
+This limits the virtual memory available to the shell and its child processes to 1GB.</p>
+<h3>vmstat</h3>
+<p>Description: Reports virtual memory statistics.
+Example:
+<code>vmstat 5 3</code>
+This displays memory statistics every 5 seconds, 3 times.</p>
+<h3>free</h3>
+<p>Description: Displays the amount of free and used memory in the system.
+Example:
+<code>free -h</code>
+This shows memory usage in human-readable format.</p>
+<h2>Additional Tools</h2>
+<h3>top / htop</h3>
+<p>Description: Monitors system processes and resource usage in real-time.
+Example:
+<code>top</code>
+or for htop:
+<code>htop</code>
+Both provide an interactive process viewer.</p>
+<h3>perf</h3>
+<p>Description: Linux profiling tool for performance analysis.
+Example:
+<code>perf stat ./my_app</code>
+This provides basic performance statistics for <code>my_app</code>.</p>
+<h3>parallel</h3>
+<p>Description: Executes jobs in parallel using multiple CPU cores.
+Example:
+<code>parallel -j 8 my_script.sh ::: input1 input2 input3 input4</code>
+This runs <code>my_script.sh</code> on 8 CPU cores simultaneously, processing different inputs.</p>
+<h3>nproc</h3>
+<p>Description: Print the number of processing units available.
+Example:
+<code>nproc</code>
+This prints the number of available cores, which can be used in scripts to dynamically allocate tasks.</p>
+<hr>
+<h1>Explanation of <code>ps -o pid,pri,ni,cmd -p 177213</code></h1>
+<p>This command uses the <code>ps</code> (process status) utility to display information about a specific process:</p>
+<ul>
+<li><code>ps</code>: The base command to report process status</li>
+<li><code>-o pid,pri,ni,cmd</code>: Specifies the output format<ul>
+<li><code>pid</code>: Process ID</li>
+<li><code>pri</code>: Priority of the process</li>
+<li><code>ni</code>: Nice value of the process</li>
+<li><code>cmd</code>: The command with all its arguments</li>
+</ul>
+</li>
+<li><code>-p 177213</code>: Selects the process with PID 177213</li>
+</ul>
+<p>This command will output a table with four columns:</p>
+<ol>
+<li>PID (Process ID): The unique identifier for the process</li>
+<li>PRI (Priority): The current priority of the process</li>
+<li>NI (Nice Value): The nice value, which affects process scheduling priority</li>
+<li>CMD (Command): The command that started the process, including its arguments</li>
+</ol>
+<p>This is useful for checking the priority and nice value of a specific process, which can be helpful when optimizing system performance or troubleshooting issues related to process scheduling.</p>
+<hr>
+<h1>Explanation of <code>top -p 177213</code></h1>
+<p>This command uses the <code>top</code> utility to monitor a specific process:</p>
+<ul>
+<li><code>top</code>: The base command that provides a dynamic real-time view of a running system</li>
+<li><code>-p 177213</code>: Specifies the Process ID (PID) to monitor</li>
+</ul>
+<p>When executed, this command will:</p>
+<ol>
+<li>Launch the <code>top</code> program in your terminal</li>
+<li>Display real-time information about only the process with PID 177213</li>
+<li>Continuously update this information (typically every 3 seconds by default)</li>
+</ol>
+<p>The output will include:</p>
+<ul>
+<li>PID: Process ID (177213 in this case)</li>
+<li>USER: User who owns the process</li>
+<li>PR: Priority of the process</li>
+<li>NI: Nice value of the process</li>
+<li>VIRT: Virtual memory used</li>
+<li>RES: Resident memory used</li>
+<li>SHR: Shared memory used</li>
+<li>S: Process status (e.g., R for running, S for sleeping)</li>
+<li>%CPU: Percentage of CPU used by this process</li>
+<li>%MEM: Percentage of memory used by this process</li>
+<li>TIME+: Total CPU time used by the process</li>
+<li>COMMAND: Command used to start the process</li>
+</ul>
+<p>This command is useful for monitoring the resource usage of a specific process in real-time, which can be helpful for performance tuning and troubleshooting.</p>
+<p>Note: You can exit the <code>top</code> display by pressing &#39;q&#39;.</p>
+<hr>
+<h1>Explanation of taskset commands</h1>
+<h2>Command 1: <code>taskset -cp 177213</code></h2>
+<p>This command displays the current CPU affinity of a specific process:</p>
+<ul>
+<li><code>taskset</code>: The command to set or retrieve the CPU affinity of a process</li>
+<li><code>-c</code>: Interprets mask as a list of CPUs instead of a bitmask</li>
+<li><code>-p</code>: Operates on an existing PID (Process ID)</li>
+<li><code>177213</code>: The PID of the process being queried</li>
+</ul>
+<p>This command will show which CPU cores the process with PID 177213 is currently allowed to run on.</p>
+<h2>Command 2: <code>sudo taskset -cp 0-$(nproc --all) 177213</code></h2>
+<p>This command sets the CPU affinity for a specific process to use all available CPU cores:</p>
+<ul>
+<li><code>sudo</code>: Runs the command with root privileges</li>
+<li><code>taskset</code>: The command to set or retrieve the CPU affinity of a process</li>
+<li><code>-c</code>: Interprets mask as a list of CPUs instead of a bitmask</li>
+<li><code>-p</code>: Operates on an existing PID (Process ID)</li>
+<li><code>0-$(nproc --all)</code>: Specifies the range of CPU cores to use<ul>
+<li><code>0-</code>: Starts the range from CPU core 0</li>
+<li><code>$(nproc --all)</code>: A command substitution that returns the number of available processing units</li>
+</ul>
+</li>
+<li><code>177213</code>: The PID of the process whose CPU affinity is being set</li>
+</ul>
+<p>This command allows the process with PID 177213 to run on all available CPU cores, potentially improving its performance if it can utilize multiple cores effectively.</p>
+<p>Note: Using <code>sudo</code> may be necessary to change the CPU affinity of processes you don&#39;t own.
+ </p>
+
+        <div class="entry-footer">
+            <h2>About</h2>
+            
+        </div>
+    </body>
+</html>

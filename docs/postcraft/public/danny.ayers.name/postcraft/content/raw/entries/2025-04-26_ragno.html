@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <link rel="stylesheet" href="/css/fonts.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/grid-columns.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/style.css" type="text/css"/>
+        <title>Ragno</title>
+    </head>
+    <!-- POST PAGE TEMPLATE -->
+    <body>
+        <header id="entry-header">
+            <h1 class="post-title h-cinzel">
+                
+            </h1>
+        </header>
+        <h1>Ragno</h1>
+<p><em>note to self</em></p>
+<p>#:Ragno is what I&#39;m calling the engine and vocab I&#39;ve developing for use with #:Semem, my semantic memory system.</p>
+<p>A lot of it comes from the projection of the ideas in the <a href=\"https://terry-xu-666.github.io/NodeRAG_web/\">NodeRAG</a> <a href=\"https://github.com/Terry-Xu-666/NodeRAG#\">paper</a> into the semweb space. I had plans in place &amp; code in progress before that material was published, but there&#39;s so much overlap with what I already had in mind I have to merge in what I can. It should save a lot of time.</p>
+<p>I have my own vocab material in draft form, plus Claude-generated NodeRAG OWL &amp; SPARQL bits. Merging should be pretty straightforward: my stuff is a generalization of NodeRAG concepts anyhow, I only need to tweak a few things to overlay them.</p>
+<p>The NodeRAG material appearing has had a secondary effect on what I&#39;m doing with vocab. I was going to put all my #:semem-related bits in the #:zpt, <em>&quot;Zoom, Pan, Tilt&quot;</em>, namespace. But looking now there is a natural separation of concerns to use : #:ragno is about the representation; #:zpt is about access and navigation.</p>
+<p>First pass I won&#39;t attempt the more novel parts of #:zpt (write-up coming soon), because the engine of NodeRAG is low-hanging fruit given the bits of dev infrastructure I have in place. It can make it using my pipeliney thing #:transmissions.</p>
+<h2>Setup</h2>
+<p>This calls for <em>yet another</em> GitHub repo : <a href=\"https://github.com/danja/ragno\">https://github.com/danja/ragno</a> . Pop it in my local setup, <code>~/hyperdata/ragno</code>.</p>
+<p>I&#39;ll need some build bits, so <code>npm init -y</code>.</p>
+<p>I&#39;ll need documentation, so I&#39;ll have the current #:postcraft template (copy-pasted locally as <code>docs/postcraft</code>). It still uses a bunch of different #:transmissions so I&#39;d better get those working before anything else. Wait, no, first, plan what else I need to do...</p>
+<h2>Plan</h2>
+<ul>
+<li>install NodeRAG, have a play</li>
+<li>refactor semem to clean interfaces</li>
+<li>incorporate hyperdata-clients in semem</li>
+<li>make sure remote transmissions apps still work (probably not - I disconnected the tests before making a bunch of system changes)</li>
+<li>create ragno trans-app</li>
+<li>set up #:postcraft documentation</li>
+<li>worker threads</li>
+<li>multi-transmissions (for postcraft)</li>
+</ul>
+<p>src/applications/test/file-to-sparqlstore
+ </p>
+
+        <div class="entry-footer">
+            <h2>About</h2>
+            
+        </div>
+    </body>
+</html>

@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <link rel="stylesheet" href="/css/fonts.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/grid-columns.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/style.css" type="text/css"/>
+        <title>Postcraft Flow : 2024-04-27</title>
+    </head>
+    <!-- POST PAGE TEMPLATE -->
+    <body>
+        <header id="entry-header">
+            <h1 class="post-title h-cinzel">
+                
+            </h1>
+        </header>
+        <h1>Postcraft Flow : 2024-04-27</h1>
+<p><em>TODO - when more static place alongside <code>transmission.ttl</code> as <code>about.md</code></em></p>
+<p>This is a work in progress, a sketch of the flow for the Postcraft pipeline. It&#39;s basically a Static Site Builder. It appears complex here, but that&#39;s a <strong>feature!</strong> Well, not exactly. The individual operations, which would typically appear as hardwired functions in a dedicated site builder are here implemented as independent services, connected at runtime via a definition that&#39;s expressed declaratively.</p>
+<p><em>Major refactoring required...later. But wherever possible here, instead of <code>execute(data, context)</code> favour <code>execute(false, context)</code>, with <code>context.default</code> instead of <code>data</code>.</em></p>
+<p>A Turtle file <code>transmission.ttl</code> defines the general topology. Configuration details for the individual services are in <code>services.ttl</code>. The configuration specific to the site being built (dirs,templates etc) is supplied in <code>manifest.ttl</code>.</p>
+<p>Right now the pipeline is a simple sequence of steps. The steps are executed in order, with the output of each step being the input to the next. There are forks in the pipeline at <code>PostcraftDispatcher</code> and <code>DirWalker</code>, but as the subsequent services are still just sequences of steps, it can still be thought of as a sequence.</p>
+<p>In <code>transmission.ttl</code> the topology is defined as an <code>rdf:List</code> (confusingly aka an RDF Collection, see <a href=\"https://ontola.io/blog/ordered-data-in-rdf\">Ordered data in RDF</a>) using the concise Turtle syntax:</p>
+<pre><code>:postcraft a trm:Pipeline ;
+trm:pipe (:s1 :s2 :s3 :s4 :s5 :s6 :s7 :s8 :s9 :s10 :s11) .
+</code></pre>
+<p>To run the pipeline, the following command is used:</p>
+<pre><code>./run postcraft /home/danny/HKMS/postcraft/danny.ayers.name
+</code></pre>
+<ul>
+<li><code>run</code> is a bash script for convenience, simply <code>node run.js &quot;$@&quot;</code></li>
+<li><code>postcraft</code> is the name of the pipeline (corresponding to a directory under <code>transmissions/applications/</code>)</li>
+</ul>
+<ul>
+<li><code>/home/danny/HKMS/postcraft/danny.ayers.name</code> is the directory containing the site content, including <code>manifest.ttl</code></li>
+</ul>
+<p>The <code>postcraft</code> pipeline services are then, in turn:</p>
+<h4>:s1 a :ContextReader .</h4>
+<p>Reads <code>manifest.ttl</code> as a RDF/JS dataset, and extracts the configuration for the site being built.
+Two values are passed into the context:</p>
+<ul>
+<li>context.rootDir (taken from the command line)</li>
+<li>context.dataset</li>
+</ul>
+<p>The configuration now in <code>dataset</code> is used to set up the context for the rest of the pipeline.</p>
+<h4>:s2 a :ConfigMap .</h4>
+<p><em>TODO use services.ttl?</em></p>
+<p>This scans <code>config.dataset</code> looking for any instances of the rdfs:Class <code>pc:ContentGroup</code>.</p>
+<p>These will contain eg.</p>
+<pre><code>    fs:sourceDirectory &quot;posts&quot; ;
+    fs:targetDirectory &quot;site/blog&quot; ;
+    pc:template &quot;layouts/mediocre/mediocre-posts_template.html&quot; .
+</code></pre>
+<p>The RDF-Ext Grapoi lib is used to extract these values and insert them into the context as :</p>
+<ul>
+<li>context.sourceDir</li>
+<li>context.targetDir</li>
+</ul>
+<p>additionally, a key is inserted into the context as:</p>
+<ul>
+<li>context.loadContext = &#39;template&#39;</li>
+</ul>
+<p>and the full path to the template is placed in <code>data</code> <strong>and config.default</strong> remember refactoring</p>
+<p>const contextClone = structuredClone(context)</p>
+<h4>:s3 a :FileReader ; # the template</h4>
+<p><code>FileReader</code> reads a file and passes on its contents. The file may be specified in <code>data</code> as in this case. (If not, it will be read using the configuration defined in <code>services.ttl</code>).</p>
+<p>Where it places the content is determined by the key given by <code>context.loadContext</code> - here it&#39;s <code>template</code>, so the template content is placed in</p>
+<ul>
+<li><code>context.template</code></li>
+</ul>
+<p>// what happened to pipeline trm:configKey :contextKey . ?</p>
+<h4>:s5 a :PostcraftDispatcher . # dispatch each content group</h4>
+<p>COMMENTED OUT</p>
+<p>Currently this isn&#39;t doing much... work already done by ConfigMap</p>
+<p>process forks here</p>
+<h4>:s6 a :DirWalker .</h4>
+<p>process forks here</p>
+<p>which reads the content directory and dispatches each file entry to be processed individually.</p>
+<p>&#39; + contextClone.filename)</p>
+<h4>:s7 a :FileReader . # the markdown content</h4>
+<p>in : context.filename
+context.sourceDir
+out : context.content</p>
+<p>if (context.loadContext) { // get rid?
+context[context.loadContext] = content
+}</p>
+<h4>:s8 a :PostcraftPrep .</h4>
+<p>sorts out filename &amp; title</p>
+<h4>:s9 a :MarkdownToHTML .</h4>
+<p>uses marked lib</p>
+<p>in: context.content is MD
+out: context.content is HTML</p>
+<h4>:s10 a :Templater .</h4>
+<p>for now just using replace()</p>
+<p><a href=\"https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_literals\">https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_literals</a></p>
+<h4>:s11 a :FileWriter .</h4>
+<h3>Utility Services</h3>
+<h4>:NOP .</h4>
+<h4>:s4 a :NOP .</h4>
+<p>No operation - a utility service that does nothing, helpful when making provisional changes to the pipeline.</p>
+<h4>:s4 a :Halt .</h4>
+<h5>:s3 a :ShowMessage .</h5>
+
+        <div class="entry-footer">
+            <h2>About</h2>
+            
+        </div>
+    </body>
+</html>

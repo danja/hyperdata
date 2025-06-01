@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <link rel="stylesheet" href="/css/fonts.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/grid-columns.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/style.css" type="text/css"/>
+        <title>Journal : 2024-05-14</title>
+    </head>
+    <!-- POST PAGE TEMPLATE -->
+    <body>
+        <header id="entry-header">
+            <h1 class="post-title h-cinzel">
+                
+            </h1>
+        </header>
+        <h1>Journal : 2024-05-14</h1>
+<p>This morning, post office then shopping with Mari. I did the minimum that seemed necessary on Bergi&#39;s &#39;Unified Landscape&#39; post, but when I pinged him he&#39;d told me he&#39;d already posted it. Not to worry, I&#39;m <em>very</em> encouraged that he&#39;s been looking at similar things to me.</p>
+<p>Progress on #Postcraft! Last night I got the pipeline as far as rendering the individual entry HTML. I did get rather quick &amp; dirty with it, but that&#39;s fine for now. I&#39;ve already got a huge todo list, mostly refactorings that will be straightforward. Now I just want to keep the momentum up, get the whole thing working end-to-end, make it nice later.</p>
+<p>TODO The how-to guide needs tips, <code>s:ShowMessage</code> etc</p>
+<pre><code>    trm:pipe (:s1 :s2 :s2 :s4 :s5 :s6 :s7 :log1 :s8 :s9 :s10 :s11 :s12 :s13 :s14 :s15 :s16) .
+...
+:s7 a :PostcraftPrep .
+
+:log1 a :ShowMessage .
+
+:s8 a :MarkdownToHTML .
+</code></pre>
+<p>Oops!</p>
+<pre><code>s2.s2.s2.s2.s2.s2.s2.s2.s2.s2.s2.s2.s2.s2.s2.s2.s2.s2.s2.s2.s2.s2.s2.s2.s2.s2.s2.s2.s2.s2.s2.s2.s2.s2.s2.s2.s2.s2.s2.s2.s2.s2.s2.s2.s2.s2.s2.s2.s2.s2.s2.s2.s2.s2.s2.s2.s2.s2.s2.s2.s2.s2.s2.s2.s2.s2.s2.s2.s2.s2.s2.s2.s2.s2.s2.s2.s2.s2.s2.s2.s2.s2.s2.s2.s2.s2.s2.s2.s2.s2.s2.s2.s2.s2.s2.s2.s2.s2.s2.s2.
+</code></pre>
+<p>Check that pipe.</p>
+<hr>
+<p>TODO it&#39;d be nice to give the <code>context</code> etc objects names, but it&#39;s something around Prototype,</p>
+<pre><code>   context.constructor.name = &#39;Context&#39;
+   -&gt;
+   TypeError: Cannot assign to read only property &#39;name&#39; of function &#39;function Object() { [native code] }&#39;
+</code></pre>
+<p>not obvious, <a href=\"https://stackoverflow.com/questions/17169335/how-do-i-specify-constructor-name-on-a-custom-object\">https://stackoverflow.com/questions/17169335/how-do-i-specify-constructor-name-on-a-custom-object</a></p>
+<hr>
+<p>That was a little annoying. I tried <code>s:Unfork</code> where it needed to go (after <code>s:DirWalker</code> etc) and it didn&#39;t work. After a <em>lot</em> of circular fiddling, it now works. I have no idea why it didn&#39;t before.</p>
+<p>Ok, that <strong>Front Page</strong>.</p>
+<p>How much to do in the pipeline, how much to hardcode in the template? (nunjucks is ok with that)</p>
+<p>I could use another <code>s:DirWalker</code> to get the list of raw entry filenames, pass that to <code>s:Template</code> to render the front page. I might need to add a <code>s:Sort</code> service to get the entries in the right order (GitHub #Copilot suggested that, it&#39;s a good one).</p>
+<p>Or... carry over what I&#39;ve already got/can get from the earlier <code>s:DirWalker</code>. That&#39;s probably the way to go.</p>
+<p>Oops. It goes into an infinite loop when I add a subdir to the source dir. <code>s:DirWalker</code> needs a test, fix recursion. Leave that for now. What there is in the context after <code>s:Unfork</code> is:</p>
+<pre><code>  &quot;filepaths&quot;: [
+    &quot;2024-05-03_one.md&quot;,
+    &quot;2024-05-03_two.md&quot;
+  ],
+</code></pre>
+<p>Hmm. It&#39;s a bit clunky, I&#39;ll have to remap those to the raw content HTML files. But it&#39;s not terrible, it can take the info from a single source, the bits of context derived from <code>manifest.ttl</code>.</p>
+<h3>Plan</h3>
+<h4>Postcraft</h4>
+<p><strong>Remember I need to take down the old server</strong></p>
+<p><em>This was TODO but now #RELOCATE : paths for entry pages/fix errors in PostCraftPrep - can refactor to simplify? check <code>s:ConfigMap</code></em></p>
+<ul>
+<li><input disabled=\"\" type=\"checkbox\"> add <code>s:Unfork</code>, template &amp; save the front page</li>
+<li><input disabled=\"\" type=\"checkbox\"> (part of above) make a start on figuring out filter/order of posts</li>
+<li><input disabled=\"\" type=\"checkbox\"> make individual entry pages presentable</li>
+<li><input disabled=\"\" type=\"checkbox\"> make the front page presentable</li>
+</ul>
+<p>probably not today</p>
+<ul>
+<li><p><input disabled=\"\" type=\"checkbox\"> 
+upload to server</p>
+</li>
+<li><p><input disabled=\"\" type=\"checkbox\"> 
+make everything work</p>
+</li>
+<li><p><input disabled=\"\" type=\"checkbox\"> 
+Hello World (again) post</p>
+</li>
+<li><p><input disabled=\"\" type=\"checkbox\"> 
+Transmissions/Postcraft overview post</p>
+</li>
+<li><p><input disabled=\"\" type=\"checkbox\"> 
+pinned posts</p>
+</li>
+<li><p><input disabled=\"\" type=\"checkbox\"> 
+Atom feed</p>
+</li>
+</ul>
+<h4>FOAF-Archive</h4>
+<ul>
+<li><input disabled=\"\" type=\"checkbox\"> Placeholders + <code>a:manifest</code> for FOAF-Archive</li>
+<li><input disabled=\"\" type=\"checkbox\"> FOAF video</li>
+</ul>
+<h4>Kaggle-Preferences</h4>
+<ul>
+<li><input disabled=\"\" type=\"checkbox\"> get set up, run the demo</li>
+</ul>
+<hr>
+<p>#RELOCATE transmissions topology - multiple lists, series/parallel</p>
+<p><a href=\"mailto:support-it@blackview.it\">support-it@blackview.it</a></p>
+<p>I believe I&#39;ve got <code>s:Unfork</code> working. I made a <code>s:Fork</code> to test it in isolation with a little test application. Fork/Unfork aren&#39;t very good names, something a like Multicast might be better. Leave that for the Great Refactoring, which I&#39;m do some time after #Postcraft is up and running.</p>
+<p>It&#39;s funny, while I was trying to figure that out, the thought of providing something like a GOTO service crossed my mind. There is a natural progression from pipeline to flowchart-shaped structures, to a little language (with Turtle syntax!). But I have to invoke <strong>YAGNI</strong> here. It will be interesting to see what other steps in that direction I have to take, but the goal right now is to make it easy to get things done. And get them done.</p>
+<p>Oops...I forgot I need to do generate the final entry pages next, before Unforking.</p>
+<p>#RELOCATE pc:ContentGroup might be better as a more general trm:Group</p>
+<h2>to add <code>s:Unfork</code> after the entry content generation phase, then</h2>
+<p>Yesterday I said : Ok, for TODOs, I&#39;ll have a top-level <code>todo/index.md</code> file, plus monthly files like <code>todo/2024-05.md</code>. Then have <strong>Plan</strong> blocks in this journal for daily bits.</p>
+<p>What I&#39;ve got dangling, I&#39;m not sure how best to manage. It would be good to have a <em>Where I&#39;m At</em> <strong>Status</strong> somewhere. And a <strong>Requirements</strong>. And a convention for flagging doc chacteristics in terms of changeability.</p>
+<p>Note to #RELOCATE, re. #GTD : I need to be clearer in demarcating my planning activity and the actual work. I&#39;m revising too much when I hit the code. I need clear plans <em>written down</em> before I start, no matter how long they take. Then code faster.</p>
+<p>context.entryContentToPage = {
+sourceDir: sourceDir,
+targetDir: targetDir,
+templateFilename: templateFilename</p>
+<hr>
+<h3>Plan</h3>
+<h4>Bergi &#39;Unified Landscape&#39;</h4>
+<p><strong>Phone Return!!!</strong></p>
+<h4>Postcraft</h4>
+<ul>
+<li><p>[*] <code>s:Unfork</code> - write a little test application</p>
+</li>
+<li><p>[*] write a little test application <code>t:transmission</code></p>
+</li>
+<li><p><input disabled=\"\" type=\"checkbox\"> 
+visualization : like <a href=\"http://localhost/farelo/src/TurtleEditor/\">http://localhost/farelo/src/TurtleEditor/</a></p>
+</li>
+</ul>
+<p>Fork is more like multicast - rename?</p>
+<h4>Kaggle-Preferences</h4>
+<ul>
+<li><input disabled=\"\" type=\"checkbox\"> get set up, run the demo</li>
+</ul>
+<h4>FOAF-Archive</h4>
+<ul>
+<li><input disabled=\"\" type=\"checkbox\"> Placeholders + <code>a:manifest</code> for FOAF-Archive</li>
+<li><input disabled=\"\" type=\"checkbox\"> FOAF video</li>
+</ul>
+<h4>Unfork</h4>
+<p>Ok, the <strong>Topology</strong> question. Postcraft is quite a good example on which to be thinking about this.</p>
+<ul>
+<li>Phase One : Markdown -&gt; HTML at raw entry level, then raw entries -&gt; final entry pages</li>
+<li>Phase Two : raw entries -&gt; front page etc.</li>
+</ul>
+<p>Phase One forks into multiple processing paths, one for each markdown file. To avoid uneccessary complications, it makes sense to make sure Phase One has completed before starting Phase Two.
+So,</p>
+<p>I believe how I&#39;ve got <code>s:DirWalker</code> means that order is maintained subsequently, even though each path runs independently (parallelism for efficiency isn&#39;t something I need to think about now).</p>
+<hr>
+<ul>
+<li>three semi-independent pipelines defined in transmission.ttl : markdown -&gt; HTML rawEntries; rawEntries -&gt; entries; rawEntries -&gt; front page</li>
+<li>one &#39;continuous&#39;, with an Unfork or some such to bring the control flow down to one path</li>
+<li>one more blocky, with ContentGroups being set up from manifest.ttl in ConfigMap at the start</li>
+</ul>
+<p>All three approaches could be supported, but for now I should just pick the one that seems most suitable for the current task. Considerations :</p>
+<ul>
+<li>keeping it simple, with sensible defaults</li>
+<li>keeping concerns separate :<ul>
+<li><code>transmission.ttl</code> = topology</li>
+<li><code>services.ttl</code> = details of individual service configurations
+together they define the application</li>
+<li><code>manifest.ttl</code> = application instance configuration</li>
+</ul>
+</li>
+</ul>
+<p>I need some fresh air.</p>
+<pre><code>
+</code></pre>
+
+        <div class="entry-footer">
+            <h2>About</h2>
+            
+        </div>
+    </body>
+</html>

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <link rel="stylesheet" href="/css/fonts.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/grid-columns.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/style.css" type="text/css"/>
+        <title>Hat</title>
+    </head>
+    <!-- POST PAGE TEMPLATE -->
+    <body>
+        <header id="entry-header">
+            <h1 class="post-title h-cinzel">
+                
+            </h1>
+        </header>
+        <h1>Hat</h1>
+<p><em>because my hat is on the desk</em></p>
+<p>I&#39;m in the process of setting up #:server infrastructure so all the #:postcraft instances (ie. rendering for my docs) can be run from a single command (using #:transmissions).</p>
+<p>I&#39;ve already got per-instance <code>manifest.ttl</code> files describing where things should go. I need an uber-manifest to run all of these. I&#39;ll need a few more vocab terms (and really need to refactor those). Coincidentally, the other day I stumbled on a vocab I did in 2001 :  </p>
+<p>RDF Process Profile (RPP) Specification 0.0.1</p>
+<p><a href=\"https://web.archive.org/web/20021009222134/http://www.isacat.net/citnames/2001/04/rpp.htm\">archive.org</a></p>
+<p>Claude summarises :</p>
+<blockquote>
+<p>RDF Process Profile (RPP) is a lightweight XML-based specification from 2001 that describes processes using RDF (Resource Description Framework). It aims to standardize how data processors are described, moving away from data-centric approaches toward resource-centric ones. RPP allows both online and offline processes to be represented as web resources, with descriptions of all required resources needed to carry out data processing. The specification includes a vocabulary of classes (like Profile, Component, Algorithm) and properties (like location, availability, input/output) that can be used to describe processes. RPP is designed to be extensible and can serve as a foundation for more sophisticated layers of process description, potentially enabling automated process discovery and execution.</p>
+</blockquote>
+<pre><code class=\"language-sh\">rapper -i rdfxml -o turtle rpp.rdfs &gt; rpp.ttl
+</code></pre>
+<p>#:todo note dead legacy domains : <a href=\"http://www.isacat.net\">http://www.isacat.net</a>    /citnames/2001/04/rpp.htm <a href=\"https://web.archive.org/web/20021009222134/http://www.isacat.net/\">https://web.archive.org/web/20021009222134/http://www.isacat.net/</a></p>
+<p>Ok, I&#39;ve set up :</p>
+<pre><code class=\"language-sh\">@prefix rpp: &lt;http://purl.org/stuff/rpp/&gt; .
+</code></pre>
+
+        <div class="entry-footer">
+            <h2>About</h2>
+            
+        </div>
+    </body>
+</html>

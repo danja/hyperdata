@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <link rel="stylesheet" href="/css/fonts.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/grid-columns.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/style.css" type="text/css"/>
+        <title>Google Takedown</title>
+    </head>
+    <!-- POST PAGE TEMPLATE -->
+    <body>
+        <header id="entry-header">
+            <h1 class="post-title h-cinzel">
+                
+            </h1>
+        </header>
+        <p> Download to my server first? But how, given whatever auth Google is using..? Wireshark to read actual messages?</p>
+<p>Claude suggested download to Google Drive first, then other more interesting suggestions, including using Selenium or Puppeteer. I think I played with Selenium a while back, the mock-browser setup would be useful elsewhere for me. To consider.</p>
+<hr>
+<p>Distraction:</p>
+<p><a href=\"https://console.cloud.google.com/welcome?pli=1&project=mozzanella-01\">https://console.cloud.google.com/welcome?pli=1&amp;project=mozzanella-01</a></p>
+<p>Start your free trial with $300 in credit. Don&#39;t worry – you won&#39;t be charged if you run out of credit. Learn more</p>
+<hr>
+<p>Asked Grok:</p>
+<p>I need to download my email archives from gmail but I have a very unreliable internet connection. For downloading from simple URLs I would use wget -c and resume if the line dropped. When I try downloading the gmail archive from a browser is does have a kind of resume, but doesn&#39;t appear to restart where it left off a lot of the time. It also has quite a complicated URL and it looks like there is some kind of auth involved too. How can I do a reliable, resumable, efficient download?
+Show more
+I understand your concern. Downloading a large email archive from Gmail can be challenging, especially with an unreliable internet connection. Here&#39;s a step-by-step guide to help you download your Gmail archives reliably, resumably, and efficiently:</p>
+<p>Method 1: Using wget with Gmail&#39;s API</p>
+<p>Gmail provides an API that allows you to download your email archives programmatically. You&#39;ll need to:</p>
+<p>Enable the Gmail API for your account:
+Go to the Google Cloud Console (<a href=\"https://console.cloud.google.com/\">https://console.cloud.google.com/</a>) and create a new project.
+Navigate to APIs &amp; Services &gt; Library and search for &quot;Gmail API&quot;.
+Click on the result, then click on the &quot;Enable&quot; button.
+Create credentials for your project (OAuth client ID).
+Install the curl and jq command-line tools:
+curl is used to send HTTP requests, and jq is used to parse JSON responses.
+Use the following command to download your email archives:
+curl -X GET <br> <a href=\"https://www.googleapis.com/gmail/v1/users/me/messages?labelIds=INBOX&maxResults=1000\">https://www.googleapis.com/gmail/v1/users/me/messages?labelIds=INBOX&amp;maxResults=1000</a> <br> -H &#39;Authorization: Bearer YOUR_ACCESS_TOKEN&#39; <br> -H &#39;Content-Type: application/json&#39; <br> -o messages.json
+Replace YOUR_ACCESS_TOKEN with the access token obtained from the Google Cloud Console.</p>
+<p>This command downloads the first 1000 messages in your inbox. You can adjust the maxResults parameter to change the batch size.</p>
+<p>To resume the download, you can use the --continue option with curl:</p>
+<p>curl -X GET <br> <a href=\"https://www.googleapis.com/gmail/v1/users/me/messages?labelIds=INBOX&maxResults=1000&startMessageId=MESSAGE_ID\">https://www.googleapis.com/gmail/v1/users/me/messages?labelIds=INBOX&amp;maxResults=1000&amp;startMessageId=MESSAGE_ID</a> <br> -H &#39;Authorization: Bearer YOUR_ACCESS_TOKEN&#39; <br> -H &#39;Content-Type: application/json&#39; <br> -o messages.json <br> --continue
+Replace MESSAGE_ID with the ID of the last message downloaded.</p>
+<p>Method 2: Using wget with Gmail&#39;s IMAP</p>
+<p>Gmail provides an IMAP (Internet Message Access Protocol) interface that allows you to access your email archives. You&#39;ll need to:</p>
+<p>Enable IMAP access for your Gmail account:
+Go to your Gmail settings (gear icon) &gt; Forwarding and POP/IMAP &gt; Enable IMAP.
+Install the wget command-line tool.
+Use the following command to download your email archives:
+wget -r -l 1 -A imap -P /path/to/download/folder imap://imap.gmail.com
+This command downloads all emails from your inbox, using the IMAP protocol. The -r option tells wget to follow links, -l 1 sets the maximum recursion depth to 1, -A imap specifies the file name pattern, and -P sets the download directory.</p>
+<p>To resume the download, you can use the --continue option with wget:</p>
+<p>wget -r -l 1 -A imap -P /path/to/download/folder --continue imap://imap.gmail.com
+Tips and Variations</p>
+<p>To download specific labels or folders, modify the labelIds or folder parameter in the API request or IMAP URL.
+To download attachments, use the --recursive option with wget and specify the attachment file name pattern.
+To download emails in a specific format (e.g., MBOX, EML), use a tool like imap-sync or mbox2eml.
+If you encounter issues with authentication or connection timeouts, try using a VPN or a more reliable internet connection.
+Remember to respect Gmail&#39;s terms of service and usage limits when downloading your email archives.</p>
+<p>Welcome back! We&#39;re glad you’re here and as always, we want to help. If you&#39;re new to Groq, here are a few suggested topics you might be interested in learning about:</p>
+<p>What is an LPU? Read our latest whitepaper outlining the four core design principles of an LPU and how it differs from a GPU
+Learn about the openly available models Groq is running, including the recent addition of Llama 3.1 by Meta
+Get inspiration from the innovative AI applications Powered by Groq, featured on our Showcase
+Ready to start building? Get your free API key at GroqCloud™ Developer Console and join our community of developers on Discord.</p>
+<p>To experience the instant intelligence of GroqChat, create an account or sign in</p>
+<p>Danny Ayers
+Danny Ayers
+ </p>
+
+        <div class="entry-footer">
+            <h2>About</h2>
+            
+        </div>
+    </body>
+</html>

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <link rel="stylesheet" href="/css/fonts.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/grid-columns.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/style.css" type="text/css"/>
+        <title>prompt-projects.md</title>
+    </head>
+    <!-- POST PAGE TEMPLATE -->
+    <body>
+        <header id="entry-header">
+            <h1 class="post-title h-cinzel">
+                
+            </h1>
+        </header>
+        <p> Maybe you can give it the opportunity to &quot;look&quot; through the documents?<br>Including in its system prompt that it should use an <code>&lt;antThinking&gt;</code> tag  or a markdown comment like this <code>[Document Search]: # (Here goes my consideration if the relevant information can be found in one of the documents)</code> to consider if there&#39;s related information in one of the documents.</p>
+<hr>
+<p>It&#39;s likely that the system doesn&#39;t check the documentation for every query to save tokens. Instead, it attempts to bootstrap the conversation by initially reviewing the uploaded information, then relies on Claude&#39;s training data to continue without constant reference to the documentation.</p>
+<p>One partially effective technique I&#39;ve found is instructing Claude to explicitly state when it can&#39;t find an answer in the documents. However, this approach can limit the Claude&#39;s ability to leverage its base knowledge, as it focuses solely on regurgitating information from the provided documents. When given more nuanced instructions that allow for generating answers from its training data, Claude often reverts to confidently providing bullshit without checking the documentation.</p>
+<p>Additional observations:</p>
+<ol>
+<li><p>For projects involving codebase and API analysis, it&#39;s beneficial to start a new conversation for each question. The model tends to check the documents more thoroughly at the beginning of a conversation, so frequent resets can improve accuracy.</p>
+</li>
+<li><p>Explicit instructions to always check uploaded documents before answering help mitigate the issue but don&#39;t completely resolve it.</p>
+</li>
+<li><p>The model appears more reliable when searching for specific answers or patterns in uploaded data, as this is more of a boolean operation. When combining uploaded data with its training data to create answers, the model is more prone to generating potentially inaccurate information.</p>
+</li>
+</ol>
+
+        <div class="entry-footer">
+            <h2>About</h2>
+            
+        </div>
+    </body>
+</html>

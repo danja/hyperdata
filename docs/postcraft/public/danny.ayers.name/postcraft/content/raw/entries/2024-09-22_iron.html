@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <link rel="stylesheet" href="/css/fonts.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/grid-columns.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/style.css" type="text/css"/>
+        <title>Iron</title>
+    </head>
+    <!-- POST PAGE TEMPLATE -->
+    <body>
+        <header id="entry-header">
+            <h1 class="post-title h-cinzel">
+                
+            </h1>
+        </header>
+        <h1>Iron</h1>
+<p>This morning I was woken first around 9:00 by Claudio wanting to get under my blanket. He&#39;s been doing it all week, seems to like to start the day with a snuggle. I&#39;d just about dozed off again when the alarm on my phone went off, 9:57 (timed so I can have a pee &amp; glass of water before BBC Radio 4 news). Dozing off again, Oriana phoned, asking if I had an iron &amp; ironing board. I have iron which I never use, so I got up and took it across.</p>
+<p>I remember last century, all the musicians in South London would use ironing boards as keyboard stands. I&#39;m pretty sure I&#39;ll have one somewhere, probably under piles of junk in the cantina, take forever to find. But I do have a couple of spare keyboard stands...</p>
+<h2>Today</h2>
+<p>Make a note of my (intended) schedule.</p>
+<h3>form-a-matic</h3>
+<p>I need to move this on a bit. I really need an RDF instance viewer/editor.</p>
+<p>TODO add terms to `project vocab :</p>
+<pre><code>prj:Requirement a rdf:Class
+</code></pre>
+<p>something like <code>resolution</code> to point between tasks/goals and requirements.</p>
+<p>wait, <a href=\"https://www.pqforce.com/en/blog/goals-vs-requirements-what-is-the-difference\">this</a> suggests my subgoals are pretty much the same. Maybe sameClassAs??</p>
+<h3>Transmissions</h3>
+<p>Refactoring first, renaming <code>services</code> to <code>transformers</code>.</p>
+<p>I also want to do the simplified runners, scripts that directly call <code>transformers</code>. It&#39;ll offer a quick &amp; dirty way of setting up (and explaining) transmissions, more importantly make sub-codebases small enough for AI&#39;s context windows to deal with.</p>
+<p>Hmm...this could make <code>transmissions/blocks</code>, each of which could be run as a <code>transformer</code> in the current sense.</p>
+<p>While I&#39;m there, think about the Turing Completeness goal.</p>
+<p>Then, I&#39;m a bit frustrated with the AI coding assistants I&#39;ve been using. A bit snag is them not seeing what happens at runtime. So I want to attach a shell to an API.</p>
+<h3>Server reorg</h3>
+<p>I&#39;ve spawned lots of #Postcraft instances that need to go on the server somewhere. I&#39;ve got a few domain names, so I reckon I&#39;ll start by renaming the <code>hyperdata.it</code> repo to <code>servers</code> and drop the postcraft stuff in there.</p>
+<p>TODO tweak <code>services-config.ttl</code> so <code>postcraft/public/home</code> goes straight to <code>postcraft/public</code></p>
+<p>TODO add a postcraft for <code>danny.ayers.name/irl</code> for more real projects.</p>
+<h3>hyperdata-desktop</h3>
+<p>Annoying I&#39;ve somehow managed to break <code>hyperdata-desktop</code> (==<code>pulsar-edit</code>) while reorganising things. I&#39;m now trying to rebuild, at some point I may have forgotten to do :</p>
+<pre><code class=\"language-sh\">nvm use
+</code></pre>
+<p>and got lib versions muddled.</p>
+<p>13:03 earlier-than-usual dogwalk, I need a bit of fresh air.</p>
+<p><code>npm install</code> mentions :</p>
+<pre><code class=\"language-sh\">--cache=/home/danny/.npm
+</code></pre>
+<p>So just in case :</p>
+<pre><code class=\"language-sh\">cd ~/.npm
+sudo rm -r *
+</code></pre>
+
+        <div class="entry-footer">
+            <h2>About</h2>
+            
+        </div>
+    </body>
+</html>

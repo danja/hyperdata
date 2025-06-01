@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <link rel="stylesheet" href="/css/fonts.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/grid-columns.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/style.css" type="text/css"/>
+        <title>Semem Fix &amp; Deploy</title>
+    </head>
+    <!-- POST PAGE TEMPLATE -->
+    <body>
+        <header id="entry-header">
+            <h1 class="post-title h-cinzel">
+                
+            </h1>
+        </header>
+        <h1>Semem Fix &amp; Deploy</h1>
+<p>I made a todo list here yesterday without any explanation. Didn&#39;t publish. Invisible todo list is absolutely not what I want on my blog front page! My top priority this week is doc organisation, so I&#39;ll let myself off this time. I&#39;ve changed the date on the file, this is it I&#39;ll now fill it out...</p>
+<p>A little job for this morning is a little explore of <a href=\"https://github.com/danja/semem\">Semem</a>.</p>
+<p>It appears to (mostly) work, here&#39;s the <a href=\"https://danny.ayers.name/entries/2025-01-01_semem-run.html\">console log of a run</a>.</p>
+<p>But, <strong>what is it doing?</strong></p>
+<p>What I want right now, as a bit of scaffolding for what I want to explore, is a nodejs version of <a href=\"https://github.com/caspianmoon/memoripy\">memoripy</a> that uses a (remote) SPARQL store as (part of) its knowledgebase.</p>
+<p>I only tried running it after many hours implementing it in a Claude project. Then had a couple of hours manually tweaking to get it to (mostly) run. It&#39;s definitely interacting with Ollama for embeddings &amp; chat, a SPARQL endpoint for persistence. I don&#39;t see the extracted concepts in the SPARQL store.</p>
+<p>Last night I had a short session with Claude, aiming to document what we had so far. I&#39;ve put the artifacts over here : <a href=\"https://github.com/danja/semem/tree/main/docs/description_2025-01-01.md\">https://github.com/danja/semem/tree/main/docs/description_2025-01-01.md</a> It sounds marvellous, but how much is true?</p>
+<h2>Banebane</h2>
+<p>I had a chat with ClaudioB yesterday morning, pointed him to my notes so far on #:semem. He asked me if I had a <strong>live instance</strong> he could play with. A very good question! Not for the first time I&#39;ll quote -</p>
+<h3>Connolly&#39;s Bane</h3>
+<blockquote>
+<p><strong>&quot;The bane of my existence is doing things that I know the
+computer could do for me&quot;</strong>
+\\– Dan Connolly</p>
+</blockquote>
+<p><em>Which reminded me I&#39;ve not been in touch with <a href=\"https://www.ninebynine.org/\">Graham Klyne</a> for many years. A blog post of his drew my attention to that quote. Good-o, he&#39;s on Mastodon : <a href=\"https://indieweb.social/@gklyne\">@gklyne@indieweb.social</a>, I&#39;ll ping him there.</em></p>
+<p>ClaudioB&#39;s question is the kind of message I want my #:hyperdata systems to be able to deal with automatically.</p>
+<p>Here&#39;s how this human agent is handling it :</p>
+<hr>
+<p><strong>[prompt]</strong></p>
+<blockquote>
+<p>Is there a live instance of Semem?</p>
+</blockquote>
+<p><strong>[me]</strong></p>
+<ul>
+<li>immediate response, &quot;not yet&quot;</li>
+<li>reformulate question in terms of concrete requirements
+-&gt;</li>
+</ul>
+<ol>
+<li>(functioning, good-enough) Semem</li>
+<li>hosting</li>
+<li>deployment infrastructure</li>
+</ol>
+<p>For 1 : all I really need to do right away is minor bugfixing and whatever&#39;s needed to use existing online LLMs
+For 2 : I&#39;ve got a live Ubuntu server (which you are looking at now) and a domain name registered for a related plan, some nginx proxying already in place.<br>For 3 : I&#39;ve got a Docker container in-progress for this stuff, <a href=\"https://github.com/danja/tbox\">tbox</a></p>
+<ul>
+<li>meta-reasoning - evaluate this against existing dev paths, consider priorities, time needed etc</li>
+</ul>
+<p>On this point there&#39;s a green flag to go ahead, it&#39;s near-enough in line with what I was planning to do already, slight rearrangement of immediate priorities.</p>
+<hr>
+<p>I acted in several roles there. Humans are good at this. I want a community of independent autonomous intelligent agents (on #:kia).</p>
+<p>Ops. Azzurra just reminded me that I&#39;ve an appointment with her up at the comune at 15:00. Now 13:12. Clever Azzurra has me sussed. I&#39;d completely forgotten. But she&#39;s given me just the right amount of time to pop this online, take Claudio out for a short walk, find some clean clothes &amp; have a wash.  </p>
+<h2>Soon...</h2>
+<p>Somewhere around my vocabs I need terms for this particular kind of input. I may already have something like <strong>Feature Request</strong> around the project management oriented bits, but it totally ties in with agent-oriented messaging.</p>
+<ul>
+<li>#:todo fix #:semem failing on UPDATE</li>
+<li>#:todo tease next steps from <code>semem/docs/description_2024-12-30/</code></li>
+</ul>
+<p>I sorted out the UPDATE.</p>
+<ul>
+<li><p>#:todo deploy to #:tbox</p>
+</li>
+<li><p>#:todo #:spike for function/action calling a la ReAct</p>
+</li>
+<li><p>#:todo some FOAF</p>
+</li>
+</ul>
+<p>Installed &#39;Markdown Preview Mermaid Support&#39; into VSCode</p>
+<p>semem - query execution times, store metrics, total embeddings size</p>
+<p>support Groq, Mistral, Claude, OpenAI</p>
+<p>refactor</p>
+<p>comments</p>
+<p>install the willison-mentioned UI tool - has useful bits for APIs?</p>
+<p>ditto LibreChat</p>
+<p>LOGGER - see Perplexity
+ </p>
+
+        <div class="entry-footer">
+            <h2>About</h2>
+            
+        </div>
+    </body>
+</html>

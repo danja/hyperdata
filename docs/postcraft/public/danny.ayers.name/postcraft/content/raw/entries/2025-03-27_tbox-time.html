@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <link rel="stylesheet" href="/css/fonts.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/grid-columns.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/style.css" type="text/css"/>
+        <title>tbox Time</title>
+    </head>
+    <!-- POST PAGE TEMPLATE -->
+    <body>
+        <header id="entry-header">
+            <h1 class="post-title h-cinzel">
+                
+            </h1>
+        </header>
+        <h1>tbox Time</h1>
+<p>First time, run</p>
+<pre><code>cd ~/hyperdata/tbox # my local dir
+./rebuild-start.sh
+</code></pre>
+<pre><code class=\"language-sh\">sudo systemctl stop tbox
+cd ~/hyperdata/tbox # my local dir
+docker-compose down
+docker-compose up -d
+</code></pre>
+<p>Wait a bit...</p>
+<pre><code class=\"language-sh\">ssh root@localhost -p 2222
+</code></pre>
+<p>It may grumble about certs. Do the keygen command it suggests and login again.</p>
+<p>Then password is <code>semem</code></p>
+<pre><code>cd /home/projects/tia/dogbot/
+./start-dogbot.sh
+</code></pre>
+<p>● To join the &quot;shed&quot; chat room from your local XMPP client, you&#39;ll need to use the following details:</p>
+<ol>
+<li>Room Address: <a href=\"mailto:shed@conference.xmpp\">shed@conference.xmpp</a></li>
+<li>Server Address: Use your localhost or the IP where Docker is running</li>
+<li>Port: 5222 (standard XMPP port)</li>
+</ol>
+<p>  Here are the detailed steps for popular XMPP clients:</p>
+<p>  Using Pidgin/Adium/Gajim:</p>
+<ol>
+<li>Configure your XMPP account (if you haven&#39;t already):
+- Username: Create any username (e.g., &quot;user&quot;)
+- Domain: xmpp or localhost
+- Password: Set any password
+- Server: localhost (or your Docker host IP)
+- Port: 5222
+- Security: Check &quot;Allow plain text authentication&quot; and &quot;Allow invalid/self-signed certificates&quot;</li>
+<li>Join the MUC (Multi-User Chat) room:
+- Room: shed
+- Server: conference.xmpp
+- Nickname: Choose any name</li>
+</ol>
+<p>  Using a Command Line Client like Profanity:</p>
+<p>  /connect localhost 5222 username password
+  /join <a href=\"mailto:shed@conference.xmpp\">shed@conference.xmpp</a></p>
+<p>  For most XMPP clients:</p>
+<p>  Use the room JID: <a href=\"mailto:shed@conference.xmpp\">shed@conference.xmpp</a>
+  Server: localhost:5222
+ </p>
+
+        <div class="entry-footer">
+            <h2>About</h2>
+            
+        </div>
+    </body>
+</html>

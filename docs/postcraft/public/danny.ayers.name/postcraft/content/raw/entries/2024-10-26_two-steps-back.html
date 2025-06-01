@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <link rel="stylesheet" href="/css/fonts.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/grid-columns.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/style.css" type="text/css"/>
+        <title>Two Steps Back</title>
+    </head>
+    <!-- POST PAGE TEMPLATE -->
+    <body>
+        <header id="entry-header">
+            <h1 class="post-title h-cinzel">
+                
+            </h1>
+        </header>
+        <h1>Two Steps Back</h1>
+<p>I&#39;ve spent the past few hours at desk going around in circle with module loading in #:transmissions. Most of this was down to my over-reliance on Claude AI. The code required for core operations is just a bit too complex.</p>
+<p>But one reason for this will be my use of repopack as-is for project knowledge. I need RAG material to be custom to the target. My own repopack.</p>
+<p>Need docs.</p>
+<p>A renaming refactoring first : execute() -&gt; process(). Everywhere!</p>
+<p>Ok, for now I&#39;ll use :</p>
+<pre><code class=\"language-sh\">transmissions/src/processors/staging/
+</code></pre>
+<p>for new stuff. Get back to module loading when I&#39;ve got my own repopack.</p>
+<p>Break time.</p>
+<p>also later:</p>
+<ul>
+<li>make the claude-json-to-md thing in staging</li>
+</ul>
+<h2>Renaming</h2>
+<p>Hmm. Looks like I&#39;ve changed things since I last used the Jasmine tests.
+But I&#39;ve still got <code>p</code> (#:postcraft runner) and <code>./trans test_fork</code> (a fairly simple runner) as integration tests.</p>
+<pre><code class=\"language-sh\">grep -r &quot;process&quot; | grep &quot;.js&quot;
+
+grep -r &quot;.js&quot; | grep -v &quot;^processors&quot; | grep &quot;process&quot;
+
+grep -r &quot;execute&quot; | grep -v &quot;^node_modules&quot; | grep &quot;.md&quot;
+</code></pre>
+<pre><code class=\"language-sh\">cd src
+grep -r execute | grep &quot;.js&quot; | grep -v &quot;^processors&quot;
+...
+engine/Transmission.js:  async execute(message) {
+engine/Transmission.js:      logger.error(&quot;No valid processor found to execute&quot;)
+engine/Transmission.js:  async execute(message) {
+engine/Transmission.js:    //  processor.execute(message)
+engine/TransmissionRunner.js:                    await transmission.execute(message)
+simples/nop/nop copy.js:message = await p10.execute(message)
+simples/nop/nop copy.js:// message = await p20.execute(message)
+simples/nop/nop.js:message = await nop.execute(message)
+simples/nop/simple-runner.js:    const outputs = await processor.execute(message)
+simples/nop/simple-runner.js:    var outputs = await nop.execute(message)
+simples/nop/simple-runner.js:    outputs = await fork.execute(message)
+simples/env-loader/env-loader.js:message = await p10.execute(message)
+simples/env-loader/env-loader.js:message = await p20.execute(message)
+
+grep -r &quot;.execute&quot; | grep &quot;.js&quot; | grep -v &quot;^processors&quot;
+
+cd ../tests
+grep -r &quot;execute&quot; | grep &quot;.js&quot;
+</code></pre>
+<blockquote>
+<p>Please give me a command that will scan the current directory tree and replace all occurrences in files of the string &quot; execute(&quot; with &quot; process(&quot;</p>
+</blockquote>
+<blockquote>
+<p>Please give me a command that will scan the current directory tree and replace all occurrences in files of the string &quot;.execute(&quot; with &quot;.process(&quot;</p>
+</blockquote>
+<pre><code class=\"language-sh\">cd src
+find . -type f -exec sed -i &#39;s/ execute(/ process(/g&#39; {} +
+find . -type f -exec sed -i &#39;s/\\.execute(/\\.process(/g&#39; {} +
+
+cd ../tests
+find . -type f -exec sed -i &#39;s/ execute(/ process(/g&#39; {} +
+find . -type f -exec sed -i &#39;s/\\.execute(/\\.process(/g&#39; {} +
+
+and in
+../docs/postcraft
+</code></pre>
+<p>Ok. Seems good. Time I committed.
+ </p>
+
+        <div class="entry-footer">
+            <h2>About</h2>
+            
+        </div>
+    </body>
+</html>

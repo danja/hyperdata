@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <link rel="stylesheet" href="/css/fonts.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/grid-columns.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/style.css" type="text/css"/>
+        <title>Damp</title>
+    </head>
+    <!-- POST PAGE TEMPLATE -->
+    <body>
+        <header id="entry-header">
+            <h1 class="post-title h-cinzel">
+                
+            </h1>
+        </header>
+        <h1>Damp</h1>
+<p><em>It&#39;s wet out again also my spirits are a little soggy.</em></p>
+<ul>
+<li>publish #:postcrafts now! It&#39;s quite an interesting little task but it&#39;s close enough to admin to feel like a chore and I keep getting distracted...</li>
+</ul>
+<p>Quick look at VocBench (below)...moving on...where was I...</p>
+<pre><code class=\"language-sh\">cd ~/github-danny/transmissions
+./trans ../server/deploy
+</code></pre>
+<p>Ok, <code>transmissions/src/applications/postcraft/transmission.ttl</code> includes :</p>
+<pre><code class=\"language-sh\">:s10 a :DatasetReader . # read the manifest
+# trm:configKey trm:describe .
+
+:s20 a :ConfigMap ;
+    trm:configKey :postcraftMap .
+</code></pre>
+<p>Hang on, how am I doing the multi-pipeline call (#:todo rename <code>pipeline</code> -&gt; <code>transmission</code>) for #:postcraft..?</p>
+<p>#:todo automate creation of project handover #:ho docs <strong>for my future self</strong></p>
+<p>Ok, <code>./trans</code> calls <code>run.js</code> which calls <code>transmissions/src/utils/CommandUtils.js</code>.</p>
+<p>The <code>CommandUtils.run()</code> calls <code>transmissions/src/engine/TransmissionBuilder.js</code> to build all the transmissions in <code>transmissions.ttl</code> and then runs them.</p>
+<p><code>TransmissionBuilder.js</code> has :</p>
+<pre><code class=\"language-javascript\">for (const q of poi.out(ns.rdf.type).quads()) {
+  if (q.object.equals(ns.trm.Pipeline)) {
+</code></pre>
+<p>Didn&#39;t I do something for running transmissions from transmissions (like a gosub)..?</p>
+<p>wtf is :</p>
+<pre><code class=\"language-javascript\">class ProcessProcessor extends Processor {
+</code></pre>
+<p>!?</p>
+<p>Ffs, I&#39;d also forgotten about <code>transmissions/src/engine/WorkerPool.js</code>. That would be handy for spawing subs. Jeez. I have no idea, maybe I dreamt it. Ok, time for a repopack, ask Claude if he remembers.</p>
+<h2>VocBench</h2>
+<p>Ah, I do have to go on a slight tangent first. Little bit of vocab needed. Coincidentally Claudio B. reminded me about <a href=\"https://vocbench.uniroma2.it/doc/\">VocBench</a> the other day, just what I need. I&#39;m pretty sure I&#39;ve used it before, can&#39;t remember at all. Can&#39;t see it on this machine, downloaded, unzipped, giving me a fun path. <strong>Semantic Turkey!</strong> - love it.</p>
+<pre><code class=\"language-sh\">danny@danny-desktop:~/Apps/VocBench/vocbench3-12.2.0-full/semanticturkey-12.2/bin$ ./semanticturkey.sh
+
+   ____                    __  _       ______         __
+  / __/__ __ _  ___ ____  / /_(_)___  /_  __/_ ______/ /_____ __ __
+ _\\ \\/ -_)  &#39; \\/ _ `/ _ \\/ __/ / __/   / / / // / __/  &#39;_/ -_) // /
+/___/\\__/_/_/_/\\_,_/_//_/\\__/_/\\__/   /_/  \\_,_/_/ /_/\\_\\__/\\_,  /
+                                                            /___/
+
+Developed by ART (Artificial Intelligence Research at Tor Vergata).
+Version: 12.2. Build: 2024-07-09T11:01:05Z. Spring Boot version: 3.2.5
+
+
+ST Started
+</code></pre>
+<p>Good-o, running nicely, access via <code>http://localhost:1979/vocbench3</code></p>
+<p>Ah. Claudio mentioned the manual. Now I see why. This thing seems big and arcane.</p>
+<p>I&#39;ll leave for now, hack the Turtle for the terms I need, get back to that manual later.
+ </p>
+
+        <div class="entry-footer">
+            <h2>About</h2>
+            
+        </div>
+    </body>
+</html>

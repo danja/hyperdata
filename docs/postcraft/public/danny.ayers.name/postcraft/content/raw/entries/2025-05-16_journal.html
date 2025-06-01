@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <link rel="stylesheet" href="/css/fonts.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/grid-columns.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/style.css" type="text/css"/>
+        <title>Journal 2025-05-16</title>
+    </head>
+    <!-- POST PAGE TEMPLATE -->
+    <body>
+        <header id="entry-header">
+            <h1 class="post-title h-cinzel">
+                
+            </h1>
+        </header>
+        <h1>Journal 2025-05-16</h1>
+<p><strong>Blog <del>might be</del> is back!</strong></p>
+<p>Ok, that was arduous. I had to rewrite a big chunk of the core code for #:transmissions, my pipeliney thing. It&#39;d simply got too spaghettified. But barring a handful of minor misalignment problems, it&#39;s working again. #:postcraft is the canonical app, this blog is published using it.</p>
+<p><img src=\"/images/2025-05/blog-back.png\" alt=\"Cartoon illustration\"></p>
+<p><em>Before going any further, I will declare that <strong>I&#39;ve been busy!</strong>
+A bunch of stuff I&#39;ve been working on is approaching the point where it might be worth putting in front of other eyebrows, if not yet eyeballs. I&#39;m planning to get <em>something</em> of each of the bits at least relatively stable &amp; written up enough to look at by the summer solstice. To allow breathing space, I&#39;ll review for a bit, properly announce anything worthwhile on 2025-07-03.</em></p>
+<p>#:postcraft is possibly the world&#39;s most over-engineered Static Site Builder. After crawling dirs for markdown files it posts the material off to a SPARQL store. Then another pipeline is set up to query the store and render the site.</p>
+<p>The over-engineering is intentional. The data in the SPARQL store is there for other uses. A couple of days ago I got #:semem, my Semantic Memory thing to create embeddings from the content and allow this to be used for &#39;semantic search&#39;.</p>
+<p>Btw, the #:semtags do have a purpose : <strong>Semantic Hashtags</strong>. I&#39;ve a very short, simple spec written for them here somewhere - the <code>#:</code> marker says the string that follows has some kind of significance in the the current domain. In practice, they are a markdown extension that I intend to use here by replacing with a link to a query on a service - a search, but ultimately using #semem as the engine.</p>
+<p>For a first pass I&#39;m thinking of templating a query, something like :</p>
+<pre><code class=\"language-sparql\">PREFIX rdfs: &lt;http://www.w3.org/2000/01/rdf-schema#&gt;
+PREFIX skos: &lt;http://www.w3.org/2004/02/skos/core#Concept&gt;
+
+SELECT ?resources WHERE {
+
+    ?c a skos:Concept ;
+       rdfs:label ?label ;
+       rdfs:seeAlso ?resources .
+
+   FILTER regex(?label, &quot;^{{semtag}}&quot;, &quot;i&quot;)
+}
+</code></pre>
+<p>Elsewhere I&#39;ll put together some basic definitions.
+ </p>
+
+        <div class="entry-footer">
+            <h2>About</h2>
+            
+        </div>
+    </body>
+</html>

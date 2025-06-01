@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <link rel="stylesheet" href="/css/fonts.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/grid-columns.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/style.css" type="text/css"/>
+        <title>Trust Graphs!</title>
+    </head>
+    <!-- POST PAGE TEMPLATE -->
+    <body>
+        <header id="entry-header">
+            <h1 class="post-title h-cinzel">
+                
+            </h1>
+        </header>
+        <h1>Trust Graphs!</h1>
+<p><em>I had a server issue - overshooting mem &amp; cpu limits. I&#39;d forgotten I&#39;d left <a href=\"https://trustgraph.ai/\">TrustGraph</a> running. #:ops</em></p>
+<p>Problem identified with :</p>
+<pre><code class=\"language-sh\">free -m
+ps -eo pmem,pcpu,rss,vsize,args | sort -k 1 -r | less
+</code></pre>
+<p><a href=\"https://techdocs.akamai.com/cloud-computing/docs/troubleshooting-memory-issues-on-compute-instances\">https://techdocs.akamai.com/cloud-computing/docs/troubleshooting-memory-issues-on-compute-instances</a></p>
+<p>Fixed with :</p>
+<pre><code class=\"language-sh\">cd /home/services/trustgraph/docker-compose/
+docker compose -f danja-tg-openai-neo4j.yaml down -v
+docker ps
+</code></pre>
+<p><a href=\"https://trustgraph.ai/docs/running/docker\">https://trustgraph.ai/docs/running/docker</a></p>
+<p>#:ops #2 - it was also running on my office machine</p>
+<pre><code class=\"language-sh\">cd ~/AI/trustgraph/deploy/docker-compose
+docker compose -f tg-ollama-neo4j.yaml down -v # maybe
+ 
+</code></pre>
+
+        <div class="entry-footer">
+            <h2>About</h2>
+            
+        </div>
+    </body>
+</html>

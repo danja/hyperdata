@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <link rel="stylesheet" href="/css/fonts.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/grid-columns.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/style.css" type="text/css"/>
+        <title>Journal 2025-02-27</title>
+    </head>
+    <!-- POST PAGE TEMPLATE -->
+    <body>
+        <header id="entry-header">
+            <h1 class="post-title h-cinzel">
+                
+            </h1>
+        </header>
+        <h1>Journal 2025-02-27</h1>
+<p>I broke my earlier #:postcraft site builder setup (that publishes this) a few weeks ago. Rather than spend time fixing that as it was I decided to push on in the direction I want things to go. #:postcraft is an <em>application</em> of #:transmissions, my pipeliney thing.</p>
+<p>A key aspect of <em>my plans</em> is using a SPARQL store for data (content) management. I&#39;ve made quick &amp; dirty #:transmissions #:processors to do SPARQL <code>UPDATE</code> and <code>SELECT</code>. They&#39;re using #:nunjucks templating - which involves a bit of code duplication at the moment, I already have a <code>:Templater</code> processor. But I want to get the publishing working end-to-end before tidying things up (there is <em>tonnes</em> of tidying to do).</p>
+<p>I&#39;ve got as far as having near-enough templating (the #:sparql-diamonds strategy) to get the rendered content in #:messages. The target paths for the ultimate HTML pages is in the messages too. But while I&#39;ve got some basic (JSON) message structuring in the <code>:Restructure</code> processor, it only covers moving things around, I need to mess with the JSON keys &amp; values as strings to get the target file path/names.</p>
+<p>I&#39;m aware there are existing libs for JSON transformation kind of thing. I actually had to use one, JMESPath, as a core part of my last quasi-dayjob. In a past life I spent quite a lot of time around XSLT, same general idea. But I&#39;ve been reluctant to commit to any lib for this, because #:transmissions processors are intended to be small, composable units, and I needed to discover what was needed. Restructuring the shape of the JSON is one aspect. I&#39;ve got a copy - (currently misnamed <code>rename</code>) and a <code>remove</code>.        </p>
+<h2>StringOps Processor</h2>
+<p>Ok, another pass at the procedure for making a new #:transmissions #:processor (I want AI to do all this for me asap).</p>
+<ol>
+<li><strong>Rough idea of what&#39;s needed, with example(s)</strong></li>
+</ol>
+<p><strong>Input :</strong></p>
+<ul>
+<li>a root target path <strong>A</strong> is specified <em>as a config setting</em> (eg. <code>/home/danny/sites/strandz.it/postcraft/public</code>)</li>
+<li>a relative path <strong>B</strong> is provided <em>in the message</em> (the SPARQL <code>SELECT</code> results give a <code>message.currentItem.relPath.value</code>, eg. <code>data/input/2025-02-11</code>)</li>
+<li>a slug is provided <strong>C</strong> <em>in the message</em> (<code>message.currentItem.slug.value</code>, eg. <code>input2</code>)</li>
+<li>a filename extension is specified <strong>D</strong>  <em>as a config setting</em> (eg. <code>.html</code>)</li>
+</ul>
+<p><strong>Process :</strong></p>
+<ul>
+<li>A,B,C,D are joined to make E</li>
+</ul>
+<p><strong>Output :</strong></p>
+<ul>
+<li>E</li>
+</ul>
+<p><strong>Side Effects :</strong> none.</p>
+<p>Hmm. In this case it isn&#39;t a simple string concat, an fs path is needed (with appropriate <code>path.sep</code> as needed), Ok, add another <strong>Input</strong> :</p>
+<ul>
+<li>the <em>nature</em> of the operation - ok, for now all that&#39;s needed is concat-like, either simple string or path</li>
+</ul>
+<ol start=\"2\">
+<li><strong>Determine (more formal) <em>Processor Signature</em></strong></li>
+</ol>
+<p>Heh, I see the <em>Signature</em> (expressed in a comment) <code>src/processors/example-group/ExampleProcessor.js</code> is lagging what I have in code. The inputs can come from <code>message</code>, <code>manifest.ttl</code> or <code>config.ttl</code> transparently in that order of precedence. ...And even the code isn&#39;t updated to where I&#39;m at in my head - <code>Processor.getProperty(predicate term)</code> should be marked <em>deprecated</em>, in favour of <code>getValue</code>/<code>getValues</code>. I&#39;ll get back to that...</p>
+<p>A major #:todo is to make a <em>Single Source of Truth</em>, terms for (something like) a <code>sig: http://purl.org/stuff/processors</code>  ontology. It should be possible to reason about these things.</p>
+<p>But this&#39;ll do for now. First pass, in a <code>transmissions.ttl</code> I&#39;ll have :</p>
+<pre><code class=\"language-turtle\">:px a :StringOps ;
+  :settings :filenameConstructor .
+</code></pre>
+<p>In the corresponding <code>config.ttl</code> :</p>
+<pre><code class=\"language-turtle\">:filenameConstructor a :ConfigSet ;
+  :asPath true ;
+  :values (:a :b :c :d) .
+  :a :string &quot;/home/danny/sites/strandz.it/postcraft/public&quot; .
+  :b :field &quot;currentItem.relPath.value&quot; .
+  :c :field &quot;currentItem.slug.value&quot; .
+  :d :string &quot;.html&quot; .
+</code></pre>
+<p>The path in <code>:a</code> should come from the <code>manifest.ttl</code> (for site <code>strandz.it</code>), but that&#39;ll happen automatically anyway. But it will need a <em>sensible default</em> in <code>config.ttl</code>.</p>
+<p>Copied and renamed dir <code>src/applications/example-application</code> to <code>src/applications/test/stringops</code></p>
+<ol start=\"3\">
+<li><strong>Do boilerplate</strong></li>
+</ol>
+<p>First question is, will this new processor fit in an existing group?
+The functionality is cross-JSON-structure string-ish ops. I do have a group <code>processors/text</code>. But the immediate use case is for a path, and there&#39;s <code>processors/fs</code>. Hmm... For now I&#39;ll put this new processor in <code>processors/json</code>, not a big deal (which suggests it should go in <code>processors/staging</code>). Decide later!</p>
+<p>If a new processor group was needed, I&#39;d need to make a copy of (&amp; rename) <code>src/processors/example-group</code> (and add a ref in <code>src/engine/AbstractProcessorFactory.js</code>). But using <code>src/processors/json</code> only means copying <code>src/processors/example-group/ExampleProcessor.js</code> and adding a ref in <code>src/processors/json/JSONProcessorsFactory.js</code>.</p>
+<ol start=\"4\">
+<li><strong>Implement!</strong></li>
+</ol>
+<p>I made a little util to help with lists for (which I&#39;m certain Bergi will tell me is unneccesary), used in <code>/home/danny/hyperdata/transmissions/src/processors/json/Restructure.js</code> as:
+<code>GrapoiHelpers.listToArray(config, this.settingsNode, term)</code></p>
+<p>Ew, I think I may have some code duplication around <code>Restructure</code>. A couple of a days ago I added
+<code>src/utils/JSONUtils.js</code> to address fields in the message, which I needed for <code>MarkdownToHTML</code>. Whatever, there&#39;s <code>JSONUtils.find()</code> which can do the <code>get</code>ting needed here (hmm, it maybe should be incorporated into <code>processor.getValues()</code> too).</p>
+<ol start=\"5\">
+<li><strong>Test!!</strong></li>
+</ol>
+
+        <div class="entry-footer">
+            <h2>About</h2>
+            
+        </div>
+    </body>
+</html>

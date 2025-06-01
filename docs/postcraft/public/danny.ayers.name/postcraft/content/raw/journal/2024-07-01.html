@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <link rel="stylesheet" href="/css/fonts.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/grid-columns.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/style.css" type="text/css"/>
+        <title>Fuseki &amp; LDAP</title>
+    </head>
+    <!-- POST PAGE TEMPLATE -->
+    <body>
+        <header id="entry-header">
+            <h1 class="post-title h-cinzel">
+                
+            </h1>
+        </header>
+        <h1>Fuseki &amp; LDAP</h1>
+<p>My ToDos were already pretty chaotic, going to the UK for a week didn&#39;t help. The #FOAFRetrospective project is my top priority, but I know there&#39;s a piece of <em>critical infrastructure</em> that I need for this (and pretty much all my other code projects) : a SPARQL Server.</p>
+<p>My go-to for this is <a href=\"https://jena.apache.org/documentation/fuseki2/\">Fuseki</a>. I&#39;m aware of, and have played with, many alternatives, some with notable benefits. But Fuseki has the core features I need, and I&#39;m familiar with it. It&#39;s part of <a href=\"https://jena.apache.org/\">Apache Jena</a>, which despite (because of?!) being unfashionably Java-based, is a very solid, mature, and well-supported platform. YMMV, but as far as I&#39;m concerned, to all intents and purposes it&#39;s <em>the</em> reference implementation of the semweb specs.</p>
+<p>A Docker image is available, but at this point in time a regular install suits me better, and basic installation is dead straightforward and <em>Just Works</em> out of the box.</p>
+<p><em><a href=\"https://github.com/afs\">Andy Seaborne</a> was/is the lead on it, good bloke, not had contact for donkeys. One of many folks I must reconnect with. I see from his <a href=\"https://twitter.com/andyseaborne\">Twitter</a> he&#39;s still active in the field. Ah, @<a href=\"mailto:andyseaborne@mastodon.green\">andyseaborne@mastodon.green</a> ...I guess Mastodon is probably how I should reconnect with people, once I&#39;ve figured out how to use it...</em></p>
+<p>I&#39;ve already got Fuseki running on my server, but it&#39;s wide open. That hasn&#39;t caused any problems in the past, but after getting my fingers burnt for being lax with security on my last server setup, I want to take more care this time.</p>
+<p>Nearby in <em>my stuff</em> there are various places where supporting user accounts on the server are kinda must-have. Last time around I was looking at using the semwebby <a href=\"https://communitysolidserver.github.io/\">Community Solid Server</a> for ACL management, but this time I decided to try a more old-fashioned approach - <a href=\"https://en.wikipedia.org/wiki/Lightweight_Directory_Access_Protocol\">LDAP</a>. Coincidentally I saw a ref on <a href=\"https://simonwillison.net/\">Simon Willison’s Weblog</a> the other day to a strategy (with essay) <a href=\"https://boringtechnology.club/\">Choose Boring Technology</a>. Yeah, this.</p>
+<p>Years back I set up LDAP in a day job (network admin at a college), but it&#39;s so long ago I&#39;ve forgotten the lot. But it turned out to be straightforward to get it running on my Ubuntu server. After a bit of trial &amp; error I was able to get <a href=\"https://directory.apache.org/studio/\">Apache Directory Studio</a> on my desktop talking to the service.</p>
+<p>To make sure I was on the right track, in the past few days, with the help of ChatGPT, I&#39;ve hacked simple signup/login forms in with nodejs/express that talk to the LDAP server. While I should tidy the code at some point, it works well enough as a sanity check (<a href=\"https://github.com/danja/node-services/tree/main/ldap-auth-app\">code on GitHub</a>).</p>
+<p>So onto Fuseki.</p>
+<p>Out of the box it uses <a href=\"https://shiro.apache.org/\">Apache Shiro</a> for auth, with configuration in a text file. But that&#39;s been around long enough to consider it <em>Boring Technology</em>, so hopefully it&#39;ll be straightforward to hook it into LDAP.</p>
+<p>Docs : <a href=\"https://jena.apache.org/documentation/fuseki2/fuseki-security\">Security in Fuseki2</a></p>
+<h3>Requirements</h3>
+<p>I anticipate needing other tiers, but right now the users/access control requirements seem pretty simple, something like:</p>
+<ul>
+<li>LDAP admin</li>
+<li>Fuseki global admin group (can create/delete datasets)</li>
+<li>Per-dataset write access groups</li>
+</ul>
+<p>Default I&#39;ll leave as open read access for now.</p>
+<h3>Current Configurations</h3>
+<h4>/etc/systemd/system/fuseki.service</h4>
+<p>includes:</p>
+<pre><code>[Service]
+Environment=FUSEKI_HOME=/home/services/fuseki
+Environment=FUSEKI_BASE=/home/services/fuseki
+
+Environment=JVM_ARGS=-Xmx1G
+ExecStart=/home/services/fuseki/fuseki-server --port=3331
+
+User=fuseki
+Restart=on-abort
+SuccessExitStatus=143
+</code></pre>
+<p><code>fuseki-server</code> there appears to be the script in the distro unchanged.</p>
+<h4>/home/services/fuseki/shiro.ini</h4>
+<pre><code>[main]
+# Development
+ssl.enabled = false
+
+plainMatcher=org.apache.shiro.authc.credential.SimpleCredentialsMatcher
+#iniRealm=org.apache.shiro.realm.text.IniRealm
+iniRealm.credentialsMatcher = $plainMatcher
+
+localhostFilter=org.apache.jena.fuseki.authz.LocalhostFilter
+
+[users]
+# Implicitly adds &quot;iniRealm =  org.apache.shiro.realm.text.IniRealm&quot;
+admin=PASSWORD
+
+[roles]
+
+[urls]
+## Control functions open to anyone
+/$/status  = anon
+/$/server  = anon
+/$/ping    = anon
+/$/metrics = anon
+
+## and the rest are restricted to localhost.
+/$/** = localhostFilter
+
+## If you want simple, basic authentication user/password
+## on the operations,
+##    1 - set a better password in [users] above.
+##    2 - comment out the &quot;/$/** = localhost&quot; line and use:
+&quot;/$/** = authcBasic,user[admin]&quot;
+
+## or to allow any access.
+##/$/** = anon
+
+# Everything else
+/**=anon
+</code></pre>
+<h4>/home/services/fuseki/config.ttl</h4>
+<pre><code>@prefix :        &lt;#&gt; .
+@prefix fuseki:  &lt;http://jena.apache.org/fuseki#&gt; .
+@prefix rdf:     &lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#&gt; .
+@prefix rdfs:    &lt;http://www.w3.org/2000/01/rdf-schema#&gt; .
+@prefix ja:      &lt;http://jena.hpl.hp.com/2005/11/Assembler#&gt; .
+
+[] rdf:type fuseki:Server ;
+</code></pre>
+<hr>
+<p>I asked ChatGPT, first-pass advice doesn&#39;t look entirely convincing, but gives me somewhere to start, it says to add :</p>
+<h4>shiro.ini</h4>
+<pre><code>[main]
+ldapRealm = org.apache.shiro.realm.ldap.JndiLdapRealm
+ldapRealm.userDnTemplate = uid={0},ou=users,dc=example,dc=com
+ldapRealm.contextFactory.url = ldap://localhost:389
+
+securityManager.realms = $ldapRealm
+
+[urls]
+/ = authcBasic
+</code></pre>
+<h4>fuseki-server.ttl</h4>
+<pre><code>## Security configuration
+[] ja:loadClass &quot;org.apache.jena.fuseki.authz.FusekiSecurityFilter&quot; .
+</code></pre>
+<p>Yeah, given there isn&#39;t a <code>fuseki-server.ttl</code> in the distro, I&#39;m guessing that&#39;s a bit off. Maybe I won&#39;t start there. Time for a quick Google.</p>
+<p>Ok, <code>org.apache.shiro.realm.ldap.JndiLdapRealm</code> is deprecated in favour of <a href=\"https://github.com/apache/shiro/blob/main/core/src/main/java/org/apache/shiro/realm/ldap/DefaultLdapRealm.java\">org.apache.shiro.realm.ldap.DefaultLdapRealm</a>. That contains <em>stuff</em>.</p>
+<p><a href=\"https://kb.sos-berlin.com/display/PKB/LDAP+Configuration\">These docs</a> are for some unrelated project that uses Shiro, but they describe LDAP bits that correspond to those above.</p>
+<p>Ew, <code>ldapRealm.userDnTemplate</code> gets ugly fast. I&#39;d better start from the other end, users/groups in LDAP.</p>
+<p>Wait. While Apache Directory Studio has everything, it would be convenient to get a simplified view.</p>
+<p>Ok, locally :</p>
+<pre><code>sudo apt-get install ldapvi
+
+ldapvi --out -h ldap://hyperdata.it -b &quot;dc=hyperdata,dc=it&quot;
+</code></pre>
+<p>Ok, that gives me straightforward blocks. But now I&#39;m wondering : <strong>Have I secured the LDAP server?</strong> Eek!</p>
+<p>Not an immediate issue - I can easily close the ports with <code>ufw</code> once I&#39;ve done playing.</p>
+<p>ChatGPT time again. Ok, keep it simple:</p>
+<p><em>I wish to create the following groups in LDAP:</em></p>
+<ul>
+<li>service-admin group (one step below full admin)</li>
+<li>fuseki-admin group (can create/delete datasets, subgroup of service-admin)</li>
+<li>fuseki-foowiki write access group (will be a subgroup of fuseki-admin)</li>
+</ul>
+<p>Ok, second pass - I primed it with a chunk of my current LDAP.</p>
+<p>This looks promising</p>
+<h4>service-admin.ldif</h4>
+<pre><code>dn: cn=service-admin,ou=groups,dc=hyperdata,dc=it
+objectClass: groupOfNames
+cn: service-admin
+description: Service Admin Group
+member: uid=danny,ou=agents,dc=hyperdata,dc=it
+</code></pre>
+<h4>fuseki-admin.ldif</h4>
+<pre><code>dn: cn=fuseki-admin,ou=groups,dc=hyperdata,dc=it
+objectClass: groupOfNames
+cn: fuseki-admin
+description: Fuseki Admin Group
+member: uid=danny,ou=agents,dc=hyperdata,dc=it
+member: cn=service-admin,ou=groups,dc=hyperdata,dc=it
+</code></pre>
+<h4>fuseki-foowiki.ldif</h4>
+<pre><code>dn: cn=fuseki-foowiki,ou=groups,dc=hyperdata,dc=it
+objectClass: groupOfNames
+cn: fuseki-foowiki
+description: Fuseki Foowiki Write Access Group
+member: uid=danny,ou=agents,dc=hyperdata,dc=it
+member: cn=fuseki-admin,ou=groups,dc=hyperdata,dc=it
+</code></pre>
+<p>I tried to do that with Apache Directory Studio (ADS), import ldif, but it gave:</p>
+<pre><code>#!RESULT ERROR
+#!CONNECTION ldap://hyperdata.it:389
+#!DATE 2024-04-18T13:07:47.783
+#!ERROR  [LDAP result code 50 - insufficientAccessRights]
+dn: cn=config
+changetype: modify
+add: olcTLSCipherSuite
+olcTLSCipherSuite: NORMAL
+</code></pre>
+<p>Ok, try on the server (I pasted them into files with nano in <code>/home/services/ldap-config/</code>):</p>
+<pre><code>root@hyperdata:/home/services/ldap-config# ldapadd -x -D &quot;cn=admin,dc=hyperdata,dc=it&quot; -W -f service-admin.ldif
+
+...
+Enter LDAP Password:
+</code></pre>
+<p>Ah, ok, at least it&#39;s password-protected.</p>
+<p>Check in ADS - yay!</p>
+<p>So far so good. Break time.</p>
+<hr>
+<p>Back to ChatGPT:</p>
+<p>I would like to configure Shiro in Fuseki to use these LDAP groups for access control:
+dn: cn=service-admin,ou=groups,dc=hyperdata,dc=it</p>
+<ul>
+<li>this has full access to Fuseki
+dn: cn=fuseki-admin,ou=groups,dc=hyperdata,dc=it</li>
+<li>this can create and delete datasets, full write access Fuseki
+dn: cn=fuseki-foowiki,ou=groups,dc=hyperdata,dc=it</li>
+<li>this has write access to the foowiki dataset
+any other user should have read access to the foowiki dataset</li>
+</ul>
+<p>This produced:</p>
+<pre><code>[main]
+# LDAP Realm Configuration
+ldapRealm = org.apache.shiro.realm.ldap.JndiLdapRealm
+ldapRealm.userDnTemplate = uid={0},ou=agents,dc=hyperdata,dc=it
+ldapRealm.contextFactory.url = ldap://hyperdata.it:389
+
+# Set the security manager to use the LDAP realm
+securityManager.realms = $ldapRealm
+
+# Caching and session management (optional but recommended)
+cacheManager = org.apache.shiro.cache.MemoryConstrainedCacheManager
+securityManager.cacheManager = $cacheManager
+
+# Authorization configuration
+[urls]
+# Define access control for URLs
+/dataset = authc, roles[service-admin, fuseki-admin]
+/dataset/foowiki = authc, roles[service-admin, fuseki-admin, fuseki-foowiki]
+/dataset/foowiki/** = authc, roles[service-admin, fuseki-admin, fuseki-foowiki]
+/ = authcBasic
+
+# Role to permission mapping
+[roles]
+service-admin = *
+fuseki-admin = dataset:create, dataset:delete, dataset:write
+fuseki-foowiki = dataset:foowiki:write
+</code></pre>
+<p>I would like to add the following LDAP users:</p>
+<p>dn: uid=fuseki-foowiki-user,ou=agents,dc=hyperdata,dc=it</p>
+<ul>
+<li>this user should be a member of the fuseki-foowiki group</li>
+</ul>
+<p>dn: uid=fuseki-admin-user,ou=agents,dc=hyperdata,dc=it</p>
+<ul>
+<li>this user should be a member of the fuseki-admin group</li>
+</ul>
+<p>dn: uid=service-admin-user,ou=agents,dc=hyperdata,dc=it</p>
+<ul>
+<li>this user should be a member of the service-admin group</li>
+</ul>
+<p>and give each a password they can use to log in.
+ </p>
+
+        <div class="entry-footer">
+            <h2>About</h2>
+            
+        </div>
+    </body>
+</html>

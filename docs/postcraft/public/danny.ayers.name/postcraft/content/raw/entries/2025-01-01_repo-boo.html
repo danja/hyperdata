@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <link rel="stylesheet" href="/css/fonts.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/grid-columns.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/style.css" type="text/css"/>
+        <title>Repo Boo</title>
+    </head>
+    <!-- POST PAGE TEMPLATE -->
+    <body>
+        <header id="entry-header">
+            <h1 class="post-title h-cinzel">
+                
+            </h1>
+        </header>
+        <h1>Repo Boo</h1>
+<p>Very annoying. I&#39;ve been using Claude projects <strong>heavily</strong> for recent dev. Made possible by <a href=\"https://github.com/yamadashy/repomix\">repomix</a> which essentially does an annotated concat of a repo&#39;s files. Tonight my thing decided to say:</p>
+<pre><code class=\"language-sh\">danny@danny-desktop:~/github-danny/transmissions$ npm run rp
+
+&gt; transmissions@1.0.0 rp
+&gt; repomix -c repomix.config-small.json . &amp;&amp; repomix -c repomix.config-large.json .
+
+(node:61405) ExperimentalWarning: Importing JSON modules is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+📦 Repomix v0.2.12
+
+Error: Config file not found at repomix.config-small.json
+For more help, please visit: https://github.com/yamadashy/repomix/issues
+(node:61421) ExperimentalWarning: Importing JSON modules is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+</code></pre>
+<p>I&#39;ve no idea what I&#39;ve done that would impact there. Can&#39;t remember if this is running a global or local install. Ok, first thing, clear caches and try again. &quot;Hey Claude, how do I..?&quot;</p>
+<pre><code class=\"language-sh\">rm -rf node_modules
+rm package-lock.json
+npm cache clean --force
+npm install
+</code></pre>
+<p>While that&#39;s running, there is something else I want to do nearby. Squat the npm registry with a couple of things. #:transmissions &amp; #:semem at least, there might be a couple of others. None will be out-of-the-box usable as they should be (as I would interpret proper etiquette), but I think I&#39;m at a point where I can legitimately grab those names. I&#39;ve put loads of work in, am committed to making them useful for other parties.</p>
+<p>It might even encourage me to get the GitHub CI/CD bits in place (for the badges, innit).</p>
+<p>Golly :</p>
+<pre><code class=\"language-sh\">npm warn using --force Recommended protections disabled.
+npm warn deprecated inflight@1.0.6: This module is not supported, and leaks memory. Do not use it. Check out lru-cache if you want a good and tested way to coalesce async requests by a key value, which is much more comprehensive and powerful.
+npm warn deprecated glob@7.2.3: Glob versions prior to v9 are no longer supported
+npm warn deprecated sourcemap-codec@1.4.8: Please use @jridgewell/sourcemap-codec instead
+npm warn deprecated rimraf@3.0.2: Rimraf versions prior to v4 are no longer supported
+npm warn deprecated glob@7.2.3: Glob versions prior to v9 are no longer supported
+npm warn deprecated glob@7.2.3: Glob versions prior to v9 are no longer supported
+npm warn deprecated glob@7.2.3: Glob versions prior to v9 are no longer supported
+
+added 1141 packages in 9m
+
+237 packages are looking for funding
+  run `npm fund` for details
+</code></pre>
+<p>Aw, <code>npm install squirt</code> works (whatever that is), I&#39;d have squatted that too. Ok, no biggy.</p>
+<pre><code class=\"language-sh\">npm install squirty
+npm error code E404
+npm error 404 Not Found - GET https://registry.yarnpkg.com/squirty - Not found
+</code></pre>
+<p>For that I only need to do some minor renaming. #:transmissions would have been a proper pain. I did it once already - had the project working label &quot;treadmill&quot; initially, but decided something more accurately descriptive would be better. Horrible search &amp; replace - not too bad with code, but docs got messy.
+ </p>
+
+        <div class="entry-footer">
+            <h2>About</h2>
+            
+        </div>
+    </body>
+</html>

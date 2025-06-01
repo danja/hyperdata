@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <link rel="stylesheet" href="/css/fonts.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/grid-columns.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/style.css" type="text/css"/>
+        <title>Journal 2025-05-31</title>
+    </head>
+    <!-- POST PAGE TEMPLATE -->
+    <body>
+        <header id="entry-header">
+            <h1 class="post-title h-cinzel">
+                
+            </h1>
+        </header>
+        <h1>Journal 2025-05-31</h1>
+<p>This morning I was woken by Federico&#39;s tractor about 15 mins before my alarm. But that was fine, last night I prepared a flask of coffee. I did about 2 hours worth of dev with Claude before getting out of bed. Then went shopping, I&#39;ve just fixed the Claude artifacts and I&#39;m very happy. A very productive morning!</p>
+<p><img src=\"/images/2025-05/jsdoc-rdf.png\" alt=\"JSDoc RDF poster\"></p>
+<h2>JSDoc RDF Plugin</h2>
+<p>It does what JSDoc does, with an output in RDF Turtle : <a href=\"https://github.com/danja/jsdoc-rdf\">jsdoc-rdf</a> on GitHub. Something I&#39;ve wanted for years but never got around to. It became more pressing now I&#39;ve started integrating LLMs etc into my knowledgebase setup - in <a href=\"https://github.com/danja/semem\">Semem</a> (which still needs a bit of tweaking for my artificial midsummer break deadline).</p>
+<h2>OpenTelemetry in Transmissions</h2>
+<p>This seems a must-have for my pipeliney thing. Ok, every node in a transmission (= pipeline) is an implementation of a <code>Processor</code>. That interface is descended from <code>ProcessorImpl</code> which does the work of running the processors. This latter now has hooks into <a href=\"https://github.com/open-telemetry\">Open Telemetry</a>. There is space for hooks in the code responsibility for the construction of pipelines, as well as in the API bits. But being lower demand, they are lower priority.</p>
+<p>I haven&#39;t a clue yet how best to make use of this, I believe I&#39;ll need Prometheus and/or Grafana somewhere.</p>
+<h2>Filesystem watching for transmissions</h2>
+<p>Not unrelated to the telemetry thing. Right now, the #:Postcraft doc pipelines to render this blog process every single source markdown file. So I just added this fs watcher.</p>
+<p>The idea is that this will be a long-lived background process. When a file in a given dir tree changes, this thing wakes up and does a HTTP POST to a given endpoint. For the #:postcraft use case, the intention is that there will be a #:transmissions mini-service that will receive the POST and run the markdown-to-sparqlstore, sparqlstore-to-html pipelines.</p>
+<p>As yet untested, but the ability to trigger transmissions via HTTP is something I&#39;ve had in mind all along. There is something approximating implementation, but I&#39;m only now getting to the stage where I can start trying it out in practice.
+ </p>
+
+        <div class="entry-footer">
+            <h2>About</h2>
+            
+        </div>
+    </body>
+</html>

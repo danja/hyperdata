@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <link rel="stylesheet" href="/css/fonts.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/grid-columns.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/style.css" type="text/css"/>
+        <title>Calm</title>
+    </head>
+    <!-- POST PAGE TEMPLATE -->
+    <body>
+        <header id="entry-header">
+            <h1 class="post-title h-cinzel">
+                
+            </h1>
+        </header>
+        <h1>Calm</h1>
+<p>I woke up calm and rested after a good night&#39;s sleep. Had about an hour doing odds &amp; end. All good. Then a video call from my mother, generally all ok but she promptly stressed me out. Headache, and the <em>No.7 insurance</em> thing has changed in my head from being a straightforward process to a <em>Big Difficult Thing</em> (nothing has changed in reality).</p>
+<p>I needed to get data from the old server so I could kill it off before the end of the month (so as not to pay for it again). Done.</p>
+<p>I also wanted to have something in place as a default AI assistant for <em>all the things</em>. I was using ChatGPT4, but hadn&#39;t subscribed for a couple of months ($ flow). <a href=\"https://groq.com/\">Groq</a> was a very good stand-in, but their free offerings didn&#39;t seem any use for managing per-task/project conversations. I started setting up <a href=\"https://www.librechat.ai/\">LibreChat</a> the other day, the plan being to to use it as a front end to <em>whatever</em>.</p>
+<p>So many distractions, and I wanted to try out ChatGPT4o anyway, so I signed up there again.</p>
+<p>Just now I had another quick look at #LibreChat - the Docker-based local install had worked nicely, I just had to add my API key for OpenAI to get that working.</p>
+<p>Might as well have that starting on boot on this machine. With a little help from GitHub #Copilot (I have a sub there) I got a systemd service file set up.</p>
+<pre><code>[Unit]
+Description=LibreChat
+Requires=docker.service
+After=docker.service
+
+[Service]
+WorkingDirectory=/home/danny/AI/LibreChat
+ExecStart=/usr/bin/docker-compose up
+ExecStop=/usr/bin/docker-compose down
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target
+</code></pre>
+<p>Hmm. It didn&#39;t work. Copilot to the rescue :</p>
+<pre><code>sudo systemctl enable librechat
+</code></pre>
+<p>Further probs. I did a load of updating things, still no joy. Then I wondered about a flag Copilot had given me : <code>ExecStart=/usr/bin/docker-compose up -d</code>. That appears to have worked! Educated guesswork that should have started sooner with distrusting AI.</p>
+<h2>Plan</h2>
+<p>carried over:</p>
+<ol>
+<li><del>Server decommissioning</del></li>
+<li>#FOAFRetrospective stuff</li>
+<li>No.7 garden</li>
+<li><del>AI assistant</del> - good enough for now</li>
+</ol>
+<ul>
+<li><p>No.7 ballcock</p>
+</li>
+<li><p>Nigel pressie - little placeholder ordered</p>
+</li>
+<li><p>draft contract for No.7</p>
+</li>
+<li><p>check insurance for No.7</p>
+</li>
+<li><p>Groq on LibreChat</p>
+</li>
+<li><p>remove _.md</p>
+</li>
+<li><p>articles for #Transmissions</p>
+</li>
+<li><p>Service.execute(message)</p>
+</li>
+<li><p>project alignment Article</p>
+</li>
+</ul>
+<hr>
+<h3>FOAF Retrospective</h3>
+<p>danbri&#39;s last message about it:</p>
+<blockquote>
+<p>I think for foaf collecting raw materials is key
+Like the most interesting or impactful things that ever used it
+Or ongojng use in linkeddata datasets
+Skos is also kind of needing the same but is probably another story
+ </p>
+</blockquote>
+
+        <div class="entry-footer">
+            <h2>About</h2>
+            
+        </div>
+    </body>
+</html>

@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <link rel="stylesheet" href="/css/fonts.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/grid-columns.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/style.css" type="text/css"/>
+        <title>Today Again</title>
+    </head>
+    <!-- POST PAGE TEMPLATE -->
+    <body>
+        <header id="entry-header">
+            <h1 class="post-title h-cinzel">
+                
+            </h1>
+        </header>
+        <h1>Today Again</h1>
+<p><em>Long day yesterday, late night. Imagine my surprise when I woke this morning to find it was today again.</em></p>
+<p>#:todo note about moving from Docker to Podman for #:tbox</p>
+<p>I&#39;ve been going round in circles figuring out how best to do PDF-markdown conversion. It&#39;s must-have for #:semem, useful elsewhere. I want to run it from node...somehow. One option was PDF.js but that&#39;s intended for browser use, it depends on facilities there. Another was the Poppler toolkit, it depends on native facilities. But that should be ok in the #:tbox container.</p>
+<p>It makes sense to do the operation in two phases : pdf2html, html2md.</p>
+<p>The shape of this - small processors - is such that it has to live in #:transmissions.  </p>
+<p>Which suggests to me a little subsystem MVP :</p>
+<ul>
+<li>pdf2md is accessible via http in #:tbox</li>
+<li>the endpoint URL is exposed by #:semem</li>
+<li>calls to the endpoint are routed to a #:transmissions application</li>
+<li>#:transmissions processors do the workflow</li>
+</ul>
+<p>I have at least sketched out a processor to do bash calls in #:transmissions, so that&#39;s kinda in place. How far did I get with #:transmissions&#39; HTTP API..?</p>
+<pre><code class=\"language-prompt\">We need to work on the HTTP API. Reference the code in project knowledge under `src/api`
+On the command `./trans -web -port 4200  system/echo` the system should spawn a http server listening on localhost, port 4200. When a HTTP POST is made to that endpoint, the server should check for a field named &#39;message&#39; and then run the transmission `system/echo` on it, and then pass the final value of &#39;message&#39; back as the body of the HTTP response.
+The transmission `system/echo` defined in `src/applications/system/echo/transmissions.ttl` simply uses a `ShowMessage` processor to output the contents of the message to the console. Something like the functionality of `src/processors/util/ShowMessage.js` needs to be built into the server to provide the response, formatted as appropriate.
+
+Currently, when asking for HTTP, the system crashes like so:
+```sh
+./trans -w -p 4200  system/echo
+
+...
+ReferenceError: applicationsDir is not defined
+    at Object.handler (file:///home/danny/github-danny/transmissions/src/api/cli/run.js:69:49)
+...
+</code></pre>
+<p>Have a good think how the required functionality can be built into the system based on what&#39;s in place already.</p>
+<pre><code>
+</code></pre>
+<p>Ok, got a good way towards that before tokens ran out. Dogwalk, then food &amp; feet up. </p>
+<pre><code class=\"language-sh\">sudo apt install poppler-utils
+</code></pre>
+<h2>Corps Blimey</h2>
+<p>I needed a term for a chunk of knowledge that (<em>hand-waves</em>) is bigger than a doc or little graph, but smaller than a corpus. Obvious really : #:corpuscle. Unintentionally I seem to have slipped into alliteration. This will mean there will be such things as #cogcom <strong>Cognitive Composer Corpuscles</strong>. <em>Chaos Computer Club, Creedence Clearwater Revival...oh, oops.</em></p>
+<p>Checking with Claude -</p>
+<pre><code class=\"language-response\">Key findings:
+
+Corpus (plural: corpora): Body of text/written material or physical body/mass
+Corpuscle: Small particle or cell, especially blood cells
+Related through Latin root &quot;corpus&quot; meaning body
+
+Common relationship: Both derive from anatomical/physical meanings, though corpus expanded to textual collections.
+...
+Related words include:
+
+* Corporate/corporation (organized body)
+* Incorporate (bring into a body)
+* Corpulent (having a large body)
+* Corporeal (physical/bodily)
+* Corpse (dead body)
+ 
+</code></pre>
+
+        <div class="entry-footer">
+            <h2>About</h2>
+            
+        </div>
+    </body>
+</html>

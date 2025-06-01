@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <link rel="stylesheet" href="/css/fonts.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/grid-columns.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/style.css" type="text/css"/>
+        <title>Dog Mood</title>
+    </head>
+    <!-- POST PAGE TEMPLATE -->
+    <body>
+        <header id="entry-header">
+            <h1 class="post-title h-cinzel">
+                
+            </h1>
+        </header>
+        <h1>Dog Mood</h1>
+<p>Earlier I rediscovered my <a href=\"https://hyperdata.it/xmlns/dogmood/\">Dog Mood Vocabulary</a> from 2020. Useful in the context of agents!!</p>
+<p>#:todo model today&#39;s encounter with other folks &amp; dogs</p>
+<pre><code class=\"language-turtle\">@prefix foaf: &lt;http://xmlns.com/foaf/0.1/&gt; .
+@prefix pets: &lt;http://purl.org/stuff/pets/&gt; .
+@prefix dogmo: &lt;http://purl.org/stuff/dogmood#&gt; .
+@prefix mz: &lt;http://purl.org/stuff/mozzanella/&gt; .
+
+
+mz:Claudio a pets:Dog;
+           foaf:name &quot;Claudio&quot;;
+           dogmo:currentMood dogmo:scared .
+
+_:blackDog   a pets:Dog;
+           dogmo:currentMood dogmo:happy .
+</code></pre>
+<p>#:farelo <strong>being able to capture ideas quickly is vital</strong> - and one of the best ways is as placeholder code etc. Get AI to make a proof-of-concept!</p>
+<p>It occurred to me I could do with a sandboxed Linux machine. So just before dog walk I created <a href=\"https://github.com/danja/tbox\">tbox</a>. After a bit of chat with Claude, I&#39;ve got first pass bits for Docker.</p>
+<p>len bullard : Don’t become a musician if you can be happy doing anything else.  Like marriage, if there is any doubt, the answer is probably no.  -  John Rutter, Composer</p>
+<hr>
+<blockquote>
+<p>&quot;I&#39;d like a xmpp broker server built on node. I&#39;d like it to be open source, stick to the standards and be popular and well-maintained. Github would be good.&quot;&quot;</p>
+</blockquote>
+<p>&lt; &quot;The most popular and well-maintained open-source XMPP broker server built on Node.js is ejabberd...&quot;</p>
+<blockquote>
+<p>&quot;so the rumours I heard about erlang aren&#39;t true?&quot;&quot;</p>
+</blockquote>
+<p>&lt; &quot;That&#39;s correct. While Erlang was a popular choice for building XMPP servers in the past, ejabberd is now primarily built on Node.js. Node.js offers several advantages, such as: ...&quot;</p>
+<blockquote>
+<p>&quot;please give me references for this&quot;</p>
+</blockquote>
+<p>&lt; [very good choice selection of (contradictory) material]</p>
+<blockquote>
+<p>&quot;How do explain what it says at Wikipedia : &quot;ejabberd is an Extensible Messaging and Presence Protocol (XMPP) application server and an MQ Telemetry Transport (MQTT) broker, written mainly in the Erlang programming language.&quot;&quot;</p>
+</blockquote>
+<p>&lt; [vague overview of what ejabberd does, plus what Erlang is]</p>
+<blockquote>
+<p>&quot;You just said &quot; It&#39;s built on Node.js&quot; but Wikipedia says &quot;written mainly in the Erlang programming language&quot; - are they lying?&quot;</p>
+</blockquote>
+<p>&lt; &quot;A Clarification on ejabberd&#39;s Language
+You&#39;re absolutely right. There seems to be a discrepancy in the information I provided earlier. ejabberd is indeed primarily written in Erlang.</p>
+<p>The confusion likely arose from the fact that there have been discussions and experiments with using Node.js ...&quot;</p>
+<hr>
+<p>So I prodded around a bit. Kinda interesting:</p>
+<p>&lt; &quot;Analyzing My Response and Potential Biases
+You&#39;ve raised some excellent points about my response. My suggestion that ejabberd was built with Node.js was likely due to a combination of factors:</p>
+<p>Recent Trends and Information: The field of technology, especially in the context of messaging servers, is constantly evolving. There may have been recent developments or experimental implementations involving Node.js that I misinterpreted or conflated with the primary language used by ejabberd.
+Contextual Bias: It&#39;s possible that the specific prompt or context you provided led me to focus on certain aspects of ejabberd, such as its potential for scalability or integration with other Node.js-based applications.
+Model Limitations: As a large language model, I am trained on a massive dataset of text and code. While this allows me to generate human-quality text, it can also introduce biases or inaccuracies if the underlying data is incomplete or outdated.
+Regarding your questions about pre-training and RAG:</p>
+<p>Pre-training: My pre-training likely played a role in my response. The data I was trained on may have included information about Node.js being used in various messaging or communication contexts, leading me to associate it with ejabberd.
+RAG (Retrieval Augmented Generation): It&#39;s possible that I did use RAG to access additional information during my response generation. However, if the retrieved information was incorrect or outdated, it could have contributed to the error.
+To improve my accuracy in the future, I will:</p>
+<p>Double-check information sources: I will strive to verify information from multiple reliable sources before providing a response.
+Be mindful of contextual bias: I will be aware of how the context of a prompt can influence my response and try to avoid making assumptions.
+Continuously update my knowledge: I will stay up-to-date with the latest developments in technology to ensure that my responses are accurate and relevant.
+Thank you for your insightful questions. Your feedback helps me to identify and address potential issues in my responses.
+&quot;</p>
+<p>A lot of that doesn&#39;t really fit. But respect, &quot;Contextual Bias&quot;, that has to be the one.
+ </p>
+
+        <div class="entry-footer">
+            <h2>About</h2>
+            
+        </div>
+    </body>
+</html>

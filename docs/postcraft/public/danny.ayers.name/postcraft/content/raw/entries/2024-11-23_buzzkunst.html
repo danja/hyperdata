@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <link rel="stylesheet" href="/css/fonts.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/grid-columns.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/style.css" type="text/css"/>
+        <title>Buzzkunst</title>
+    </head>
+    <!-- POST PAGE TEMPLATE -->
+    <body>
+        <header id="entry-header">
+            <h1 class="post-title h-cinzel">
+                
+            </h1>
+        </header>
+        <h1>Buzzkunst</h1>
+<p><em>The first CD I have tried playing with office computer. Mad winds last night took one tree onto a power line and others on nearby roads, Mozzanella was well blocked. Power now back, still no interwebs. Italian radio music got tired after a while. Remembered I&#39;ve got loads of CDs.)</em></p>
+<p>I think I&#39;ve finally sorted out the module thing. Bloody paths. So with :</p>
+<pre><code class=\"language-sh\">./trans ../trans-apps/applications/test_module-load -m &#39;{&quot;first&quot;:&quot;one&quot;,&quot;second&quot;:&quot;two&quot;}&#39;
+</code></pre>
+<p>The <em>application</em> is loaded from over there. It uses modules from <code>/home/danny/github-danny/transmissions/src/processors</code> and one from <code>/home/danny/github-danny/trans-apps/applications/test_module-load/processors</code> that isn&#39;t mentioned in the &#39;local&#39; JS at all, is dynamically loaded from the place of the application.</p>
+<p>This bit is as much about decrufting the <code>transmissions</code> repo as anything. The next bit is where it&#39;ll star getting fun. Working in a similar fashion, the processor modules can be loaded from <em>anywhere</em>. They are identified with URIs in the transmission. The most popular form of URI is the URL. Do a HTTP GET, matey! <em>(microservices proximal)</em>.</p>
+<p>But I really should remember to pace how I do things. I did get some way into defining multiple transmissions at the same time. The composability is key to where I want to go with autonomous agents.</p>
+<p>I need to go serious on the tests. There&#39;s core refactoring to do, but to save wasting time I should take it methodically.</p>
+<p>While going around in circles on this part I stumbled on what looks like a nice way of doing the GETable bits - <strong>Spin</strong> #:todo:link. Some WASM-based thingy.</p>
+<p>I also need to do my own version of s/repopack/repomix</p>
+<p>I also need to make the #:semem thing.</p>
+<p>Most of all I need to dive back to #:farelo so I&#39;m managing my time most effectively.</p>
+<p>Which needs a bit of work on #:ns.</p>
+<p>But <strong>This is Fine.</strong>. All according to plan. (#:todo:link John Finnemore &#39;Plans&#39; sketch). Claude is already carrying a lot of my load, as I start being able to use my own bits instead, the net <em>volume</em> of work for me should descend rapidly.</p>
+<p>Shit. Still some breakage around my paths stuff. An extra hassle being that my publish script for #:postcraft, &#39;p&#39;, seems to have dropped off my PATH.</p>
+<p>Fuckity fuck. The <code>manifest.ttl</code> bit seems to have dropped out. Before I&#39;ve even documented how it&#39;s meant to (did) work.</p>
+<p><strong>target</strong> isn&#39;t being resolved properly. Grr. Bloody path stuff again. Bloody fool dannys again for not having tests in place to catch that sooner.</p>
+<p>I remembered to run <code>backup.sh</code> so at least this stuff is backed up to a second local drive.
+ </p>
+
+        <div class="entry-footer">
+            <h2>About</h2>
+            
+        </div>
+    </body>
+</html>

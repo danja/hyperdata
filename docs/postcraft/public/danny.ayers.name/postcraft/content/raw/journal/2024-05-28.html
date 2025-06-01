@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <link rel="stylesheet" href="/css/fonts.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/grid-columns.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/style.css" type="text/css"/>
+        <title>Cough to Sneeze</title>
+    </head>
+    <!-- POST PAGE TEMPLATE -->
+    <body>
+        <header id="entry-header">
+            <h1 class="post-title h-cinzel">
+                
+            </h1>
+        </header>
+        <h1>Cough to Sneeze</h1>
+<p>I seem to have got over the cough/cold I had. Head still a bit fuzzy, but after one good cough when I woke up, all seems fine. Now snuffling a bit with hay fever...</p>
+<h2>Plan</h2>
+<ul>
+<li>Decommission server</li>
+</ul>
+<p>The Cranberries&#39; <a href=\"https://genius.com/The-cranberries-zombie-lyrics\">Zombie</a></p>
+<p>Ok, if I tweak find-big-files a little, I should be able to save some time:</p>
+<pre><code>find ./ -type f -printf &#39;%s %p\\n&#39; | sort -nr | head -30 | awk &#39;{print &quot;rm &quot; $2}&#39; &gt; bigfiles.sh
+</code></pre>
+<p>I&#39;ll manually check the script before running it in case it&#39;s picking up anything I want to keep.</p>
+<p>Ok, sweet.</p>
+<p>Now :</p>
+<pre><code>tar -czvf server-decommission-2024-05_root.tar.gz /root
+chmod 777
+</code></pre>
+<p>and locally:</p>
+<pre><code>time scp danny@178.79.136.35:/zips/server-decommission-2024-05_root.tar.gz ./
+</code></pre>
+<p>oops
+wrong dir - move to <code>/zips</code> and try again</p>
+<p>hah, that was tiny.</p>
+<p>Now, <code>/home</code> - doesn&#39;t have many big files, and most of those are in <code>.git</code> dirs. I&#39;ll just delete those.</p>
+<pre><code>find ./ -type d -name &#39;.git&#39; &gt; gits.sh
+...
+tar -czvf server-decommission-2024-05_home.tar.gz /home
+</code></pre>
+<pre><code>time scp danny@178.79.136.35:/zips/server-decommission-2024-05_home.tar.gz ./
+</code></pre>
+<p><code>var</code> - virtually all big files were under <code>log</code>, <code>lib</code> or <code>cache</code>. I reckon I&#39;m safe in just deleting those.</p>
+<pre><code>tar -czvf server-decommission-2024-05_var.tar.gz /var
+</code></pre>
+<p>Hmm. There was a lot under <code>/var/www/html</code> as expected. What I&#39;d forgotten about is all the <code>webdav</code> stuff for Joplin.</p>
+<p>That&#39;s a pain, I want to reuse that, but I seem to remember Joplin having a weird format in its <code>.md</code> files.</p>
+<pre><code>time scp danny@178.79.136.35:/zips/server-decommission-2024-05_var.tar.gz ./
+</code></pre>
+
+        <div class="entry-footer">
+            <h2>About</h2>
+            
+        </div>
+    </body>
+</html>

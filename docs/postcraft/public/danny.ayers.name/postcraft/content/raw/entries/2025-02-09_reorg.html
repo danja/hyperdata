@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <link rel="stylesheet" href="/css/fonts.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/grid-columns.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/style.css" type="text/css"/>
+        <title>Reorg</title>
+    </head>
+    <!-- POST PAGE TEMPLATE -->
+    <body>
+        <header id="entry-header">
+            <h1 class="post-title h-cinzel">
+                
+            </h1>
+        </header>
+        <h1>Reorg</h1>
+<p>PS. I realised I needed easy access to the actual project repos from Pulsar for editing README.md etc, so I renamed the symlinks of the #:postcraft sections to eg. <code>semem-docs</code>. Also changed theme.  I like this combo.</p>
+<p>I had started using git submodules to organise my code subprojects (of #:hyperdata, the umbrella). This turned out to be a bad idea. First, a bit of extra admin needed (and remembering these things were submodules) and then things started getting really confusing when I wanted to integrate the #:clients subproject into various other subprojects, one submodule into other submodules... Way too much #:CognitiveLoad.</p>
+<p>So I&#39;m simplifying :</p>
+<pre><code class=\"language-sh\">danny@danny-desktop:~$ tree -L 1 hyperdata/
+
+hyperdata/
+├── clients
+├── hyperdata
+├── semem
+├── tbox
+└── transmissions
+</code></pre>
+<p>Each of those (and the rest) will be a completely independent repo/module. This change is fairly straightforward, the only bit that will need special attention is <code>hyperdata</code>, it needs to forget the submodules. I got the procedure for that from Perplexity, will do it once I&#39;m sure everything&#39;s ok in the new structure.</p>
+<p>A complication is that I&#39;ve been using Pulsar Editor for docs. This is based on the old Atom editor, and works a treat for this purpose. I did start customizing it as <code>hyperdata-editor</code>, but I managed to break that, so reverted to the original source distro). It manages workspaces a little differently than VSCode and I&#39;ve been using #:postcraft for docs, so to give me what I need in the editor a little bit of symlinking is needed. With this latest setup, so far I&#39;ve done :</p>
+<pre><code class=\"language-sh\">cd ~/hyperdata/hyperdata/workspaces/postcrafts
+
+ln -s ~/hyperdata/hyperdata/docs/postcraft/content-raw ./hyperdata
+
+ln -s ~/hyperdata/transmissions/docs/postcraft/content-raw ./transmissions
+ln -s ~/hyperdata/clients/docs/postcraft/content-raw ./clients
+ln -s ~/hyperdata/semem/docs/postcraft/content-raw ./semem
+ln -s ~/hyperdata/tbox/docs/postcraft/content-raw ./tbox
+...
+</code></pre>
+<p>Then I opened the first symlink as a folder in Pulsar, I&#39;ll add all the rest as folders to give me easy access to the lot.</p>
+<p>I&#39;ve also started reorganizing the bits that will be online :</p>
+<pre><code class=\"language-sh\">danny@danny-desktop:~$ tree -L 2 sites
+
+sites
+├── danny.ayers.name
+│   └── postcraft
+├── hyperdata.it
+└── strandz.it
+</code></pre>
+<p>They are currently all over the place. I&#39;ll fix that as I go along.</p>
+<p>PS. Just realised I need to edit the README.md etc from here too, so I&#39;ll add :</p>
+<pre><code class=\"language-sh\">ln -s ~/hyperdata/tbox ./tbox-repo
+</code></pre>
+<p><img src=\"media/images/2025-02/pulsar-screenshot.png\" alt=\"Pulsar Screenshot\">
+ </p>
+
+        <div class="entry-footer">
+            <h2>About</h2>
+            
+        </div>
+    </body>
+</html>

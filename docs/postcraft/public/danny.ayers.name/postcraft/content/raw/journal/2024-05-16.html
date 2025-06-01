@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <link rel="stylesheet" href="/css/fonts.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/grid-columns.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/style.css" type="text/css"/>
+        <title>Journal : 2024-05-16</title>
+    </head>
+    <!-- POST PAGE TEMPLATE -->
+    <body>
+        <header id="entry-header">
+            <h1 class="post-title h-cinzel">
+                
+            </h1>
+        </header>
+        <h1>Journal : 2024-05-16</h1>
+<p>Yesterday, after lots of dreadful hackery, I <em>finally</em> got to a key milestone with #Postcraft static site builder (an application of #Transmissions). It&#39;s working end-to-end. There&#39;s still a massive amount of work to do on all levels, but it kind-of corresponds to a Minimum Viable Product (that only I will ever use). Enough is in place that I can actually start using it, it feels like a huge weight off my shoulders.</p>
+<p>Today, 5 priorities :</p>
+<ol>
+<li>Make the pages bare-minimum pretty to put online</li>
+<li>Put online</li>
+</ol>
+<p>Stop. Two will do.</p>
+<p>The page styling (CSS now, later little bits of JS etc) files should be declared in the manifest, but for now I&#39;ll just copy files over manually. Actually, why bother copying, might as well just point to the originals for now.</p>
+<p>Oh FFS!!! It seems I changed something last night after it was all working, and now it&#39;s not. I&#39;ve done <code>git reset --hard</code>, nope. (Andwith that wiped some bits of tidying. Hey ho).</p>
+<p>So I&#39;ll have to go back to the start of the pipeline, trace things step-by-step.
+Which does actually give me what might be a good idea : the services do have a <em>signature</em>, very like those of function arguments/return value - what they expect to receive, what they pass on.
+<em>Copilot in this (markdown) typing just suggested a &quot;contract&quot; for a service - I like that.</em>
+So it should be straightforward to add some flagging, I guess in the common base class (in <code>Service.js</code>), in the first instance just for logging/debugging. But the same thing should lend itself to a natural interface for unit-ish testing.</p>
+<hr>
+<p>Carried over from yesterday:</p>
+<h3>Plan</h3>
+<h4>Postcraft</h4>
+<p><strong>Remember I need to take down the old server</strong></p>
+<ul>
+<li><p><input disabled=\"\" type=\"checkbox\"> 
+upload to server</p>
+</li>
+<li><p><input disabled=\"\" type=\"checkbox\"> 
+make everything work</p>
+</li>
+<li><p><input disabled=\"\" type=\"checkbox\"> 
+Hello World (again) post</p>
+</li>
+<li><p><input disabled=\"\" type=\"checkbox\"> 
+Transmissions/Postcraft overview post</p>
+</li>
+<li><p><input disabled=\"\" type=\"checkbox\"> 
+pinned posts</p>
+</li>
+<li><p><input disabled=\"\" type=\"checkbox\"> 
+Atom feed</p>
+</li>
+</ul>
+<h4>FOAF-Retrospective</h4>
+<ul>
+<li><input disabled=\"\" type=\"checkbox\"> FOAF video cleanup</li>
+<li><input disabled=\"\" type=\"checkbox\"> Placeholders + manifest for site</li>
+<li><input disabled=\"\" type=\"checkbox\"> find papers</li>
+</ul>
+<h4>Kaggle-Preferences</h4>
+<ul>
+<li><input disabled=\"\" type=\"checkbox\"> get set up, run the demo</li>
+</ul>
+
+        <div class="entry-footer">
+            <h2>About</h2>
+            
+        </div>
+    </body>
+</html>

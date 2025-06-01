@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <link rel="stylesheet" href="/css/fonts.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/grid-columns.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/style.css" type="text/css"/>
+        <title>What Query..?</title>
+    </head>
+    <!-- POST PAGE TEMPLATE -->
+    <body>
+        <header id="entry-header">
+            <h1 class="post-title h-cinzel">
+                
+            </h1>
+        </header>
+        <h1>What Query..?</h1>
+<p>So my blog is now back live-ish. The <em>-ish</em> comes from the fact it&#39;s messing up the order of posts.</p>
+<h2>The Secret to Comedy</h2>
+<p>Material is being passed to and fro between #:transmissions and a SPARQL store (in a #:tbox Docker container, right now running locally) and when I threw the full 100s of entries at it, initially this machine was segfaulting. Ok, my best guess is memory is getting eaten too fast for whatever garbage collection is running around here.</p>
+<p>But so far I haven&#39;t really considered timing (or much of concurrency). The SPARQL store calls, and many I will be wanting to do soon are over HTTP, some throttling facility is needed.
+Fortunately this was pretty easy to set up in node/#transmissions.</p>
+<p>I added a method to an existing <code>SysUtils</code> class:</p>
+<pre><code class=\"language-sh\">class SysUtils {
+...
+  static sleep(ms=100) {
+      return new Promise((resolve) =&gt; {
+          setTimeout(resolve, ms)
+      })
+  }
+}
+export default SysUtils
+</code></pre>
+<p>Then in #:transmissions all I had to do was to get the value from the config of whichever <code>Processor</code> might need slowing, then call the above.</p>
+<pre><code class=\"language-sh\">const delay = super.getProperty(ns.trn.delay, &#39;100&#39;) // 100mS is default if unspecified elsewhere
+...
+await SysUtils.sleep(delay)
+</code></pre>
+<p>It actually worked!
+Well, to the extent that the thing isn&#39;t crash &amp; burning any more.</p>
+<p>Hmm. This is the kind of thing that might be needed in a bunch of different processors. Performance is way down the list of considerations for #:transmissions <em>at the moment</em>, so I could stick the above in in the parent <code>Processor</code> class. But hmm...</p>
+<p>I just put it in <code>src/processors/flow/ForEach.js</code>, but inside the loop. Nah, wrong place.</p>
+<p>Subclass of <code>Processor</code> called <code>SlowableProcessor</code>, put delay in the <code>preProcess(message)</code> call on its way up to the one in <code>Processor</code>. Make things like <code>SPARQLUpdate</code> a child of that. Yup.
+I&#39;m wary of big inheritance trees (Java in a past life), which is why there aren&#39;t any here, dependency injection instead in most places. Grandparents is ok.
+ </p>
+
+        <div class="entry-footer">
+            <h2>About</h2>
+            
+        </div>
+    </body>
+</html>

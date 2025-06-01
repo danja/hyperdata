@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <link rel="stylesheet" href="/css/fonts.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/grid-columns.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/style.css" type="text/css"/>
+        <title>Today</title>
+    </head>
+    <!-- POST PAGE TEMPLATE -->
+    <body>
+        <header id="entry-header">
+            <h1 class="post-title h-cinzel">
+                
+            </h1>
+        </header>
+        <h1>Today</h1>
+<p>A bit of a distraction, my mother&#39;s unwell wants me to go over to hers. I&#39;ve said I&#39;ll see what I can do - provisionally about 5 days, some time this week.</p>
+<p>Loose ends : static server bits, done, below.</p>
+<p>Next, get some of the little <code>hyperdata</code> browser apps working again, against #Fuseki on this new server. I think all I need to do is set up the endpoints and maybe shove in a bit of starter data. I do need to get the auth working (I&#39;m planning on using LDAP), but that&#39;s not a priority right now.</p>
+<h2>Plan</h2>
+<ul>
+<li>reorg FOAF Retrospective <em>continues...</em></li>
+<li>static server bits - I think that&#39;s mostly done for now</li>
+<li>hyperdata browser apps against Fuseki</li>
+<li>project alignment notes</li>
+<li>blog layout tweaks</li>
+<li>ADHD note</li>
+</ul>
+<h3>Static server bits</h3>
+<p>It took me hours to realise why I had the static Web things set up on the old server the way they were, and why I was
+struggling to get the missing bits joined in. Because they were all in separate git repositories. So obvious, but it just didn&#39;t click in my head. All I need to do is clone them on the new server, pop in a symlink, that should be it.</p>
+<p>The login as regular user, su to root bit is a pain, I can&#39;t remember how to automate those bits - but AI can -</p>
+<p>Locally :</p>
+<pre><code>ssh-keygen -t rsa -b 4096 -C &quot;danny.ayers@gmail.com&quot;
+(I already had one)
+ssh-copy-id danny@178.79.189.240
+...
+nano ~/.ssh/config
+
+Host 178.79.189.240
+    HostName hyperdata.it
+    User danny
+    IdentityFile ~/.ssh/id_rsa
+    RequestTTY yes
+    RemoteCommand sudo su -
+</code></pre>
+<p>Remote :</p>
+<pre><code>sudo visudo
+...add...
+danny ALL=(ALL) NOPASSWD: ALL
+</code></pre>
+<p>Soo...the bits that were missing I <em>might</em> want to look at in the near future are:</p>
+<ul>
+<li>farelo</li>
+<li>foolicious</li>
+<li>foowiki</li>
+<li>trellis</li>
+<li>schema-editor</li>
+<li>HKMS</li>
+<li>trev</li>
+<li>dork</li>
+<li>environs</li>
+</ul>
+<p><em>(I haven&#39;t a clue what&#39;s in the last 4)</em></p>
+<p>These were all under <code>/home/hkms-apps/</code> on the old server. I&#39;ve already created a <code>/home/github/</code> on the new server. Clunky naming, but I might as well use that for things above, symlink from <code>/home/hkms-apps</code> to <code>/home/github</code>.</p>
+<p>Hmm. The tarball I got from the old server is lacking <code>.git</code> dirs in the above. I guess I must have stripped them out before zipping. No worries, I&#39;m pretty sure there&#39;ll be the same as under <a href=\"https://github.com/danja\">https://github.com/danja</a></p>
+<p>Ok, cloned all those except for <strong>dork</strong>, apparently that&#39;s <em>Description of Runtime Klasses</em>. A Java thing I did ages ago, uses reflection to generate RDF descriptions of the code. I&#39;ll leave that one for now, I&#39;m not planning on doing any Java in the near future (no sure why it was on the server like this, hey ho).
+ </p>
+
+        <div class="entry-footer">
+            <h2>About</h2>
+            
+        </div>
+    </body>
+</html>

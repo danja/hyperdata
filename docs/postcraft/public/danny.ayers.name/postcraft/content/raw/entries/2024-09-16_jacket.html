@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <link rel="stylesheet" href="/css/fonts.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/grid-columns.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/style.css" type="text/css"/>
+        <title>Hiding Jacket</title>
+    </head>
+    <!-- POST PAGE TEMPLATE -->
+    <body>
+        <header id="entry-header">
+            <h1 class="post-title h-cinzel">
+                
+            </h1>
+        </header>
+        <h1>Hiding Jacket</h1>
+<p>13:00</p>
+<p>It&#39;s gone cool. I have a fleece jacket that&#39;s warm, but I knew it needed washing. So I just searched high &amp; low, only to find it in the washing machine. A wash I did a couple of days ago and completely forgot.</p>
+<p>My priorities today are something like :</p>
+<ul>
+<li>pension docs</li>
+<li>pulsar</li>
+<li>form-a-matic</li>
+<li>xmpp</li>
+<li>sidebars</li>
+<li>tidy desk</li>
+<li>fix chairs</li>
+<li>metal detector</li>
+<li>music room</li>
+<li>PS. read @iand&#39;s notes around <a href=\"https://blog.iandavis.com/2017/10/microfunctions/\">Serverless: why microfunctions &gt; microservices</a></li>
+<li>foaf-retro todos</li>
+</ul>
+<p>But I&#39;ve still got a bit of task paralysis. #ADHD Strategy : either do something that will help productivity or something that will benefit someone else or take Claudio out.</p>
+<p>The #Pulsar thing is productivity and should be a quicky.</p>
+<p>Just thinking about Transmissions dev.</p>
+<h2>Pulsar Install</h2>
+<p><a href=\"https://pulsar-edit.dev/docs/launch-manual/sections/core-hacking/#building-pulsar\">https://pulsar-edit.dev/docs/launch-manual/sections/core-hacking/#building-pulsar</a></p>
+<pre><code>danny@danny-desktop:~/github-danny/pulsar$ node -v
+v20.11.0
+danny@danny-desktop:~/github-danny/pulsar$ nvm use
+Found &#39;/home/danny/github-danny/pulsar/.nvmrc&#39; with version &lt;16&gt;
+Now using node v16.20.2 (npm v8.19.4)
+danny@danny-desktop:~/github-danny/pulsar$ node -v
+v16.20.2
+</code></pre>
+<p>New to me, <a href=\"https://nodejs.org/api/corepack.html\">corepack</a> :</p>
+<p>Trying :</p>
+<pre><code class=\"language-bash\">corepack enable
+git submodule init &amp;&amp; git submodule update
+yarn install
+yarn build
+yarn build:apm
+yarn start
+</code></pre>
+<p>Some dependency warnings for <code>install</code></p>
+<p>Taking its time...might as well do printer alignment (I put in a new ink cartridge the other day before going out, alignment step had timed out before I got back).</p>
+<p>Yay! Pulsar worked.</p>
+<p>TODO review my earlier Pulsar tweaks, maybe integrate, save as <code>hkms-desktop</code></p>
+<p>TODO have a look at making an AppImage of <code>hkms-desktop</code></p>
+<p>What I want this for, in the first instance, is as a text editor for my #Postcraft instances, to free up this VSCode for, errm, code (I have been coding in Cursor, which is based on VSCode, but having this one separate to try other AI assistants will be useful).</p>
+<p>I want the edity bits of each Postcraft instance in a common place. Named symlinks first :</p>
+<pre><code class=\"language-bash\">mkdir ~/workspaces_hkms-desktop
+cd ~/workspaces_hkms-desktop
+mkdir postcrafts-raw
+cd postcrafts-raw
+ln -s ~/github-danny/postcraft/danny.ayers.name/content-raw ./danny.ayers.name
+ln -s ~/github-danny/hyperdata/docs/postcraft/content-raw ./hyperdata
+ln -s ~/github-danny/transmissions/docs/postcraft/content-raw ./transmissions
+ln -s ~/github-danny/foaf-retro/docs/postcraft/content-raw ./foaf-retro
+</code></pre>
+<p>Hmm. Most of the others need their folder structure updating. I&#39;ll sort those out as I need them.</p>
+<p>Ok, this will need tweaks, but that&#39;s basically done :</p>
+<p><img src=\"media/images/2024-09/pulsar.png\" alt=\"Screenshot of Pulsar for editing\"></p>
+<p>Font size changed 16-&gt;14.</p>
+<pre><code class=\"language-bash\">cd ../transmissions/
+./trans postcraft ../postcraft/danny.ayers.name
+</code></pre>
+<p>TODO bash script to run transmissions on postcrafts</p>
+<p>Bum. I left a bug in there. Sort out later.</p>
+<p>Git commit &amp; push everything.</p>
+<p>TODO better way of doing git commit/push on all these (instead of from inside VSCode)</p>
+<p>Dogwalk time.</p>
+<blockquote>
+<p>(use <code>usr/local/bin</code>...) Alternatively, if you want the scripts to be available only for your user:</p>
+<p>Create a bin directory in your home folder if it doesn&#39;t exist: mkdir -p ~/bin
+Add this line to your .bashrc file: export PATH=&quot;$HOME/bin:$PATH&quot;
+Reload your .bashrc: source ~/.bashrc
+Place your scripts in ~/bin</p>
+</blockquote>
+<p>I need a <code>hyperdata-static-2024</code> repo.</p>
+<pre><code class=\"language-bash\">cd ~/github-danny/pulsar
+
+repopack --verbose -c /home/danny/github-danny/transmissions/repopack.config.json
+</code></pre>
+<p>That got stuck.</p>
+<p>Hmm. <code>npm update repopack</code> stuck too. Network glitching? Yup, connection had dropped.</p>
+<p>TODO minimalist hardcoded runner script for Transmissions to help testing &amp; AI assistant generation</p>
+<p>Something like :</p>
+<pre><code class=\"language-javascript\">const servicesConfigA = {...}
+const servicesConfigB = {...}
+
+var message = {...}
+
+// need to add
+const A = new ServiceA(servicesConfigA, configType=&quot;json&quot;)
+const B = new ServiceB(servicesConfigB, configType=&quot;json&quot;)
+
+message = A.execute(message)
+message = B.execute(message)
+
+console.log(JSON.stringify(message))
+</code></pre>
+<p>I&#39;ve made another repopack config, so :</p>
+<pre><code class=\"language-bash\">cd ~/github-danny/pulsar
+repopack --verbose -c ./repopack.config.json
+</code></pre>
+<p>Hmm. 9x too big for Claude.</p>
+<p>Time to organise my scripts. Might as well put them on GitHub and on hyperdata.it</p>
+<p>Added to <code>.bashrc</code> :</p>
+<pre><code class=\"language-bash\">export PATH=&quot;$HOME/github-danny/hyperdata.it/scripts:$PATH&quot;
+</code></pre>
+<p>then :</p>
+<pre><code class=\"language-bash\">source ~/.bashrc
+</code></pre>
+<p>I did a repopack of the <code>src</code> and <code>docs</code> dirs of Pulsar. Docs was 58% of Claude project space, so I&#39;ll leave that there for now.</p>
+<p>The Transmissions bug was an easy fix.</p>
+<p>19:38 - food time.
+ </p>
+
+        <div class="entry-footer">
+            <h2>About</h2>
+            
+        </div>
+    </body>
+</html>

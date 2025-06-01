@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <link rel="stylesheet" href="/css/fonts.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/grid-columns.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/style.css" type="text/css"/>
+        <title>Matches</title>
+    </head>
+    <!-- POST PAGE TEMPLATE -->
+    <body>
+        <header id="entry-header">
+            <h1 class="post-title h-cinzel">
+                
+            </h1>
+        </header>
+        <h1>Matches</h1>
+<p>I had a very distracting trip to the UK, and now I&#39;m trying to pick up from where I left off with code projects. I started yesterday, but my brain wasn&#39;t yet in gear, so went for something near the top of my to-dos, Install Aider Composer #:link. Did that, called it a day.</p>
+<p>This morning when I got to desk the machine was playing silly buggers, so I had to start with an hour of tedious sysadmin.</p>
+<p><em>Finally</em>, got to my code proper. Apparently I&#39;d made a good start on #:squirt, essentially (for now) a simple bit of HTML form-based UI for posting stuff to a SPARQL server. I&#39;d been working with Claude Projects, starting with quite a lengthy requirements spec and a bunch of relevant knowledge files.</p>
+<p>I ran the latest <code>npm build dev</code>, which is hooked into webpack #:link for bundling. I&#39;m using vanilla JS but a key dependency is the RDF-Ext lib #:link. When opening what should have been a form, I got an error : <code>dataset.removeMatches()</code>. I&#39;ve not got my workflow for Aider Composer figured out yet, and couldn&#39;t be bothered doing another cycle with Claude just yet. Plan C : <strong>view source</strong>. Took 2 mins to find that it should have been <code>dataset.deleteMatches()</code>. Claude may have been drawing on an old version of the RDF-Ext material, but I had given it a bunch of current code in the Project knowledge, so maybe it just got mixed up/hallucinated.</p>
+<p>So that&#39;s me reminded re. #:squirt. While away, the state of my current online material went under the headlights a couple of times, so that&#39;s been pushed up priorities. Make <strong>this</strong> look nice!</p>
+<p>I&#39;ve also got loads of fairly urgent real world stuff to do this week, like taking down a couple of trees. Sunny today, so I&#39;d better make a start on that.</p>
+<p>Dogwalk first.  
+ </p>
+
+        <div class="entry-footer">
+            <h2>About</h2>
+            
+        </div>
+    </body>
+</html>

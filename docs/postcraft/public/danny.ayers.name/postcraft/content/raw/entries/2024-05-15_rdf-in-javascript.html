@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <link rel="stylesheet" href="/css/fonts.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/grid-columns.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/style.css" type="text/css"/>
+        <title>RDF in Javascript</title>
+    </head>
+    <!-- POST PAGE TEMPLATE -->
+    <body>
+        <header id="entry-header">
+            <h1 class="post-title h-cinzel">
+                
+            </h1>
+        </header>
+        <h1>RDF in Javascript</h1>
+<p>In a past life I used to use Java for everything. The Jena RDF libraries were the go-to. I don&#39;t recall having any major problems using Jena, beyond the usual initial learning curve for a new library.</p>
+<p>Most of my coding had/has a browser front end, and when SPARQL came along this gradually changed how I worked with RDF. Ultimately I pretty much stopped using RDF directly in code at all, dealing instead with SPARQL queries &amp; responses. Thing is, most of the time you&#39;re not really interested in the RDF model/datasets as a whole, more like a limited projection relevant to the task or application at hand. For a crude analogy, the Human Resources department doesn&#39;t need the entire corporate database, just the bits related to hiring and firing.</p>
+<p>But now I have a need to work with RDF in Javascript. I&#39;ve been using the</p>
+<p>tweeted -
+Humbled by Javascript!
+A block of code gets a series of resources of a given type from an RDF dataset. A
+<code>switch(instance){ case a: ...}</code>
+directs each for processing.
+Error.
+So I spent 2 hours looking for a bug in my RDF handling.
+I&#39;d forgotten to put <code>return</code> in the cases.
+ </p>
+
+        <div class="entry-footer">
+            <h2>About</h2>
+            
+        </div>
+    </body>
+</html>

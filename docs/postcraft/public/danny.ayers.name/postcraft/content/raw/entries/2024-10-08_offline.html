@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <link rel="stylesheet" href="/css/fonts.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/grid-columns.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/style.css" type="text/css"/>
+        <title>Offline Ignorance</title>
+    </head>
+    <!-- POST PAGE TEMPLATE -->
+    <body>
+        <header id="entry-header">
+            <h1 class="post-title h-cinzel">
+                
+            </h1>
+        </header>
+        <h1>Offline Ignorance</h1>
+<p>#:mozz #:connectivity #:mesh #:rf:lora #:ai:local #:tools:ollama</p>
+<p>It&#39;s now 17:21 and wet. It&#39;s either been raining, pouring or absolutely pissing it down all day.</p>
+<p>I started with my usual #:bedfast start-of-day, which has been getting longer but oddly more productive since the nights started drawing in.</p>
+<p>Coffee, then to desk. I&#39;d only just got started on <em>stuff</em> when <strong>the interweb connection dropped</strong>. Grrr.</p>
+<h2>Connezione (#:spell)</h2>
+<p>The connection isn&#39;t brilliant here at the best of times. Any bad weather, oh dear. Thing is, the world&#39;s fibre cables terminate about 2km up the road. I don&#39;t know about my neighbours, but my copper wires are mostly on the ground up the field (I intend to recycle the poles for radio stuff). The best connection available at the moment is via a radio link to a mountain across the valley. It&#39;s fast enough for my purposes (just) but can be intermittent, which can be <strong>bloody annoying</strong>. I am kinda impressed by the tech though, the transceiver on my front house wall is smaller than a pair of binoculars. I must look into the freqs/protocols.</p>
+<p>I&#39;ve been toying with the idea of setting up a LoRa (Lora? - dunno, clashing acronyms) link/mesh with Castiglione di Garfagnana, nearest (small) town an hour&#39;s walk away, up and down hills. Medieval fortress town, strategically placed, significant in the days of city-states as it overlooks the access bits of this part of the Garfagnana valley. Which is a long way of saying it&#39;s on a hill. I&#39;ve not checked properly, but I&#39;m pretty sure somewhere on the house or in the field there should be a clear line of sight. In a straight line it can&#39;t be more than a couple of km. Should be reachable even with a smallish antenna.</p>
+<p>But lorA, as best I know, only has a very low baud rate, only enough for minimal messaging. I don&#39;t know details of the legality re. freqs &amp; power, but crucially I believe there is some open space in the bands, which would give me a foothold.</p>
+<p>#:tbc ...</p>
+<p>redundancy of connection is a Good Thing.  </p>
+<p>elfquake etc</p>
+<p>#:todo ask on Facebook if there are any Radio Hams around here, check for groups</p>
+<p>#:todo make a little pingy app to find my phone</p>
+<h2>Ollama Fun</h2>
+<p>The <em>stuff</em> I&#39;m working on at the moment is heavily dependent on LLMs. No interweb, no LLMs...
+But I remembered I had promising results the other day running Phi 3 on Ollama on my (very basic) desktop computer. So I just sparked it up to have a play. Discovered I could really do with seeing the docs... Hmm, I&#39;m guessing I cloned the Ollama repo locally, docs might be there. But got distracted by writing that ^^^, and I&#39;d better take Claudio out before dark.</p>
+<p>Anyhoo, this is how I found I could do with the docs :</p>
+<pre><code class=\"language-sh\">danny@danny-desktop:~$ ollama run phi3
+&gt;&gt;&gt; /?
+Available Commands:
+  /set            Set session variables
+  /show           Show model information
+  /load &lt;model&gt;   Load a session or model
+  /save &lt;model&gt;   Save your current session
+  /clear          Clear session context
+  /bye            Exit
+  /?, /help       Help for a command
+  /? shortcuts    Help for keyboard shortcuts
+
+Use &quot;&quot;&quot; to begin a multi-line message.
+
+&gt;&gt;&gt; set help
+To set up a command-line application that provides user assistance with the phrase &quot;set help&quot;, you can use Python&#39;s
+built-in \\`argparse\\` module to create an argument parser and define this as one of its arguments. Here is how it could be
+implemented:
+
+\\`\\`\\`python
+import argparse
+
+def main():
+    # Create a top-level namespace for the command line program options
+    parser = argparse.ArgumentParser(description=&#39;Help Set&#39;)
+...
+</code></pre>
+<p>It continued for page after page.
+ </p>
+
+        <div class="entry-footer">
+            <h2>About</h2>
+            
+        </div>
+    </body>
+</html>

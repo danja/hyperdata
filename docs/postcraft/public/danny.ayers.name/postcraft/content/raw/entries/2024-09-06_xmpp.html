@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <link rel="stylesheet" href="/css/fonts.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/grid-columns.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/style.css" type="text/css"/>
+        <title>Setting up XMPP</title>
+    </head>
+    <!-- POST PAGE TEMPLATE -->
+    <body>
+        <header id="entry-header">
+            <h1 class="post-title h-cinzel">
+                
+            </h1>
+        </header>
+        <h1>Setting up XMPP</h1>
+<p>A little diversion. <a href=\"https://xmpp.org/\">XMPP</a> on <code>hyperdata.it</code>. I took lots of notes last time I set it up, hopefully won&#39;t take long.</p>
+<p>First thing is to install <a href=\"https://docs.ejabberd.im/\">ejabberd</a> and set it up with certs &amp; a handful of users. Then connect it to LDAP (already installed).</p>
+<p>18:00</p>
+<pre><code class=\"language-bash\">apt install ejabberd
+...
+root@hyperdata:~#  ejabberdctl start
+ERROR: The ejabberd node &#39;ejabberd@localhost&#39; is already running.
+</code></pre>
+<p>Ok...</p>
+<pre><code class=\"language-bash\">nano /etc/ejabberd/ejabberd.yml
+...
+hosts:
+  - localhost
+  - hyperdata.it
+...
+ejabberdctl reload_config
+ejabberdctl register admin hyperdata.it password
+...
+User admin@hyperdata.it successfully registered.
+</code></pre>
+<p>Apparently there should be an admin interface on <a href=\"https://hyperdata.it:5280/admin/\">https://hyperdata.it:5280/admin/</a>
+LetsEncrypt time.</p>
+<pre><code>service ejabberd stop
+mv /etc/ejabberd/ejabberd.pem  /etc/ejabberd/ejabberd.pem.backup
+
+//certbot certonly --webroot -w /etc/ejabberd -d hyperdata.it --force-renewal --rsa-key-size 4096
+ certbot certonly -w /etc/ejabberd -d hyperdata.it
+ ...
+ says current cert is ok
+
+
+
+ok, looks like I&#39;ve set up DNS for `xmpp.hyperdata.it`
+
+https://stackoverflow.com/questions/56335966/how-to-renew-lets-encrypt-certificate-in-ejabberd-configured-server
+</code></pre>
+<p>Hmm. not sure how to make certbot aware of <code>xmpp.hyperdata.it</code> except for adding</p>
+<pre><code class=\"language-bash\">nano /etc/nginx/sites-available/xmpp.hyperdata.it.conf
+...
+server {
+    server_name xmpp.hyperdata.it;
+
+    location / {
+        proxy_pass http://127.0.0.1:5280;
+        proxy_set_header Host $host;
+    }
+    listen 80;
+}
+...
+ln -s /etc/nginx/sites-available/xmpp.hyperdata.it.conf /etc/nginx/sites-enabled/xmpp.hyperdata.it.conf
+systemctl restart nginx
+certbot
+...chose  xmpp.hyperdata.it
+Successfully deployed certificate for xmpp.hyperdata.it
+</code></pre>
+<p>ufw disable</p>
+<p>Hmm. Next...</p>
+<pre><code class=\"language-bash\">cat /etc/letsencrypt/live/hyperdata.it/privkey.pem /etc/letsencrypt/live/xmpp.hyperdata.it/fullchain.pem &gt; ejabberd.pem
+</code></pre>
+<p><a href=\"https://hyperdata.it:5280/admin/\">https://hyperdata.it:5280/admin/</a></p>
+<p>nano /etc/ejabberd/ejabberd.yml
+add xmpp.hyperdata.it
+ejabberdctl reload_config
+ejabberdctl register admin hyperdata.it password</p>
+<p>admin</p>
+<p>alice
+bob
+canary
+danbri
+maxf</p>
+<p>danja
+dogbot
+mari</p>
+<p>19:00 - reboot, dogwalk</p>
+<p>20:00 - back. <code>ejabberd</code> came back fine</p>
+<p>Currently <code>https://xmpp.hyperdata.it/</code> is giving me a 502 Bad Gateway (through nginx).</p>
+<p>None of the likely HTTP endpoints work. nginx logs...</p>
+<p>TODO /home/www/danny.ayers.name/robots.txt and .ico</p>
+<p>TODO archive.org for &quot;GET /wordpress/wp-content/uploads/2015/11/dscn6185.jpg HTTP/1.1&quot;, host: &quot;hyperdata.it&quot;</p>
+<p>Before I forget - ufw firewall open for whatever XMPP uses</p>
+<p><a href=\"https://stackoverflow.com/questions/3452161/which-ports-does-xmpp-use\">https://stackoverflow.com/questions/3452161/which-ports-does-xmpp-use</a></p>
+<pre><code class=\"language-bash\">ufw allow 5222
+ufw allow 5269
+ufw enable
+ufw status
+</code></pre>
+<p>Eyeball config :</p>
+<pre><code class=\"language-bash\">nano /etc/ejabberd/ejabberd.yml
+</code></pre>
+<p>onto : <code>/var/log/ejabberd</code></p>
+<p>both <code>ejabberd.log</code> and <code>error.log</code> say it&#39;s not seeing the certfile. Path or permissions?</p>
+<p>Check my notes...</p>
+<blockquote>
+<p>THISSSSSSS
+certbot --key-type ecdsa --cert-name xmpp.hyperdata.it</p>
+</blockquote>
+<p>Hmm. That looks like it&#39;s ok already.</p>
+<pre><code class=\"language-yaml\">certfiles:
+  - &quot;/etc/ejabberd/ejabberd.pem&quot;
+#  - /etc/letsencrypt/live/localhost/fullchain.pem
+#  - /etc/letsencrypt/live/localhost/privkey.pem
+---
+adding
+
+- /etc/letsencrypt/live/hyperdata.it/fullchain.pem
+- /etc/letsencrypt/live/hyperdata.it/privkey.pem
+- /etc/letsencrypt/live/xmpp.hyperdata.it/fullchain.pem
+- /etc/letsencrypt/live/xmpp.hyperdata.it/privkey.pem
+---
+ejabberdctl reload_config
+</code></pre>
+<p>Hmm. why is the first one in quotes?</p>
+<p><a href=\"https://docs.ejabberd.im/admin/configuration\">https://docs.ejabberd.im/admin/configuration</a></p>
+<pre><code class=\"language-bash\">ejabberdctl request-certificate all
+Error: error
+Error: &quot;Challenge failed for domain conference.hyperdata.it: ACME server reported: 178.79.189.240: Invalid response from http://conference.hyperdata.it/.well-known/acme-challenge/Wy7YZJQD9wGdOLI9tyv2oKyTTktvnGtWVgIaEhd1qZg: 404 (error type: unauthorized)&quot;
+</code></pre>
+<p><a href=\"https://www.process-one.net/blog/ejabberd-xmpp-server-useful-configuration-steps/\">https://www.process-one.net/blog/ejabberd-xmpp-server-useful-configuration-steps/</a></p>
+<p>suggests A records for :</p>
+<ul>
+<li>conference</li>
+<li>proxy</li>
+<li>pubsub</li>
+<li>upload</li>
+</ul>
+<p>My DNS aready has :</p>
+<pre><code>conference 10800 IN CNAME hyperdata.it.
+</code></pre>
+<p>etc.</p>
+<p>I saw mention of <code>chat</code> somewhere too - might as well add that too.</p>
+<p>It&#39;s poking at the filesystem, so I guess I should make dirs &amp; nginx config for those.</p>
+<pre><code class=\"language-bash\">root@hyperdata:/home/www# tree xmpp
+xmpp
+├── chat
+├── conference
+├── proxy
+├── pubsub
+└── upload
+</code></pre>
+<p><a href=\"https://foaf-retro.hyperdata.it/\">https://foaf-retro.hyperdata.it/</a></p>
+<pre><code>server {
+    listen 80;
+    server_name chat.hyperdata.it;
+
+    # Hide nginx version
+    server_tokens off;
+
+    location / {
+        root /home/www/xmpp/chat;
+        index index.html index.htm index.ttl;
+        try_files $uri $uri/ =404;
+    }
+}
+
+server {
+    listen 80;
+    server_name conference.hyperdata.it;
+
+    # Hide nginx version
+    server_tokens off;
+
+    location / {
+        root /home/www/xmpp/conference;
+        index index.html index.htm index.ttl;
+        try_files $uri $uri/ =404;
+    }
+}
+
+server {
+    listen 80;
+    server_name proxy.hyperdata.it;
+
+    # Hide nginx version
+    server_tokens off;
+
+    location / {
+        root /home/www/xmpp/proxy;
+        index index.html index.htm index.ttl;
+        try_files $uri $uri/ =404;
+    }
+}
+server {
+    listen 80;
+    server_name pubsub.hyperdata.it;
+
+    # Hide nginx version
+    server_tokens off;
+
+    location / {
+        root /home/www/xmpp/pubsub;
+        index index.html index.htm index.ttl;
+        try_files $uri $uri/ =404;
+    }
+}
+server {
+    listen 80;
+    server_name upload.hyperdata.it;
+
+    # Hide nginx version
+    server_tokens off;
+
+    location / {
+        root /home/www/xmpp/upload;
+        index index.html index.htm index.ttl;
+        try_files $uri $uri/ =404;
+    }
+}
+</code></pre>
+<p>While I&#39;m here :</p>
+<pre><code>server {
+    listen 80;
+    server_name kia.hyperdata.it;
+
+    # Hide nginx version
+    server_tokens off;
+
+    location / {
+        root /home/www/kia;
+        index index.html index.htm index.ttl;
+        try_files $uri $uri/ =404;
+    }
+}
+
+...
+ln -s /etc/nginx/sites-available/kia.hyperdata.it.conf /etc/nginx/sites-enabled/kia.hyperdata.it.conf
+nginx -t
+systemctl restart nginx
+certbot
+</code></pre>
+<p>KIA done.</p>
+<p>Back to :</p>
+<pre><code class=\"language-bash\">ejabberdctl request-certificate all
+</code></pre>
+<p>Grrr! Tucked away in the docs it says you have to turn off TLS first :</p>
+<pre><code>listen:
+  -
+    module: ejabberd_http
+    port: 5280
+    tls: false
+    request_handlers:
+      /.well-known/acme-challenge: ejabberd_acme
+</code></pre>
+<pre><code class=\"language-bash\">nano /etc/ejabberd/ejabberd.yml
+ejabberdctl reload_config
+ejabberdctl request-certificate all
+</code></pre>
+<blockquote>
+<p>Error: &quot;ACME server reported: Error creating new order :: too many failed authorizations recently: see <a href=\"https://letsencrypt.org/docs/failed-validation-limit/\">https://letsencrypt.org/docs/failed-validation-limit/</a> (error type: rateLimited)&quot;</p>
+</blockquote>
+<p>certbot has a dry run option, does this?</p>
+<p>Ok, enough for today.</p>
+<p>21:37</p>
+<p>my hosts</p>
+<pre><code>root@hyperdata:/etc/nginx/sites-available# ls ../sites-enabled/
+danny.ayers.name.conf         fuseki.conf            ps.hyperdata.it.conf  strandz.it.conf
+elfquake.org.conf             hyperdata.it.conf      ps.strandz.it.conf    xmpp.hyperdata.it.conf
+foaf-retro.hyperdata.it.conf  kia.hyperdata.it.conf  solid.conf
+</code></pre>
+
+        <div class="entry-footer">
+            <h2>About</h2>
+            
+        </div>
+    </body>
+</html>

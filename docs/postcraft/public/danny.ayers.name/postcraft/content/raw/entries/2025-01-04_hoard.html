@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <link rel="stylesheet" href="/css/fonts.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/grid-columns.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/style.css" type="text/css"/>
+        <title>Hoard</title>
+    </head>
+    <!-- POST PAGE TEMPLATE -->
+    <body>
+        <header id="entry-header">
+            <h1 class="post-title h-cinzel">
+                
+            </h1>
+        </header>
+        <h1>Hoard</h1>
+<p><em>hyperdata-whiteboard</em></p>
+<p><img src=\"media/images/2025-01/claudio-halo.jpeg\" alt=\"Claudio with lens flare halo\"></p>
+<p>I got distracted yesterday while sorting out the #:packer #:transmission (for concat&#39;ing repos for LLMs), then in the evening, when I got back to desk I was too tired to do anything, gave up. Returning to it now, I need a small repo to run it against. As it happens, this morning in bed, a passing thought led me to start another<sup><a id=\"footnote-ref-1\" href=\"#footnote-1\" data-footnote-ref aria-describedby=\"footnote-label\">1</a></sup> little whiteboard project (with Claude). I&#39;ll make that a new repo.</p>
+<p>Online, I&#39;ve created <a href=\"https://github.com/danja/hoard\">https://github.com/danja/hoard</a></p>
+<p>Locally:</p>
+<pre><code class=\"language-sh\">cd ~/github-danny/hyperdata/packages
+git submodule add https://github.com/danja/hoard.git hoard
+cd hoard
+npm init -y
+</code></pre>
+<p>Ok, so now I can try :</p>
+<pre><code class=\"language-sh\">cd ~/github-danny/transmissions
+./trans packer ../hyperdata/packages/hoard
+</code></pre>
+<p>Ok, it fails as expected...</p>
+<p>My head&#39;s a little fuzzy and Claudio&#39;s pestering. <strong>Dogwalk</strong> time.</p>
+<p><img src=\"media/images/2025-01/claudio-mountains.jpeg\" alt=\"Claudio walking in the hills\"></p>
+<p>Clearer head. I had another quick look at the repomix issue :</p>
+<pre><code class=\"language-sh\">npm run rp
+
+&gt; transmissions@1.0.0 rp
+&gt; node --no-warnings $(which repomix) -c repomix.config-small.json . &amp;&amp; node --no-warnings $(which repomix) -c repomix.config-large.json .
+
+📦 Repomix v0.2.12
+
+Error: Config file not found at repomix.config-small.json
+...
+</code></pre>
+<p><strong>Fool Danny!</strong></p>
+<p>My config files were called <code> repopack.config-large.json</code> and  <code>repopack.config-small.json</code>.</p>
+<p>Fixed. Great!! Now I can use repomix to make my alternative to repomix...</p>
+<p>Still not quite there, but :</p>
+<p><img src=\"media/images/2025-01/claude-arse.png\" alt=\"Claude out of tokens message\"></p>
+<p>Break time.</p>
+<section class=\"footnotes\" data-footnotes>
+<h2 id=\"footnote-label\" class=\"sr-only\">Footnotes</h2>
+<ol>
+<li id=\"footnote-1\">
+<p>I&#39;ve been around whiteboards a few times before, first time of note being a <a href=\"https://www.xml.com/pub/a/2003/11/19/svgwiki.html\">SVG Wiki Whiteboard</a> in 2003. <a href=\"#footnote-ref-1\" data-footnote-backref aria-label=\"Back to reference 1\">↩</a></p>
+</li>
+</ol>
+</section>
+
+        <div class="entry-footer">
+            <h2>About</h2>
+            
+        </div>
+    </body>
+</html>

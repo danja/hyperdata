@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <link rel="stylesheet" href="/css/fonts.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/grid-columns.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/style.css" type="text/css"/>
+        <title>Mostly Transmissions Today</title>
+    </head>
+    <!-- POST PAGE TEMPLATE -->
+    <body>
+        <header id="entry-header">
+            <h1 class="post-title h-cinzel">
+                
+            </h1>
+        </header>
+        <h1>Mostly Transmissions Today</h1>
+<p>Main things:</p>
+<ol start=\"0\">
+<li>AI support</li>
+<li>Refactor #Transmissions</li>
+<li>Tidy up #Postcraft</li>
+<li>FOAF video recovery</li>
+</ol>
+<h2>AI Support</h2>
+<p>The other day I had a play with <a href=\"https://www.librechat.ai/\">LibreChat</a>, which is a chatbot frontend that can be connected to a range of AI services. I got it running on my local machine, have done a <code>git pull</code> and have been adding services.</p>
+<p><a href=\"\">notes from the other day</a></p>
+<p>From <a href=\"https://www.librechat.ai/docs/configuration/librechat_yaml/ai_endpoints\">Known Endpoints</a> in <code>librechat.example.yaml</code> :</p>
+<ul>
+<li><a href=\"https://anyscale.com/\">AnyScale</a></li>
+<li><a href=\"https://apipie.ai/\">API Pie</a></li>
+<li><a href=\"https://fireworks.ai/\">Fireworks</a></li>
+<li><a href=\"https://groq.ai/\">GROQ</a></li>
+<li><a href=\"https://huggingface.co/\">HuggingFace</a></li>
+<li><a href=\"https://mistral.ai/\">Mistral AI</a></li>
+<li><a href=\"https://openrouter.ai/\">OpenRouter</a></li>
+<li><a href=\"https://perplexity.ai/\">Perplexity</a> - requires payment first</li>
+<li><a href=\"https://shuttleai.app/\">Shuttle AI</a></li>
+<li><a href=\"https://api.together.ai/\">Together AI</a></li>
+</ul>
+<p>I&#39;ve added API keys for those to my <code>.env</code>. (Don&#39;t forget to include it in the <code>.gitignore</code> before committing!)</p>
+<p>Listed in the <a href=\"https://www.librechat.ai/docs/configuration/librechat_yaml/ai_endpoints\">endpoints</a> but weren&#39;t in the sample <code>.env</code>, I&#39;ve also added:</p>
+<ul>
+<li><a href=\"https://cohere.com\">Cohere</a></li>
+<li><a href=\"https://databricks.com\">DataBricks</a> - wasn&#39;t obvious where to get the API key, left for now</li>
+</ul>
+<p><em>to be continued...</em></p>
+<p>It also supports RAG, and somewhere it mentions using HuggingFace for embeddings. So also in my <code>.env</code>:</p>
+<pre><code>RAG_API_URL=http://host.docker.internal:8000
+EMBEDDINGS_PROVIDER=huggingface
+HF_TOKEN=...
+</code></pre>
+<pre><code>danny@danny-desktop:~/AI/LibreChat$ docker compose ls
+danny@danny-desktop:~/AI/LibreChat$ docker compose up -d
+</code></pre>
+<p>Hmm. It doesn&#39;t appear to be picking up the new <code>.env</code> settings, even after <code>docker compose </code>. Try again later.</p>
+<h2>Tidy up Postcraft</h2>
+<p>The <a href=\"https://github.com/danja/transmissions\">Transmissions</a> refactoring might take a while, and will no doubt break the setup for <a href=\"https://github.com/danja/postcraft\">Postcraft</a> in the interim. So I&#39;ll do a quick tidy up there first, publish the current material.</p>
+<p>ok, <code>2024-04-27_postcraft-flow.md</code> says:</p>
+<pre><code>./run postcraft /home/danny/HKMS/postcraft/danny.ayers.name
+</code></pre>
+<p>I guess that&#39;ll be from <code>danny@danny-desktop:~/HKMS/transmissions$</code> - the terminal I have in #Cursor.</p>
+<p>Ok, that appears to have run ok. Stuff locally at <code>http://localhost/danny.ayers.name/public/blog/</code>
+I&#39;ll push those changes, then do a quick check of <a href=\"https://danny.ayers.name/\">https://danny.ayers.name/</a></p>
+<p>It&#39;s there, but without the CSS.</p>
+<pre><code>  &lt;link rel=&quot;stylesheet&quot; href=&quot;css/fonts.css&quot; type=&quot;text/css&quot; /&gt;
+</code></pre>
+<p><strong>Need more coffee!!</strong></p>
+<p>Ok, so with :</p>
+<pre><code>./run postcraft /home/danny/HKMS/postcraft/danny.ayers.name
+</code></pre>
+<p>it&#39;s picking up :</p>
+<pre><code>/home/danny/HKMS/transmissions/src/applications/postcraft
+
+./about.md
+./services.ttl
+./transmission.ttl
+</code></pre>
+<p>and then applying that to :</p>
+<pre><code>/home/danny/HKMS/postcraft/danny.ayers.name/manifest.ttl
+</code></pre>
+<p>putting the result in :</p>
+<pre><code>danny@danny-desktop:~/HKMS/postcraft/danny.ayers.name/public/blog$ ls
+entries  index.html
+</code></pre>
+<p>I don&#39;t like <code>./blog</code> there, <code>./home</code> would be better.</p>
+<p>what it needs to do but I clearly haven&#39;t set up yet is to copy some of this across :</p>
+<pre><code>danny@danny-desktop:~/HKMS/postcraft/danny.ayers.name/layouts/mediocre$ ls
+about.md  css  fonts  layout-sample.html  templates
+</code></pre>
+<p>So this is <em>delegation to the max</em>, but that&#39;s ok, intentional separation of concerns.</p>
+<p>I forget what <strong>Transmissions services</strong> (in <code>transmissions/src/services/</code>) I&#39;ve got set up around <strong>copy</strong>, one might need to be tweaked/added.
+It&#39;ll be easiest to run at the start of the pipeline, before things start forking.
+That will take its config from <code>transmissions/src/applications/postcraft/services.ttl</code>. Which in turn (I think) should take its details from the <code>manifest.ttl</code> in the site directory.</p>
+<p>I&#39;ll need to check what is in place already. While I&#39;m at it, I want to tweak the content folders a bit. New version in <a href=\"https://github.com/danja/postcraft/blob/main/docs/site-template.md\">docs/site-template.md</a>.</p>
+<p>Ok, so in <code>danny.ayers.name/manifest.ttl</code> I&#39;ve flipped <code>blog</code> to <code>home</code> and added :</p>
+<pre><code># STYLES ETC
+t:CSS a pc:StaticGroup ;
+    pc:site &lt;https://danny.ayers.name/&gt; ;
+    fs:sourceDirectory &quot;layouts/mediocre/css&quot; ;
+    fs:targetDirectory &quot;public/home/css&quot; .
+
+... similar for fonts &amp; JS
+</code></pre>
+<p><strong>also need to clean dirs on rebuild</strong> - later</p>
+<p>Although I&#39;ve got a <code>FileReader</code> and a <code>FileWriter</code>, I don&#39;t have a <code>FileCopy</code>. I&#39;ll add one to the services.</p>
+<p>Shortly...</p>
+<p>I&#39;ll put the config in place in <code>service.ttl</code> now, then implement it after a bit of Transmissions refactoring, after dogwalk.</p>
+<p>Hmm. I can&#39;t remember how I did the delegaty bit. For now I&#39;ve put this in <code>services.ttl</code> as a placeholder :</p>
+<pre><code>t:copyCSS a trm:FileCopy ;
+        trm:key t:cssCopy .
+
+... similar for fonts &amp; JS
+</code></pre>
+<p>Yay! I got the change from <code>execute(data, context)</code> to <code>execute(context)</code> etc. done and it&#39;s working with the <code>postcraft</code> application. I was dreading that. It may have broken some of the other services, but no biggy, I&#39;ll find out as I go along.</p>
+<p>I guess I should also rename the <code>mill</code> dir to <code>engine</code> while I&#39;m at it. Done! That was surprisingly painless too.</p>
+<p>So, <code>FileCopy</code> service. I also need a <code>FileRemove</code> service nearbly, so I might as well set that up too.</p>
+<p>Prompt time.</p>
+<p>Using @ServiceExample.js as a template, create @FileCopy.js The context object going into execute(context) will have <code>source</code> and <code>destination</code> keys. The <code>source</code> will be a path to a file or directory, the <code>destination</code> will be a path to a directory. If <code>source</code> is a file, it will be copied to the <code>destination</code> directory. If <code>source</code> is a directory, the directory and its contents will be copied recursively to the <code>destination</code> directory. Include appropriate error handling.</p>
+<p>Using @ServiceExample.js as a template, create @FileRemove.js The context object going into execute(context) will have a <code>remove</code> key. This will be a path to a file or directory. If it is a file, that file will be deleted. If it is a directory, the directory&#39;s contents will be deleted recursively, but not the directory itself. Include appropriate error handling.</p>
+<p>Ok, they&#39;re sketched out and I&#39;ve started a little application <code>file-copy-remove-test</code> to try them out.
+Enough for today.
+ </p>
+
+        <div class="entry-footer">
+            <h2>About</h2>
+            
+        </div>
+    </body>
+</html>

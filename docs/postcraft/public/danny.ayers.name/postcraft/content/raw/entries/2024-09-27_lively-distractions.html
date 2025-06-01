@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <link rel="stylesheet" href="/css/fonts.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/grid-columns.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/style.css" type="text/css"/>
+        <title>Lively Distractions</title>
+    </head>
+    <!-- POST PAGE TEMPLATE -->
+    <body>
+        <header id="entry-header">
+            <h1 class="post-title h-cinzel">
+                
+            </h1>
+        </header>
+        <h1>Lively Distractions</h1>
+<p><strong>2024-09-28</strong> Yesterday I was too busy doing things, head firing on way too many cylinders, so only wrote down reminders. I&#39;ll flesh them out a little now.</p>
+<h2>Tibico Research</h2>
+<p>Last month Oriana asked me to look after her jar of <a href=\"https://en.wikipedia.org/wiki/Tibicos\">Tibicos</a> aka <strong>water kefir</strong>. It&#39;s fascinating stuff, I&#39;ve already started experimenting. It also made a nice test case for using Claude AI&#39;s <a href=\"https://www.anthropic.com/news/projects\">Projects</a> for research. I had only used them for software projects, for which they are great (with the help of <a href=\"https://github.com/yamadashy/repopack\">repopack</a>). I know virtually nothing about microbiology (though have been interested a while - I&#39;ve got a usable microscope etc), so this topic offered a good <em>virgin</em> project.    </p>
+<p>I created the Project and set up a custom prompt. Then added the &#39;Edit&#39; raw text of the Wikipedia page on Tibicos and that of <a href=\"https://en.wikipedia.org/wiki/Saccharomyces_boulardii\">Saccharomyces boulardii</a> (a probiotic - that page is an interesting read), together with 4 papers linked from Wikipedia, to Project Knowledge.
+It worked really well, I immediately had a useful expert on hand.  </p>
+<p>I was curious how viable it might be to incorporate the probiotic critter into the existing symbiotic tibicos culture. Here&#39;s how the chat started :</p>
+<p><img src=\"media/images/2024-09/claude-tibicos_1.png\" alt=\"Claude Tibicos research screenshot 1\"></p>
+<p>By the 4th interaction we were at this :</p>
+<p> <img src=\"media/images/2024-09/claude-tibicos_2.png\" alt=\"Claude Tibicos research screenshot 1\"></p>
+<h2>Alife</h2>
+<p>Thinking about real (little) life reminded me of alife. I had to have a play with Claude. Not long ago <a href=\"https://x.com/danbri\">danbri</a> showed me things he&#39;d been able to build.</p>
+<p>Claudio</p>
+<h2>Farelo bits</h2>
+<p>write requirements first!</p>
+<p>convert into prompt if appropriate</p>
+<p>farelo metrics</p>
+<h2>sparql-store-lite</h2>
+<p>Many of my [hyperdata](<a href=\"https://hyperdata.it%5D\">https://hyperdata.it]</a> projects require a <a href=\"https://en.wikipedia.org/wiki/SPARQL\">SPARQL</a> store. I&#39;m in the process of setting up <a href=\"https://jena.apache.org/documentation/fuseki2/\">Fuseki</a> on my server. It&#39;s my go-to for self-hosted, very capable and straightforward to set up. (<a href=\"https://virtuoso.openlinksw.com/\">Virtuoso</a> and <a href=\"https://www.ontotext.com\">Ontotext</a> are among other out-of-the-box alternatives, but I&#39;ve also history of coding with <a href=\"https://jena.apache.org/\">Apache Jena</a> libs on which Fuseki is built, so it&#39;s an obvious default).</p>
+<p>Long-term, this time around I want to use <a href=\"https://en.wikipedia.org/wiki/Lightweight_Directory_Access_Protocol\">LDAP</a>-backed auth on my server which is taking a bit of time (I&#39;ve already had to hack a bit of connector code for <a href=\"https://shiro.apache.org/\">Apache Shiro</a>. <em>I used to know Java, eh...</em>). I do have Fuseki running on my desktop, but while I was mulling this over I remembered that I&#39;m meant to be writing some docs for <a href=\"https://www.bergnet.org\">Bergi</a>&#39;s <a href=\"https://github.com/rdf-ext\">RDF-Ext</a>. For which I need to get familiar with it. A little file-system backed SPARQL store running on nodejs would be a great little project, likely to be very useful for debugging #Transmissions.   </p>
+<p>So locally :</p>
+<pre><code>cd /home/danny/github-danny/hyperdata/packages
+git submodule add https://github.com/danja/sparql-store-lite.git sparql-store-lite
+</code></pre>
+<p>Claude <a href=\"https://claude.ai/chat/cb4609cc-19aa-4701-840a-c7eca3bf5d90\">offered me</a> a starting point, beginning :</p>
+<pre><code class=\"language-javascript\">import rdf from &#39;rdf-ext&#39;
+import N3 from &#39;n3&#39;
+import { SparqlParser } from &#39;sparqljs&#39;
+import { QueryEngine } from &#39;rdf-query-engine&#39;
+// ...
+</code></pre>
+<p>@rdfjs/parser-n3</p>
+<p>nvm install node</p>
+<p>npm install -g npm@latest</p>
+<p>npm -v</p>
+<hr>
+<h3>webpack transmissions for in-browser</h3>
+<p>To interact with GitHub&#39;s API using Node.js, here are some suitable libraries ranked by activity, coverage, and popularity:</p>
+<ol>
+<li><p>Octokit (<a href=\"https://github.com/octokit/octokit.js\">https://github.com/octokit/octokit.js</a>)</p>
+<ul>
+<li>Official GitHub REST API client for JavaScript</li>
+<li>Very active development, excellent coverage, and widely used</li>
+<li>Supports both REST and GraphQL APIs</li>
+</ul>
+</li>
+<li><p>@octokit/rest (<a href=\"https://github.com/octokit/rest.js\">https://github.com/octokit/rest.js</a>)</p>
+<ul>
+<li>Part of the Octokit ecosystem, focused on REST API</li>
+<li>Active development, great coverage for REST API, popular</li>
+</ul>
+</li>
+<li><p>axios (<a href=\"https://github.com/axios/axios\">https://github.com/axios/axios</a>)</p>
+<ul>
+<li>General-purpose HTTP client, can be used with GitHub API</li>
+<li>Very active, widely used, but requires more manual setup for GitHub specifics</li>
+</ul>
+</li>
+</ol>
+<p>These libraries are well-maintained, offer good coverage, and are popular in the Node.js ecosystem for GitHub API interactions.</p>
+<p>Q1: What specific GitHub API features are you looking to implement in your transmissions processors?
+Q2: Do you have a preference for using REST API or GraphQL API for GitHub interactions?
+Q3: Are there any specific authentication methods you need to support (e.g., OAuth, Personal Access Tokens)?
+ </p>
+
+        <div class="entry-footer">
+            <h2>About</h2>
+            
+        </div>
+    </body>
+</html>

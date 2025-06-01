@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <link rel="stylesheet" href="/css/fonts.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/grid-columns.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/style.css" type="text/css"/>
+        <title>Fan Migration</title>
+    </head>
+    <!-- POST PAGE TEMPLATE -->
+    <body>
+        <header id="entry-header">
+            <h1 class="post-title h-cinzel">
+                
+            </h1>
+        </header>
+        <h1>Fan Migration</h1>
+<p>It&#39;s chilly. The summer fans have gone down into the cantina for winter, the fan heaters have come up.</p>
+<p><strong>Grrrrr</strong>, the Pulsar install had a little brokenness, I wanted to turn off autocomplete on <code>.md</code> but loading packages for settings wasn&#39;t working.</p>
+<p>I moved pre-existing <code>~/.pulsar</code> out of the way and reinstalled - it needed</p>
+<pre><code>~/github-danny/pulsar$ nvm use
+</code></pre>
+<p>Packages still not being found. Got a minimal error message on command line :</p>
+<pre><code>[79459:0917/125131.490332:INFO:CONSOLE(223)] &quot;Fetching local packages failed. Error: Fetching local packages failed.
+    at createProcessError (/home/danny/github-danny/pulsar/node_modules/settings-view/lib/package-manager.js:575:17)
+</code></pre>
+<p>Ok, I haz source &amp; AI...</p>
+<pre><code class=\"language-bash\">cd src
+repopack --verbose -c ../repopack.config.json
+cd ../docs
+repopack --verbose -c ../repopack.config.json
+</code></pre>
+<p>(needed a new terminator session so it used the right nodejs)</p>
+<p>Distracted - little admin/productivity jobs -</p>
+<p>Moved my <em>Daily</em> tabs from Brave to Opera. Dark theme so I can see.</p>
+<p>Fixed one problem with Pulsar, I had an env var in <code>.bashrc</code> pointing to the wrong path for <code>apm</code>. Not entirely fixed yet, need to <code>apt upgrade</code>...</p>
+<p>I&#39;ve decided to give myself a deadline for doing a release of #Transmissions etc, announcements... 2024-10-31</p>
+<p>This really calls for me to figure out task priorities. That starts with capturing tasks.
+Onto #fom-a-matic, <a href=\"https://danny.ayers.name/entries/2024-09-10_goon.html\">latest notes</a>.</p>
+<p>Hmm. Docs should go under #farelo. Need to set that up first <strong>why oh why are the yaks so hairy!?</strong></p>
+<p>Ops. I was in the process of moving Farelo to the #hyperdata monorepo, so I&#39;ve got (at least) two different dirs...</p>
+<pre><code>/home/danny/github-danny/hyperdata/packages/farelo
+/home/danny/github-danny/farelo
+</code></pre>
+<p>Two different repos.</p>
+<p>The <code>form-a-matic</code> source so far is a transmission defined under <code>trans-apps</code> using services under transmissions. I have notes on shifting the services elsewhere, but that&#39;s not high priority.</p>
+<p>After a couple of real-world odd jobs.
+ </p>
+
+        <div class="entry-footer">
+            <h2>About</h2>
+            
+        </div>
+    </body>
+</html>
