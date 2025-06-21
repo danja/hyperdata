@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <link rel="stylesheet" href="/css/fonts.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/grid-columns.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/style.css" type="text/css"/>
+        <title>Creating Custom Processors in Transmissions</title>
+    </head>
+    <!-- POST PAGE TEMPLATE -->
+    <body>
+    <strong></strong><em></em>
+        <header id="entry-header">
+            <h1 class="post-title h-cinzel">
+                
+            </h1>
+        </header>
+        <!-- ARTICLE CONTENT -->
+
+<article class="post-content">
+    <h1>Creating Custom Processors in Transmissions</h1>
+<p>This guide explains how to create new processing components for the Transmissions framework.</p>
+<h2>Overview</h2>
+<p>Processors are the core components in Transmissions that handle data transformation in a pipeline. Each processor:</p>
+<ol>
+<li>Receives a message object</li>
+<li>Performs specific operations on it</li>
+<li>Emits the modified message to the next processor in the chain</li>
+</ol>
+<h2>Step 1: Create the Processor Class</h2>
+<p>Create a new JavaScript file for your processor at <code>src/processors/your-group/YourProcessor.js</code>:</p>
+<pre><code class="language-javascript">import logger from &#39;../../utils/Logger.js&#39;
+import ns from &#39;../../utils/ns.js&#39;
+import Processor from &#39;../../model/Processor.js&#39;
+
+class YourProcessor extends Processor {
+    constructor(config) {
+        super(config)
+    }
+
+    async process(message) {
+        logger.debug(`\n\nYourProcessor.process`)
+        
+        // Skip if this is a completion message
+        if (message.done) {
+            return this.emit(&#39;message&#39;, message)
+        }
+        
+        // Get configuration properties from settings
+        const someProperty = await this.getProperty(ns.trn.someProperty, &#39;defaultValue&#39;)
+        
+        // Process the message (your custom logic here)
+        // Example: modify a field in the message
+        message.transformedData = `Processed: ${message.originalData}`
+        
+        // Forward the modified message to the next processor
+        return this.emit(&#39;message&#39;, message)
+    }
+}
+
+export default YourProcessor
+</code></pre>
+<h2>Step 2: Create a Factory for Your Processor Group</h2>
+<p>If you&#39;re creating a new processor group, create a factory file at <code>src/processors/your-group/YourGroupProcessorsFactory.js</code>:</p>
+<pre><code class="language-javascript">import logger from &#39;../../utils/Logger.js&#39;
+import ns from &#39;../../utils/ns.js&#39;
+import YourProcessor from &#39;./YourProcessor.js&#39;
+// Import other processors in the same group
+
+class YourGroupProcessorsFactory {
+    static createProcessor(type, config) {
+        if (type.equals(ns.trn.YourProcessor)) {
+            return new YourProcessor(config)
+        }
+        
+        // Add other processors from your group
+        
+        return false
+    }
+}
+
+export default YourGroupProcessorsFactory
+</code></pre>
+<h2>Step 3: Register Your Factory</h2>
+<p>Edit <code>src/engine/AbstractProcessorFactory.js</code> to include your factory:</p>
+<pre><code class="language-javascript">// Add this import with other processor group imports
+import YourGroupProcessorsFactory from &#39;../processors/your-group/YourGroupProcessorsFactory.js&#39;
+
+class AbstractProcessorFactory {
+    static createProcessor(type, config) {
+        // Add your factory early in the checks
+        var processor = YourGroupProcessorsFactory.createProcessor(type, config)
+        if (processor) return processor
+        
+        // The rest of the existing factory checks
+        // ...
+    }
+}
+</code></pre>
+<h2>Step 4: Test with a Simple Runner</h2>
+<p>Create a simple test script at <code>src/simples/your-processor/simple-runner.js</code>:</p>
+<pre><code class="language-javascript">import YourProcessor from &#39;../../processors/your-group/YourProcessor.js&#39;
+import logger from &#39;../../utils/Logger.js&#39;
+
+const config = {
+    whiteboard: []
+}
+
+const processor = new YourProcessor(config)
+
+async function runTest() {
+    const message = { 
+        originalData: &#39;test data&#39;
+    }
+    
+    const result = await processor.process(message)
+    logger.log(&#39;Output:&#39;)
+    logger.reveal(result)
+}
+
+runTest().catch(console.error)
+</code></pre>
+<h2>Step 5: Define the Processor in a Transmission</h2>
+<p>In your application&#39;s <code>transmissions.ttl</code> file:</p>
+<pre><code class="language-turtle">@prefix rdf: &lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#&gt; .
+@prefix rdfs: &lt;http://www.w3.org/2000/01/rdf-schema#&gt; .
+@prefix : &lt;http://purl.org/stuff/transmissions/&gt; .
+
+:your-transmission a :Transmission ;
+    :pipe (:p10 :p20) .
+
+:p10 a :YourProcessor ;
+     :settings :yourSettings .
+
+:p20 a :ShowMessage .
+</code></pre>
+<h2>Step 6: Configure the Processor</h2>
+<p>In your application&#39;s <code>config.ttl</code> file:</p>
+<pre><code class="language-turtle">@prefix rdf: &lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#&gt; .
+@prefix rdfs: &lt;http://www.w3.org/2000/01/rdf-schema#&gt; .
+@prefix : &lt;http://purl.org/stuff/transmissions/&gt; .
+
+:yourSettings a :ConfigSet ;
+    :someProperty &quot;configured value&quot; ;
+    :anotherSetting &quot;another value&quot; .
+</code></pre>
+<h2>Key Concepts</h2>
+<h3>Message Object</h3>
+<p>The message object is passed between processors and typically contains:</p>
+<ul>
+<li><code>content</code>: The primary data being processed</li>
+<li><code>done</code>: Flag indicating completion (for multi-message processors)</li>
+<li><code>filepath</code>, <code>fullPath</code>, etc.: Context information</li>
+<li>Any custom fields added by processors</li>
+</ul>
+<h3>Configuration Access</h3>
+<p>Retrieve configuration settings with:</p>
+<pre><code class="language-javascript">const value = await this.getProperty(ns.trn.propertyName, &#39;defaultValue&#39;)
+</code></pre>
+<h3>Typical Processor Patterns</h3>
+<ol>
+<li><strong>Simple Transform</strong>: Modify message and pass it on</li>
+<li><strong>Filter</strong>: Only emit message if it meets certain criteria</li>
+<li><strong>Fork</strong>: Emit multiple messages for downstream parallel processing</li>
+<li><strong>Accumulator</strong>: Collect data across multiple messages before emitting</li>
+<li><strong>Reader/Writer</strong>: Handle I/O operations</li>
+</ol>
+<h3>Message Flow Control</h3>
+<p>For multi-message workflows:</p>
+<ol>
+<li><code>message.done = false</code>: Regular message processing</li>
+<li><code>message.done = true</code>: Final message indicating completion</li>
+</ol>
+<h3>Common Utilities</h3>
+<ul>
+<li><code>logger</code>: For debug, info, warning, error messages</li>
+<li><code>ns</code>: Namespace helpers for RDF properties</li>
+<li><code>JSONUtils</code>: Helpers for working with nested objects</li>
+</ul>
+<h2>Examples</h2>
+<p>See existing processors for patterns:</p>
+<ul>
+<li><code>src/processors/fs/DirWalker.js</code>: Emits multiple messages from filesystem</li>
+<li><code>src/processors/flow/ForEach.js</code>: Iterates over data in messages</li>
+<li><code>src/processors/flow/Accumulate.js</code>: Collects data across messages</li>
+<li><code>src/processors/json/Restructure.js</code>: Data transformation example</li>
+<li><code>src/processors/text/Templater.js</code>: Content generation example</li>
+</ul>
+<h2>Testing</h2>
+<ol>
+<li>Use the <code>simples</code> pattern for quick testing</li>
+<li>Add proper tests in the <code>tests</code> directory</li>
+<li>Run tests with <code>npm test</code></li>
+</ol>
+<h2>Reference Files</h2>
+<p>For more examples:</p>
+<ul>
+<li><code>src/processors/example-group/ExampleProcessor.js</code></li>
+<li><code>src/model/Processor.js</code></li>
+<li><code>src/processors/fs/DirWalker.js</code></li>
+<li><code>src/simples/nop/nop.js</code></li>
+</ul>
+
+</article>
+<p class="post-title h-cinzel">
+    <a href="https://hyperdata.it/manual/to-sort/howtos_2025-03-28/processor-development-guide.html">
+        Creating Custom Processors in Transmissions
+    </a>
+</p> <em></em>
+    </body>
+</html>

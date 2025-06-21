@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <link rel="stylesheet" href="/css/fonts.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/grid-columns.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/style.css" type="text/css"/>
+        <title>Application Objects</title>
+    </head>
+    <!-- POST PAGE TEMPLATE -->
+    <body>
+    <strong></strong><em></em>
+        <header id="entry-header">
+            <h1 class="post-title h-cinzel">
+                
+            </h1>
+        </header>
+        <!-- ARTICLE CONTENT -->
+
+<article class="post-content">
+    <h1>Application Objects</h1>
+<p>There are fields used in the creation of applications and passed along in messages that would be better stored in a broader scope. I&#39;d like to encapsulate the fields in <code>src/engine/Application.js</code>.</p>
+<p>I think most of the relevant fields are used in <code>src/engine/ApplicationManager.js</code> :</p>
+<pre><code class="language-sh">class ApplicationManager {
+    constructor() {
+        this.appsDir = &#39;src/applications&#39;
+        this.transmissionFilename = &#39;transmissions.ttl&#39;
+        this.configFilename = &#39;config.ttl&#39;
+        this.moduleSubDir = &#39;processors&#39;
+        this.dataSubDir = &#39;data&#39;
+        this.manifestFilename = &#39;manifest.ttl&#39;
+    }
+    ...
+     async initialize(appName, appPath, subtask, target, flags) {
+</code></pre>
+<p>When a transmission is running a message may contain the fields : &quot;appName&quot;, &quot;appPath&quot;, &quot;subtask&quot;, &quot;rootDir&quot;, &quot;dataDir&quot;, &quot;targetPath&quot;</p>
+<p>The refactoring will be done in the following steps :</p>
+<ol>
+<li>review the code to find current fields that are appropriate to associate with an <code>Application</code> class, noting how they are modified in the program flow</li>
+<li>create tests to check expected field values at appropriate points</li>
+<li>extend <code>src/engine/Application.js</code> to support the fields, give them sensible defaults</li>
+<li>review the code to find locations where the current fields are accessed and add an instance of <code>Application</code></li>
+<li>follow the current field access statements with their equivalents using the <code>Application</code> instance</li>
+<li>test</li>
+<li>bugfix</li>
+</ol>
+<p>To get started I&#39;d like artifacts from you : your summary of tasks; a revision of <code>src/engine/Application.js</code> including full source code; a list of filepaths to affected code with the changes necessary at each point; tests.</p>
+<hr>
+<h2>NEXT</h2>
+<p>new repomix, session</p>
+<p>I get a failure in this :</p>
+<pre><code class="language-sh">npm test -- tests/integration/application-manager.spec.js
+</code></pre>
+<ol>
+<li>ApplicationManager Integration message processing should propagate application context in messages</li>
+</ol>
+<ul>
+<li>AssertionError: expected undefined to equal &#39;test_app_manager&#39;</li>
+</ul>
+<p>...</p>
+<p>pass a ref to the app to each transmission</p>
+<p>src/engine/TransmissionBuilder.js:</p>
+<ul>
+<li>Access application context through passed message</li>
+<li>Use app.dataset for RDF operations</li>
+</ul>
+<p>src/processors/base/Processor.js:</p>
+<ul>
+<li>Access application context through message</li>
+<li>Use app paths for file operations</li>
+</ul>
+<p>add the app properties to config - make graph in ApplicationManager? merge</p>
+<p><echo> a :Application .</p>
+<p><this> a :ApplicationSession ;
+    :application <echo> ;
+    :config <config> .
+ </p>
+
+</article>
+<p class="post-title h-cinzel">
+    <a href="https://hyperdata.it/entries/2025-02-02_app-object.html">
+        Application Objects
+    </a>
+</p> <em></em>
+    </body>
+</html>

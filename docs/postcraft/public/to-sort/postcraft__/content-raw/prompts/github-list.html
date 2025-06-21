@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <link rel="stylesheet" href="/css/fonts.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/grid-columns.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/style.css" type="text/css"/>
+        <title>GitHubList processor module for Transmissions</title>
+    </head>
+    <!-- POST PAGE TEMPLATE -->
+    <body>
+    <strong></strong><em></em>
+        <header id="entry-header">
+            <h1 class="post-title h-cinzel">
+                
+            </h1>
+        </header>
+        <!-- ARTICLE CONTENT -->
+
+<article class="post-content">
+    <h1>GitHubList processor module for Transmissions</h1>
+<p>Your Goal is to write a processor module for Transmissions that will call GitHub to obtain a list of a user&#39;s personal repositories. First review these instructions as a whole, and then identify the subgoals. Then, taking each subgoal in turn, break it down into a concrete series of tasks. Carry out the sequence of tasks.<br>You have plenty of time, so don&#39;t rush, try to be as careful in understanding and operation as possible.
+Existing source code may be found in the Project Knowledge files.</p>
+<p>Two modules are required -</p>
+<ol>
+<li><code>GitHubList</code> located in :</li>
+</ol>
+<pre><code class="language-sh">./trans-apps/applications/git-apps/processors/GitHubList.js
+</code></pre>
+<p>modeled on :</p>
+<pre><code class="language-sh">./transmissions/src/processors/templates/ProcessorTemplate.js
+</code></pre>
+<ol start="2">
+<li><code>GitHubProcessorsFactory</code> located in</li>
+</ol>
+<pre><code class="language-sh">./trans-apps/applications/git-apps/processors/GitHubProcessorsFactory.js
+</code></pre>
+<p>modeled on :</p>
+<pre><code class="language-sh">/transmissions/src/processors/templates/TemplateProcessorsFactory.js
+</code></pre>
+<p>The input message will contain the user&#39;s name represented in this form (<code>danja</code> is an example name) :</p>
+<pre><code class="language-json">{
+  &quot;github&quot; :
+  { &quot;name&quot;: &quot;danja&quot; }
+}
+</code></pre>
+<p>The output message will append a list of the user&#39;s repositories in this form (<code>repo1</code>, <code>repo2</code> are example repository names) :</p>
+<pre><code class="language-json">{
+  github :
+  { &quot;name&quot; : &quot;danja&quot;,
+     &quot;repositories&quot; : [&quot;repo1&quot;, &quot;repo2&quot;]
+   }
+}
+</code></pre>
+<p>The functionality of <code>GitHubList</code>  will be implemented using the <code>octokit</code> npm library, with the <code>dotenv</code> library to manage the API key. The key will either be available as an underlying OS environment variable of specified in the file</p>
+<pre><code class="language-sh">./trans-apps/applications/git-apps/.env
+</code></pre>
+<p>Initially, <code>GitHubList</code> will be tested and used via a runner of the same shape as :</p>
+<pre><code class="language-sh">./transmissions/src/simples/env-loader/env-loader.js
+</code></pre>
+<p>After you have finished all these, re-read the high level Goal and taking each of your derived subgoals in turn, review your code to ensure that it fulfils the requirements.
+Show me the full source of the implementations.</p>
+<hr>
+<p>/home/danny/github-danny/postcraft/danny.ayers.name/content-raw/entries/2024-09-27_lively-distractions.md</p>
+<p><a href="https://github.com/github/rest-api-description">https://github.com/github/rest-api-description</a>
+ </p>
+
+</article>
+<p class="post-title h-cinzel">
+    <a href="https://hyperdata.it/to-sort/postcraft__/content-raw/prompts/github-list.html">
+        GitHubList processor module for Transmissions
+    </a>
+</p> <em></em>
+    </body>
+</html>

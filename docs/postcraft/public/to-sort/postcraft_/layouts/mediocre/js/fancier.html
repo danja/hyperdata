@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <link rel="stylesheet" href="/css/fonts.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/grid-columns.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/style.css" type="text/css"/>
+        <title>fancier.js</title>
+    </head>
+    <!-- POST PAGE TEMPLATE -->
+    <body>
+    <strong></strong><em></em>
+        <header id="entry-header">
+            <h1 class="post-title h-cinzel">
+                
+            </h1>
+        </header>
+        <!-- ARTICLE CONTENT -->
+
+<article class="post-content">
+    <p> const themeSelect = document.getElementById(&#39;theme-select&#39;);</p>
+<p>themeSelect.addEventListener(&#39;change&#39;, () =&gt; {
+    const bodyStyle = window.getComputedStyle(document.body);
+    console.log(bodyStyle);
+    const backgroundColor = bodyStyle.getPropertyValue(&#39;--background&#39;);
+    const textColor = bodyStyle.getPropertyValue(&#39;--text-color&#39;);</p>
+<pre><code>if (themeSelect.value === &#39;dark&#39;) {
+    document.body.style.background = &#39;black&#39;;
+    document.body.style.color = &#39;white&#39;;
+} else {
+    document.body.style.background = &#39;white&#39;;
+    document.body.style.color = &#39;black&#39;;
+}
+</code></pre>
+<p>});</p>
+<p>// <a href="https://www.freecodecamp.org/news/use-local-storage-in-modern-apps/#heading-code-example-for-local-storage">https://www.freecodecamp.org/news/use-local-storage-in-modern-apps/#heading-code-example-for-local-storage</a></p>
+<p>/*
+themeSelect.addEventListener(&#39;change&#39;, () =&gt; {
+    document.body.classList.remove(&#39;dark-theme&#39;);
+    document.body.classList.remove(&#39;light-theme&#39;);
+    if (themeSelect.value === &#39;dark&#39;) {
+        document.body.classList.add(&#39;dark-theme&#39;);
+    }
+    if (themeSelect.value === &#39;light&#39;) {
+        document.body.classList.add(&#39;light-theme&#39;);
+    }
+});
+*/
+ </p>
+
+</article>
+<p class="post-title h-cinzel">
+    <a href="https://hyperdata.it/to-sort/postcraft_/layouts/mediocre/js/fancier.html">
+        fancier.js
+    </a>
+</p> <em></em>
+    </body>
+</html>

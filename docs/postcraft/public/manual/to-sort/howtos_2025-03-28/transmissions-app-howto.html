@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <link rel="stylesheet" href="/css/fonts.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/grid-columns.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/style.css" type="text/css"/>
+        <title>Creating a Transmissions Application</title>
+    </head>
+    <!-- POST PAGE TEMPLATE -->
+    <body>
+    <strong></strong><em></em>
+        <header id="entry-header">
+            <h1 class="post-title h-cinzel">
+                
+            </h1>
+        </header>
+        <!-- ARTICLE CONTENT -->
+
+<article class="post-content">
+    <h1>Creating a Transmissions Application</h1>
+<p>This guide explains how to create an application within the Transmissions framework, which provides a pipeline-based approach to data processing.</p>
+<h2>Application Structure</h2>
+<p>A basic Transmissions application consists of:</p>
+<ol>
+<li><strong>Folder structure</strong> - A directory under <code>src/applications/</code></li>
+<li><strong>Core files</strong>:<ul>
+<li><code>about.md</code> - Documentation</li>
+<li><code>config.ttl</code> - Configuration settings in Turtle format</li>
+<li><code>transmissions.ttl</code> - Pipeline definition in Turtle format</li>
+</ul>
+</li>
+<li><strong>Optional</strong>:<ul>
+<li><code>about.ttl</code> - Additional RDF metadata</li>
+<li><code>data/</code> - Application-specific data files</li>
+</ul>
+</li>
+</ol>
+<h2>Step 1: Create the Directory Structure</h2>
+<p>Create a directory for your application:</p>
+<pre><code>src/applications/my-application/
+├── about.md
+├── config.ttl
+├── transmissions.ttl
+└── data/
+    ├── input/
+    └── output/
+</code></pre>
+<h2>Step 2: Create the About Documentation</h2>
+<p>Write a Markdown document that describes your application:</p>
+<pre><code class="language-markdown"># My Application
+
+## Runner
+
+```sh
+cd ~/path/to/transmissions
+./trans my-application
+</code></pre>
+<h2>Description</h2>
+<p>This application does X, Y, and Z by processing data through a pipeline of processors.</p>
+<pre><code>
+## Step 3: Define Configuration (config.ttl)
+
+Create a `config.ttl` file with settings for your processors:
+
+```turtle
+# src/applications/my-application/config.ttl
+
+@prefix rdf: &lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#&gt; .
+@prefix rdfs: &lt;http://www.w3.org/2000/01/rdf-schema#&gt; .
+@prefix : &lt;http://purl.org/stuff/transmissions/&gt; .
+
+:mySettings1 a :ConfigSet ;
+    :settingKey1 &quot;setting value 1&quot; ;
+    :settingKey2 &quot;setting value 2&quot; .
+
+:mySettings2 a :ConfigSet ;
+    :settingKey3 &quot;setting value 3&quot; ;
+    :settingKey4 &quot;setting value 4&quot; .
+</code></pre>
+<h2>Step 4: Define the Pipeline (transmissions.ttl)</h2>
+<p>Create a <code>transmissions.ttl</code> file to define your processing pipeline:</p>
+<pre><code class="language-turtle"># src/applications/my-application/transmissions.ttl
+
+@prefix rdf: &lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#&gt; .
+@prefix rdfs: &lt;http://www.w3.org/2000/01/rdf-schema#&gt; .
+@prefix : &lt;http://purl.org/stuff/transmissions/&gt; .
+
+##################################################################
+# Utility Processors : insert into pipe for debugging            #
+#                                                                #
+:SM a :ShowMessage . # verbose report, continues pipe            #
+:SC a :ShowConfig . # verbose report, continues pipe             #
+:DE a :DeadEnd . # ends the current pipe quietly                 #
+:H  a :Halt . # kills everything                                 #
+:N  a :NOP . # no operation (except for showing stage in pipe)   #
+:UF a :Unfork . # collapses all pipes but one                    #
+##################################################################
+
+:my-application a :Transmission ;
+    :pipe (:p10 :p20 :p30) .
+
+:p10 a :ProcessorType1 ;
+     :settings :mySettings1 .
+
+:p20 a :ProcessorType2 ;
+     :settings :mySettings2 .
+
+:p30 a :ShowMessage .
+</code></pre>
+<h2>Step 5: Set Up Data Directories (Optional)</h2>
+<p>If your application works with files, create input/output directories:</p>
+<pre><code>src/applications/my-application/data/
+├── input/
+└── output/
+</code></pre>
+<h2>Step 6: Run Your Application</h2>
+<p>Run your application using the Transmissions CLI:</p>
+<pre><code class="language-sh">./trans my-application
+</code></pre>
+<p>For applications with message input:</p>
+<pre><code class="language-sh">./trans my-application -m &#39;{&quot;key&quot;: &quot;value&quot;}&#39;
+</code></pre>
+<h2>Example: Simple Echo Application</h2>
+<h3>Directory Structure</h3>
+<pre><code>src/applications/echo/
+├── about.md
+├── config.ttl
+└── transmissions.ttl
+</code></pre>
+<h3>about.md</h3>
+<pre><code class="language-markdown"># Echo Application
+
+## Runner
+
+```sh
+cd ~/path/to/transmissions
+./trans echo -m &#39;{&quot;message&quot;:&quot;Hello, World!&quot;}&#39;
+</code></pre>
+<h2>Description</h2>
+<p>A simple application that echoes back the input message.</p>
+<pre><code>
+### config.ttl
+
+```turtle
+@prefix rdf: &lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#&gt; .
+@prefix rdfs: &lt;http://www.w3.org/2000/01/rdf-schema#&gt; .
+@prefix : &lt;http://purl.org/stuff/transmissions/&gt; .
+
+# Empty config for this simple example
+</code></pre>
+<h3>transmissions.ttl</h3>
+<pre><code class="language-turtle">@prefix rdf: &lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#&gt; .
+@prefix rdfs: &lt;http://www.w3.org/2000/01/rdf-schema#&gt; .
+@prefix : &lt;http://purl.org/stuff/transmissions/&gt; .
+
+:echo a :Transmission ;
+    :pipe (:p10 :p20) .
+
+:p10 a :NOP .
+:p20 a :ShowMessage .
+</code></pre>
+<h2>Common Processors to Use</h2>
+<p>Here are some useful processors available in the Transmissions framework:</p>
+<ul>
+<li><p><strong>File System</strong>:</p>
+<ul>
+<li><code>:FileReader</code> - Reads files</li>
+<li><code>:FileWriter</code> - Writes files</li>
+<li><code>:DirWalker</code> - Recursively walks directories</li>
+</ul>
+</li>
+<li><p><strong>Flow Control</strong>:</p>
+<ul>
+<li><code>:NOP</code> - No operation</li>
+<li><code>:ForEach</code> - Iterates over arrays</li>
+<li><code>:Unfork</code> - Collapses parallel pipes</li>
+</ul>
+</li>
+<li><p><strong>Text Processing</strong>:</p>
+<ul>
+<li><code>:StringFilter</code> - Filters strings based on patterns</li>
+<li><code>:Templater</code> - Uses Nunjucks templates</li>
+<li><code>:MarkdownToHTML</code> - Converts markdown to HTML</li>
+</ul>
+</li>
+<li><p><strong>Debugging</strong>:</p>
+<ul>
+<li><code>:ShowMessage</code> - Displays message contents</li>
+<li><code>:ShowConfig</code> - Shows configuration</li>
+</ul>
+</li>
+<li><p><strong>JSON Processing</strong>:</p>
+<ul>
+<li><code>:Restructure</code> - Reorganizes JSON data</li>
+</ul>
+</li>
+<li><p><strong>SPARQL Processing</strong>:</p>
+<ul>
+<li><code>:SPARQLSelect</code> - Executes SPARQL SELECT queries</li>
+<li><code>:SPARQLUpdate</code> - Executes SPARQL UPDATE operations</li>
+</ul>
+</li>
+</ul>
+<h2>Creating a Complex Application</h2>
+<p>For more complex applications, you might include:</p>
+<ol>
+<li><strong>Multiple pipelines</strong> in your <code>transmissions.ttl</code></li>
+<li><strong>Custom processors</strong> specific to your application</li>
+<li><strong>Manifest files</strong> for configuration overrides</li>
+<li><strong>Testing components</strong> for validation</li>
+</ol>
+<p>Review existing applications like <code>md-to-sparqlstore</code>, <code>file-to-sparqlstore</code>, or <code>terrapack</code> for more complex examples.
+ </p>
+
+</article>
+<p class="post-title h-cinzel">
+    <a href="https://hyperdata.it/manual/to-sort/howtos_2025-03-28/transmissions-app-howto.html">
+        Creating a Transmissions Application
+    </a>
+</p> <em></em>
+    </body>
+</html>

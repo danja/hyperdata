@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <link rel="stylesheet" href="/css/fonts.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/grid-columns.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/style.css" type="text/css"/>
+        <title>Transmissions Codebase Reorganization Plan</title>
+    </head>
+    <!-- POST PAGE TEMPLATE -->
+    <body>
+    <strong></strong><em></em>
+        <header id="entry-header">
+            <h1 class="post-title h-cinzel">
+                
+            </h1>
+        </header>
+        <!-- ARTICLE CONTENT -->
+
+<article class="post-content">
+    <h1>Transmissions Codebase Reorganization Plan</h1>
+<h2>Phase 1: Create New Core Classes</h2>
+<ol>
+<li>Create <code>src/core/Director.js</code>:</li>
+</ol>
+<pre><code class="language-javascript">class Director {
+  constructor() {
+    this.builder = new TransmissionBuilder();
+    this.runner = new TransmissionRunner();
+    this.procurer = new Procurer();
+    this.proctor = new Proctor();
+  }
+
+  async initializeApplication(args) {
+    const application = new Application();
+    await this.procurer.loadResources(application, args);
+    await this.builder.buildTransmissions(application);
+    return application;
+  }
+
+  async applyToTarget(application, target) {
+    await this.runner.execute(application, target);
+  }
+}
+</code></pre>
+<ol start="2">
+<li>Create <code>src/core/Application.js</code>:</li>
+</ol>
+<pre><code class="language-javascript">class Application {
+  constructor() {
+    this.transmissions = new Map();
+    this.config = null;
+    this.manifest = null;
+  }
+
+  addTransmission(id, transmission) {
+    this.transmissions.set(id, transmission);
+  }
+}
+</code></pre>
+<ol start="3">
+<li>Create <code>src/core/Procurer.js</code>:</li>
+</ol>
+<pre><code class="language-javascript">class Procurer {
+  constructor() {
+    this.moduleLoader = ModuleLoaderFactory.createModuleLoader();
+  }
+
+  async loadResources(application, args) {
+    const config = await this.loadConfig(args.configPath);
+    const manifest = await this.loadManifest(args.target);
+    application.config = config;
+    application.manifest = manifest;
+  }
+}
+</code></pre>
+<h2>Phase 2: Refactor Existing Code</h2>
+<ol>
+<li>Rename and update <code>CommandUtils.js</code> to <code>Dispatch.js</code>:</li>
+</ol>
+<pre><code class="language-javascript">class Dispatch {
+  constructor() {
+    this.director = new Director();
+  }
+
+  async handleCommand(args) {
+    const application = await this.director.initializeApplication(args);
+    await this.director.applyToTarget(application, args.target);
+  }
+}
+</code></pre>
+<ol start="2">
+<li>Update <code>run.js</code>:</li>
+</ol>
+<pre><code class="language-javascript">import Dispatch from &#39;./src/core/Dispatch.js&#39;;
+
+const dispatch = new Dispatch();
+await dispatch.handleCommand(args);
+</code></pre>
+<h2>Phase 3: Move Functionality</h2>
+<ol>
+<li>Move module loading from TransmissionBuilder to Procurer:</li>
+</ol>
+<pre><code class="language-javascript">// In Procurer.js
+async loadModule(name) {
+  return this.moduleLoader.loadModule(name);
+}
+</code></pre>
+<ol start="2">
+<li>Move dataset operations from TransmissionBuilder to Procurer:</li>
+</ol>
+<pre><code class="language-javascript">// In Procurer.js
+async loadDataset(path) {
+  const stream = fromFile(path);
+  return await rdf.dataset().import(stream);
+}
+</code></pre>
+<h2>Phase 4: Implement Resource Resolution</h2>
+<ol>
+<li>Add resource resolution to Procurer:</li>
+</ol>
+<pre><code class="language-javascript">// In Procurer.js
+async resolveTransmissionFiles(basePath) {
+  const files = await this.findTransmissionFiles(basePath);
+  return this.mergeTransmissionFiles(files);
+}
+
+async resolveConfigFiles(basePath) {
+  const files = await this.findConfigFiles(basePath);
+  return this.mergeConfigFiles(files);
+}
+</code></pre>
+<h2>Migration Steps</h2>
+<ol>
+<li>Create new directory structure:</li>
+</ol>
+<pre><code>src/
+  core/
+    Director.js
+    Application.js
+    Procurer.js
+    Proctor.js
+    Dispatch.js
+  engine/  # Move existing engine code here
+  processors/ # Keep existing processors here
+</code></pre>
+<ol start="2">
+<li><p>Update imports in all files to reflect new structure</p>
+</li>
+<li><p>Create placeholder Proctor:</p>
+</li>
+</ol>
+<pre><code class="language-javascript">class Proctor {
+  constructor() {
+    // Placeholder for future implementation
+  }
+}
+</code></pre>
+<ol start="4">
+<li>Update tests to use new structure</li>
+</ol>
+<h2>Testing Strategy</h2>
+<ol>
+<li>Create unit tests for new core classes</li>
+<li>Update existing integration tests</li>
+<li>Add new integration tests for multi-file transmissions</li>
+<li>Verify resource resolution with test cases</li>
+</ol>
+<hr>
+<h1>Transmissions Refactoring Handover Document</h1>
+<h2>Project Summary</h2>
+<p>Reorganizing the Transmissions codebase to improve separation of concerns and extensibility. The key change is introduction of a Director pattern to manage Application lifecycles and resource procurement.</p>
+<h2>Core Architecture Changes</h2>
+<h3>New Core Components</h3>
+<ol>
+<li><strong>Director</strong></li>
+</ol>
+<ul>
+<li>Central orchestrator for application lifecycle</li>
+<li>Manages TransmissionBuilder, TransmissionRunner, Procurer, Proctor</li>
+<li>Entry point for all application operations</li>
+</ul>
+<ol start="2">
+<li><strong>Application</strong></li>
+</ol>
+<ul>
+<li>Container for Transmission definitions</li>
+<li>Holds configuration and manifest data</li>
+<li>Manages transmission relationships</li>
+</ul>
+<ol start="3">
+<li><strong>Procurer</strong></li>
+</ol>
+<ul>
+<li>Handles all resource loading and resolution</li>
+<li>Manages module dependencies</li>
+<li>RDF data operations for config/manifest files</li>
+</ul>
+<ol start="4">
+<li><strong>Proctor</strong> (placeholder)</li>
+</ol>
+<ul>
+<li>Future home for reflection/testing/documentation</li>
+</ul>
+<h3>Key Changes</h3>
+<ol>
+<li><strong>Command Processing</strong></li>
+</ol>
+<ul>
+<li><code>CommandUtils</code> → <code>Dispatch</code></li>
+<li>Simplified to delegate to Director</li>
+<li>Cleaner separation of CLI concerns</li>
+</ul>
+<ol start="2">
+<li><strong>Resource Management</strong></li>
+</ol>
+<ul>
+<li>Module loading moved from TransmissionBuilder to Procurer</li>
+<li>Dataset operations centralized in Procurer</li>
+<li>Support for multiple transmission/config files</li>
+</ul>
+<h2>Implementation State</h2>
+<h3>Completed</h3>
+<ul>
+<li>Basic architecture design</li>
+<li>Component interface definitions</li>
+<li>Migration plan</li>
+</ul>
+<h3>Pending</h3>
+<ul>
+<li>Implementation of core classes</li>
+<li>Migration of existing functionality</li>
+<li>Test suite updates</li>
+<li>Resource resolution implementation</li>
+</ul>
+<h2>Key Files &amp; Locations</h2>
+<pre><code>src/
+  core/
+    Director.js         # New orchestration layer
+    Application.js      # New application container
+    Procurer.js         # New resource manager  
+    Proctor.js         # Future testing/docs framework
+    Dispatch.js         # Renamed from CommandUtils
+  engine/              # Existing engine code
+  processors/          # Existing processors
+</code></pre>
+<h2>Migration Tasks</h2>
+<ol>
+<li>Core Implementation</li>
+</ol>
+<ul>
+<li>Create new core/ directory structure</li>
+<li>Implement Director, Application classes</li>
+<li>Create Procurer with basic functionality</li>
+<li>Add Proctor placeholder</li>
+</ul>
+<ol start="2">
+<li>Code Migration</li>
+</ol>
+<ul>
+<li>Move module loading to Procurer</li>
+<li>Move dataset operations to Procurer</li>
+<li>Update import paths throughout codebase</li>
+</ul>
+<ol start="3">
+<li>Testing</li>
+</ol>
+<ul>
+<li>Create unit tests for new components</li>
+<li>Update existing integration tests</li>
+<li>Add multi-file transmission tests</li>
+</ul>
+<h2>Critical Paths</h2>
+<ol>
+<li>Resource Resolution</li>
+</ol>
+<ul>
+<li>Parse transmissions.ttl for external references</li>
+<li>Merge multiple transmission definitions</li>
+<li>Handle circular dependencies</li>
+</ul>
+<ol start="2">
+<li>Application State</li>
+</ol>
+<ul>
+<li>Clear lifecycle stages for Application</li>
+<li>Clean state management in Director</li>
+<li>Error handling/recovery</li>
+</ul>
+<h2>RDF Summary</h2>
+<pre><code class="language-turtle">@prefix dcterms: &lt;http://purl.org/dc/terms/&gt; .
+@prefix prov: &lt;http://www.w3.org/ns/prov#&gt; .
+@prefix prj: &lt;http://purl.org/stuff/project/&gt; .
+
+[
+    a prj:Pivot, prj:Handover ;
+    dcterms:title &quot;Transmissions Codebase Reorganization&quot; ;
+    dcterms:description &quot;Major refactoring to improve architecture and extensibility&quot; ;
+    dcterms:creator &lt;http://purl.org/stuff/agents/ClaudeAI&gt;, &lt;http://danny.ayers.name/&gt; ;
+    prj:status &quot;Design Complete - Implementation Pending&quot; ;
+    prj:keywords &quot;refactoring, architecture, Director pattern, dependency management&quot; ;
+    prov:wasGeneratedBy [
+      a prov:Activity ;
+      prj:includes &lt;http://hyperdata.it/prompts/system-prompt&gt;
+    ]
+] .
+</code></pre>
+<h2>Next Actions</h2>
+<ol>
+<li>Create core directory structure</li>
+<li>Implement Director.js and Application.js</li>
+<li>Begin Procurer implementation</li>
+<li>Update run.js to use new Dispatch</li>
+</ol>
+<h2>Questions/Decisions Needed</h2>
+<ol>
+<li>Error handling strategy across new components</li>
+<li>Testing framework for new resource resolution</li>
+<li>Backward compatibility requirements</li>
+<li>Documentation generation approach</li>
+</ol>
+
+</article>
+<p class="post-title h-cinzel">
+    <a href="https://hyperdata.it/entries/2024-11-16_reorg.html">
+        Transmissions Codebase Reorganization Plan
+    </a>
+</p> <em></em>
+    </body>
+</html>

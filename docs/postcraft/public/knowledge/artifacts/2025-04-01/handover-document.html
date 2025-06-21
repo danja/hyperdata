@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <link rel="stylesheet" href="/css/fonts.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/grid-columns.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/style.css" type="text/css"/>
+        <title>Transmission Pipeline Editor - Handover Document</title>
+    </head>
+    <!-- POST PAGE TEMPLATE -->
+    <body>
+    <strong></strong><em></em>
+        <header id="entry-header">
+            <h1 class="post-title h-cinzel">
+                
+            </h1>
+        </header>
+        <!-- ARTICLE CONTENT -->
+
+<article class="post-content">
+    <h1>Transmission Pipeline Editor - Handover Document</h1>
+<h2>Project Overview</h2>
+<p>This project implements a visual editor for transmission pipelines using the node-flow library. It enables developers to:</p>
+<ol>
+<li>Visualize transmission pipelines defined in TTL format</li>
+<li>Edit these pipelines through an interactive graphical interface</li>
+<li>Save changes back to the original TTL format</li>
+</ol>
+<p>The implementation follows a loosely-coupled architecture that bridges the transmission system and the node-flow library without creating tight dependencies between them. This design ensures that changes to either system will have minimal impact on the integration.</p>
+<h2>Architecture</h2>
+<p>The implementation follows a model-view-controller pattern with specialized components:</p>
+<p><img src="https://i.imgur.com/IzOc5X8.png" alt="Architecture Diagram"></p>
+<h3>Core Components</h3>
+<ol>
+<li><strong>TransmissionsLoader</strong> - Parses TTL files into an intermediate data structure</li>
+<li><strong>ProcessorNodePublisher</strong> - Defines processor types as node-flow node types</li>
+<li><strong>TransmissionsGraphBuilder</strong> - Constructs node-flow graphs from transmission data</li>
+<li><strong>TransmissionsExporter</strong> - Serializes node-flow graphs back to TTL format</li>
+<li><strong>TransmissionEditor</strong> - Coordinates the other components and provides the main API</li>
+</ol>
+<h2>Implementation Details</h2>
+<h3>File Structure</h3>
+<pre><code>src/tools/nodeflow/
+├── TransmissionsLoader.js
+├── ProcessorNodePublisher.js
+├── TransmissionsGraphBuilder.js
+├── TransmissionsExporter.js
+├── TransmissionEditor.js
+├── index.html
+└── README.md
+</code></pre>
+<h3>Component Breakdown</h3>
+<h4>1. TransmissionsLoader.js</h4>
+<p>This component loads transmission TTL files and parses them into a standardized intermediate format:</p>
+<pre><code class="language-javascript">{
+  id: &quot;http://purl.org/stuff/transmissions/ccc&quot;,
+  shortId: &quot;ccc&quot;,
+  label: &quot;ccc&quot;,
+  comment: &quot;Claude conversations.json converter&quot;,
+  processors: [
+    {
+      id: &quot;http://purl.org/stuff/transmissions/ccc10&quot;,
+      shortId: &quot;ccc10&quot;,
+      type: &quot;http://purl.org/stuff/transmissions/FileReader&quot;,
+      shortType: &quot;FileReader&quot;,
+      settings: &quot;http://purl.org/stuff/transmissions/readFile&quot;,
+      shortSettings: &quot;readFile&quot;,
+      comments: [&quot;Claude conversations.json&quot;]
+    },
+    // More processors...
+  ],
+  connections: [
+    {
+      from: &quot;http://purl.org/stuff/transmissions/ccc10&quot;,
+      to: &quot;http://purl.org/stuff/transmissions/ccc20&quot;
+    },
+    // More connections...
+  ]
+}
+</code></pre>
+<p>It uses the existing RDF utilities and Grapoi helpers to traverse the RDF graph and extract necessary information.</p>
+<h4>2. ProcessorNodePublisher.js</h4>
+<p>Registers processor types as node definitions in node-flow. It preregisters common processor types and can dynamically register additional types found in loaded transmissions.</p>
+<p>Each processor type is represented as a node with:</p>
+<ul>
+<li>Input and output ports for messages</li>
+<li>Styling based on the transmission system&#39;s theme</li>
+<li>Metadata to track its relation to the original TTL definitions</li>
+</ul>
+<h4>3. TransmissionsGraphBuilder.js</h4>
+<p>Constructs a node-flow graph from the intermediate transmission data format:</p>
+<ul>
+<li>Creates nodes for each processor</li>
+<li>Positions them in a simple horizontal layout</li>
+<li>Establishes connections between nodes</li>
+<li>Sets metadata on nodes to maintain the link to TTL</li>
+</ul>
+<h4>4. TransmissionsExporter.js</h4>
+<p>Performs the reverse of the loader, converting a node-flow graph back to TTL format:</p>
+<ul>
+<li>Extracts transmission structure from the graph</li>
+<li>Organizes nodes by their connections</li>
+<li>Generates an RDF dataset</li>
+<li>Serializes to TTL format</li>
+</ul>
+<h4>5. TransmissionEditor.js</h4>
+<p>The main entry point that coordinates the other components:</p>
+<ul>
+<li>Initializes node-flow graph</li>
+<li>Handles loading TTL files</li>
+<li>Manages the graph building process</li>
+<li>Provides API for saving changes</li>
+<li>Sets up event handlers for the editor</li>
+</ul>
+<h2>Usage Guide</h2>
+<h3>Basic Usage</h3>
+<pre><code class="language-javascript">import TransmissionEditor from &#39;./tools/nodeflow/TransmissionEditor.js&#39;;
+
+// Initialize the editor with a canvas element
+const canvas = document.getElementById(&#39;editor-canvas&#39;);
+const editor = new TransmissionEditor(canvas);
+
+// Load a transmission TTL file
+await editor.loadFromFile(&#39;path/to/transmission.ttl&#39;);
+
+// Save changes back to TTL
+await editor.saveToFile(&#39;path/to/output.ttl&#39;);
+</code></pre>
+<h3>Using the Editor UI</h3>
+<p>The included <code>index.html</code> provides a complete editor interface with:</p>
+<ul>
+<li>Load/Save buttons</li>
+<li>New transmission creation</li>
+<li>Graph organization</li>
+<li>Status indicators</li>
+</ul>
+<h2>Technical Implementation Notes</h2>
+<h3>RDF Integration</h3>
+<p>The implementation relies on your existing RDF utilities:</p>
+<ul>
+<li><code>RDFUtils.readDataset</code> and <code>RDFUtils.writeDataset</code> for file I/O</li>
+<li><code>GrapoiHelpers.listToArray</code> for parsing RDF lists</li>
+<li><code>ns</code> namespace helper for URI handling</li>
+</ul>
+<h3>Node-Flow Integration</h3>
+<p>The integration uses these key features of node-flow:</p>
+<ul>
+<li>Publisher for defining node types</li>
+<li>Custom node styling and configuration</li>
+<li>Flow connections for representing pipeline links</li>
+<li>Node metadata for storing TTL-specific information</li>
+</ul>
+<h3>Data Flow</h3>
+<ol>
+<li>TTL file → RDF dataset → Intermediate format → node-flow graph</li>
+<li>User edits graph</li>
+<li>node-flow graph → Intermediate format → RDF dataset → TTL file</li>
+</ol>
+<h2>Tips and Hints</h2>
+<h3>Working with RDF</h3>
+<ul>
+<li>The transmission system uses RDF lists extensively, particularly for the <code>trn:pipe</code> property</li>
+<li>Processor settings are referenced by URI, not embedded in the processor node</li>
+<li>Comments in the TTL are preserved as node metadata</li>
+</ul>
+<h3>Node-Flow Limitations</h3>
+<ul>
+<li>Node-flow doesn&#39;t provide a built-in method to remove nodes programmatically</li>
+<li>Visual positioning relies on manual calculation rather than auto-layout</li>
+<li>Connection logic must be handled explicitly between ports</li>
+</ul>
+<h3>Common Issues</h3>
+<ul>
+<li><strong>Missing processor types</strong>: If a TTL file references a processor type that isn&#39;t registered, add it to the ProcessorNodePublisher</li>
+<li><strong>RDF parsing errors</strong>: Check for malformed TTL syntax if loading fails</li>
+<li><strong>Connection failures</strong>: Ensure input/output port types match (they&#39;re all &#39;message&#39; by default)</li>
+</ul>
+<h2>Suggested Next Steps</h2>
+<h3>Short Term Improvements</h3>
+<ol>
+<li><p><strong>Settings Editor</strong>: Add support for editing processor settings directly</p>
+<ul>
+<li>Create a UI for modifying <code>trn:settings</code> references</li>
+<li>Implement settings form based on processor type</li>
+</ul>
+</li>
+<li><p><strong>Visual Enhancements</strong>:</p>
+<ul>
+<li>Add icons or visual indicators for different processor types</li>
+<li>Implement processor state visualization (success/error/processing)</li>
+<li>Add tooltips showing processor descriptions</li>
+</ul>
+</li>
+<li><p><strong>Usability Features</strong>:</p>
+<ul>
+<li>Proper file dialogs for loading/saving TTL files</li>
+<li>Keyboard shortcuts for common operations</li>
+<li>Undo/redo functionality</li>
+</ul>
+</li>
+</ol>
+<h3>Medium Term Goals</h3>
+<ol>
+<li><p><strong>Multi-Transmission Support</strong>:</p>
+<ul>
+<li>Edit multiple transmissions in a single graph</li>
+<li>Visual differentiation between transmissions</li>
+<li>Copy/paste between transmissions</li>
+</ul>
+</li>
+<li><p><strong>Integration with Runtime</strong>:</p>
+<ul>
+<li>Connect to running transmission instances</li>
+<li>Visualize message flow through the pipeline</li>
+<li>Debug mode with breakpoints and step execution</li>
+</ul>
+</li>
+<li><p><strong>Validation</strong>:</p>
+<ul>
+<li>Validate connections between incompatible processors</li>
+<li>Warning for missing settings or invalid configurations</li>
+<li>Type checking for processor inputs/outputs</li>
+</ul>
+</li>
+</ol>
+<h3>Long Term Vision</h3>
+<ol>
+<li><p><strong>Processor SDK</strong>:</p>
+<ul>
+<li>UI for creating new processor types</li>
+<li>Testing framework for processors</li>
+<li>Documentation generation</li>
+</ul>
+</li>
+<li><p><strong>Collaborative Editing</strong>:</p>
+<ul>
+<li>Real-time collaborative editing of transmissions</li>
+<li>Change tracking and versioning</li>
+<li>Comments and annotations</li>
+</ul>
+</li>
+<li><p><strong>Advanced Visualization</strong>:</p>
+<ul>
+<li>3D visualization of complex pipelines</li>
+<li>Flow animation showing message progression</li>
+<li>Performance metrics visualization</li>
+</ul>
+</li>
+</ol>
+<h2>Conclusion</h2>
+<p>This implementation provides a solid foundation for visually editing transmission pipelines. The loosely-coupled architecture ensures that both the transmission system and node-flow can evolve independently while maintaining compatibility through the bridge components.</p>
+<p>The most immediate value will come from implementing the settings editor and improving the visual design to make processor types more distinguishable. These improvements will make the editor more practical for daily use in transmission pipeline development.
+ </p>
+
+</article>
+<p class="post-title h-cinzel">
+    <a href="https://hyperdata.it/knowledge/artifacts/2025-04-01/handover-document.html">
+        Transmission Pipeline Editor - Handover Document
+    </a>
+</p> <em></em>
+    </body>
+</html>

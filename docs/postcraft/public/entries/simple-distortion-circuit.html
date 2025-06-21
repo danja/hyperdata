@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <link rel="stylesheet" href="/css/fonts.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/grid-columns.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/style.css" type="text/css"/>
+        <title>Simple Distortion Circuit</title>
+    </head>
+    <!-- POST PAGE TEMPLATE -->
+    <body>
+    <strong></strong><em></em>
+        <header id="entry-header">
+            <h1 class="post-title h-cinzel">
+                
+            </h1>
+        </header>
+        <!-- ARTICLE CONTENT -->
+
+<article class="post-content">
+    <h1>Simple Distortion Circuit</h1>
+<p><a href="https://www.youtube.com/watch?v=mMDBcwWSbNc">rough demo video</a></p>
+<p>I was a bit frustrated not having a convenient distortion module on my setup so I designed one. After a handful of sketches and a little bit of breadboarding, this is what I came up with :</p>
+<p><img src="/images/2025-06/distortion.png" alt="Schematic"></p>
+<p>Its operation is a lot more straightforward than it looks.</p>
+<p>The left-hand op amp is just operating as a textbook inverting amp, gain of x1 to about x10. The right-hand hand op amp is having more fun. The core idea is that of a <a href="https://en.wikipedia.org/wiki/Log_amplifier">log amplifier</a>, the &quot;transdiode&quot; configuration. It&#39;s using the exponential characteristic of a bipolar transistor in the feedback of the op amp to achieve a logarithmic transfer function. In other words, <strong>soft clipping</strong>. Tube overdrive style, if you&#39;re an American guitar head. The magic part of this configuration is that the combination of NPN and PNP transistors, simply one on top of the other, actually works to make the function work on negative-going signals in mirror image. <em>No way that would work!</em> But it does.</p>
+<p>I&#39;ve flipped the op amp inputs so this is non-inverting - I&#39;d forgotten, I was going to make the input amp non-inverting too... Reason being, ideally I wanted it DC-coupled so it could be an interesting function on control voltages too. But when wired up to modules this messed up its use on signals - the <em>your guess is as good as mine</em> Eurorack standard voltage levels. So I AC coupled it, hence the cap on input &amp; output. (The 100p cap in the feedback is my cargo cult attempt at ensuring HF stability. It makes no audible difference).</p>
+<p>The variable resistance in the feedback effectively adjusts when the transistors start getting curvy. When it&#39;s down to the 10k I couldn&#39;t see or hear any difference from the input signal, is effectively unity gain. Wide open, the curve starts early, it sounds like hard clipping.</p>
+<p>The pair of diodes was the result of messing about. I initially tried them from the signal path between the first op amp and the second, to ground. I expected a buzzier hard clipping at a lower level, until the log-ish follower was wound up for gain. But it wasn&#39;t very interesting. What was interesting is the current config. I&#39;ll leave it to someone better at sums than me to figure out properly, but intuitively I would have expected this to have extended the linearish low level region up by the voltage drop until transistor bias starts kicking in, with the effect of raising the curvy roof. Nah. The result in practice is that it gives an audible boost overall. When the bases are direct to ground, the transfer curve seems rather kinky, not as smooth as it should be. With the diodes in circuit, it have a much more elegant curve. My explanation is something something op amp compensating something bias something.</p>
+<p>Here&#39;s it on the breadboard :</p>
+<p><img src="/images/2025-06/breadboard.png" alt="Breadboard"></p>
+<p>I&#39;ve got all the music room gear in the office while I redecorate, and the desktop machine I usually run a &#39;scope (Bitscope) on was busy entertaining Claude. So it gave me a chance to use my breadboard. It is literally built on a plastic breadboard, hat tip to the originators. As well as the horrid little Chinese scope and signal generator there&#39;s a home-hack audio amp, underneath a +/- 12v, +5 PSU in a tin I got from Penny Market. Got 3.5 mm sockets, various pots, a few switches. The idea is I can take prototypes to the modular in a Mohammed-mountain kind of deal. Only after I&#39;d made it did I here about the Erica Synths (they who do collabs with the wonderful DIYer <a href="https://www.youtube.com/@MoritzKlein0">Moritz Klein</a>) do a ready-made, neat version : the <a href="https://www.ericasynths.lv/shop/diy-kits-1/edu-diy-labor/">EDU DIY Labor</a>. Hey ho. Saved meself a few quid.</p>
+<p>Oh yeah, back to the circuit. Nothing&#39;s critical. For op amps I used a TL072, transistors a BC109 &amp; BC179, generic highish gain silicon small signal I happened to have. To keep it balanced up &amp; down you probably want a complementary pair like that. I plan to slap the circuit on a scrap of stripboard, cut &amp; drill a bit of aluminium sheet for front panel, couple of hours work max, my itch scratched.
+ </p>
+
+</article>
+<p class="post-title h-cinzel">
+    <a href="http://danny.ayers.name/entries/simple-distortion-circuit.html">
+        Simple Distortion Circuit
+    </a>
+</p> <em></em>
+    </body>
+</html>

@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <link rel="stylesheet" href="/css/fonts.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/grid-columns.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/style.css" type="text/css"/>
+        <title>Transmissions Model Component Analysis</title>
+    </head>
+    <!-- POST PAGE TEMPLATE -->
+    <body>
+    <strong></strong><em></em>
+        <header id="entry-header">
+            <h1 class="post-title h-cinzel">
+                
+            </h1>
+        </header>
+        <!-- ARTICLE CONTENT -->
+
+<article class="post-content">
+    <h1>Transmissions Model Component Analysis</h1>
+<h2>Application.js</h2>
+<ul>
+<li><strong>Purpose</strong>: Represents an application instance with its configuration and RDF dataset</li>
+<li><strong>Key Features</strong>:<ul>
+<li>Maintains RDF dataset for application configuration</li>
+<li>Manages application identity (appNode) and session (sessionNode)</li>
+<li>Provides method to merge in external datasets</li>
+<li>Initializes application context with core triples</li>
+</ul>
+</li>
+</ul>
+<h2>Connector.js</h2>
+<ul>
+<li><strong>Purpose</strong>: Creates connections between processors in the pipeline</li>
+<li><strong>Key Features</strong>:<ul>
+<li>Extends EventEmitter for message passing</li>
+<li>Handles connections between regular processors</li>
+<li>Supports nested transmission connections (connecting to first/last nodes)</li>
+<li>Routes messages through the pipeline via event emission</li>
+</ul>
+</li>
+</ul>
+<h2>Processor.js</h2>
+<ul>
+<li><strong>Purpose</strong>: Base class for all processors in the system</li>
+<li><strong>Key Features</strong>:<ul>
+<li>Message queue management with asynchronous processing</li>
+<li>Configuration handling via ProcessorSettings</li>
+<li>Pre/post-processing hooks</li>
+<li>Property access from RDF configuration</li>
+<li>Event-based message passing with deep copying</li>
+<li>Tag management for debugging</li>
+</ul>
+</li>
+</ul>
+<h2>SlowableProcessor.js</h2>
+<ul>
+<li><strong>Purpose</strong>: Extends Processor with controllable processing delays</li>
+<li><strong>Key Features</strong>:<ul>
+<li>Adds configurable delays to processing</li>
+<li>Inherits core functionality from Processor</li>
+<li>Useful for debugging or rate limiting</li>
+</ul>
+</li>
+</ul>
+<h2>Transmission.js</h2>
+<ul>
+<li><strong>Purpose</strong>: Represents a complete processing pipeline</li>
+<li><strong>Key Features</strong>:<ul>
+<li>Manages collection of processors and their connections</li>
+<li>Supports nested transmissions with parent/child relationships</li>
+<li>Handles processor registration and connector creation</li>
+<li>Maintains execution path information</li>
+<li>Error propagation with transmission stack traces</li>
+</ul>
+</li>
+</ul>
+<h2>Whiteboard.js</h2>
+<ul>
+<li><strong>Purpose</strong>: Shared state container for accumulating data across processors</li>
+<li><strong>Key Features</strong>:<ul>
+<li>Singleton pattern for global access</li>
+<li>Accumulator management for different data types</li>
+<li>String or array-based data aggregation</li>
+<li>Designed for data sharing between pipeline steps</li>
+</ul>
+</li>
+</ul>
+<h2>System Architecture Observations</h2>
+<ul>
+<li><strong>Event-Driven Processing</strong>: The system uses events for message passing</li>
+<li><strong>Pipeline Configuration</strong>: Transmissions define processor connections declaratively</li>
+<li><strong>RDF-Based Configuration</strong>: Components read settings from RDF datasets</li>
+<li><strong>Hierarchical Design</strong>: Support for nested transmissions enables complex flows</li>
+<li><strong>Message-Based Communication</strong>: All components communicate via message objects</li>
+<li><strong>Whiteboard Pattern</strong>: Shared state management via Whiteboard singleton</li>
+</ul>
+
+</article>
+<p class="post-title h-cinzel">
+    <a href="https://hyperdata.it/manual/to-sort/howtos_2025-03-28/model-analysis.html">
+        Transmissions Model Component Analysis
+    </a>
+</p> <em></em>
+    </body>
+</html>

@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <link rel="stylesheet" href="/css/fonts.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/grid-columns.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/style.css" type="text/css"/>
+        <title>Transmissions Engine Component Documentation</title>
+    </head>
+    <!-- POST PAGE TEMPLATE -->
+    <body>
+    <strong></strong><em></em>
+        <header id="entry-header">
+            <h1 class="post-title h-cinzel">
+                
+            </h1>
+        </header>
+        <!-- ARTICLE CONTENT -->
+
+<article class="post-content">
+    <h1>Transmissions Engine Component Documentation</h1>
+<h2>Overview</h2>
+<p>The Transmissions engine is the core processing infrastructure responsible for application loading, transmission construction, and execution. It uses a combination of RDF-based configuration and dependency injection for flexible pipeline construction.</p>
+<h2>Core Components</h2>
+<h3><code>AbstractProcessorFactory.js</code></h3>
+<p>A factory class that creates processor instances using a chain of responsibility pattern:</p>
+<ul>
+<li>Creates processor instances based on their type</li>
+<li>Searches through various processor factories to find matching processor implementations</li>
+<li>Returns appropriate processor instance or falls through to next factory</li>
+<li>Serves as the central registry for all available processor types in the system</li>
+</ul>
+<h3><code>ApplicationManager.js</code></h3>
+<p>Manages the lifecycle of Transmissions applications:</p>
+<ul>
+<li>Initializes application context and configuration</li>
+<li>Loads application manifests and configurations</li>
+<li>Builds transmission pipelines from RDF definitions</li>
+<li>Starts application execution with provided messages</li>
+<li>Maintains application state throughout processing</li>
+<li>Provides methods for listing available applications</li>
+</ul>
+<h3><code>AppResolver.js</code></h3>
+<p>Resolves application paths and loads configurations:</p>
+<ul>
+<li>Locates application files in the filesystem</li>
+<li>Resolves relative paths to actual filesystem locations</li>
+<li>Loads transmission and configuration files</li>
+<li>Handles manifest files for deployment-specific configuration</li>
+<li>Resolves subtasks within applications</li>
+<li>Provides context information to the application manager</li>
+</ul>
+<h3><code>ModuleLoader.js</code></h3>
+<p>Dynamic module loading system for processors:</p>
+<ul>
+<li>Manages a classpath for processor module loading</li>
+<li>Provides caching mechanism for loaded modules</li>
+<li>Handles module resolution across multiple paths</li>
+<li>Gracefully handles module loading errors</li>
+</ul>
+<h3><code>ModuleLoaderFactory.js</code></h3>
+<p>Factory for creating ModuleLoader instances:</p>
+<ul>
+<li>Creates singleton ModuleLoader instances</li>
+<li>Configures loader with proper paths for core and application processors</li>
+<li>Provides application-specific module loading</li>
+</ul>
+<h3><code>ProcessorSettings.js</code></h3>
+<p>Handles processor configuration from RDF datasets:</p>
+<ul>
+<li>Extracts configuration properties from RDF graphs</li>
+<li>Resolves property values based on various lookup strategies</li>
+<li>Handles single values, arrays, and nested configurations</li>
+<li>Supports property inheritance and overrides</li>
+<li>Works with message-based property overrides</li>
+</ul>
+<h3><code>TransmissionBuilder.js</code></h3>
+<p>Constructs processing pipelines from RDF definitions:</p>
+<ul>
+<li>Builds processor instances based on RDF configurations</li>
+<li>Connects processors to form the transmission pipeline</li>
+<li>Handles nested transmissions</li>
+<li>Manages processor instantiation and configuration</li>
+<li>Connects event handlers between processors</li>
+</ul>
+<h3><code>WorkerPool.js</code></h3>
+<p>Manages worker threads for parallel processing:</p>
+<ul>
+<li>Creates a pool of worker threads</li>
+<li>Manages message queuing and dispatch</li>
+<li>Handles worker lifecycle and reuse</li>
+<li>Provides load balancing across workers</li>
+</ul>
+<h2>Interaction Flow</h2>
+<ol>
+<li><code>ApplicationManager</code> initializes using <code>AppResolver</code> to locate application files</li>
+<li><code>ApplicationManager</code> uses <code>TransmissionBuilder</code> to construct transmission pipelines</li>
+<li><code>TransmissionBuilder</code> uses <code>AbstractProcessorFactory</code> to create processor instances</li>
+<li><code>AbstractProcessorFactory</code> uses <code>ModuleLoaderFactory</code> to load processor modules</li>
+<li>Processors use <code>ProcessorSettings</code> to get configuration values</li>
+<li><code>ApplicationManager</code> starts execution of the pipeline</li>
+<li>Optional <code>WorkerPool</code> handles parallel processing tasks</li>
+</ol>
+<h2>Key Concepts</h2>
+<ul>
+<li><strong>RDF-based configuration</strong>: All application configurations are stored in RDF (Turtle) files</li>
+<li><strong>Dependency Injection</strong>: Components are loosely coupled through configuration</li>
+<li><strong>Event-driven processing</strong>: Processors communicate through events</li>
+<li><strong>Pipeline architecture</strong>: Data flows through a series of connected processors</li>
+<li><strong>Dynamic loading</strong>: Processors and applications are loaded dynamically at runtime</li>
+</ul>
+
+</article>
+<p class="post-title h-cinzel">
+    <a href="https://hyperdata.it/manual/to-sort/howtos_2025-03-28/engine-documentation.html">
+        Transmissions Engine Component Documentation
+    </a>
+</p> <em></em>
+    </body>
+</html>

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <link rel="stylesheet" href="/css/fonts.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/grid-columns.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/style.css" type="text/css"/>
+        <title>Libraries Used</title>
+    </head>
+    <!-- POST PAGE TEMPLATE -->
+    <body>
+    <strong></strong><em></em>
+        <header id="entry-header">
+            <h1 class="post-title h-cinzel">
+                
+            </h1>
+        </header>
+        <!-- ARTICLE CONTENT -->
+
+<article class="post-content">
+    <h1>Libraries Used</h1>
+<h2>Core</h2>
+<h2>For Services</h2>
+<h3>Protocol-related</h3>
+<ul>
+<li><a href="https://axios-http.com/docs/intro">Axios</a></li>
+</ul>
+<h3>Document manipulation</h3>
+<ul>
+<li><a href="https://cheerio.js.org/">cheerio</a> - parsing and manipulating HTML (and XML)</li>
+<li><a href="https://github.com/mixmark-io/turndown">Turndown</a> - Convert HTML into Markdown</li>
+</ul>
+<h3>Alternatives</h3>
+<p>Choices above made on a couple of criteria :</p>
+<ul>
+<li>must be well-known &amp; well-maintained</li>
+<li>rather than any all-in-one dedicated lib, more fine-grained preferred for reusability</li>
+</ul>
+<p>For Web crawling, node&#39;s own <code>fetch()</code> was the simplest option, but <a href="https://axios-http.com/docs/intro">Axios</a> has a bunch of convenience wrappers - data is passed around as JSON objects.
+<a href="https://apidog.com/blog/axios-vs-fetch/#:~:text=Axios%20provides%20the%20data%20in,response%20has%20an%20error%20status">https://apidog.com/blog/axios-vs-fetch/#:~:text=Axios%20provides%20the%20data%20in,response%20has%20an%20error%20status</a>.</p>
+<p>For HTML page parsing options start with various SAX-like streaming alternatives, then move into more DOM-oriented systems, and beyond into to tools that can run headless browsers and work with anything rendered dynamically in a page. The stand-out choices seemed to be <a href="https://cheerio.js.org/">cheerio</a></p>
+<h3>Maybe later</h3>
+<p><a href="https://github.com/jessetane/queue/tree/master">https://github.com/jessetane/queue/tree/master</a>
+ </p>
+
+</article>
+<p class="post-title h-cinzel">
+    <a href="https://hyperdata.it/to-sort/libs.html">
+        Libraries Used
+    </a>
+</p> <em></em>
+    </body>
+</html>

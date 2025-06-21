@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <link rel="stylesheet" href="/css/fonts.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/grid-columns.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/style.css" type="text/css"/>
+        <title>Transmissions Reference Key</title>
+    </head>
+    <!-- POST PAGE TEMPLATE -->
+    <body>
+    <strong></strong><em></em>
+        <header id="entry-header">
+            <h1 class="post-title h-cinzel">
+                
+            </h1>
+        </header>
+        <!-- ARTICLE CONTENT -->
+
+<article class="post-content">
+    <p> I would like you to help me create a Transmissions application. Its purpose will be to extract data from a JSON file and transform the result into two representations :</p>
+<ul>
+<li>a set of markdown documents</li>
+<li>a set of Turtle RDF files</li>
+</ul>
+<p>Please build the application following these steps, one at a time :</p>
+<ol>
+<li>digest the material here</li>
+<li>ascertain what will needed, referring to the references below and your project knowledge</li>
+<li>build what is needed</li>
+</ol>
+<p>The transmission will read the JSON file from disk, walk the JSON structure, and spawn additional processes to reformat the contents. One branch of processes will do the markdown formatting, the other the Turtle.</p>
+<p>Transmissions operates by chaining together processes at runtime. Each process should have one primary function, for anything more than this the functionality should be decomposed into smaller units, each in their own processor module. The processes should be created in a manner that makes them suitable for reuse, with any application-specific declarations contained in <code>processors-config.ttl</code>.</p>
+<p>In this implementation, two filesystem locations will be used, relative to the starting dir :</p>
+<ul>
+<li><code>transmissions</code> - core system repo</li>
+<li><code>trans-apps</code> - application repo</li>
+</ul>
+<p>The application will be run with :</p>
+<pre><code class="language-sh">cd transmissions
+./trans ../trans-apps/applications/claude-json-converter ../trans-apps/applications/claude-json-converter/conversations.json
+</code></pre>
+<p>Application examples can be found in :</p>
+<pre><code class="language-sh">transmissions/src/applications
+</code></pre>
+<p>The processing pipeline will be defined in :</p>
+<pre><code class="language-sh">trans-apps/applications/claude-json-converter/transmissions.ttl
+</code></pre>
+<p>Any system configuration data needed should be expressed in :</p>
+<pre><code class="language-sh">trans-apps/applications/claude-json-converter/processors-config.ttl
+</code></pre>
+<p>Most of the necessary processors can be found in the JS modules contained in :</p>
+<pre><code class="language-sh">transmissions/src/processors/
+trans-apps/applications/**/processors/
+</code></pre>
+<p>Any new processors should be patterned on the templates in :</p>
+<pre><code class="language-sh">trans-apps/applications/claude-json-converter/processors/ProcessorTemplate.js
+trans-apps/applications/claude-json-converter/processors/TemplateProcessorsFactory.js
+</code></pre>
+<p>and will be placed in the same dir.</p>
+<p>A simple standalone skeleton for testing the application and processors should be constructed, modeled on the contents of :</p>
+<pre><code class="language-sh">trans-apps/applications/claude-json-converter/scripts/test-runner.js
+</code></pre>
+<p>Finally create unit and integration tests that may be run via Jasmine, modeled on those in :</p>
+<pre><code class="language-sh">transmissions/tests/
+</code></pre>
+<p>The new tests will be placed in :</p>
+<pre><code class="language-sh">trans-apps/applications/claude-json-converter/tests/
+</code></pre>
+<p>and configured to be run from npm.</p>
+<hr>
+<p>├── about.md
+├── conversations.json
+├── manifest.ttl
+├── package.json
+├── processors
+│   ├── ProcessorTemplate.js
+│   └── TemplateProcessorsFactory.js
+├── processors-config.ttl
+├── repopack.config.json
+├── scripts
+│   └── test-runner.js
+├── transmissions.ttl
+└── users.json</p>
+<p>You have in your project knowledge a Python script called cli.py.</p>
+<h1>Transmissions Reference Key</h1>
+<p>Transmissions is an evolving system designed to simplify development of data processing applications. It operates through pipeline-like structures which are described declaratively.</p>
+<h2>Terminology</h2>
+<p>Typically two filesystem locations will be used :</p>
+<ul>
+<li><code>transmissions</code> - core system repo</li>
+<li><code>trans-apps</code> - application repo</li>
+</ul>
+<p>├── src
+│   ├── applications : demo (and some stale) applications
+│   ├── engine : system-level modules
+│   ├── processors :  (and some stale)
+│   ├── sandbox
+│   ├── simples
+│   └── utils
+├── tests
+│   ├── grapoi-raw-tests.js
+│   ├── helpers
+│   ├── integration
+│   └── unit</p>
+<h2>transmissions.ttl</h2>
+<h2></h2>
+
+</article>
+<p class="post-title h-cinzel">
+    <a href="https://hyperdata.it/prompts/claude-to-sparql-app.html">
+        Transmissions Reference Key
+    </a>
+</p> <em></em>
+    </body>
+</html>

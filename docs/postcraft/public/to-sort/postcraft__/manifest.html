@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <link rel="stylesheet" href="/css/fonts.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/grid-columns.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/style.css" type="text/css"/>
+        <title> manifest.ttl for danny.ayers.name </title>
+    </head>
+    <!-- POST PAGE TEMPLATE -->
+    <body>
+    <strong></strong><em></em>
+        <header id="entry-header">
+            <h1 class="post-title h-cinzel">
+                
+            </h1>
+        </header>
+        <!-- ARTICLE CONTENT -->
+
+<article class="post-content">
+    <h3>manifest.ttl for danny.ayers.name</h3>
+<p>@prefix rdf: <a href="http://www.w3.org/1999/02/22-rdf-syntax-ns#">http://www.w3.org/1999/02/22-rdf-syntax-ns#</a> .
+@prefix rdfs: <a href="http://www.w3.org/2000/01/rdf-schema#">http://www.w3.org/2000/01/rdf-schema#</a> .
+@prefix dcterms: <a href="http://purl.org/dc/terms/">http://purl.org/dc/terms/</a> .</p>
+<h1>SIOC</h1>
+<p>@prefix trn: <a href="http://purl.org/stuff/transmissions/">http://purl.org/stuff/transmissions/</a> .
+@prefix trn: <a href="http://purl.org/stuff/transmissions/">http://purl.org/stuff/transmissions/</a> .
+@prefix trn: <a href="http://purl.org/stuff/transmissions/">http://purl.org/stuff/transmissions/</a> .
+@prefix trn: <a href="http://purl.org/stuff/transmissions/">http://purl.org/stuff/transmissions/</a> . # for custom terms &amp; instances</p>
+<p><a href="https://danny.ayers.name/">https://danny.ayers.name/</a> a trn:Site ;
+    rdfs:label &quot;danny.ayers.name&quot; ;
+    dcterms:title &quot;Rawer&quot; ;
+    trn:contains <a href="https://danny.ayers.name/home">https://danny.ayers.name/home</a> ;  # maybe
+    trn:includes trn:PostContent . # maybe</p>
+<h1>this should maybe give the contentgroup a renderType, indirect with template etc</h1>
+<h1>POST CONTENT</h1>
+<p>trn:PostContent a trn:ContentGroup ;
+    trn:site <a href="https://danny.ayers.name/">https://danny.ayers.name/</a> ;
+    trn:subdir &quot;home&quot; ; # better property name?
+    trn:sourceDirectory &quot;content-raw/entries&quot; ; # SOURCE DIR HERE journal, entries
+    trn:targetDirectory &quot;cache&quot; ;
+    trn:template &quot;layouts/mediocre/templates/entry-content_template.njk&quot; .</p>
+<h1>POST PAGES</h1>
+<p>trn:PostPages a trn:ContentGroup ;
+    trn:site <a href="https://danny.ayers.name/">https://danny.ayers.name/</a> ;</p>
+<h1>trn:sourceDirectory &quot;public/post-content-cache&quot; ;</h1>
+<pre><code>trn:targetDirectory &quot;public/home/entries&quot; ;
+trn:template &quot;layouts/mediocre/templates/entry-page_template.njk&quot; .
+</code></pre>
+<h1>MAIN PAGE</h1>
+<p>trn:IndexPage a trn:ContentGroup ; # TODO naming!
+    trn:site <a href="https://danny.ayers.name/">https://danny.ayers.name/</a> ;
+    trn:filepath &quot;public/home/index.html&quot; ;
+    trn:template &quot;layouts/mediocre/templates/index-page_template.njk&quot; .</p>
+<h1>STYLES ETC not yet implemented</h1>
+<p>trn:CSS a trn:StaticGroup ;
+    trn:site <a href="https://danny.ayers.name/">https://danny.ayers.name/</a> ;
+    trn:sourceDirectory &quot;layouts/mediocre/css&quot; ;
+    trn:targetDirectory &quot;public/home/css&quot; .</p>
+<p>trn:fonts a trn:StaticGroup ;
+    trn:site <a href="https://danny.ayers.name/">https://danny.ayers.name/</a> ;
+    trn:sourceDirectory &quot;layouts/mediocre/fonts&quot; ;
+    trn:targetDirectory &quot;public/home/js&quot; .</p>
+<p>trn:JS a trn:StaticGroup ;
+    trn:site <a href="https://danny.ayers.name/">https://danny.ayers.name/</a> ;
+    trn:sourceDirectory &quot;layouts/mediocre/js&quot; ;
+    trn:targetDirectory &quot;public/home/js&quot; .</p>
+<h1>pinned - not yet implemented</h1>
+<p><a href="https://danny.ayers.name/index">https://danny.ayers.name/index</a> a trn:SpecialCase ;
+    trn:state &quot;pinned&quot; ;
+    trn:sourceFile &quot;home/2023-10-27_hello.md&quot; ;
+    trn:targetFile &quot;public/home/2023-10-27_hello.html&quot; .</p>
+<h1>trn:template &quot;layouts/mediocre/mediocre-posts_template.html&quot; .</h1>
+
+</article>
+<p class="post-title h-cinzel">
+    <a href="https://hyperdata.it/to-sort/postcraft__/manifest.html">
+         manifest.ttl for danny.ayers.name 
+    </a>
+</p> <em></em>
+    </body>
+</html>

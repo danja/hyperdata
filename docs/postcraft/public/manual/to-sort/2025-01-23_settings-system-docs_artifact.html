@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <link rel="stylesheet" href="/css/fonts.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/grid-columns.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/style.css" type="text/css"/>
+        <title>Transmissions Settings System</title>
+    </head>
+    <!-- POST PAGE TEMPLATE -->
+    <body>
+    <strong></strong><em></em>
+        <header id="entry-header">
+            <h1 class="post-title h-cinzel">
+                
+            </h1>
+        </header>
+        <!-- ARTICLE CONTENT -->
+
+<article class="post-content">
+    <h1>Transmissions Settings System</h1>
+<h2>Overview</h2>
+<p>The settings system provides configuration management for Transmissions processors using RDF-based configuration. It supports both direct value access and referenced settings through a flexible graph structure.</p>
+<h2>Core Components</h2>
+<h3>ProcessorSettings</h3>
+<p>Base class providing configuration access methods:</p>
+<ul>
+<li><code>getValue(property, fallback)</code>: Returns single value or fallback</li>
+<li><code>getValues(property, fallback)</code>: Returns array of values or fallback</li>
+</ul>
+<h3>TestSettings</h3>
+<p>Implementation demonstrating settings usage patterns:</p>
+<ul>
+<li>Direct property access</li>
+<li>Multiple value handling</li>
+<li>Fallback value support</li>
+<li>Message property preservation</li>
+</ul>
+<h2>Configuration Format</h2>
+<p>Settings are defined in Turtle (.ttl) files:</p>
+<pre><code class="language-turtle">@prefix rdf: &lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#&gt; .
+@prefix rdfs: &lt;http://www.w3.org/2000/01/rdf-schema#&gt; .
+@prefix : &lt;http://purl.org/stuff/transmissions/&gt; .
+
+:settingsSingle a :ConfigSet ;
+    :name &quot;Alice&quot; .
+
+:settingsMulti a :ConfigSet ;
+    :setting &quot;value1&quot;, &quot;value2&quot;, &quot;value3&quot; .
+</code></pre>
+<h2>Usage Examples</h2>
+<h3>Simple Property Access</h3>
+<pre><code class="language-javascript">const value = settings.getProperty(ns.trn.name)
+</code></pre>
+<h3>Multiple Values</h3>
+<pre><code class="language-javascript">const values = settings.getValues(ns.trn.setting)
+</code></pre>
+<h3>Message Processing</h3>
+<pre><code class="language-javascript">const result = await settings.process(message) 
+</code></pre>
+<h2>Best Practices</h2>
+<ol>
+<li>Always provide fallback values for optional settings</li>
+<li>Use array methods for multiple value properties</li>
+<li>Preserve existing message properties during processing</li>
+<li>Validate required settings early</li>
+<li>Document setting dependencies in processor code</li>
+</ol>
+
+</article>
+<p class="post-title h-cinzel">
+    <a href="https://hyperdata.it/manual/to-sort/2025-01-23_settings-system-docs_artifact.html">
+        Transmissions Settings System
+    </a>
+</p> <em></em>
+    </body>
+</html>

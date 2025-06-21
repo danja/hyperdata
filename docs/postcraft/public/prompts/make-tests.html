@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <link rel="stylesheet" href="/css/fonts.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/grid-columns.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/style.css" type="text/css"/>
+        <title>Transmissions : create Jasmine tests</title>
+    </head>
+    <!-- POST PAGE TEMPLATE -->
+    <body>
+    <strong></strong><em></em>
+        <header id="entry-header">
+            <h1 class="post-title h-cinzel">
+                
+            </h1>
+        </header>
+        <!-- ARTICLE CONTENT -->
+
+<article class="post-content">
+    <h1>Transmissions : create Jasmine tests</h1>
+<p>tests/integration/restructure.spec.js isfailing on the equivalence test, although the output appears to be the correct json</p>
+<h2>Integration</h2>
+<h3>Transmissions</h3>
+<p>Substitute &#39;test_restructure&#39; for &#39;{app_name}&#39; in what follows.
+Please create a test as an artifact following the general pattern of <code>tests/integration/fs-rw_simple.spec.js</code> called  <code>tests/integration/{app_name}.spec.js</code> that will carry out the following steps :</p>
+<ol>
+<li>remove any files called <code>src/applications/{app_name}/data/output/output-01.md</code>, <code>src/applications/{app_name}/data/output/output-02.md</code> etc</li>
+<li>run <code>./trans {app_name}</code></li>
+<li>compare the contents of each of the files like <code>src/applications/{app_name}/data/output/output-01.md</code> with <code>src/applications/{app_name}/data/output/required-01.md</code></li>
+<li>report success if the files match, failure otherwise</li>
+</ol>
+<h3>Simples</h3>
+<p>Substitute &#39;test_restructure&#39; for &#39;{app_name}&#39; in what follows.
+Please create a test as an artifact following the general pattern of <code>tests/integration/fs-rw_simple.spec.js</code> called  <code>tests/integration/{app_name}.spec.js</code> that will carry out the following steps :</p>
+<ol>
+<li>remove the file <code>src/applications/test_restructure/data/output/output-01.md</code> if it exists</li>
+<li>run <code>node src/applications/test_fs-rw/simple.js</code></li>
+<li>compare the contents of  <code>src/applications/test-_fs-rw/data/output/output-01.md</code> with <code>src/applications/test_fs-rw/data/output/required-01.md</code></li>
+<li>report success if the files match, failure otherwise</li>
+</ol>
+
+</article>
+<p class="post-title h-cinzel">
+    <a href="https://hyperdata.it/prompts/make-tests.html">
+        Transmissions : create Jasmine tests
+    </a>
+</p> <em></em>
+    </body>
+</html>

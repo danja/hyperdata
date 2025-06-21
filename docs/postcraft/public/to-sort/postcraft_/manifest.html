@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <link rel="stylesheet" href="/css/fonts.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/grid-columns.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/style.css" type="text/css"/>
+        <title> manifest.ttl for elfquake.org postcraft docs </title>
+    </head>
+    <!-- POST PAGE TEMPLATE -->
+    <body>
+    <strong></strong><em></em>
+        <header id="entry-header">
+            <h1 class="post-title h-cinzel">
+                
+            </h1>
+        </header>
+        <!-- ARTICLE CONTENT -->
+
+<article class="post-content">
+    <h3>manifest.ttl for elfquake.org postcraft docs</h3>
+<p>@prefix rdf: <a href="http://www.w3.org/1999/02/22-rdf-syntax-ns#">http://www.w3.org/1999/02/22-rdf-syntax-ns#</a> .
+@prefix rdfs: <a href="http://www.w3.org/2000/01/rdf-schema#">http://www.w3.org/2000/01/rdf-schema#</a> .
+@prefix dcterms: <a href="http://purl.org/dc/terms/">http://purl.org/dc/terms/</a> .
+@prefix trn: <a href="http://purl.org/stuff/transmissions/">http://purl.org/stuff/transmissions/</a> .
+@prefix trn: <a href="http://purl.org/stuff/transmissions/">http://purl.org/stuff/transmissions/</a> .
+@prefix trn: <a href="http://purl.org/stuff/transmissions/">http://purl.org/stuff/transmissions/</a> .
+@prefix trn: <a href="http://hyperdata.it/treadmill/">http://hyperdata.it/treadmill/</a> . # for custom terms &amp; instances</p>
+<p><a href="https://elfquake.org/">https://elfquake.org/</a> a trn:Site ;
+    rdfs:label &quot;elfquake.org&quot; ;
+    trn:contains <a href="https://elfquake.org/blog">https://elfquake.org/blog</a> .</p>
+<p><a href="https://elfquake.org/blog">https://elfquake.org/blog</a> a trn:ContentGroup ;
+    trn:sourceDirectory &quot;posts&quot; ;
+    trn:targetDirectory &quot;site&quot; ;
+    trn:template &quot;layouts/mediocre/mediocre.html&quot; .</p>
+<h1>this should maybe give the contentgroup a renderType, indirect with template etc</h1>
+<p><a href="https://elfquake.org/blog">https://elfquake.org/blog</a> a trn:ContentGroup ;
+    trn:sourceDirectory &quot;posts&quot; ;
+    trn:targetDirectory &quot;site&quot; ;
+    trn:template &quot;layouts/mediocre/mediocre.html&quot; .</p>
+<h1>for index page &amp; pinned, collapsed</h1>
+<p><a href="https://elfquake.org/index">https://elfquake.org/index</a> a trn:SpecialCase ;
+    trn:sourceDirectory &quot;posts&quot; ;
+    trn:targetDirectory &quot;site&quot; ;
+    trn:template &quot;layouts/mediocre/mediocre.html&quot; .</p>
+
+</article>
+<p class="post-title h-cinzel">
+    <a href="https://hyperdata.it/to-sort/postcraft_/manifest.html">
+         manifest.ttl for elfquake.org postcraft docs 
+    </a>
+</p> <em></em>
+    </body>
+</html>

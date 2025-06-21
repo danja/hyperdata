@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <link rel="stylesheet" href="/css/fonts.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/grid-columns.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/style.css" type="text/css"/>
+        <title>RDF Configuration Patterns</title>
+    </head>
+    <!-- POST PAGE TEMPLATE -->
+    <body>
+    <strong></strong><em></em>
+        <header id="entry-header">
+            <h1 class="post-title h-cinzel">
+                
+            </h1>
+        </header>
+        <!-- ARTICLE CONTENT -->
+
+<article class="post-content">
+    <h1>RDF Configuration Patterns</h1>
+<h2>Basic Settings</h2>
+<pre><code class="language-turtle">@prefix trn: &lt;http://purl.org/stuff/transmissions/&gt; .
+@prefix : &lt;http://example.org/config#&gt; .
+
+:processorSettings a trn:ConfigSet ;
+    trn:key &quot;uniqueKey&quot; ;
+    trn:value &quot;value&quot; .
+</code></pre>
+<h2>Path Settings</h2>
+<pre><code class="language-turtle">@base &lt;http://purl.org/stuff/path/&gt; .
+
+:fileSettings a trn:ConfigSet ;
+    trn:sourceFile &lt;input/data.json&gt; ;
+    trn:targetFile &lt;output/result.json&gt; .
+</code></pre>
+<h2>Composite Settings</h2>
+<pre><code class="language-turtle">:complexSettings a trn:ConfigSet ;
+    trn:settings (
+        :setting1
+        :setting2
+    ) .
+
+:setting1 trn:key &quot;key1&quot; ;
+         trn:value &quot;value1&quot; .
+
+:setting2 trn:key &quot;key2&quot; ;
+         trn:value &quot;value2&quot; .
+</code></pre>
+<h2>Inheritance</h2>
+<pre><code class="language-turtle">:baseSettings a trn:ConfigSet ;
+    trn:commonSetting &quot;shared&quot; .
+
+:specificSettings a trn:ConfigSet ;
+    rdfs:subClassOf :baseSettings ;
+    trn:uniqueSetting &quot;specific&quot; .
+</code></pre>
+<h2>Best Practices</h2>
+<ol>
+<li>Use consistent namespaces</li>
+<li>Define clear hierarchies</li>
+<li>Group related settings</li>
+<li>Use semantic relationships</li>
+<li>Include type declarations</li>
+</ol>
+
+</article>
+<p class="post-title h-cinzel">
+    <a href="https://hyperdata.it/manual/to-sort/create-processor/rdf-config-patterns.html">
+        RDF Configuration Patterns
+    </a>
+</p> <em></em>
+    </body>
+</html>

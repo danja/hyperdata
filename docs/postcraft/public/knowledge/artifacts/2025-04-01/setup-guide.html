@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <link rel="stylesheet" href="/css/fonts.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/grid-columns.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/style.css" type="text/css"/>
+        <title>Transmission Pipeline Editor - Setup Guide</title>
+    </head>
+    <!-- POST PAGE TEMPLATE -->
+    <body>
+    <strong></strong><em></em>
+        <header id="entry-header">
+            <h1 class="post-title h-cinzel">
+                
+            </h1>
+        </header>
+        <!-- ARTICLE CONTENT -->
+
+<article class="post-content">
+    <h1>Transmission Pipeline Editor - Setup Guide</h1>
+<h2>Project Setup</h2>
+<h3>1. Create Directory Structure</h3>
+<p>First, create the necessary directory structure:</p>
+<pre><code>src/
+└── tools/
+    └── nodeflow/
+</code></pre>
+<h3>2. Install Dependencies</h3>
+<p>The editor requires the <code>node-flow</code> library from npm:</p>
+<pre><code class="language-bash">npm install @elicdavis/node-flow
+</code></pre>
+<h3>3. Create ESM Import Map</h3>
+<p>Create an <code>import-map.json</code> file in your project root:</p>
+<pre><code class="language-json">{
+  &quot;imports&quot;: {
+    &quot;@elicdavis/node-flow&quot;: &quot;./node_modules/@elicdavis/node-flow/dist/index.mjs&quot;,
+    &quot;node-flow-components&quot;: &quot;./src/tools/nodeflow/components/index.js&quot;
+  }
+}
+</code></pre>
+<h3>4. Project Entry Point</h3>
+<p>Create an <code>index.html</code> file that correctly loads the modules:</p>
+<pre><code class="language-html">&lt;!DOCTYPE html&gt;
+&lt;html lang=&quot;en&quot;&gt;
+&lt;head&gt;
+  &lt;meta charset=&quot;UTF-8&quot;&gt;
+  &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1.0&quot;&gt;
+  &lt;title&gt;Transmission Pipeline Editor&lt;/title&gt;
+  &lt;script type=&quot;importmap&quot;&gt;
+    {
+      &quot;imports&quot;: {
+        &quot;@elicdavis/node-flow&quot;: &quot;./node_modules/@elicdavis/node-flow/dist/index.mjs&quot;,
+        &quot;node-flow-components&quot;: &quot;./src/tools/nodeflow/components/index.js&quot;
+      }
+    }
+  &lt;/script&gt;
+  &lt;style&gt;
+    body, html {
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      font-family: Arial, sans-serif;
+    }
+    
+    #editor-container {
+      position: relative;
+      width: 100%;
+      height: 100%;
+    }
+    
+    #canvas {
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+    
+    #toolbar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      padding: 10px;
+      background-color: #0c2b35;
+      color: #afb9bb;
+      display: flex;
+      gap: 10px;
+      z-index: 100;
+    }
+    
+    button {
+      padding: 5px 10px;
+      background-color: #154050;
+      color: #afb9bb;
+      border: 1px solid #1c1c1c;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: background-color 0.2s;
+    }
+    
+    button:hover {
+      background-color: #195366;
+    }
+    
+    #status {
+      margin-left: auto;
+      padding: 5px 10px;
+      background-color: #07212a;
+      border-radius: 4px;
+    }
+    
+    .dialog {
+      display: none;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background-color: #0c2b35;
+      border: 1px solid #154050;
+      border-radius: 8px;
+      padding: 20px;
+      z-index: 200;
+      min-width: 300px;
+    }
+    
+    .dialog h2 {
+      margin-top: 0;
+      color: #afb9bb;
+    }
+    
+    .dialog label {
+      display: block;
+      margin-bottom: 5px;
+      color: #afb9bb;
+    }
+    
+    .dialog input {
+      width: 100%;
+      padding: 8px;
+      background-color: #07212a;
+      border: 1px solid #154050;
+      border-radius: 4px;
+      color: #afb9bb;
+      margin-bottom: 15px;
+    }
+    
+    .dialog-buttons {
+      display: flex;
+      justify-content: flex-end;
+      gap: 10px;
+    }
+  &lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;div id=&quot;toolbar&quot;&gt;
+    &lt;button id=&quot;load-btn&quot;&gt;Load TTL&lt;/button&gt;
+    &lt;button id=&quot;save-btn&quot;&gt;Save TTL&lt;/button&gt;
+    &lt;button id=&quot;new-btn&quot;&gt;New Transmission&lt;/button&gt;
+    &lt;button id=&quot;organize-btn&quot;&gt;Organize&lt;/button&gt;
+    &lt;span id=&quot;status&quot;&gt;Ready&lt;/span&gt;
+  &lt;/div&gt;
+  
+  &lt;div id=&quot;editor-container&quot;&gt;
+    &lt;canvas id=&quot;canvas&quot;&gt;&lt;/canvas&gt;
+  &lt;/div&gt;
+  
+  &lt;div id=&quot;new-dialog&quot; class=&quot;dialog&quot;&gt;
+    &lt;h2&gt;New Transmission&lt;/h2&gt;
+    &lt;label for=&quot;transmission-name&quot;&gt;Transmission Name:&lt;/label&gt;
+    &lt;input type=&quot;text&quot; id=&quot;transmission-name&quot; value=&quot;New Transmission&quot;&gt;
+    &lt;div class=&quot;dialog-buttons&quot;&gt;
+      &lt;button id=&quot;cancel-new&quot;&gt;Cancel&lt;/button&gt;
+      &lt;button id=&quot;create-new&quot;&gt;Create&lt;/button&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+  
+  &lt;!-- Hidden file input --&gt;
+  &lt;input type=&quot;file&quot; id=&quot;file-input&quot; accept=&quot;.ttl&quot; style=&quot;display:none&quot;&gt;
+  
+  &lt;script type=&quot;module&quot;&gt;
+    import { TransmissionEditor } from &quot;./src/tools/nodeflow/components/index.js&quot;;
+    
+    document.addEventListener(&#39;DOMContentLoaded&#39;, () =&gt; {
+      // Initialize the editor
+      const canvas = document.getElementById(&#39;canvas&#39;);
+      const editor = new TransmissionEditor(canvas);
+      
+      // Set up UI elements
+      const fileInput = document.getElementById(&#39;file-input&#39;);
+      const loadBtn = document.getElementById(&#39;load-btn&#39;);
+      const saveBtn = document.getElementById(&#39;save-btn&#39;);
+      const newBtn = document.getElementById(&#39;new-btn&#39;);
+      const organizeBtn = document.getElementById(&#39;organize-btn&#39;);
+      const status = document.getElementById(&#39;status&#39;);
+      
+      // New transmission dialog
+      const newDialog = document.getElementById(&#39;new-dialog&#39;);
+      const transmissionName = document.getElementById(&#39;transmission-name&#39;);
+      const cancelNewBtn = document.getElementById(&#39;cancel-new&#39;);
+      const createNewBtn = document.getElementById(&#39;create-new&#39;);
+      
+      // Load TTL file
+      loadBtn.addEventListener(&#39;click&#39;, () =&gt; {
+        fileInput.click();
+      });
+      
+      fileInput.addEventListener(&#39;change&#39;, async (e) =&gt; {
+        const file = e.target.files[0];
+        if (file) {
+          try {
+            status.textContent = `Loading ${file.name}...`;
+            await editor.loadFromFile(file.path || URL.createObjectURL(file));
+            status.textContent = `Loaded ${file.name}`;
+          } catch (error) {
+            status.textContent = `Error: ${error.message}`;
+            console.error(error);
+          }
+        }
+      });
+      
+      // Save TTL file
+      saveBtn.addEventListener(&#39;click&#39;, async () =&gt; {
+        try {
+          status.textContent = &#39;Saving...&#39;;
+          
+          // In a real application, we would show a file dialog here
+          // For now, we&#39;ll just save to the loaded file
+          await editor.saveToFile();
+          
+          status.textContent = &#39;Saved!&#39;;
+        } catch (error) {
+          status.textContent = `Error: ${error.message}`;
+          console.error(error);
+        }
+      });
+      
+      // New transmission
+      newBtn.addEventListener(&#39;click&#39;, () =&gt; {
+        newDialog.style.display = &#39;block&#39;;
+      });
+      
+      cancelNewBtn.addEventListener(&#39;click&#39;, () =&gt; {
+        newDialog.style.display = &#39;none&#39;;
+      });
+      
+      createNewBtn.addEventListener(&#39;click&#39;, () =&gt; {
+        const name = transmissionName.value.trim() || &#39;New Transmission&#39;;
+        editor.createNewTransmission(name);
+        newDialog.style.display = &#39;none&#39;;
+        status.textContent = `Created new transmission: ${name}`;
+      });
+      
+      // Organize graph
+      organizeBtn.addEventListener(&#39;click&#39;, () =&gt; {
+        try {
+          editor.getGraph().organize();
+          status.textContent = &#39;Graph organized!&#39;;
+        } catch (error) {
+          status.textContent = `Error: ${error.message}`;
+          console.error(error);
+        }
+      });
+      
+      // Initial status
+      status.textContent = &#39;Ready - Click &quot;Load TTL&quot; to open a transmission file&#39;;
+    });
+  &lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+<h2>5. Create Components Directory</h2>
+<p>Create a components directory to organize your editor modules:</p>
+<pre><code>src/tools/nodeflow/
+└── components/
+    ├── TransmissionsLoader.js
+    ├── ProcessorNodePublisher.js
+    ├── TransmissionsGraphBuilder.js
+    ├── TransmissionsExporter.js
+    ├── TransmissionEditor.js
+    └── index.js
+</code></pre>
+<h2>6. Create index.js</h2>
+<p>Create a barrel file to export all components:</p>
+<pre><code class="language-javascript">// src/tools/nodeflow/components/index.js
+export { default as TransmissionsLoader } from &#39;./TransmissionsLoader.js&#39;;
+export { default as ProcessorNodePublisher } from &#39;./ProcessorNodePublisher.js&#39;;
+export { default as TransmissionsGraphBuilder } from &#39;./TransmissionsGraphBuilder.js&#39;;
+export { default as TransmissionsExporter } from &#39;./TransmissionsExporter.js&#39;;
+export { default as TransmissionEditor } from &#39;./TransmissionEditor.js&#39;;
+</code></pre>
+<h2>Component Files with Correct Imports</h2>
+<h3>TransmissionEditor.js</h3>
+<pre><code class="language-javascript">// src/tools/nodeflow/components/TransmissionEditor.js
+import { NodeFlowGraph } from &#39;@elicdavis/node-flow&#39;;
+import TransmissionsLoader from &#39;./TransmissionsLoader.js&#39;;
+import TransmissionsGraphBuilder from &#39;./TransmissionsGraphBuilder.js&#39;;
+import TransmissionsExporter from &#39;./TransmissionsExporter.js&#39;;
+import ProcessorNodePublisher from &#39;./ProcessorNodePublisher.js&#39;;
+import logger from &#39;../../../utils/Logger.js&#39;;
+
+class TransmissionEditor {
+  // Implementation remains the same
+}
+
+export default TransmissionEditor;
+</code></pre>
+<h3>ProcessorNodePublisher.js</h3>
+<pre><code class="language-javascript">// src/tools/nodeflow/components/ProcessorNodePublisher.js
+import { Publisher } from &#39;@elicdavis/node-flow&#39;;
+import ns from &#39;../../../utils/ns.js&#39;;
+import logger from &#39;../../../utils/Logger.js&#39;;
+import rdf from &#39;rdf-ext&#39;;
+
+class ProcessorNodePublisher extends Publisher {
+  // Implementation remains the same
+}
+
+export default ProcessorNodePublisher;
+</code></pre>
+<h3>TransmissionsGraphBuilder.js</h3>
+<pre><code class="language-javascript">// src/tools/nodeflow/components/TransmissionsGraphBuilder.js
+import { FlowNode } from &#39;@elicdavis/node-flow&#39;;
+import ns from &#39;../../../utils/ns.js&#39;;
+import logger from &#39;../../../utils/Logger.js&#39;;
+
+class TransmissionsGraphBuilder {
+  // Implementation remains the same
+}
+
+export default TransmissionsGraphBuilder;
+</code></pre>
+<h2>Running the Editor</h2>
+<ol>
+<li>Start a local web server in your project root:</li>
+</ol>
+<pre><code class="language-bash">npx http-server -p 8080
+</code></pre>
+<ol start="2">
+<li><p>Open <a href="http://localhost:8080">http://localhost:8080</a> in your browser</p>
+</li>
+<li><p>The editor will be available and ready to use</p>
+</li>
+</ol>
+<h2>Troubleshooting</h2>
+<h3>Common Import Errors</h3>
+<p>If you see errors like this:</p>
+<pre><code>Uncaught TypeError: Failed to resolve module specifier &quot;@elicdavis/node-flow&quot;
+</code></pre>
+<p>Check that:</p>
+<ol>
+<li>The import map is correctly defined in your HTML</li>
+<li>You&#39;ve installed the package with npm</li>
+<li>The path in the import map matches the actual location of the file</li>
+</ol>
+<h3>CORS Issues</h3>
+<p>If you experience CORS issues when loading files:</p>
+<ol>
+<li>Make sure you&#39;re using a proper web server (not opening the HTML file directly)</li>
+<li>For file operations, consider using a tool like Electron for desktop app capabilities</li>
+</ol>
+<h3>Module Loading Issues</h3>
+<p>Modern browsers require proper MIME types for ES modules. Ensure your server is configured to serve JavaScript files with the correct MIME type:</p>
+<pre><code>Content-Type: application/javascript
+</code></pre>
+
+</article>
+<p class="post-title h-cinzel">
+    <a href="https://hyperdata.it/knowledge/artifacts/2025-04-01/setup-guide.html">
+        Transmission Pipeline Editor - Setup Guide
+    </a>
+</p> <em></em>
+    </body>
+</html>

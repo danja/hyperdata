@@ -3,25 +3,17 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
 PREFIX : <http://purl.org/stuff/transmissions/>
 
 SELECT DISTINCT * WHERE {
-  GRAPH ?graph {
-  ?article a schema:Article ;
-    :sourcePath ?sourcePath ;
-    :relPath ?relPath ;
-        :relative ?relative ;
-    :slug ?slug ;
+     GRAPH ?g {
+  ?uri a schema:Article ;
     schema:headline ?title ;
-    schema:dateCreated ?created ;
     schema:dateModified ?modified ;
-    schema:articleBody ?content ;
-    schema:creator ?creator .
+    :slug ?slug ;
+       schema:articleBody ?content ;
+        :relative ?relative ;
+    schema:dateCreated ?created .
 
-  ?creator a schema:Person ;
-    schema:name ?creatorName .
-
-OPTIONAL {
-    ?article schema:datePublished ?published ;
 }
-#   FILTER(?published >= "{{startDate}}"^^xsd:dateTime)
+FILTER(?created != "")
 }
-}
-ORDER BY DESC(?modified)
+ORDER BY DESC(?created)
+# LIMIT 8

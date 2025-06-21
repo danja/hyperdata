@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <link rel="stylesheet" href="/css/fonts.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/grid-columns.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/style.css" type="text/css"/>
+        <title>FileReaderNG</title>
+    </head>
+    <!-- POST PAGE TEMPLATE -->
+    <body>
+    <strong></strong><em></em>
+        <header id="entry-header">
+            <h1 class="post-title h-cinzel">
+                
+            </h1>
+        </header>
+        <!-- ARTICLE CONTENT -->
+
+<article class="post-content">
+    <h1>FileReaderNG</h1>
+<p>#:todo move to prompts</p>
+<p>Attached is <code>src/processors/fs/FileReader.js</code>. I&#39;d like you to extend this to capture file metadata and added as a field in the message object. The target field will be obtained with <code>message[this.getProperty(ns.trn.metaField)]</code>. So with a target field of <code>meta</code> you might have something like eg.</p>
+<p>message</p>
+<pre><code class="language-json">{
+  &quot;meta&quot; : {
+    &quot;filename&quot; : &quot;example.txt&quot;
+    ...
+  }
+  ...
+}
+</code></pre>
+<p>Please create an artifact with the complete source code.</p>
+<p><code>src/processors/example-group/ExampleProcessor.js</code></p>
+<p>I need a smarter FileReader to pull out file metadata</p>
+<ol>
+<li>state the problem</li>
+<li>write the requirements</li>
+<li>provide the contextual knowledge</li>
+<li>provide any conventions</li>
+</ol>
+<p>highlight unknowns</p>
+<p>read text file</p>
+<pre><code class="language-javascript">// src/processors/fs/FileRemove.js
+/**
+ * FileRemove Processor
+ *
+ * Removes files or directory contents on the local filesystem.
+ * @extends Processor
+ *
+ * #### __*Input*__
+ * * message.applicationRootDir (optional) - The root directory of the application
+ * * message.target (if no settings) - The path of the file or directory to remove
+ *
+ * #### __*Configuration*__
+ * If a settings is provided in the transmission:
+ * * ns.trn.target - The target path relative to applicationRootDir
+ *
+ * #### __*Output*__
+ * * Removes the specified file or directory contents
+ * * message (unmodified) - The input message is passed through
+ *
+ * #### __*Behavior*__
+ * * Removes individual files directly
+ * * Recursively removes directory contents
+ * * Logs debug information about the removal process
+ *
+ * #### __Tests__
+ * `./run file-copy-remove-test`
+ * `npm test -- tests/integration/file-copy-remove-test.spec.js`
+ *
+ */
+</code></pre>
+
+</article>
+<p class="post-title h-cinzel">
+    <a href="https://hyperdata.it/entries/2025-01-15_filereaderng.html">
+        FileReaderNG
+    </a>
+</p> <em></em>
+    </body>
+</html>

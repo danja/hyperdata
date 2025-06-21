@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <link rel="stylesheet" href="/css/fonts.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/grid-columns.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/style.css" type="text/css"/>
+        <title>JSON Restructure Utility</title>
+    </head>
+    <!-- POST PAGE TEMPLATE -->
+    <body>
+    <strong></strong><em></em>
+        <header id="entry-header">
+            <h1 class="post-title h-cinzel">
+                
+            </h1>
+        </header>
+        <!-- ARTICLE CONTENT -->
+
+<article class="post-content">
+    <h1>JSON Restructure Utility</h1>
+<h2>Requirements</h2>
+<ol>
+<li>The script with read JSON files in pairs from a dir <code>input</code>, apply a mapping and write the result to the dir <code>output</code>.</li>
+<li>The shape of the input JSON and mapping won&#39;t be known ahead of time, the variable names and values might be anything valid in JSON.</li>
+<li>In the mappings, a key will be given as &quot;pre&quot; which will give the path to the source data of interest. 4. In the mappings, a  path will be given, &quot;post&quot; that will determine the destination of the contents indicated by &quot;pre&quot;.   </li>
+<li>Any missing <code>pre</code> paths or values will be logged to console as a warning, but processing should continue.</li>
+</ol>
+<p>A sample input, <code>input_01.json</code> :</p>
+<pre><code class="language-json">{
+    &quot;A&quot;: &quot;zero&quot;,
+    &quot;B&quot;: {
+        &quot;a1&quot;: &quot;one&quot;,
+        &quot;a2&quot;: &quot;two&quot;,
+        &quot;a3&quot;: [
+            {
+                &quot;a31&quot;: &quot;three&quot;,
+                &quot;a32&quot;: &quot;four&quot;
+            },
+            {
+                &quot;a33&quot;: &quot;five&quot;,
+                &quot;a34&quot;: &quot;six&quot;
+            }
+        ]
+    },
+    &quot;C&quot;:{
+      &quot;c1&quot;:&quot;seven&quot;
+        }
+}
+</code></pre>
+<p>A sample mapping <code>mapping_01.json</code> :</p>
+<pre><code class="language-json">{
+[
+  {&quot;pre&quot;:&quot;A&quot;,&quot;post&quot;:&quot;U&quot;},
+  {&quot;pre&quot;:&quot;B.a1&quot;,&quot;post&quot;:&quot;V&quot;},
+  {&quot;pre&quot;:&quot;B.a3&quot;,&quot;post&quot;:&quot;W&quot;},
+  {&quot;pre&quot;:&quot;C.c1&quot;, &quot;post&quot;:&quot;X.d&quot;}
+]
+}
+</code></pre>
+<p>Required output <code>output_01.json</code> :</p>
+<pre><code class="language-json">{
+&quot;U&quot;:&quot;zero&quot;,
+&quot;V&quot;: &quot;one&quot;,
+&quot;W&quot;:  [
+    {
+        &quot;a31&quot;: &quot;three&quot;,
+        &quot;a32&quot;: &quot;four&quot;
+    },
+    {
+        &quot;a33&quot;: &quot;five&quot;,
+        &quot;a34&quot;: &quot;six&quot;
+    }
+],
+&quot;X&quot;:{&quot;d&quot;:&quot;seven&quot;}
+}
+</code></pre>
+<p>please refactor restructure.js into classes and methods, so it will be easy to integrate into a different system, where the json data may be passed as strings or objects
+ </p>
+
+</article>
+<p class="post-title h-cinzel">
+    <a href="https://hyperdata.it/prompts/restructure.html">
+        JSON Restructure Utility
+    </a>
+</p> <em></em>
+    </body>
+</html>

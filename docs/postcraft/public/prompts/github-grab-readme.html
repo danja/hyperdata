@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <link rel="stylesheet" href="/css/fonts.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/grid-columns.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/style.css" type="text/css"/>
+        <title>github-grab-readme.md</title>
+    </head>
+    <!-- POST PAGE TEMPLATE -->
+    <body>
+    <strong></strong><em></em>
+        <header id="entry-header">
+            <h1 class="post-title h-cinzel">
+                
+            </h1>
+        </header>
+        <!-- ARTICLE CONTENT -->
+
+<article class="post-content">
+    <p> ./trans ../trans-apps/applications/github-list-repos -P &#39;{&quot;github&quot;: {&quot;name&quot;:&quot;danja&quot;}}&#39;</p>
+<p>The <code>GitHubList</code> process in the transmission is now producing :</p>
+<pre><code class="language-json">&quot;payload&quot;: {
+    &quot;github&quot;: {
+      &quot;name&quot;: &quot;danja&quot;,
+      &quot;repositories&quot;: [
+        &quot;2001&quot;,
+        &quot;aa-module&quot;,
+        &quot;abcjs&quot;,
+        ...
+</code></pre>
+<p>The goal is now to take this, and with the subsequent processors defined in this transmission, carry out these operations :</p>
+<p>For each repository (iterate with <code>JSONWalker</code>), do a HTTP GET on the corresponding README.md, with URLs based on the list in the message from <code>GitHubList</code> following the form :</p>
+<pre><code>https://raw.githubusercontent.com/danja/abcjs/refs/heads/main/README.md
+</code></pre>
+<p>Then using <code>FileWriter</code>, save the text retrieved each GET to file with <code>FileWriter</code> follwoing the pattern :</p>
+<pre><code>target_dir/2001_README.md
+target_dir/abcjs_README.md
+</code></pre>
+<p>Here is the transmission, under <code>trans-apps/applications/github-list-repos/transmissions.ttl</code></p>
+<pre><code class="language-turtle">:github_list_pipeline a trm:Pipeline ;
+trm:pipe (:p10 :p20 :p30 :p40) .
+
+:p10 a :GitHubList .
+:p20 a :JSONWalker ;
+     trm:configKey :repoConfig .
+:p30 a :HttpGet .
+:p40 a :FileWriter ;
+     trm:configKey :repoFsConfig .
+</code></pre>
+<p>You will need to make a corresponding <code>trans-apps/applications/github-list-repos/processors-config.ttl</code></p>
+<p>Use examples like <code>transmissions/src/applications/claude-json-converter/processors-config.ttl</code> for reference.</p>
+<p>Minor changes may be needed to <code>JSONWalker</code>, but keep these to a minimum, wherever possible make things declarative in <code>processors-config.ttl</code> so the processor modules are reusable.
+ </p>
+
+</article>
+<p class="post-title h-cinzel">
+    <a href="https://hyperdata.it/prompts/github-grab-readme.html">
+        github-grab-readme.md
+    </a>
+</p> <em></em>
+    </body>
+</html>

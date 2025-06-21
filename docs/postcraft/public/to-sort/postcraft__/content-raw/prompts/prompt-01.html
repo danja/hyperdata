@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <link rel="stylesheet" href="/css/fonts.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/grid-columns.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/style.css" type="text/css"/>
+        <title>Transmissions Prompt 01</title>
+    </head>
+    <!-- POST PAGE TEMPLATE -->
+    <body>
+    <strong></strong><em></em>
+        <header id="entry-header">
+            <h1 class="post-title h-cinzel">
+                
+            </h1>
+        </header>
+        <!-- ARTICLE CONTENT -->
+
+<article class="post-content">
+    <h1>Transmissions Prompt 01</h1>
+<p>Transmissions is a pipeline runner which applies a series of processes to an object <code>message</code>. Each process is defined an a class with a single method <code>execute(message)</code>. In the present system the pipeline is defined declaratively and an engine is used to instantiate the processor classes and connect them together by means of event listeners. At run time the object is sent to the first processor which does its operation and passes the message to the next processor in the pipeline with <code>emit()</code>.
+To simplify testing I&#39;m trying to make hardcoded pipeline runners that isolate the processors from the pipeline engine. To do this I&#39;ve started by added a return value to the processor&#39;s <code>execute()</code> method. Here is an example.</p>
+<pre><code class="language-javascript">import logger from &#39;../../utils/Logger.js&#39;
+import Processor from &#39;../base/Processor.js&#39;
+
+class NOP extends Processor {
+
+    constructor(config) {
+        super(config);
+    }
+
+    async process(message) {
+      this.emit(&#39;message&#39;, message)
+      return message
+    }
+}
+export default NOP
+</code></pre>
+<p>The simple runner for this is :</p>
+<pre><code class="language-javascript">// nop-runner.js
+import NOP from &#39;../../processors/util/NOP.js&#39;
+
+const config = {}
+
+const nop = new NOP(config)
+
+var message = { &#39;value&#39;: &#39;42&#39; }
+
+message = await nop.process(message)
+
+console.log(&#39;value = &#39; + message.value)
+</code></pre>
+<p>But my problem now is that some of the processors are designed to emit a series of processed messages to be handled independently in the follow parts of the pipeline, which in effect becomes a tree of operations.</p>
+<p>Here is an example of such a processor :</p>
+<pre><code class="language-javascript">// Fork.js
+import logger from &#39;../../utils/Logger.js&#39;
+import Processor from &#39;../base/Processor.js&#39;
+
+class Fork extends Processor {
+
+    constructor(config) {
+        super(config)
+    }
+
+    async process(message) {
+        var nForks = 2
+        if (message.nForks) {
+            nForks = message.nForks
+        }
+
+        for (let i = 0; i &lt; nForks; i++) {
+            var messageClone = structuredClone(message)
+            messageClone.forkN = i
+            this.emit(&#39;message&#39;, message)
+        }
+
+        message.done = true // one extra to flag completion
+
+        this.emit(&#39;message&#39;, message)
+    }
+}
+
+export default Fork
+</code></pre>
+<p>Can you suggest a way of making a simple runner in the style of <code>nop-runner.js</code> but which handles the case of multiple outputs. It must be general-purpose and require only minimal, non-breaking changes to existing code. All processors share a common superclass <code>Process</code> which would be suitable for adding any facilities to all processors. Note that some of the processor&#39;s internal processing rely on the values in <code>config</code> as well as the incoming message.  
+ </p>
+
+</article>
+<p class="post-title h-cinzel">
+    <a href="https://hyperdata.it/to-sort/postcraft__/content-raw/prompts/prompt-01.html">
+        Transmissions Prompt 01
+    </a>
+</p> <em></em>
+    </body>
+</html>

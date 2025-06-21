@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <link rel="stylesheet" href="/css/fonts.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/grid-columns.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/style.css" type="text/css"/>
+        <title>Processor Settings</title>
+    </head>
+    <!-- POST PAGE TEMPLATE -->
+    <body>
+    <strong></strong><em></em>
+        <header id="entry-header">
+            <h1 class="post-title h-cinzel">
+                
+            </h1>
+        </header>
+        <!-- ARTICLE CONTENT -->
+
+<article class="post-content">
+    <h1>Processor Settings</h1>
+<p>I got in a real mess due to inconsistencies in the way data from an application&#39;s <code>config.ttl</code> was being addressed.</p>
+<p>The first version did this kind of thing :</p>
+<pre><code class="language-turtle">### transmissions.ttl
+
+:s1 a :Something ;
+    trm:configKey :moverKey .
+
+### config.ttl
+
+t:mover a trm:ServiceConfig ;
+    trm:key t:moverKey ;
+    trm:source &quot;data/start/one.txt&quot; ;
+    trm:destination &quot;data/single-empty/one.txt&quot; .    
+</code></pre>
+<p>I soon realised that there was an obvious, simpler, better approach (I&#39;ve no idea why I didn&#39;t choose it first). Drop the indirection, refer to the <code>t:mover</code> node directly.
+But the above worked well enough that the change got left undone. A broken #:postcraft application is a good prompt to sort it out.</p>
+<p>There&#39;s another hack in there I can fix at the same time : representing (relative) fs paths as strings. RDF is all about resources, those bits of data deserve <del>URIs</del>IRIs. There are several alternate ways of expressing them according to the <a href="https://www.w3.org/TR/turtle/#sec-iri">Turtle spec</a>.</p>
+<p><em>Related, at some point I&#39;m likely to want to treat those Turtle files as named graphs in a global scope. I&#39;ll cross that bridge when I come to it.</em></p>
+<pre><code class="language-turtle"># A triple with all absolute IRIs
+&lt;http://one.example/subject1&gt; &lt;http://one.example/predicate1&gt; &lt;http://one.example/object1&gt; .
+
+@base &lt;http://one.example/&gt; .
+&lt;subject2&gt; &lt;predicate2&gt; &lt;object2&gt; .     # relative IRIs, e.g. http://one.example/subject2
+</code></pre>
+<p>So I&#39;ll say anything under <code>http://purl.org/stuff/path/</code> can be lifted out to provide a local relative path.</p>
+<p>While I&#39;m at it, I have been confusing myself by using &#39;config&#39; differently in different contexts. Here, I reckon &#39;settings&#39; is a bit more intuitive.</p>
+<p>Ok, now I have :</p>
+<pre><code class="language-turtle">### transmissions.ttl
+...
+:s1 a :Something ;
+    trm:settings :mover .
+
+### config.ttl
+
+@base http://purl.org/stuff/path/ .
+...
+t:mover a trm:ServiceConfig ;
+    trm:source &quot;data/start/one.txt&quot; ;
+    trm:destination &quot;data/single-empty/one.txt&quot; .    
+</code></pre>
+
+</article>
+<p class="post-title h-cinzel">
+    <a href="https://hyperdata.it/entries/2025-01-11_processor-settings.html">
+        Processor Settings
+    </a>
+</p> <em></em>
+    </body>
+</html>

@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <link rel="stylesheet" href="/css/fonts.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/grid-columns.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/style.css" type="text/css"/>
+        <title>Markdown Extensions</title>
+    </head>
+    <!-- POST PAGE TEMPLATE -->
+    <body>
+    <strong></strong><em></em>
+        <header id="entry-header">
+            <h1 class="post-title h-cinzel">
+                
+            </h1>
+        </header>
+        <!-- ARTICLE CONTENT -->
+
+<article class="post-content">
+    <h1>Markdown Extensions</h1>
+<p><em>Original title Turtle Markdown Extensions</em></p>
+<h2></h2>
+<p><a href="https://daringfireball.net/projects/markdown/syntax#link">https://daringfireball.net/projects/markdown/syntax#link</a></p>
+<h2><a href="https://www.markdownguide.org/">https://www.markdownguide.org/</a></h2>
+<h2>Earlier</h2>
+<p>A bit of forward-planning for blog engine stuff. This went on my todo list the other day, since then I&#39;ve had a think, thought I&#39;d better get it down before I forget.</p>
+<p><strong>How to express RDF statements in Markdown?</strong></p>
+<h4>Uses Cases</h4>
+<ol>
+<li>make statements about the md doc</li>
+<li>extract a block of arbitrary Turtle from md doc</li>
+</ol>
+<h4>General Requirements</h4>
+<ol start="0">
+<li>simple to use, simple to implement</li>
+<li>independent of, but compatible with existing markdown tools</li>
+<li>extensible, reasonably modular</li>
+<li>block identifier &amp; delimiters</li>
+<li>useful defaults, easily overriden</li>
+</ol>
+<p><em>Note re. (2) : the markup syntax used will be interpreted as a processing instruction, so while Turtle creation/extraction is the immediate goal, it makes sense for extensibility to consider other possible uses.</em></p>
+<h3>0. General Syntax</h3>
+<p>` :term fur`</p>
+<p>``` :term fur```</p>
+<p>TODO express in <a href="https://en.wikipedia.org/wiki/Backus%E2%80%93Naur_form">BNF</a>
+TODO provide regexes</p>
+<h3>1. Statements about Current Markdown Document</h3>
+<p>` :tag fur`</p>
+<ul>
+<li>the URL of the current document (or a derived version in a format like HTML) will be the subject of the triple</li>
+<li>the string <code>:tag</code> will be interpreted as the term <code>tag</code> from the namespace <code>http://purl.org/stuff/mx/</code> and used as the property of the triple</li>
+<li>the string <code>fur</code> will be used as the literal object of the triple</li>
+</ul>
+<p>TODO result</p>
+<p>In this example <code>fur</code> is one word, a simple string delimited by spaces. Alternatives will include quoting of literals <code>&quot;as in Turtle&quot;</code> for the object as well as the use of URIs using standard Turtle syntax.</p>
+<p>TODO longer example</p>
+<h4>Useful Terms</h4>
+<ul>
+<li>mx:x - extract, as above</li>
+<li>mx:a - rdf:type</li>
+<li>mx:cat - category</li>
+<li>mx:tag</li>
+<li>mx:tags</li>
+</ul>
+<p>TODO fill out as needed, find standard vocab equivalents</p>
+<h3>2. Arbitrary Turtle in Markdown Document</h3>
+<p>Where a block of Turtle should be extracted, the term <code>mx:x</code> should be used, e.g.</p>
+<p><strong>```:x</strong>
+@base <a href="http://example.org/">http://example.org/</a> .
+@prefix foaf: <a href="http://xmlns.com/foaf/0.1/">http://xmlns.com/foaf/0.1/</a> .
+@prefix rel: <a href="http://www.perceive.net/schemas/relationship/">http://www.perceive.net/schemas/relationship/</a> .</p>
+<p>&lt;#green-goblin&gt;
+rel:enemyOf &lt;#spiderman&gt; ;
+a foaf:Person ; # in the context of the Marvel universe
+foaf:name &quot;Green Goblin&quot; .
+<strong>```</strong></p>
+<h3>3. Interpretation Rules</h3>
+<p>TODO</p>
+<p>for eg. mx:tags - provide a simple list syntax</p>
+<p>Terms MAY be interpreted as those in the mx namespace and/or well-known equivalents</p>
+<p>How to say what should be passed to standard markdown processor, what should be cut?</p>
+<h2>Implementation Notes</h2>
+<ul>
+<li>Processing should occur before standard markdown processing.</li>
+<li>Processing will return a dictionary (or equiv).</li>
+</ul>
+<p>eg. :</p>
+<pre><code>contents = mx(markdown_with_extensions)
+
+markdown = contents[&#39;markdown&#39;]
+turtle = contents[&#39;turtle&#39;]
+
+html = to_html(markdown)
+store.add(turtle)
+</code></pre>
+
+</article>
+<p class="post-title h-cinzel">
+    <a href="https://hyperdata.it/to-sort/postcraft__/content-raw/todo/turtle-markdown.html">
+        Markdown Extensions
+    </a>
+</p> <em></em>
+    </body>
+</html>

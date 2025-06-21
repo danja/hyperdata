@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <link rel="stylesheet" href="/css/fonts.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/grid-columns.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/style.css" type="text/css"/>
+        <title>trm.ttl</title>
+    </head>
+    <!-- POST PAGE TEMPLATE -->
+    <body>
+    <strong></strong><em></em>
+        <header id="entry-header">
+            <h1 class="post-title h-cinzel">
+                
+            </h1>
+        </header>
+        <!-- ARTICLE CONTENT -->
+
+<article class="post-content">
+    <p> @prefix rdf: <a href="http://www.w3.org/1999/02/22-rdf-syntax-ns#">http://www.w3.org/1999/02/22-rdf-syntax-ns#</a> .
+@prefix rdfs: <a href="http://www.w3.org/2000/01/rdf-schema#">http://www.w3.org/2000/01/rdf-schema#</a> .
+@prefix owl: <a href="http://www.w3.org/2002/07/owl#">http://www.w3.org/2002/07/owl#</a> .</p>
+<p>@prefix tsm: <a href="http://purl.org/stuff/transmissions/">http://purl.org/stuff/transmissions/</a> .
+@prefix : <a href="http://purl.org/stuff/transmissions/">http://purl.org/stuff/transmissions/</a> .</p>
+<p><a href="http://purl.org/stuff/transmissions/">http://purl.org/stuff/transmissions/</a> rdf:type owl:Ontology ;
+   rdfs:comment &quot;Transmissions Framework Vocabulary&quot; ;
+   rdfs:label &quot;Transmissions&quot; .</p>
+<p>trn:Message a rdfs:Class, owl:Class .</p>
+<p>trn:Processor a rdfs:Class, owl:Class .</p>
+<p>trn:thingy a rdfs:Class, owl:Class ;
+   rdfs:subClassOf trn:thingy ;
+   rdfs:comment &quot;thingy&quot; ;
+   rdfs:isDefinedBy <a href="http://purl.org/stuff/transmissions/">http://purl.org/stuff/transmissions/</a> ;
+   rdfs:label &quot;thingy&quot; .
+ </p>
+
+</article>
+<p class="post-title h-cinzel">
+    <a href="https://hyperdata.it/manual/to-sort/transmission-model/trm.html">
+        trm.ttl
+    </a>
+</p> <em></em>
+    </body>
+</html>

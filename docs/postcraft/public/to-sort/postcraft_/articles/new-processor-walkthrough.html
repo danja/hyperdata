@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <link rel="stylesheet" href="/css/fonts.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/grid-columns.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/style.css" type="text/css"/>
+        <title>Creating a new Service</title>
+    </head>
+    <!-- POST PAGE TEMPLATE -->
+    <body>
+    <strong></strong><em></em>
+        <header id="entry-header">
+            <h1 class="post-title h-cinzel">
+                
+            </h1>
+        </header>
+        <!-- ARTICLE CONTENT -->
+
+<article class="post-content">
+    <h1>Creating a new Service</h1>
+<ol>
+<li>Preparation</li>
+<li>Specification : StringFilter Signature</li>
+<li>Implementation</li>
+<li>Unit Tests</li>
+<li>Integrate</li>
+<li>Integration Test(s)</li>
+<li>Documentation</li>
+</ol>
+<h2>Preparation</h2>
+<p><em>Lean towards YAGNI, at least on the first pass, but reusability is a #SoftGoal, so if a little generalization/extra utility is trivial to put, why not.</em></p>
+<p>What the <strong>globbo</strong> application needs this service to do is filter out strings that don&#39;t match <code>*.md</code>, but this can be generalised at low cost. A common pattern (for patterns) is having an <strong>include</strong> and <strong>exclude</strong> list.</p>
+<p>Find something similar :</p>
+<pre><code>src/services/text/StringReplace.js
+</code></pre>
+<p>Its <strong>Signature</strong> (see JSDocs) declares that it has <code>message.content</code> as an input and output.That&#39;s reusable here.</p>
+<h2>StringFilter Signature</h2>
+<p><strong><em>Input</em></strong></p>
+<ul>
+<li><strong><code>message.content</code></strong> - the string to be tested</li>
+<li><strong><code>message.include</code></strong> - (optional) whitelist, a string or list of strings</li>
+<li><strong><code>message.exclude</code></strong> - (optional) blacklist, a string or list of strings</li>
+</ul>
+<p><strong><em>Output</em></strong></p>
+<ul>
+<li><strong><code>message.content</code></strong></li>
+</ul>
+<p><strong><em>Behavior</em></strong></p>
+<ul>
+<li>first the value of <code>message.content</code> is tested against <code>message.exclude</code>, if a match <strong>isn&#39;t</strong> found, <code>message.content</code> is passed through to the output</li>
+<li>next the value of <code>message.content</code> is tested against <code>message.include</code>, if a match <strong>is</strong> found, <code>message.content</code> is passed through to the output</li>
+</ul>
+<p>The rules need to be defined. Seems easiest to follow those used by systems like <code>package.json</code>. Noted in <code>/home/danny/github-danny/transmissions/docs/postcraft-site/articles/service_string-filter.md</code></p>
+<h2>Implementation</h2>
+<p>The skeleton in : <code>src/services/ServiceExample.js</code> is copied to the appropriate subdir of <code>src/services/</code> (here <code>text</code>) and renamed. The <code>import</code> paths will need adjusting.</p>
+<p>Then the <code>execute(message)</code> needs to be written to provide the required functionality.</p>
+<p><strong>Here is where AI can really help.</strong></p>
+<p>In this instance I&#39;ve expanded the skeleton code a little, which I will pass to an assistant along with a description of the required behaviour (in <code>service_string-filter.md</code>).</p>
+<blockquote>
+<p>At this point in time the #Transmissions repo is such that, after running <code>repopack</code> (see <code>runners.md</code>) the result fits in 78% of the space available to a Claude Project, giving it a good context for understanding what is required.</p>
+</blockquote>
+<pre><code class="language-javascript">import logger from &quot;../../utils/Logger.js&quot;;
+import ProcessService from &quot;../base/Service.js&quot;;
+
+class StringFilter extends ProcessService {
+  constructor(config) {
+    super(config);
+  }
+
+  accepted(message) {
+    var accepted = true;
+    logger.debug(&quot;testing patterns&quot;);
+    return accepted;
+  }
+  async process(message) {
+    logger.debug(
+      &quot;\nStringFilter Input : \nmessage.content = &quot; + message.content
+    );
+    logger.debug(&quot;message.exclude = &quot;);
+    logger.reveal(message.exclude);
+    logger.debug(&quot;message.include = &quot;);
+    logger.reveal(message.include);
+    logger.debug(&quot;\nOutput : \nmessage.content = &quot; + message.content);
+    if (accepted) {
+      this.emit(&quot;message&quot;, message);
+    }
+  }
+}
+
+export default StringFilter;
+</code></pre>
+<p>Claude gave me something that on visual inspection, seemed very close to what I asked for. It got the order of include/exclude back-to-front and made the code a little bit more verbose than it needed to be, but those issues are easily fixed manually.</p>
+<h2>Unit Tests</h2>
+<p>Choose an existing test to serve as a model. <code>tests/unit/NOP.spec.js</code> is minimal but contains the essentials.</p>
+<p><strong>AI time again.</strong></p>
+<h2>Integrate</h2>
+<p>Services are created using the Factory pattern. An entry should be added to <code>TextServicesFactory</code> (simply copy, paste &amp; tweak an existing entry).</p>
+<h2>Integration Test(s)</h2>
+<p>Create a minimal <code>transmission.ttl</code> that uses the new service.</p>
+<p>NEED A VALUE-TESTER SERVICE THAT LOADS A JSON AND/OR RDF FILE AND COMPARES VALUES WITH MESSAGE</p>
+<p>NEED A SINGLETON CAPTUREALL SERVICE TO COLLECT CONTENT</p>
+<ol start="7">
+<li>Documentation</li>
+</ol>
+
+</article>
+<p class="post-title h-cinzel">
+    <a href="https://hyperdata.it/to-sort/postcraft_/articles/new-processor-walkthrough.html">
+        Creating a new Service
+    </a>
+</p> <em></em>
+    </body>
+</html>

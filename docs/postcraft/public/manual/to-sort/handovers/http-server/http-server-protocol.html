@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <link rel="stylesheet" href="/css/fonts.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/grid-columns.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/style.css" type="text/css"/>
+        <title>HTTP Server Message Protocol Specification</title>
+    </head>
+    <!-- POST PAGE TEMPLATE -->
+    <body>
+    <strong></strong><em></em>
+        <header id="entry-header">
+            <h1 class="post-title h-cinzel">
+                
+            </h1>
+        </header>
+        <!-- ARTICLE CONTENT -->
+
+<article class="post-content">
+    <h1>HTTP Server Message Protocol Specification</h1>
+<h2>Worker Thread Message Protocol</h2>
+<h3>Server → Worker Messages</h3>
+<h4>Start Server</h4>
+<pre><code class="language-javascript">{
+  type: &#39;start&#39;,
+  config: {
+    port: number,          // Server port (default: 3000)
+    basePath: string,      // Base URL path (default: &#39;/&#39;)
+    staticPath: string,    // Path to static files
+    cors: boolean,         // Enable CORS (default: false) 
+    timeout: number,       // Request timeout in ms (default: 30000)
+    maxRequestSize: string // Max request size (default: &#39;1mb&#39;)
+    rateLimit: {
+      windowMs: number,    // Time window for rate limiting (default: 15min)
+      max: number         // Max requests per window (default: 100)
+    }
+  }
+}
+</code></pre>
+<h4>Stop Server</h4>
+<pre><code class="language-javascript">{
+  type: &#39;stop&#39;
+}
+</code></pre>
+<h3>Worker → Server Messages</h3>
+<h4>Status Updates</h4>
+<pre><code class="language-javascript">{
+  type: &#39;status&#39;,
+  status: &#39;running&#39; | &#39;stopped&#39;,
+  port?: number  // Included only with &#39;running&#39; status
+}
+</code></pre>
+<h4>Error Reporting</h4>
+<pre><code class="language-javascript">{
+  type: &#39;error&#39;,
+  error: string  // Error message
+}
+</code></pre>
+<h2>Message Flow</h2>
+<ol>
+<li><p>Server startup:</p>
+<ul>
+<li>Server sends &#39;start&#39; message with config</li>
+<li>Worker responds with &#39;status&#39; message (&#39;running&#39;)</li>
+</ul>
+</li>
+<li><p>Normal operation:</p>
+<ul>
+<li>Worker sends &#39;error&#39; messages as needed</li>
+</ul>
+</li>
+<li><p>Shutdown:</p>
+<ul>
+<li>Server sends &#39;stop&#39; message</li>
+<li>Worker cleans up and responds with &#39;status&#39; message (&#39;stopped&#39;)</li>
+<li>Worker terminates</li>
+</ul>
+</li>
+</ol>
+<h2>Error Handling</h2>
+<ul>
+<li>All errors from the worker thread are sent via &#39;error&#39; messages</li>
+<li>Worker continues running after non-fatal errors</li>
+<li>Fatal errors trigger worker termination after error message</li>
+</ul>
+
+</article>
+<p class="post-title h-cinzel">
+    <a href="https://hyperdata.it/manual/to-sort/handovers/http-server/http-server-protocol.html">
+        HTTP Server Message Protocol Specification
+    </a>
+</p> <em></em>
+    </body>
+</html>

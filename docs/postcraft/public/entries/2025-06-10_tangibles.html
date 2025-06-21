@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <link rel="stylesheet" href="/css/fonts.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/grid-columns.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/style.css" type="text/css"/>
+        <title>Where are the Tangibles in Schema.org?</title>
+    </head>
+    <!-- POST PAGE TEMPLATE -->
+    <body>
+    <strong></strong><em></em>
+        <header id="entry-header">
+            <h1 class="post-title h-cinzel">
+                
+            </h1>
+        </header>
+        <!-- ARTICLE CONTENT -->
+
+<article class="post-content">
+    <h1>Where are the Tangibles in Schema.org?</h1>
+<p><strong>tl;dr</strong> : <a href="https://schema.org/">Schema.org</a> has terms for <a href="https://schema.org/Thing">Thing</a>, <a href="https://schema.org/Intangible">Intangible</a> and <a href="https://schema.org/Product">Product</a>, but no obvious way of describing a tangible thing that isn&#39;t necessarily a product.
+I suggest the obvious : <strong><a href="https://schema.org/Tangible">https://schema.org/Tangible</a></strong>, which could be inserted quietly without breaking anything <em>(details at the bottom here)</em>.</p>
+<h2>Motivation</h2>
+<p>One of my many projects-in-progress is a <em>Yet Another</em> <strong>Personal Project Manager</strong>, this one I&#39;m calling #:Farelo. I need a model in which to describe projects, which, this being 2025, will be an ontology expressed in RDF/OWL (#:why-rdf). As it happens I&#39;ve been working on this intermittently for over 20 years, I have a vocab that lives at <a href="https://purl.org/stuff/project">https://purl.org/stuff/project</a>. Some bits I&#39;m happy with, some not so much, and there are one or two terms I intend adding. It also needs alignment with <a href="https://schema.org/">Schema.org</a>, which seems to have taken the role of quasi-upper, maybe <em>Standard Über Ontology</em>.</p>
+<p>Right now I really need the app <em>yesterday</em>, to manage <a href="https://github.com/danja/tensegrity">my tensegrity structure of projects</a> with confusing interdependencies. This time around, rather than trying to work with the software project domain right away, I thought a real-world project would be illuminating as a target. A project I have in progress is a reboot of my music room. It goes something like this :</p>
+<h3>Project : Music Room Reboot</h3>
+<ul>
+<li>Shift everything out of the room</li>
+<li>Redecorate, make furniture,</li>
+<li>Apply acoustic treatment (hang mattresses from the walls)</li>
+<li>Clean, test and if necessary fix all the pieces of equipment</li>
+<li>Shift everything back into the room</li>
+<li>Make a lot of noise</li>
+</ul>
+<p>It is a nice use case for a project management app as there are parts that are strictly sequential : I won&#39;t want to hang mattresses before redecorating. But some bits can happen in parallel : I have shifted pretty much everything out into the office (it&#39;s no longer in the initial <strong>state</strong>), where I&#39;ve wired a bunch of things temporarily, so I can make a lot of noise while everything else progresses.</p>
+<h2>Stuff, a Set of Things</h2>
+<p>Ok, so how do I model all this? Ok, I&#39;ve got most of what I need already covered in the project ontology, though major I am missing from the current version of the  is the concept of <strong>project resources</strong>. These have a definite impact on dependency graphs. In the real world, I need to purchase paint (done!) before I can redecorate (soon...).</p>
+<p>But, again in the real world, above I have <em>all the pieces of equipment</em>. For example, an analog mixer. It&#39;s a <a href="https://www.behringer.com/behringer/product?modelCode=0601-ABT">Behringer Xenyx 2442FX</a>. The device is listed as a <strong>product</strong>, and that fits with Schema.org&#39;s term <a href="https://schema.org/Product">Product</a> :</p>
+<blockquote>
+<p>Any offered product or service. For example: a pair of shoes; a concert ticket; the rental of a car; a haircut; or an episode of a TV show streamed online.</p>
+</blockquote>
+<p>Almost. It certainly <em>was</em> a product, before I bought it. I&#39;m very unlikely to offer it as a product again - even if I&#39;m able to get the couple of dead channels working, it also features some metalwork damage from the time I broke an acoustic guitar on it (a sudden power outage corrupted a whole day&#39;s work, I was very annoyed). Resale value - I&#39;d probably give €20 for it if I was really stuck.</p>
+<p>Also in the <em>stuff</em> is my primary guitar, <a href="https://hyperdata.it/stuff/vinocaster/">The Vinocaster</a>. A custom job, made by me to be exactly what I wanted. Which, for all practical purposes, it is. It is a <strong>product</strong> in the sense that I produced it (<em>over many, many hours</em>). But that&#39;s not how <code>schema:Product</code> is defined.</p>
+<h2>Pebble Dashed</h2>
+<p>Going a step further, how do I describe the subject of this image :</p>
+<p><img src="/images/2025-06/pebble.jpeg" alt="a pebble"></p>
+<pre><code class="language-turtle">[
+    a schema:Thing ;
+    rdfs:label &quot;pebble&quot; ;
+    :weight &quot;200&quot;
+]
+</code></pre>
+<p>Ok, so the Schema.org vocab is maintained largely by corporate entities, in the view of which <strong>the Web is a marketing tool</strong>. Chances are my local browser has encountered Schema.org terms in <strong>HTML <meta> tags</strong> a few dozen times already today. Thing <em>[sic]</em> is, <strong>the Web is more than just a marketing tool</strong>.</p>
+<p>So how about  :</p>
+<blockquote>
+<p>Tangible is a subclass of Thing disjoint from Intangible. It has the description of &quot;a thing which is apprehensible as physically real or existent by the senses&quot;. (Product is a subclass of the union of Tangible and Intangible).</p>
+</blockquote>
+<h3>A Modest Proposal</h3>
+<pre><code class="language-turtle">@prefix owl: &lt;http://www.w3.org/2002/07/owl#&gt; .
+@prefix rdfs: &lt;http://www.w3.org/2000/01/rdf-schema#&gt; .
+@prefix dc: &lt;http://purl.org/dc/elements/1.1/&gt; .
+@prefix schema: &lt;http://schema.org/&gt; .
+@prefix : &lt;http://example.org/ontology#&gt; .
+
+# Define Tangible as a subclass of Thing, disjoint from Intangible
+schema:Tangible a owl:Class ;
+    rdfs:label &quot;Tangible&quot; ;
+    dc:description &quot;a thing which is apprehensible as physically real or existent by the senses&quot; ;
+    owl:subClassOf schema:Thing ;
+    owl:disjointWith schema:Intangible .
+
+schema:Product a owl:Class ;
+    owl:subClassOf [
+        a owl:Class ;
+        owl:unionOf ( schema:Tangible schema:Intangible )
+    ] .
+
+    :MyLittlePebble a schema:Tangible ;
+    :weight &quot;300&quot; .
+</code></pre>
+
+</article>
+<p class="post-title h-cinzel">
+    <a href="http://danny.ayers.name/entries/2025-06-10_tangibles.html">
+        Where are the Tangibles in Schema.org?
+    </a>
+</p> <em></em>
+    </body>
+</html>

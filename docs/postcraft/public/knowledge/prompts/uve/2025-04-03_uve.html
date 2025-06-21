@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <link rel="stylesheet" href="/css/fonts.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/grid-columns.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/style.css" type="text/css"/>
+        <title>UVE</title>
+    </head>
+    <!-- POST PAGE TEMPLATE -->
+    <body>
+    <strong></strong><em></em>
+        <header id="entry-header">
+            <h1 class="post-title h-cinzel">
+                
+            </h1>
+        </header>
+        <!-- ARTICLE CONTENT -->
+
+<article class="post-content">
+    <h1>UVE</h1>
+<p><em>Universal Virtual Environment, and grapes</em></p>
+<h2>Overview</h2>
+<p>UVE is a rendering of conceptual space in 3D using threejs. It follows a model like that of UML class diagrams, except classes are represented as spheres, relationships between them represented as labeled pipes. Interfaces will be represented as ports on the surface of spheres. The user navigates through the space using mouse or arrow keys, having a first-person camera pov. Initially only a handful of class sphere will be visible. If the user navigates into the surface of a class sphere, they will enter, to find a space containing interlinked spheres corresponding to the subclasses.</p>
+<p>The world model will be represented as an RDF/OWL model using RDF-Ext, in particular the Grapoi libraries for navigation in the space.</p>
+<p>As a first example, a group of 5 friends will appear, expressed using the FOAF vocabulary.</p>
+<h2>Architecture</h2>
+<ul>
+<li>The final requirements are yet to be determined, so it is designed for serendipity</li>
+<li>Small, loosely-coupled modules will be organized as Model and Views in a pub-sub messaging architecture with the model having a common bus</li>
+<li>Change events will be propagated between the views and model many-to-one. Two views will be used initially : one, an RDF graph that is read and written from an RDF Turtle syntax file. The other is the threejs rendering.</li>
+</ul>
+<h2>Coding Conventions</h2>
+<ul>
+<li>Modern Javascript with best known practices in an agile style, lots of small iterations, lots of refactoring</li>
+<li>All code will be vanilla Javascript unless stated otherwise</li>
+<li>Every important part of code will have an associated unit test</li>
+<li>comments will be terse and appear at the class and method level, but only inline when the functionality of code isn&#39;t self-explanatory</li>
+<li>developer and end-user documentation will be created concurrently with the code and tests</li>
+</ul>
+<h2>Tools and Libraries</h2>
+<ul>
+<li>threejs</li>
+<li>loglevel</li>
+<li>WebPack</li>
+<li>node with npm where appropriate, using ES modules</li>
+<li>Jasmine &amp; chai for tests</li>
+<li>JSDoc</li>
+<li>typescript types will be included for the benefit of IDEs</li>
+</ul>
+
+</article>
+<p class="post-title h-cinzel">
+    <a href="https://hyperdata.it/knowledge/prompts/uve/2025-04-03_uve.html">
+        UVE
+    </a>
+</p> <em></em>
+    </body>
+</html>

@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <link rel="stylesheet" href="/css/fonts.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/grid-columns.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/style.css" type="text/css"/>
+        <title>Packer Pipeline Flow</title>
+    </head>
+    <!-- POST PAGE TEMPLATE -->
+    <body>
+    <strong></strong><em></em>
+        <header id="entry-header">
+            <h1 class="post-title h-cinzel">
+                
+            </h1>
+        </header>
+        <!-- ARTICLE CONTENT -->
+
+<article class="post-content">
+    <h1>Packer Pipeline Flow</h1>
+<h2>Command Processing</h2>
+<ol>
+<li><code>./trans packer ./src</code> initiates with:<ul>
+<li>application = &quot;packer&quot; </li>
+<li>target = &quot;./src&quot;</li>
+<li>Command utils resolves target to absolute path</li>
+<li>Sets targetPath in message object</li>
+</ul>
+</li>
+</ol>
+<h2>Pipeline Components</h2>
+<h3>1. DirWalker (p10)</h3>
+<ul>
+<li>Input: message with targetPath = resolved &quot;./src&quot; path</li>
+<li>Config: <pre><code class="language-turtle">trn:dirWalker a trn:ConfigSet ;
+  trn:sourceDir &quot;.&quot; ;
+  trn:includeExtensions &quot;[&#39;.md&#39;,&#39;.js&#39;,&#39;.ttl&#39;]&quot;
+</code></pre>
+</li>
+<li>Process:<ul>
+<li>Walks target directory recursively</li>
+<li>Filters files by includeExtensions</li>
+<li>For each matching file emits message with:<pre><code class="language-javascript">{
+  filepath: relative path,
+  fullPath: absolute path,
+  filename: basename,
+  content: undefined // filled by FileReader
+}
+</code></pre>
+</li>
+</ul>
+</li>
+</ul>
+<h3>2. StringFilter (p20)</h3>
+<ul>
+<li>Input: individual file messages from DirWalker</li>
+<li>Config:<pre><code class="language-turtle">trn:filterConfig a trn:ConfigSet ;
+  trn:includePatterns &quot;*.txt,*.md,*.js...&quot; ;
+  trn:excludePatterns &quot;node_modules/*,dist/*...&quot;
+</code></pre>
+</li>
+<li>Process:<ul>
+<li>Filters files based on include/exclude patterns</li>
+<li>Passes matching files downstream</li>
+<li>Drops non-matching files</li>
+</ul>
+</li>
+</ul>
+<h3>3. FileReader (p30)</h3>
+<ul>
+<li>Input: filtered file messages</li>
+<li>Config:<pre><code class="language-turtle">trn:readConfig a trn:ConfigSet ;
+  trn:mediaType &quot;text/plain&quot;
+</code></pre>
+</li>
+<li>Process:<ul>
+<li>Reads file content</li>
+<li>Adds content to message.content</li>
+<li>Preserves file metadata</li>
+</ul>
+</li>
+</ul>
+<h3>4. FileContainer (p40)</h3>
+<ul>
+<li>Input: messages with file content</li>
+<li>Config: <pre><code class="language-turtle">trn:containerConfig a trn:ConfigSet ;
+  trn:destination &quot;repomix.json&quot;
+</code></pre>
+</li>
+<li>Process:<ul>
+<li>Accumulates files and metadata</li>
+<li>Builds container structure:<pre><code class="language-javascript">{
+  files: {
+    [relativePath]: {
+      content: string,
+      type: string,
+      timestamp: string
+    }
+  },
+  summary: {
+    totalFiles: number,
+    fileTypes: Record&lt;string, number&gt;
+  }
+}
+</code></pre>
+</li>
+</ul>
+</li>
+</ul>
+<h3>5. CaptureAll (p50)</h3>
+<ul>
+<li>Stores all messages in whiteboard array</li>
+<li>Preserves message flow</li>
+</ul>
+<h3>6. WhiteboardToMessage (p60)</h3>
+<ul>
+<li>Transforms whiteboard array into structured message</li>
+<li>Groups similar properties</li>
+</ul>
+<h3>7. Unfork (p70)</h3>
+<ul>
+<li>Collapses forked message paths</li>
+<li>Ensures single output path</li>
+</ul>
+<h3>8. FileWriter (p80)</h3>
+<ul>
+<li>Input: final container message</li>
+<li>Config:<pre><code class="language-turtle">trn:writeConfig a trn:ConfigSet ;
+  trn:destinationFile &quot;repomix-output.txt&quot;
+</code></pre>
+</li>
+<li>Process:<ul>
+<li>Writes formatted container to output file</li>
+<li>Returns success message</li>
+</ul>
+</li>
+</ul>
+<h2>Expected Output</h2>
+<ul>
+<li>repomix-output.txt containing:<ul>
+<li>Directory structure of src/</li>
+<li>File contents</li>
+<li>File metadata</li>
+<li>Summary statistics</li>
+</ul>
+</li>
+</ul>
+<h2>Key Message Properties Throughout Pipeline</h2>
+<pre><code class="language-javascript">{
+  targetPath: &quot;/absolute/path/to/src&quot;,
+  rootDir: &quot;/path/to/packer/app&quot;,
+  filepath: &quot;relative/path/to/file&quot;,
+  content: &quot;file contents&quot;,
+  done: boolean // indicates completion
+}
+</code></pre>
+<h2>Error Handling</h2>
+<ol>
+<li>DirWalker handles missing/invalid directories</li>
+<li>StringFilter validates patterns before use</li>
+<li>FileReader checks file accessibility</li>
+<li>FileContainer validates content structure </li>
+<li>FileWriter ensures directory exists</li>
+</ol>
+<h2>Debug Points</h2>
+<ul>
+<li>Check message.targetPath in DirWalker</li>
+<li>Verify pattern loading in StringFilter</li>
+<li>Monitor content preservation in FileReader</li>
+<li>Validate container structure before write</li>
+</ul>
+
+</article>
+<p class="post-title h-cinzel">
+    <a href="https://hyperdata.it/manual/to-sort/how-packer-should-work/packer-flow.html">
+        Packer Pipeline Flow
+    </a>
+</p> <em></em>
+    </body>
+</html>

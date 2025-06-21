@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <link rel="stylesheet" href="/css/fonts.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/grid-columns.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/style.css" type="text/css"/>
+        <title>ForEach processor module for Transmissions</title>
+    </head>
+    <!-- POST PAGE TEMPLATE -->
+    <body>
+    <strong></strong><em></em>
+        <header id="entry-header">
+            <h1 class="post-title h-cinzel">
+                
+            </h1>
+        </header>
+        <!-- ARTICLE CONTENT -->
+
+<article class="post-content">
+    <h1>ForEach processor module for Transmissions</h1>
+<p>Your Goal is to write a processor module for Transmissions that will initiate multiple processing pipelines based on a list provided in the incoming message. First review these instructions as a whole, and then identify the subgoals. Then, taking each subgoal in turn, break it down into a concrete series of tasks. Carry out the sequence of tasks.<br>You have plenty of time, so don&#39;t rush, try to be as careful in understanding and operation as possible.
+Existing source code may be found in the Project Knowledge files.</p>
+<p>Two modules are required -</p>
+<ol>
+<li><code>ForEach</code> located in :</li>
+</ol>
+<pre><code class="language-sh">./transmissions/src/processors/flow/ForEach.js
+</code></pre>
+<p>modeled on :</p>
+<pre><code class="language-sh">./transmissions/src/processors/templates/ProcessorTemplate.js
+</code></pre>
+<ol start="2">
+<li><code>FlowProcessorsFactory</code> located in</li>
+</ol>
+<pre><code class="language-sh">./transmissions/src/processors/flow/FlowProcessorsFactory.js
+</code></pre>
+<p>modeled on :</p>
+<pre><code class="language-sh">/transmissions/src/processors/templates/TemplateProcessorsFactory.js
+</code></pre>
+<p>The input message will contain the list to be processed in the form of this example :</p>
+<pre><code class="language-json">{
+  &quot;foreach&quot; :
+  [&quot;item1&quot;, &quot;item2&quot;, &quot;item3&quot;]
+}
+</code></pre>
+<p>The behavior will be to emit the message to a subsequent processor using the existing engine infrastructure, like a simpler version of :</p>
+<pre><code class="language-sh">transmissions/src/processors/fs/DirWalker.js
+</code></pre>
+<p>Each message emitted will be a structuredClone of the input message.  </p>
+<p>Once this code is completed, create application definitions in the form of these examples :</p>
+<pre><code class="language-sh">transmissions/src/applications/test_fork/transmissions.ttl
+transmissions/src/applications/test_fork/processors-config.ttl
+</code></pre>
+<p>After you have finished all these, re-read the high level Goal and taking each of your derived subgoals in turn, review your code to ensure that it fulfils the requirements.
+Show me the full source of the implementations.</p>
+<hr>
+<p>/home/danny/github-danny/postcraft/danny.ayers.name/content-raw/entries/2024-09-27_lively-distractions.md</p>
+<p><a href="https://github.com/github/rest-api-description">https://github.com/github/rest-api-description</a>
+ </p>
+
+</article>
+<p class="post-title h-cinzel">
+    <a href="https://hyperdata.it/to-sort/postcraft__/content-raw/prompts/foreach.html">
+        ForEach processor module for Transmissions
+    </a>
+</p> <em></em>
+    </body>
+</html>

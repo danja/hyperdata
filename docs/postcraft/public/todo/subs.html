@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <link rel="stylesheet" href="/css/fonts.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/grid-columns.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/style.css" type="text/css"/>
+        <title>subs.md</title>
+    </head>
+    <!-- POST PAGE TEMPLATE -->
+    <body>
+    <strong></strong><em></em>
+        <header id="entry-header">
+            <h1 class="post-title h-cinzel">
+                
+            </h1>
+        </header>
+        <!-- ARTICLE CONTENT -->
+
+<article class="post-content">
+    <pre><code class="language-prompt">There was talk of adding support for one transmission loading another like a subroutine to help things be more modular, encapsulated. These would be declared in a `transmissions.tll` for example as :
+
+```turtle
+@prefix : &lt;http://purl.org/stuff/transmissions/&gt; .
+
+:parent a :Transmission ;
+   :pipe (:p10 :p20 :p30) .
+
+:p10  a :NOP .
+:p20  a :child .
+:p30  a :ShowMessage .
+
+:child a :Transmission ;
+ :pipe (:c10 :c20) .
+
+:c10 a :NOP .
+:c20 a :NOP .
+</code></pre>
+<p>With this, the system would use <code>src/engine/ApplicationManager.js</code> to create an <code>src/model/Application.js</code> containing two instances of <code>src/model/Transmission.js</code> with <code>src/engine/TransmissionBuilder.js</code>, these would be connected together by instances of <code>src/model/Connector.js</code>. When run the message flow would be equivalent to :</p>
+<pre><code class="language-turtle">:combined a :Transmission ;
+    :pipe (:p10 :c10 :c20 :p30) .
+</code></pre>
+<p>There may be some kind of support for this already in place, otherwise how would you suggest implementing this feature?</p>
+<pre><code> 
+</code></pre>
+
+</article>
+<p class="post-title h-cinzel">
+    <a href="https://hyperdata.it/todo/subs.html">
+        subs.md
+    </a>
+</p> <em></em>
+    </body>
+</html>

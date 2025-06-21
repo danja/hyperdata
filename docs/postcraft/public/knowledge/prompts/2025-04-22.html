@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <link rel="stylesheet" href="/css/fonts.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/grid-columns.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/style.css" type="text/css"/>
+        <title>2025-04-22.md</title>
+    </head>
+    <!-- POST PAGE TEMPLATE -->
+    <body>
+    <strong></strong><em></em>
+        <header id="entry-header">
+            <h1 class="post-title h-cinzel">
+                
+            </h1>
+        </header>
+        <!-- ARTICLE CONTENT -->
+
+<article class="post-content">
+    <p> In project knowledge you will find the utilities :</p>
+<ul>
+<li><code>src/utils/browser-rdf-ext.js</code></li>
+<li><code>src/utils/browser-rdf-utils.js</code></li>
+<li><code>src/utils/BrowserUtils.js</code></li>
+<li><code>src/utils/DatasetUtils.js</code></li>
+<li><code>src/utils/RDFUtils.js</code></li>
+<li><code>src/utils/GrapoiHelpers.js</code></li>
+</ul>
+<p>These are very messy and there&#39;s some redundancy. Please identify where in the core source these are used and create Jasmine unit tests for the classes that use them. Jasmine, not Jest. Think deeply to understand that we don&#39;t want to test the above directly at this stage, rather we need to test the parts of the codebase where they are used, that&#39;s the functionality we are interested in right now. Please render the tests as individual, complete artifacts. Let me run these to confirm correct operation before we proceed.</p>
+<p>need to be refactored into :</p>
+<ul>
+<li><code>src/utils/RDFNodeUtils.js</code> - for core nodejs operations</li>
+<li><code>src/utils/RDFBrowserUtils.js</code> - for browser-related operations</li>
+<li><code>src/utils/RDFMockUtils.js</code> - for mock object related operations</li>
+</ul>
+<p>Each of these files should contain a single class, so we&#39;ll have: <code>RDFNodeUtils</code>, <code>RDFBrowserUtils</code> and <code>RDFMockUtils</code>.
+ </p>
+
+</article>
+<p class="post-title h-cinzel">
+    <a href="https://hyperdata.it/knowledge/prompts/2025-04-22.html">
+        2025-04-22.md
+    </a>
+</p> <em></em>
+    </body>
+</html>

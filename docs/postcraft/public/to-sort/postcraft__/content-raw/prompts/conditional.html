@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <link rel="stylesheet" href="/css/fonts.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/grid-columns.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/style.css" type="text/css"/>
+        <title>Conditional processor module for Transmissions</title>
+    </head>
+    <!-- POST PAGE TEMPLATE -->
+    <body>
+    <strong></strong><em></em>
+        <header id="entry-header">
+            <h1 class="post-title h-cinzel">
+                
+            </h1>
+        </header>
+        <!-- ARTICLE CONTENT -->
+
+<article class="post-content">
+    <h1>Conditional processor module for Transmissions</h1>
+<p>Your Goal is to write a processor module for Transmissions that will initiate multiple processing pipelines based on a list provided in the incoming message. First review these instructions as a whole, and then identify the subgoals. Then, taking each subgoal in turn, break it down into a concrete series of tasks. Carry out the sequence of tasks.<br>You have plenty of time, so don&#39;t rush, try to be as careful in understanding and operation as possible.
+Existing source code may be found in the Project Knowledge files.</p>
+<p>Two modules are required -</p>
+<ol>
+<li><code>Conditional</code> located in :</li>
+</ol>
+<pre><code class="language-sh">./transmissions/src/processors/flow/Conditional.js
+</code></pre>
+<p>modeled on :</p>
+<pre><code class="language-sh">./transmissions/src/processors/templates/ProcessorTemplate.js
+</code></pre>
+<p>The input message will be in the form of this example :</p>
+<pre><code class="language-json">{
+  &quot;data&quot; : {
+    &quot;person&quot;:{
+      &quot;name&quot; : &quot;Steve&quot;,
+      &quot;female&quot;: &quot;false&quot;,  
+      &quot;properties&quot; : {
+        &quot;height&quot;: &quot;100&quot;,
+        &quot;width&quot;:&quot;50&quot;
+    }
+  }
+  }
+  &quot;conditions&quot; :
+  [
+    {
+      &quot;label&quot;: &quot;label2&quot;,
+      &quot;type&quot;: &quot;boolean&quot;,
+      &quot;pointer&quot;: &quot;data.person.female&quot;
+    },
+    {
+      &quot;label&quot;: &quot;label1&quot;,
+      &quot;type&quot;: &quot;match&quot;,
+      &quot;pointer&quot;: &quot;data.name&quot;,
+      &quot;test&quot;:   {    
+        &quot;properties&quot; : {
+            &quot;height&quot;: &quot;100&quot;,
+            &quot;width&quot;:&quot;50&quot;
+          }
+        }
+    }
+  ]
+}
+</code></pre>
+<p>The <code>data</code> block is arbitrary, could be any shape, dependent on previous Processors.
+The <code>conditional</code> block is used by the <code>Conditional</code> processor to examine the message as a whole and extract a boolean value.
+Here there are two types of conditional test, others may be added later so structure the code for easy extension.
+In both cases <code>label</code> will be a simple string which may be used in debugging.
+<code>pointer</code> will locate a position in the data tree following standard Javascript style referencing.
+The <code>boolean</code> type of test will simply check for a true/false value at the given pointer.
+The <code>match</code> type of test will compare the values within its <code>test</code> structure against the message. Only the keys and values defined in <code>test</code> will be checked, everything else is ignored. <code>true</code> is the default, but there is an mismatch, the value <code>true</code> is produced.</p>
+<p> The results of individual condition will be combined using an operator which will be supplied in the <code>config.operator</code> value of the instance of <code>Condition</code>. It will default to logical <code>or</code>.</p>
+<p>The resultant behavior will be to emit the input message to subsequent processors using existing engine infrastructure, similar in operation to :</p>
+<pre><code class="language-sh">transmissions/src/processors/util/Fork.js
+</code></pre>
+<p>Each message emitted will be a structuredClone of the input message.  </p>
+<p>Once this code is completed, create application definitions in the form of these examples :</p>
+<pre><code class="language-sh">transmissions/src/applications/test_conditional/transmissions.ttl
+transmissions/src/applications/test_conditional/processors-config.ttl
+</code></pre>
+<p>Then create <code>transmissions/src/simples/conditional.js</code> following the shape of the example in <code>transmissions/src/simples/env-loader/env-loader.js</code>.</p>
+<p>After you have finished all these, re-read the high level Goal and taking each of your derived subgoals in turn, review your code to ensure that it fulfils the requirements.
+Show me the full source of the implementations.</p>
+<hr>
+<p>/home/danny/github-danny/postcraft/danny.ayers.name/content-raw/entries/2024-09-27_lively-distractions.md</p>
+<p><a href="https://github.com/github/rest-api-description">https://github.com/github/rest-api-description</a>
+ </p>
+
+</article>
+<p class="post-title h-cinzel">
+    <a href="https://hyperdata.it/to-sort/postcraft__/content-raw/prompts/conditional.html">
+        Conditional processor module for Transmissions
+    </a>
+</p> <em></em>
+    </body>
+</html>

@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <link rel="stylesheet" href="/css/fonts.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/grid-columns.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/style.css" type="text/css"/>
+        <title>Transmissions : Next Steps</title>
+    </head>
+    <!-- POST PAGE TEMPLATE -->
+    <body>
+    <strong></strong><em></em>
+        <header id="entry-header">
+            <h1 class="post-title h-cinzel">
+                
+            </h1>
+        </header>
+        <!-- ARTICLE CONTENT -->
+
+<article class="post-content">
+    <h1>Transmissions : Next Steps</h1>
+<p><a href="https://docs.npmjs.com/cli/v11/configuring-npm/package-json">https://docs.npmjs.com/cli/v11/configuring-npm/package-json</a></p>
+<p>graphicals</p>
+<h2>feature : Docs</h2>
+<p>Enough for Bergi to be able to review the RDF-Ext bits.</p>
+<p>docs - what has Bergi used for syntax highlighting in RDF-Ext?</p>
+<h3>feature : Signature standard</h3>
+<p>Comments, add <code>src/processors/system/SignatureParser</code></p>
+<h3>feature : Aux + Describe</h3>
+<p>property in <code>transmissions.ttl</code> like</p>
+<pre><code class="language-turtle">:p a :Processor ;
+    :aux :Describe .
+</code></pre>
+<p>runs an auxiliary process, first case Describe to log the <strong>Signature</strong> of <code>:p</code></p>
+<h3>Misc</h3>
+<p>tweak DirWalker &amp; ForEach to copy <code>message.app.datas</code> along, make an implementation note somewhere</p>
+<p>Integration tests based on applications - need a fixture</p>
+<p>rename addTag</p>
+<p>#:feature types
+#:feature inline settings
+#:bugfix subtask support
+#:feature Node Flow integration</p>
+<p><a href="https://elicdavis.github.io/node-flow/">https://elicdavis.github.io/node-flow/</a>
+observer pattern - callbacks on Transmission etc.
+add Observer superclass?
+consider semem integration</p>
+<ol>
+<li>transmissions editor</li>
+<li>live interactions</li>
+</ol>
+<p><strong>2025-02-06</strong></p>
+<p>improve reveal()</p>
+<ul>
+<li><p>terrapacks</p>
+</li>
+<li><p>clients</p>
+</li>
+<li><p>duckduckgo</p>
+</li>
+<li><p>toRDF()</p>
+</li>
+<li><p>subtransmissions - test</p>
+</li>
+</ul>
+<p><strong>2025-02-04</strong></p>
+<ul>
+<li>remote modules loading again - ok for now, #:todo /home/danny/github-danny/hyperdata/workspaces/transmissions/todo/module-loader.md</li>
+</ul>
+<hr>
+<p>move claude dumps out of the way!</p>
+<p><echo> a :Application .</p>
+<p><this> a :ApplicationSession ;
+    :application <echo> ;
+    :config <config> .</p>
+<p>allow reading of transmission + config as one file etc.</p>
+<p>allow direct properties on processors in transmissions -</p>
+<p>instead of having to use config, ie :</p>
+<pre><code>var die = this.getProperty(ns.trn.die)
+logger.log(`die = ${die}`)
+if (die == &quot;true&quot;) {
+    process.exit(1)
+}
+</code></pre>
+<p>fix all applications with <code>:key</code> in their config</p>
+<pre><code class="language-turtle">:ccc40 a :JSONWalker ;
+     trn:settings :messagesConfig .
+
+
+:MessagesWalker a :ConfigSet ;
+    :key :messagesConfig ;
+    :pointer &quot;content&quot; .
+</code></pre>
+<pre><code>  :ccc40 a :JSONWalker ;
+       trn:settings :MessagesWalker .
+
+
+  :MessagesWalker a :ConfigSet ;
+      :pointer &quot;content&quot; .
+    ```
+
+
+
+https://opentelemetry.io/docs/languages/js/
+
+* packer
+* squirt
+* watch Processor (after the worker thread bits sorted)
+
+* mcp ns - make callers for Ollama, Grok, Mistral, Claude, OpenAI
+Please make a turtle rdf representation of the schemas attached.  
+
+* look into fs `watch` and git messaging to pull recent changes into #:postcraft
+* quick overview doc (enough for ClaudioB)
+* fix modules/trans-apps
+* transmissions/todo/sub-trans.md
+* sort out refactoring todos
+
+* mcp ns/Processors
+* clients for Ollama, Grok, Mistral, Claude, OpenAI...
+* update librechat
+
+the `processors/postcraft` need un-hardcoding
+
+claude json artifacts
+
+#:todo write #:semtag &#39;spec&#39; and make processor
+
+* HttpServer : Integrate - refactor workers handling
+* Ping : Integrate - needs tests
+* signatures (in NS) : Integrate
+
+* Stat
+* Sort
+* FilenameMap : Integrate
+* MarkMap : Integrate
+
+
+
+
+#:um term #:integrate - `um:Integration rdf:subClassOf um:Phase .`
+
+* first pass at an aggregator - current dev techniques, gather data on dev process
+
+### App Gen : Integrate
+
+**vocab : configKey**
+
+tests/helpers/FileTestHelper.js
+
+tests/helpers/TestDataGenerator.js
+
+tests/examples/generate-test-data.js
+
+### App Gen : Integrate
+
+/home/danny/github-danny/transmissions/staging
+https://claude.ai/chat/ebf4dd53-7801-49ea-9841-0de9ae2cb394
+
+### Find latest files
+
+* `fs/Stat.js`
+* `json/Sort.js`
+
+### Streaming : Integrate
+
+SORT OUT
+```javascript
+if (message.targetPath) {
+     f = path.join(message.targetPath, filepath)
+ } else {
+     f = path.join(message.dataDir, filepath)
+ }
+</code></pre>
+<p>#:todo ShowConnections util
+#:todo validator for pipe (no duplicates!)</p>
+<p>#:todo pass a module as <code>message</code>, make an <code>Execute</code> processor (unsafe)</p>
+<p>New utility :</p>
+<pre><code class="language-turtle">:SV a :ShowValue . # show a named value in the message
+</code></pre>
+<p>#:transmissions demo : blackjack &amp; hookers</p>
+<p>hookers = webhooks</p>
+<p>docs : # trm:pipe (:walk_convs :uf_convs  :retree1  :walk_msgs :uf_msgs :SM :DE :retree2  :mf :write) .</p>
+<p>#:todo use &#39;payload&#39; rather that &#39;content&#39; as default in messages?</p>
+<p>#:todo in <code>FileWriter</code> dump, add datetime stamp to filename</p>
+<h3>ShowConnections util</h3>
+<p>In transmissions :</p>
+<pre><code class="language-turtle">t:retree a trm:ServiceConfig ;
+</code></pre>
+<p>In config :</p>
+<pre><code class="language-turtle">t:retree a trm:ServiceConfig ;
+    trm:rename (t:pp1 t:pp2 t:pp3) . # consider using blank nodes
+    t:pp1   trm:pre     &quot;content.item.chat_messages&quot; ;
+</code></pre>
+<hr>
+<h2>Done</h2>
+<ul>
+<li><p>make tests for <code>Restructure.js</code></p>
+</li>
+<li><p>get <code>src/applications/claude-json-converter</code> working</p>
+</li>
+<li><p>fix #:postcraft - good enough for now</p>
+</li>
+</ul>
+
+</article>
+<p class="post-title h-cinzel">
+    <a href="https://hyperdata.it/todo/transmissions-next-steps.html">
+        Transmissions : Next Steps
+    </a>
+</p> <em></em>
+    </body>
+</html>

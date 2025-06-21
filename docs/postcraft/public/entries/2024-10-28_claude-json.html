@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <link rel="stylesheet" href="/css/fonts.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/grid-columns.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/style.css" type="text/css"/>
+        <title>Re-Rendering Claude Chat JSON Data</title>
+    </head>
+    <!-- POST PAGE TEMPLATE -->
+    <body>
+    <strong></strong><em></em>
+        <header id="entry-header">
+            <h1 class="post-title h-cinzel">
+                
+            </h1>
+        </header>
+        <!-- ARTICLE CONTENT -->
+
+<article class="post-content">
+    <h1>Re-Rendering Claude Chat JSON Data</h1>
+<p>I&#39;m using Claude&#39;s Projects a <em>lot</em>, and have been attempting to keep projects distinct. But I hop around between them, and leave many threads in-progress, it&#39;s got very difficult to find things. But a JSON export is available.</p>
+<p>What I&#39;d like is <code>converstations.json</code> rendered on the fs something like :</p>
+<pre><code>&gt; ROOT
+  meta_r.ttl
+    &gt; PROJECT1
+      meta_p1.ttl
+      &gt; SESSION1
+        meta_s1.ttl
+        text1.md
+        text2.md
+        ...
+      &gt; SESSION2
+        ...
+    &gt; PROJECT2
+   ...
+</code></pre>
+<p><em>I started building the #:transmission for these as an application away from the core <a href="https://github.com/danja/transmissions">transmissions repo</a>, over in <a href="https://github.com/danja/trans-apps">trans-apps</a>. But got in a tangle with paths in <code>ModuleLoader</code>, so reverted to putting it in the core for now. One problem at a time...</em></p>
+<p>Last night I got the #:transmission this far (very hackily) :</p>
+<pre><code class="language-turtle">:cjc a trm:Pipeline ;
+
+trm:pipe (:p10 :p30 :p40) .
+
+:p10 a :JSONWalker .
+:p20 a :Unfork .
+:p30 a :MarkdownFormatter .
+:p40 a :FileWriter .
+</code></pre>
+<p>This is run from:</p>
+<pre><code class="language-sh">./trans claude-json-converter -P ./conversations.json
+</code></pre>
+<p><code>JSONWalker</code> runs through the list of top level elements, spawning a new pipe for each. I had <code>Unfork</code> in there so I could look at one in isolation. So far so good. But I now need it to split each of these. <code>JSONWalker</code> again (it&#39;s only going to handle one layer, maybe rename..?). But different config. Right now all that&#39;s hardcoded, it should go in <code>processors-config.ttl</code>.</p>
+<p>Hmm, first the target <em>ROOT</em> dir. That should already be doable from the CLI:</p>
+<pre><code class="language-sh">./trans claude-json-converter -P ./conversations.json target_root
+</code></pre>
+<p>to check (<code>:SM</code> = Show Message) :</p>
+<pre><code class="language-turtle">:cjc_test a trm:Pipeline ;
+trm:pipe (:SM ) .
+</code></pre>
+<p>Boo! The message includes :</p>
+<pre><code>&quot;dataDir&quot;: &quot;src/applications/claude-json-converter/data&quot;,
+&quot;rootDir&quot;: &quot;target_dir&quot;,
+&quot;applicationRootDir&quot;: &quot;target_dir&quot;,
+</code></pre>
+<p>Messed up from my module-loading efforts. Ok, for now I&#39;ll put it in <code>processors-config.ttl</code>.</p>
+<pre><code class="language-turtle">t:TopConfig a trm:ServiceConfig ;
+    trm:key t:topConfig ;
+    trm:targetDir &quot;claude-chat&quot; .
+</code></pre>
+<p>for:</p>
+<pre><code class="language-turtle">:p10 a :JSONWalker ;
+     trm:configKey :topConfig .
+</code></pre>
+<p>So, <code>ShowConfig</code>:</p>
+<pre><code class="language-turtle">:cjc_test a trm:Pipeline ;
+trm:pipe (:SC) .
+</code></pre>
+<p>Hah! Fool danny. I&#39;d completely forgotten how I&#39;d set up access to the config. Even then it&#39;s very <em>work-in-progress</em>. But this worked well enough for now :</p>
+<pre><code class="language-javascript">logger.debug(`JSONWalker: using configKey ${this.configKey.value}`)
+const targetDir = this.getPropertyFromMyConfig(ns.trm.targetDir)
+logger.debug(`JSONWalker:targetDir =  ${targetDir}`)
+</code></pre>
+<p>Next, how does <code>FileWriter</code> work..?</p>
+<p>./trans ../trans-apps/applications/github-list-repos -P &#39;{&quot;github&quot;: {&quot;name&quot;:&quot;danja&quot;}}&#39;
+ </p>
+
+</article>
+<p class="post-title h-cinzel">
+    <a href="https://hyperdata.it/entries/2024-10-28_claude-json.html">
+        Re-Rendering Claude Chat JSON Data
+    </a>
+</p> <em></em>
+    </body>
+</html>

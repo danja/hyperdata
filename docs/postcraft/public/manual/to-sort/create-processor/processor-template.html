@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <link rel="stylesheet" href="/css/fonts.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/grid-columns.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/style.css" type="text/css"/>
+        <title>New Processor Template</title>
+    </head>
+    <!-- POST PAGE TEMPLATE -->
+    <body>
+    <strong></strong><em></em>
+        <header id="entry-header">
+            <h1 class="post-title h-cinzel">
+                
+            </h1>
+        </header>
+        <!-- ARTICLE CONTENT -->
+
+<article class="post-content">
+    <h1>New Processor Template</h1>
+<h2>Core Information Required</h2>
+<ol>
+<li>Processor Name &amp; Purpose</li>
+</ol>
+<ul>
+<li>Unique identifier </li>
+<li>Primary functionality</li>
+<li>Input/output data types</li>
+<li>Success criteria</li>
+</ul>
+<ol start="2">
+<li>Configuration Requirements</li>
+</ol>
+<ul>
+<li>RDF configuration format</li>
+<li>Required settings</li>
+<li>Optional settings</li>
+<li>Default values</li>
+</ul>
+<ol start="3">
+<li>Message Structure</li>
+</ol>
+<ul>
+<li>Expected input fields</li>
+<li>Output fields</li>
+<li>Error conditions</li>
+</ul>
+<ol start="4">
+<li>Integration Points</li>
+</ol>
+<ul>
+<li>Required modules</li>
+<li>Dependencies </li>
+<li>Event triggers</li>
+</ul>
+<h2>Example Usage</h2>
+<pre><code class="language-javascript">// Example transmission.ttl
+:myPipe a trm:Transmission ;
+    trm:pipe (:p10) .
+
+:p10 a :NewProcessor ;
+    trm:settings :processorSettings .
+
+// Example config.ttl  
+:processorSettings a trm:ConfigSet ;
+    trm:key :requiredSetting ;
+    trm:value &quot;value&quot; .
+
+// Example message
+{
+  &quot;input&quot;: &quot;data&quot;,
+  &quot;config&quot;: {}
+}
+</code></pre>
+<h2>Testing Requirements</h2>
+<ul>
+<li>Unit test cases</li>
+<li>Integration test scenarios</li>
+<li>Error handling tests</li>
+</ul>
+<h2>Documentation Requirements</h2>
+<ul>
+<li>Public API</li>
+<li>Configuration options</li>
+<li>Example usage</li>
+<li>Error handling</li>
+</ul>
+
+</article>
+<p class="post-title h-cinzel">
+    <a href="https://hyperdata.it/manual/to-sort/create-processor/processor-template.html">
+        New Processor Template
+    </a>
+</p> <em></em>
+    </body>
+</html>

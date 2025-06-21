@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <link rel="stylesheet" href="/css/fonts.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/grid-columns.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/style.css" type="text/css"/>
+        <title>Priorities</title>
+    </head>
+    <!-- POST PAGE TEMPLATE -->
+    <body>
+    <strong></strong><em></em>
+        <header id="entry-header">
+            <h1 class="post-title h-cinzel">
+                
+            </h1>
+        </header>
+        <!-- ARTICLE CONTENT -->
+
+<article class="post-content">
+    <h1>Priorities</h1>
+<p>Repairing/refactoring #:postcraft</p>
+<p>In #:transmissions I have to be clearer about where processors get their instructions. I think this is what it should be, in descending order :</p>
+<p>Properties in the :</p>
+<ol>
+<li><code>message</code> they receive</li>
+<li>target <code>manifest.ttl</code></li>
+<li>application <code>config.ttl</code></li>
+<li><em>sensible default TBD</em></li>
+</ol>
+<p>Right now I need it in <code>DirWalker</code>. It appears I&#39;ve used <code>message.sourceDir</code> there before. Not ideal naming, but I get why - &quot;sourceDir&quot; will make sense in lots of other processors.</p>
+<p>I have the following in node:</p>
+<pre><code class="language-javascript">{
+&quot;targetPath&quot;: &quot;/home/danny/github-danny/postcraft/test-site&quot;,
+&quot;sourceDir&quot;: &quot;content-raw&quot;,
+&quot;filename&quot;: &quot;2025-01-08_hello-again.md&quot;,
+&quot;fullPath&quot;: &quot;/home/danny/github-danny/postcraft/test-site/content-raw/entries/2025-01-08_hello-again.md&quot;,
+</code></pre>
+<p> What&#39;s the best way to pull out the subdir path <code>entries</code></p>
+<p> Ok, I believe I have this first part working.
+ </p>
+
+</article>
+<p class="post-title h-cinzel">
+    <a href="https://hyperdata.it/entries/2025-01-08_priorities.html">
+        Priorities
+    </a>
+</p> <em></em>
+    </body>
+</html>

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <link rel="stylesheet" href="/css/fonts.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/grid-columns.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/style.css" type="text/css"/>
+        <title>Code Function</title>
+    </head>
+    <!-- POST PAGE TEMPLATE -->
+    <body>
+    <strong></strong><em></em>
+        <header id="entry-header">
+            <h1 class="post-title h-cinzel">
+                
+            </h1>
+        </header>
+        <!-- ARTICLE CONTENT -->
+
+<article class="post-content">
+    <h1>Code Function</h1>
+<h2>logging convention</h2>
+<p> minimal <code>logger.log</code></p>
+<p>logger.debug, start method with  <code>ClassName.methodName</code>
+inside method, indent 4 spaces (= tab)</p>
+<p>#:definitive 2025-04-03</p>
+<p>What they <strong>should</strong> do. Dated notes are things that may change in future (mostly generalizations of current functionality).</p>
+<h2>Style Notes</h2>
+<p>Core code is made using ES modules. Each exports a single <code>default</code>, with a class name corresponding to the filename, eg. in <code>src/engine/ProcessorSettings.js</code> :</p>
+<pre><code class="language-javascript">export default ProcessorSettings
+</code></pre>
+<h2>Model : <code>src/model</code> : Primarily representations of state</h2>
+<h3>Application</h3>
+<p>Top-level Transmissions application. An Application contains a set of Transmission definitions together with a set of Configuration definitions.  </p>
+<p>this.transmissionsModel = null
+     this.manifestModel = null
+     this.configModel = null</p>
+<p><strong>2025-04-03</strong> transmissions are defined in the file <code>transmissions.ttl</code></p>
+<h3>Model</h3>
+<h3>Transmission</h3>
+<p>A pipeline/workflow that defines a sequence of processes, providing identifiers for each Processor as well as corresponding</p>
+<h3>Configuration</h3>
+<h3>Processors</h3>
+<h3>SlowableProcessor</h3>
+<h3>Connector</h3>
+<h3>Whiteboard</h3>
+<h2>Engine : <code>src/engine</code> : Primarily operations on Model</h2>
+<p>AbstractProcessorFactory.js  ApplicationManager.js  AppResolver.js  ModuleLoaderFactory.js  ModuleLoader.js  ProcessorSettings.js  TransmissionBuilder.js  WorkerPool.js
+ </p>
+
+</article>
+<p class="post-title h-cinzel">
+    <a href="https://hyperdata.it/manual/2025-04-03_code-function.html">
+        Code Function
+    </a>
+</p> <em></em>
+    </body>
+</html>

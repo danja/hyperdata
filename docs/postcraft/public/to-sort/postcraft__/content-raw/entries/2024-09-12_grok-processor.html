@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <link rel="stylesheet" href="/css/fonts.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/grid-columns.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/style.css" type="text/css"/>
+        <title>Grok Processor</title>
+    </head>
+    <!-- POST PAGE TEMPLATE -->
+    <body>
+    <strong></strong><em></em>
+        <header id="entry-header">
+            <h1 class="post-title h-cinzel">
+                
+            </h1>
+        </header>
+        <!-- ARTICLE CONTENT -->
+
+<article class="post-content">
+    <p> I just Messaged Mari :</p>
+<blockquote>
+<p>Hah, major distraction from what I was going to do. For help I was going to ask Claude, the AI tool I&#39;m currently paying for. But it was out of service. Tried another, Groq - is pretty good free. Noticed a service they offer for using their AI from code. Appears to be free right now. So This hour I will spend adding it to my code...</p>
+</blockquote>
+<p>Ok, <a href="https://console.groq.com/playground">Groq Playground</a> lets you run sample API calls. Has a button &#39;View Code&#39;. Tried it, code is below.</p>
+<p>Good-oh, they have an SDK to do some of the drudge work, that simplifies things for now.
+No mention of the API key in the code example, but in docs nearby they say :</p>
+<blockquote>
+<p>Configure your API key as an environment variable.
+Presumably the SDK picks that up.</p>
+</blockquote>
+<p>(There is a nodejs lib I&#39;ve used somewhere for using a <em>hidden</em> <code>.env</code> file for such stuff, may be worth considering later)</p>
+<p>I guess I&#39;ll put this in <code>~/.bashrc</code> :</p>
+<pre><code class="language-bash">export GROQ_API_KEY=&lt;your-api-key-here&gt;
+</code></pre>
+<p>Hah! It&#39;s already there. My bloody memory, eh.</p>
+<p>Hmm, I could really do with -</p>
+<p><del>TODO</del> lift initial #Transmissions message from file</p>
+<p>Hang on, I might already be able to do this with <code>FileReader</code>, I wonder...</p>
+<p>Signature includes :</p>
+<p><strong><em>Input</em></strong></p>
+<ul>
+<li><strong>message.filepath</strong>
+<strong><em>Output</em></strong></li>
+<li><strong>message.content</strong></li>
+</ul>
+<p>Mostly. It reads a file and dumps the content into the message. Won&#39;t know what it is though. Need a flag to say it&#39;ll be JSON (or whatever). That should go in <code>services-config.ttl</code>. Errm, HTTP media type? Claude says <code>application/json</code> or <code>application/json; charset=utf-8</code>. I believe node defaults to <code>utf-8</code>, so I&#39;ll ignore that bit.</p>
+<p>Should be an easy enough tweak. I&#39;ll need to set up a test application for Grok API calls anyway, so I might as well do that now.</p>
+<p>TODO link this in with new service walkthrough docs</p>
+<p>TODO create a skeleton application template</p>
+<p>Within #transmissions there&#39;s an app I was working on recently, hadn&#39;t got very far, <code>src/applications/globbo</code>. I&#39;ll copy that over to the other repo so :</p>
+<pre><code class="language-bash">danny@danny-desktop:~/hyperdata/trans-apps$ tree applications/test-grok-api/
+...
+applications/test-grok-api/
+├── about.md
+├── services-config.ttl
+└── transmissions.ttl
+...
+</code></pre>
+<p>TODO figure out/remember &amp; doc what WhiteboardToMessage does</p>
+<p>Ok, starter <code>transmissions.ttl</code>, I just want it to show the message before &amp; after a <code>FileReader</code> :</p>
+<pre><code class="language-turtle">...
+:test_grok_api a trm:Pipeline ;
+    trm:pipe (:SM1 :s10 :SM2) .
+
+:s10 a FileReader .
+</code></pre>
+<p><code>SM1</code>, <code>SM2</code> will create instances of the <code>ShowMessage</code> service, dump the message to console, I&#39;ve got them in the top of the Turtle file for easy reuse.</p>
+<p><code>./trans -h</code> tells me (on this fs layout) I need to run :</p>
+<pre><code class="language-bash">./trans test-grok-api -d  ../trans-apps/applications
+</code></pre>
+<p>Ok, pretty good, it gives me:</p>
+<pre><code class="language-bash">...
++ ***** Execute Transmission :  &lt;http://hyperdata.it/transmissions/test_grok_api&gt;
+| Running : http://hyperdata.it/transmissions/SM1 a ShowMessage
+***************************
+***  Message
+Instance of Object with properties -
+{
+  &quot;dataDir&quot;: &quot;../trans-apps/applications/test-grok-api/data&quot;,
+  &quot;rootDir&quot;: &quot;[no key]&quot;,
+  &quot;tags&quot;: &quot;SM1&quot;
+}
+***************************
+| Running :  (SM1) s10 a FileReader
+TypeError: this.getMyConfig is not a function
+</code></pre>
+<p>TODO The error is likely due to non-existent expected field(s) in the message.</p>
+<p>I don&#39;t think I&#39;ll need <code>rootDir</code> any time soon, but <code>dataDir</code> is nice to have. I&#39;ll stick the messages for Grok in there:</p>
+<p><code>/home/danny/github-danny/trans-apps/applications/test-grok-api/data/grok-messages_01.json</code></p>
+<pre><code class="language-json">{
+  &quot;messages&quot;: [
+    {
+      &quot;role&quot;: &quot;system&quot;,
+      &quot;content&quot;: &quot;You are dull-witted armchair philosopher with a bad temper and obsession with Victorian ladies&#39; undergarments. You respond to questions with terse, bad-tempered statements which have little relevance to the topic at hand.&quot;
+    },
+    {
+      &quot;role&quot;: &quot;user&quot;,
+      &quot;content&quot;: &quot;Based on current scientific understanding of particle physics, what is matter?&quot;
+    }
+  ],
+  &quot;model&quot;: &quot;llama3-8b-8192&quot;,
+  &quot;temperature&quot;: 1,
+  &quot;max_tokens&quot;: 1024,
+  &quot;top_p&quot;: 1,
+  &quot;stream&quot;: true,
+  &quot;stop&quot;: null
+}
+</code></pre>
+<p>I need to point <code>FileReader</code> at this. Any recent (likely to work) examples of its use in <code>transmissions/applications</code>?
+<code>postcraft/transmissions.ttl</code> has a couple, but they don&#39;t appear to pull a filename. <code>link-lister/transmissions.ttl</code> has:</p>
+<pre><code class="language-turtle">:s1 a :FileReader ;
+    trm:configKey :sourceFile .
+</code></pre>
+<p>which is just what&#39;s needed, but that&#39;s an old thing, I might have broken. Check its <code>services-config.ttl</code> :</p>
+<pre><code class="language-turtle">t:llSourceMap a trm:DataMap ;
+    trm:key t:sourceFile ;
+    trm:value &quot;starter-links.md&quot; .
+</code></pre>
+<p>Hmm. Put this in <code>services-config.ttl</code> :</p>
+<pre><code class="language-turtle">t:test a trm:MessageFile ;
+    trm:key t:messageFile ;
+    trm:value &quot;grok-messages_01.json&quot; .
+</code></pre>
+<p>and tweak <code>transmissions.ttl</code> :</p>
+<p>See what goes in the message...nothing.</p>
+<p>Aah...more recently touched services have eg. :</p>
+<pre><code>this.getPropertyFromMyConfig(ns.trm.source)
+</code></pre>
+<p>Jeez. I had to look through lots before getting that bit near.</p>
+<p>TODO tidy up namespaces</p>
+<p>And <code>FileReader</code> uses <code>rootDir</code>...scrollback...</p>
+<p>Ok, in the message <code>dataDir</code> has the necessary. It would be legit for <code>FileReader</code> to use that if <code>rootDir</code> is undefined</p>
+<p>TODO refactor so the value is copied across around <code>run.js</code></p>
+<p>Workaround for now, put the check in <code>FileReader</code></p>
+<p>Now to interpret by media type, for now just JSON.</p>
+<p>Ok, so all the above took a long time, but now I have a message containing :</p>
+<pre><code class="language-json">  &quot;fromfile&quot;: {
+    &quot;messages&quot;: [
+      {
+        &quot;role&quot;: &quot;system&quot;,
+</code></pre>
+<p>I&#39;d better stop at 21:50.</p>
+<p>Command line :</p>
+<pre><code class="language-bash">./trans test-grok-api -d  ../trans-apps/applications
+</code></pre>
+<p>In <code>transmission.ttl</code> :</p>
+<pre><code class="language-turtle">:s10 a :FileReader ;
+    trm:configKey :filename .
+</code></pre>
+<p>In <code>services-config.ttl</code> :</p>
+<pre><code class="language-turtle">t:test a trm:ServiceConfig ;
+    trm:key t:filename ;
+    trm:mediaType &quot;application/json&quot; ;
+    trm:messageFile &quot;grok-messages_01.json&quot; .
+</code></pre>
+<p>Next session on this -</p>
+<p>Not immediately necessary, but passing the value <code>message.fromfile</code> looks a bit ugly, doesn&#39;t suggest reuse for the Grok API call service (or similars). A <code>RemapContext</code> seems appropriate simply to flip it to <code>message.messages</code>.</p>
+<p>TODO rename <code>RemapContext</code> to <code>RemapMessage</code></p>
+<p>Then pretty much copy &amp; paste the guts below to make a <code>GrokChatCompletion</code> service.</p>
+<p>TODO <del>read up on</del> ask Claude about loading JS/ES modules dynamically, so <code>GrokChatCompletion.js</code> can live under <code>trans-apps</code>, to not pile up the dependencies on core Transmissions.</p>
+<p>Asked - in <a href="https://claude.ai/chat/ababe767-af96-4e10-830b-ab4f3ad096fd">https://claude.ai/chat/ababe767-af96-4e10-830b-ab4f3ad096fd</a></p>
+<p>The responses appear more useful after I suggested using Java&#39;s command-line -classpath approach as an analogy. And a bit more interesting when I was wondering about edge-case-ish scenarios when you might have conflicting versions available. Stuff about JS interpreter caching I&#39;d not come across, need to be a bit more awake to take in.</p>
+<p>22:26, enough.</p>
+<pre><code class="language-javascript">const Groq = require(&quot;groq-sdk&quot;)
+
+const groq = new Groq()
+async function main() {
+  const chatCompletion = await groq.chat.completions.create({
+    messages: [
+      {
+        role: &quot;system&quot;,
+        content:
+          &quot;you are a nodejs developer. Keep responses very short and to the point&quot;,
+      },
+      {
+        role: &quot;user&quot;,
+        content:
+          &quot;I would like to involve a bunch of documents I have locally in a RAG kind of setup calling on Grok to give the effect of the modelhaving been trained on custom data. Would it be beneficial to create a vector representation, tokenise or anything like that? \n&quot;,
+      },
+    ],
+    model: &quot;llama3-8b-8192&quot;,
+    temperature: 1,
+    max_tokens: 1024,
+    top_p: 1,
+    stream: true,
+    stop: null,
+  })
+
+  for await (const chunk of chatCompletion) {
+    process.stdout.write(chunk.choices[0]?.delta?.content || &quot;&quot;)
+  }
+}
+
+main()
+</code></pre>
+
+</article>
+<p class="post-title h-cinzel">
+    <a href="https://hyperdata.it/to-sort/postcraft__/content-raw/entries/2024-09-12_grok-processor.html">
+        Grok Processor
+    </a>
+</p> <em></em>
+    </body>
+</html>

@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <link rel="stylesheet" href="/css/fonts.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/grid-columns.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/style.css" type="text/css"/>
+        <title> 1. Use `Promise.all` for Batch Processing</title>
+    </head>
+    <!-- POST PAGE TEMPLATE -->
+    <body>
+    <strong></strong><em></em>
+        <header id="entry-header">
+            <h1 class="post-title h-cinzel">
+                
+            </h1>
+        </header>
+        <!-- ARTICLE CONTENT -->
+
+<article class="post-content">
+    <p> It sounds like you&#39;re encountering a common issue in asynchronous processing pipelines: ensuring that data (in your case, the flag signaling the end of the list) is passed along in the correct order, especially after asynchronous operations have completed. This issue arises because asynchronous tasks (like reading files) may complete in a non-deterministic order, potentially causing the flag to be sent before all tasks have finished.</p>
+<p>Here are some strategies to handle this situation:</p>
+<h3>1. Use <code>Promise.all</code> for Batch Processing</h3>
+<p>If your pipeline can afford to wait for all files to be processed before moving to the next stage, consider using <code>Promise.all</code> to wait for all file-reading (and subsequent processing) promises to resolve before sending the flag. This ensures that the flag is only sent after all asynchronous operations have completed.</p>
+<pre><code class="language-javascript">let readFilesPromises = filenames.map((filename) =&gt;
+  readFileAndProcess(filename)
+);
+await Promise.all(readFilesPromises);
+// After all promises resolve, send the flag
+sendFlag();
+</code></pre>
+<h3>2. Chain Promises</h3>
+<p>For a more sequential approach, especially if subsequent operations depend on the completion of previous ones, you might chain your promises. This ensures operations are completed in order.</p>
+<pre><code class="language-javascript">async function processFilesSequentially(filenames) {
+  for (let filename of filenames) {
+    await readFileAndProcess(filename);
+  }
+  sendFlag();
+}
+</code></pre>
+<h3>3. Use Async Iterators</h3>
+<p>If your pipeline processes a stream of data (like reading lines from a file), async iterators (introduced in ES2018) can be helpful. They allow you to work with asynchronous data sources in a synchronous-like manner.</p>
+<pre><code class="language-javascript">async function processLineByLine(fileStream) {
+  for await (let line of fileStream) {
+    processLine(line);
+  }
+  sendFlag();
+}
+</code></pre>
+<h3>4. Monitor Active Tasks</h3>
+<p>Implement a counter or a set to track active tasks. Increment (or add to the set) when a task starts, and decrement (or remove from the set) when a task completes. Send the flag only when all tasks are done.</p>
+<pre><code class="language-javascript">let activeTasks = new Set();
+filenames.forEach((filename) =&gt; {
+  let task = readFileAndProcess(filename).finally(() =&gt; {
+    activeTasks.delete(task);
+    if (activeTasks.size === 0) {
+      sendFlag();
+    }
+  });
+  activeTasks.add(task);
+});
+</code></pre>
+<h3>5. Correct Usage of Async/Await</h3>
+<p>Ensure that you&#39;re correctly using <code>async</code> and <code>await</code> within your service implementations. Misuse can lead to unexpected execution order. Pay particular attention to asynchronous functions called inside loops, making sure they&#39;re awaited correctly to maintain the order of operations.</p>
+<h3>Solution Implementation</h3>
+<p>Given the pipeline nature of your application, integrating these strategies requires a balance between maintaining the order of operations and leveraging asynchronous performance. You may need to adjust based on the specifics of your pipeline and the dependencies between tasks. If tasks within a service can execute independently of one another, options like <code>Promise.all</code> offer efficient, parallel processing. For strictly ordered tasks, sequential processing with explicit <code>await</code> calls ensures correctness at the cost of concurrency.</p>
+<p>By carefully structuring your async operations and using JavaScript&#39;s asynchronous programming features, you can ensure that your pipeline behaves as expected, processing all data and only sending the termination flag once all work is complete.
+ </p>
+
+</article>
+<p class="post-title h-cinzel">
+    <a href="https://hyperdata.it/to-sort/async-chat.html">
+         1. Use `Promise.all` for Batch Processing
+    </a>
+</p> <em></em>
+    </body>
+</html>

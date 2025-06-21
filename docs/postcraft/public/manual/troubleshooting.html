@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <link rel="stylesheet" href="/css/fonts.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/grid-columns.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/style.css" type="text/css"/>
+        <title>Troubleshooting</title>
+    </head>
+    <!-- POST PAGE TEMPLATE -->
+    <body>
+    <strong></strong><em></em>
+        <header id="entry-header">
+            <h1 class="post-title h-cinzel">
+                
+            </h1>
+        </header>
+        <!-- ARTICLE CONTENT -->
+
+<article class="post-content">
+    <h1>Troubleshooting</h1>
+<h2>Symptoms</h2>
+<ul>
+<li>Unexpected settings value</li>
+<li>Mysteriously hangs</li>
+</ul>
+<h3>Unexpected settings value</h3>
+<h4>Possible Cause</h4>
+<h4>Diagnostic</h4>
+<p>Use -v in the command line, grep for Warning - possible Turtle syntax error (broken Turtle files are ignored). The <code>rapper</code> utility can be helpful :</p>
+<pre><code class="language-sh">rapper -c -i turtle &lt;filename&gt;
+</code></pre>
+<h4>Fix</h4>
+<hr>
+<h3>Mysteriously hangs</h3>
+<p>After generally working, the transmission hangs for no apparent reason when run.</p>
+<h4>Possible Cause</h4>
+<p>Duplicate processor in pipeline, eg. <code>:p1 :SM :p2 :SM</code></p>
+<h4>Diagnostic</h4>
+<h4>Fix</h4>
+<p>check with</p>
+<pre><code class="language-sh"> rapper -c -i turtle tt.ttl
+</code></pre>
+<p> :loglevel &quot;debug&quot; ;</p>
+<p>Insert :SE :DE in the transmission</p>
+<p>:TEST a :NOP ;
+  :settings [
+    :test &quot;TEST FROM ttl&quot;
+  ] .</p>
+<p>Double-check where the properties are coming from</p>
+<p>run tests</p>
+<p>new processor has test?</p>
+<p>create a new test : sample-app
+ </p>
+
+</article>
+<p class="post-title h-cinzel">
+    <a href="https://hyperdata.it/manual/troubleshooting.html">
+        Troubleshooting
+    </a>
+</p> <em></em>
+    </body>
+</html>

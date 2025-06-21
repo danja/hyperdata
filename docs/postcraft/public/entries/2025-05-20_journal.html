@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <link rel="stylesheet" href="/css/fonts.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/grid-columns.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/style.css" type="text/css"/>
+        <title>Journal 2025-05-20</title>
+    </head>
+    <!-- POST PAGE TEMPLATE -->
+    <body>
+    <strong></strong><em></em>
+        <header id="entry-header">
+            <h1 class="post-title h-cinzel">
+                
+            </h1>
+        </header>
+        <!-- ARTICLE CONTENT -->
+
+<article class="post-content">
+    <h1>Journal 2025-05-20</h1>
+<h2>Windsurf Comments</h2>
+<p>I&#39;ve been trying out <a href="https://windsurf.com/editor">Windsurf</a> (formerly Codeium), <em>Yet Another</em> custom VS Code build with Copilot-style AI. It&#39;s good, on a par with the others I&#39;ve tried. But it&#39;s hard to compare these tools because they are all in such active dev.</p>
+<p><img src="/images/2025-05/windsurf.png" alt="Windsurfing robot"></p>
+<p>On the day my free sub runs out (funds low), found a great feature : <strong>Custom Workflows</strong>. You can tuck away task-specific prompts in <code>.windsurf/workflows/*.md</code> files, invoke from chat with a slash. I needed to apply a specific comment template to about 100 different files (#:transmissions #:processors, I have a #:signature in comments), this feature is perfect. I just piled through them.</p>
+<p>I don&#39;t know which base they&#39;ve built their <strong>SWE-1</strong> on, but I&#39;m willing to bet it was <strong>a &quot;thinking&quot; model</strong>. Has that tendency to do more than you ask for, which is an irritating trait for a code assistant, time-consuming looking what bits to reject.</p>
+<p>Also there appears to be a minor bug in message timing. I just gave it a problem to look at, on the edge of what usual context windows can deal with - loads of content/layer indirection needed. As expected it&#39;s taking it a long time, fine, may not be doable. But this side I&#39;ve got &quot;Deadline exceeded...retryable&quot; x7...</p>
+<p>It&#39;s still taken me all morning on that one chore. But it was a very worthwhile exercise. Apart from it being way, way faster than doing it manually, it allowed me to see what I had, clear out a lot of cruft, clean up various lumps of poo.</p>
+<h2>Badgers</h2>
+<p>I stumbled on the <a href="https://www.bestpractices.dev/en">OpenSSF Best Practices Badge Program</a> which seems a worthy cause. I had a quick go at #:atuin, which is probably my cleanest active repo. Without doing anything manually it got a score of 16%. I should probably come back to that.</p>
+<p>One thing that covers, it rings a vague bell from somewhere :</p>
+<blockquote>
+<p>The <a href="https://nvd.nist.gov/cpe.cfm">Common Platform Enumeration (CPE)</a> is a structured naming scheme for information technology systems, software, and packages. It is used in a number of systems and databases when reporting vulnerabilities.&quot;</p>
+</blockquote>
+<p>Something else to come back to.</p>
+<h2>Other Tabs I Should Close</h2>
+<ul>
+<li><p><a href="https://huggingface.co/learn/mcp-course/unit0/introduction">HuggingFace MCP Course</a></p>
+</li>
+<li><p><a href="https://www.marktechpost.com/2025/05/14/step-by-step-guide-to-build-a-fast-semantic-search-and-rag-qa-engine-on-web-scraped-data-using-together-ai-embeddings-faiss-retrieval-and-langchain/">A Step-by-Step Guide to Build a Fast Semantic Search and RAG QA Engine on Web-Scraped Data Using Together AI Embeddings, FAISS Retrieval, and LangChain</a> - this is from MarkTechPost - actually by their CEO. The site often has useful links, if you can find them in their nightmare level of inserted ads. Bookmarked because the same functionality is something I want from #:transmissions + #:semem in the near future. Totally different kit, but it&#39;ll be useful to see how it&#39;s done there.</p>
+</li>
+<li><p><a href="https://en.wikipedia.org/wiki/REST">REST - Wikipedia</a> - visited because I woke up perversely trying to remember how Saint Roy defined state in <em>Hypertext as the Engine of State</em> (<strong>HATEOS</strong>). I was pleased to see this line :</p>
+<blockquote>
+<p>An application that adheres to the REST architectural constraints may be informally described as RESTful, although this term is more commonly associated with the design of HTTP-based APIs and what are widely considered best practices regarding the &quot;verbs&quot; (HTTP methods) a resource responds to, while having little to do with REST as originally formulated—and is often even at odds with the concept.</p>
+</blockquote>
+</li>
+<li><p><a href="https://github.com/BaldissaraMatheus/Tasks.md">Tasks.md</a> (GitHub) - &quot;A self-hosted, Markdown file based task management board.&quot;. I like the look of this. Is <a href="https://en.wikipedia.org/wiki/Kanban_(development)">Kanban</a>-style, minimally layered over files (tasks) and dirs (panels). It&#39;s available in a Docker version. I fancy having a play. It should be totally compatible with what I&#39;ve got in mind with #:trestle, but <strong>usable now</strong> without any direct coupling.</p>
+</li>
+<li><p><a href="https://github.com/atomic14/diy-alexa">DIY Alexa</a> (GitHub) - uses an ESP32, my current favourite microcontroller with Tensorflow Lite, hooked into <a href="https://wit.ai/">wit.ai</a> which is a voice/text thing, apparently from Meta. Fun stuff.</p>
+</li>
+<li><p><a href="https://github.com/IBM/analog-foundation-models">analog-foundation-models</a> - yeah. From IBM. LLMs with the multiplications done by analog chips. Bit clunky, too many 8-bit ADC/DACs for my liking. And only IBM can afford to play with such toys. (<a href="https://github.com/danja/analog-computer">My own analog computer</a> is still mostly a big box of components in the drawer, I got distracted by Eurorack modular hardware)
+§</p>
+</li>
+</ul>
+
+</article>
+<p class="post-title h-cinzel">
+    <a href="http://danny.ayers.name/entries/2025-05-20_journal.html">
+        Journal 2025-05-20
+    </a>
+</p> <em></em>
+    </body>
+</html>

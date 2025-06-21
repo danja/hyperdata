@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <link rel="stylesheet" href="/css/fonts.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/grid-columns.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/style.css" type="text/css"/>
+        <title>Transmissions ToDo : Features</title>
+    </head>
+    <!-- POST PAGE TEMPLATE -->
+    <body>
+    <strong></strong><em></em>
+        <header id="entry-header">
+            <h1 class="post-title h-cinzel">
+                
+            </h1>
+        </header>
+        <!-- ARTICLE CONTENT -->
+
+<article class="post-content">
+    <h1>Transmissions ToDo : Features</h1>
+<h3>sub trans running</h3>
+<p>implemented, can&#39;t find, need test :</p>
+<pre><code class="language-turtle">:pipeA a trn:Transmission ;
+trn:pipe (:pipeB :pipeC ) .
+
+:pipeB  a trn:Transmission ;
+ trn:pipe (:s3 :s104 :s105) .
+
+:pipeC a trn:Transmission ;
+trn:pipe (:s3 :s204 :s205) .
+</code></pre>
+<h3>Multiple input ports processor</h3>
+<p>subclass of Processor. Demo :Merge - somehow messages are combined</p>
+<p>content/raw/prompts/2025-04-17_combo.md</p>
+<h3>About flag</h3>
+<p><code>-a, --about</code> gives description of what&#39;s being called - #:selfie, check tinyspy</p>
+<h3>Workers</h3>
+<p>use tinyworker? whatever it is, with vitest</p>
+<p>Some implementation, not yet working <code>examples/worker</code></p>
+<p>not passing tests...</p>
+<h2>npm test -- tests/engine/WorkerPool.spec.js</h2>
+<ul>
+<li>somehow make the processor type more visible in config/manifest</li>
+</ul>
+<p>maybe just naming</p>
+<pre><code class="language-turtle">:p10Settings a :ConfigSet ;
+...
+</code></pre>
+<ul>
+<li>add a safety check to FileRemove</li>
+</ul>
+<h2>Postcraft - related</h2>
+<p>set up the multi-transmission runner</p>
+<p>move to trans-apps</p>
+<h2>RDF</h2>
+<p>drop need for <code>:ConfigSettings</code></p>
+<p>allow settings in <code>transmissions.ttl</code>
+(when it&#39;s loaded, use grapoi, prime config)
+precedence?</p>
+<h2>Processors</h2>
+<h3><code>src/processors/semem</code></h3>
+<ul>
+<li>``</li>
+</ul>
+<h3><code>src/processors/llms</code></h3>
+<p>Tools as Claude Code</p>
+<pre><code>Tool	Description	Permission Required
+AgentTool	Runs a sub-agent to handle complex, multi-step tasks	No
+BashTool	Executes shell commands in your environment	Yes
+GlobTool	Finds files based on pattern matching	No
+GrepTool	Searches for patterns in file contents	No
+LSTool	Lists files and directories	No
+FileReadTool	Reads the contents of files	No
+FileEditTool	Makes targeted edits to specific files	Yes
+FileWriteTool	Creates or overwrites files	Yes
+NotebookReadTool	Reads and displays Jupyter notebook contents	No
+NotebookEditTool	Modifies Jupyter notebook cells	Yes
+</code></pre>
+<p>Field compare for tests (integrate)
+ </p>
+
+</article>
+<p class="post-title h-cinzel">
+    <a href="https://hyperdata.it/todo/features.html">
+        Transmissions ToDo : Features
+    </a>
+</p> <em></em>
+    </body>
+</html>

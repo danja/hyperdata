@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <link rel="stylesheet" href="/css/fonts.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/grid-columns.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/style.css" type="text/css"/>
+        <title>Building a Transmissions Application</title>
+    </head>
+    <!-- POST PAGE TEMPLATE -->
+    <body>
+    <strong></strong><em></em>
+        <header id="entry-header">
+            <h1 class="post-title h-cinzel">
+                
+            </h1>
+        </header>
+        <!-- ARTICLE CONTENT -->
+
+<article class="post-content">
+    <h1>Building a Transmissions Application</h1>
+<p>Easy, but there are a lot of small steps</p>
+<p>Shallow but long learning curve</p>
+<p>TODO transmissions anatomy
+TODO responsibilities of a service
+TODO note about cumulative benefit of using transmissions/dogfood</p>
+<p>TODO figure out a system for what to do when expected bits of the message are missing</p>
+<p><strong>2024-08-06</strong></p>
+<p>TODO make this collapsed</p>
+<p>#Transmissions has reached a point where I&#39;m starting to actually use it. I&#39;ve deployed the #Postcraft application already for static sites, even though it&#39;s still very lacking. But I&#39;m using iterative, eat your own dogfood dev.</p>
+<p>I&#39;ve been using markdown for notes for a few years now. I spent a while using #Obsidian then #Joplin apps (they have a lot of overlap with my #hyperdata meta-project).
+This means I&#39;ve got loads of markdown files scattered all over the place. My next steps (embeddings etc) call for me to pull them together.</p>
+<p>I was about to ask #Claude to write me a bash script to help me locate them. Then thought, even though such a script would quickly help with the immediate problem, it&#39;s a nice size problem to dogfood on #Transmissions as demo/tyre-kicking.</p>
+<h2>Description</h2>
+<ul>
+<li>Goal : a tool to recursively read local filesystem directories, checking for files with the <code>.md</code> extension to identify collections of such</li>
+<li>Goal : documentation of the app creation process</li>
+<li>Implementation : a #Transmissions application</li>
+<li>SoftGoal : reusability</li>
+<li><em>non-goal</em> - efficiency</li>
+</ul>
+<h2>Requirements</h2>
+<h3>Abstract</h3>
+<ul>
+<li>Recursive directory walker</li>
+<li>File name filter/glob : recognise <code>&lt;pattern&gt;</code>, eg. <code>*.md</code></li>
+<li>Simple metrics : count<code>&lt;pattern&gt;</code> per dir</li>
+<li>Presentation : easy to interpret output (something like <code>tree</code>?)</li>
+</ul>
+<h3>Implementation-specific</h3>
+<p><em>(Provisional order of work after analysis)</em></p>
+<ol>
+<li>Service implementations</li>
+<li>Transmission definition (<code>transmission.ttl</code>)</li>
+<li>Application service configurations (<code>services.ttl</code>)</li>
+<li>Instance manifest (<code>manifest.ttl</code>)</li>
+</ol>
+<h2>Dev Process</h2>
+<ol>
+<li>Identify necessary inputs and desired outputs</li>
+<li>Loosely sketch sequence of operations, broken down into minimal functionality of each</li>
+<li>Look for existing services that might fulfil the necessary operations</li>
+<li>If necessary write new services</li>
+<li>Initialise environment as needed</li>
+<li>Create minimum necessary <code>transmissions.ttl</code> and <code>services.ttl</code> to test</li>
+<li>If appropriate, create <code>manifest.ttl</code></li>
+<li>Expand/fix above as necessary</li>
+<li>Deploy</li>
+</ol>
+<h2>Here we go</h2>
+<h3>1. Necessary inputs and desired outputs</h3>
+<ul>
+<li>Inputs : starting point on fs, file name filter (any other config leave for now)</li>
+<li>Outputs : a list of relevant dirs &amp; their metrics</li>
+</ul>
+<p>The inputs here are values that might change per run, so they should probably go in <code>manifest.ttl</code> or maybe better on the command line.</p>
+<p>The outputs - doesn&#39;t have to be fancy, just something to <code>stdout</code> that isn&#39;t a flood will do.</p>
+<h3>2. Sequence of operations sketch</h3>
+<ul>
+<li>system receives a start path, filter definition</li>
+<li>a dir walker recurses through dirs, spitting out their paths as it goes through</li>
+<li>a filter checks the path to see if it matches the required pattern, if so passes it on</li>
+<li>a correlator? groups and annotates the findings</li>
+<li>a writer prints out the result</li>
+</ul>
+<h3>3. Existing services</h3>
+<p>TODO command line path argument?</p>
+<p>check <code>/home/danny/github-danny/transmissions/docs/postcraft-site/todo/service-statuses.md</code></p>
+<p>check JSDoc</p>
+<pre><code>npm run docs
+</code></pre>
+<p>Services are grouped by functional area :</p>
+<pre><code>src/services/
+├── base
+├── fs
+├── markup
+├── postcraft
+├── protocols
+├── rdf
+├── ServiceExample.js
+├── test
+├── text
+├── unsafe
+└── util
+</code></pre>
+<p>All are subclasses of Service</p>
+<p>There is a <code>DirWalker</code></p>
+<p>There was a <code>src/services/text/StringFilter.js</code> but it wasn&#39;t in use anywhere, so missed out on refactoring. It&#39;ll be easiest to write again to ensure consistency with other services.</p>
+<h3>4. If necessary write new services</h3>
+<p>see <code>docs/postcraft-site/articles/new-service-walkthrough.md</code></p>
+<p>looks like I&#39;ll also need a <code>src/services/util/CaptureAll.js</code>, a singleton that all messages will be received by</p>
+<h3>5. Initialise environment as needed</h3>
+<p>The minimum necessary for a #Transmissions app is a <code>transmission.ttl</code> TODO checkthis is the case</p>
+<p>In the current setup, in the <code>transmissions</code> repo, the following should be created :</p>
+<pre><code>src/applications/globbo/
+├── about.md
+├── services.ttl
+└── transmission.ttl
+</code></pre>
+<p>For the <code>run</code> script to address the application, <code>about.md</code> <strong>must</strong> exist. It <strong>should</strong> contain a description of the application.</p>
+<h4>DirWalker</h4>
+<p><strong><em>Input</em></strong></p>
+<ul>
+<li>message.rootDir</li>
+<li>message.sourceDir</li>
+</ul>
+<p><strong><em>Output</em></strong></p>
+<ul>
+<li>message.filename</li>
+</ul>
+<pre><code>(:SM :DE) pipeline
+
+./run globbo
+...
+{
+  &quot;dataDir&quot;: &quot;src/applications/globbo/data&quot;,
+  &quot;rootDir&quot;: &quot;&quot;,
+  &quot;applicationRootDir&quot;: &quot;/home/danny/github-danny/transmissions/src/applications/globbo&quot;,
+  &quot;dataString&quot;: &quot;&quot;,
+  &quot;tags&quot;: &quot;SM&quot;
+}
+</code></pre>
+<pre><code>./run globbo something
+...
+{
+  &quot;dataDir&quot;: &quot;src/applications/globbo/data&quot;,
+  &quot;rootDir&quot;: &quot;something&quot;,
+  &quot;applicationRootDir&quot;: &quot;/home/danny/github-danny/transmissions/src/applications/globbo&quot;,
+  &quot;dataString&quot;: &quot;something&quot;,
+  &quot;tags&quot;: &quot;SM&quot;
+}
+</code></pre>
+<p>TODO fix up run.js, the command arg is getting put in rootDir, no!</p>
+<p>Ok, there is:</p>
+<pre><code>./run globbo -c &#39;{&quot;a&quot;:&quot;something&quot;}&#39;
+...
+{
+  &quot;a&quot;: &quot;something&quot;,
+  &quot;applicationRootDir&quot;: &quot;/home/danny/github-danny/transmissions/src/applications/globbo&quot;,
+  &quot;dataString&quot;: &quot;&quot;,
+  &quot;tags&quot;: &quot;SM&quot;
+}
+</code></pre>
+<p>TODO Where did <code>rootDir</code> go?</p>
+<pre><code>./run globbo -c &#39;{&quot;rootDir&quot;: &quot;./&quot;, &quot;sourceDir&quot;:&quot;docs&quot;}&#39;
+...
+{
+  &quot;rootDir&quot;: &quot;./&quot;,
+  &quot;sourceDir&quot;: &quot;docs&quot;,
+  &quot;applicationRootDir&quot;: &quot;/home/danny/github-danny/transmissions/src/applications/globbo&quot;,
+  &quot;dataString&quot;: &quot;&quot;,
+  &quot;tags&quot;: &quot;SM&quot;
+}
+</code></pre>
+<p>adding <code>DirWalker</code> - not bad!</p>
+<p>NEXT CaptureAll</p>
+<p>I need a ShowConfig
+ </p>
+
+</article>
+<p class="post-title h-cinzel">
+    <a href="https://hyperdata.it/to-sort/postcraft_/articles/new-application-walkthrough.html">
+        Building a Transmissions Application
+    </a>
+</p> <em></em>
+    </body>
+</html>

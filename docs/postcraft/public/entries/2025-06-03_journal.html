@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <link rel="stylesheet" href="/css/fonts.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/grid-columns.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/style.css" type="text/css"/>
+        <title>Journal 2025-06-03</title>
+    </head>
+    <!-- POST PAGE TEMPLATE -->
+    <body>
+    <strong></strong><em></em>
+        <header id="entry-header">
+            <h1 class="post-title h-cinzel">
+                
+            </h1>
+        </header>
+        <!-- ARTICLE CONTENT -->
+
+<article class="post-content">
+    <h1>Journal 2025-06-03</h1>
+<h2>The Tensegrity Suite</h2>
+<p>It occurred to me that if anyone shows interest in the stuff I&#39;ve been playing with then there needs to be a good place to discuss things. The domain (AI) is pretty hot right now, but my particular corner is niche. Still, things need to be public, must be easy to maintain. It occurred to me sticking things in Git would be useful. Then I discovered GitHub supports <a href="https://docs.github.com/en/discussions">Discussions</a> on repos. That&#39;ll do. So I&#39;ve set up a repo called <a href="https://github.com/danja/tensegrity">tensegrity</a> and on it enabled Discussions. It&#39;s new to me, but I think it should work. If you are reading this then you should probably go say hello over there.</p>
+<p><img src="/images/2025-06/victorian.png" alt="Victorian engineer figuring out tensegrity"></p>
+<h2>Bloody Paths!</h2>
+<p>What I have going on with this stuff right now is that a #:Transmissions pipeline reads content from markdown files in a particular dir tree, posts this off (lightly annotated with metadata) to a SPARQL store. This initial use case I call #:Postcraft, pulls this back out again and renders it as a static Web site. Like what you are looking at.
+This is massively over-engineered for a static site builder, but it&#39;s what seemed like a good sanity check for getting such data in and out of the store.</p>
+<p>The thing is I&#39;ve also got #:Semem looking at the contents of that store. This is intended as an LLM-oriented knowledgebase. I&#39;d already got some bits in place, like generating embeddings from the content and use of them for <em>semantic search</em> in the vector store similarity sense.</p>
+<p>I had a big push on this in the past week or so, sorting out the #:Ragno ontology for describing knowledgebases and <em>maybe</em> implementing a bunch of knowledge augmentation and retrieval algorithms. I say <em>maybe</em> because a large part of the coding was done by AI assistants, and they&#39;re not exactly great at checking their own homework. But this report on <a href="https://github.com/danja/semem/blob/main/INTERACTIONS.md">interactions</a> gives me cautious optimism.</p>
+<p>One thing I know for sure, this stuff is currently very fragile. And confusing. I don&#39;t know why I bothered asking ChatGPT for an illustration of this post because I could simply have taken a pic of my office.</p>
+<p> <img src="/images/2025-06/office1.jpeg" alt="a view of my office featuring confusing things"></p>
+<p>So anyway, the <strong>bloody paths</strong> thing. To kick the tyres of #:Semem I needed a smaller set of docs than this blog stuff. I&#39;ve hardly put any content in the #:Postcraft part of #:Semem itself yet. It will eventually look after the docs, but as of now, sod all there.</p>
+<p>So I ran the #:Postcraft transmissions over it. Bugger! Totally berserk paths. The primary motivation behind #:Transmissions is to make complex processing easier to manage. However, the decomposition comes at a cost. Here are the current commands I have to run to render this site:</p>
+<pre><code class="language-sh">cd ~/hyperdata/transmissions # my local path
+./del-dan.sh # clear SPARQL graphs
+./trans postcraft-statics ~/sites/danny.ayers.name/postcraft #
+./trans md-to-sparqlstore ~/sites/danny.ayers.name/postcraft
+./trans sparqlstore-to-html ~/sites/danny.ayers.name/postcraft
+./trans sparqlstore-to-site-indexes ~/sites/danny.ayers.name/postcraft
+</code></pre>
+<p>Here&#39;s the <a href="https://github.com/danja/transmissions/blob/main/src/apps/sparqlstore-to-html/transmissions.ttl">transmissions.ttl</a> for <code>sparqlstore-to-html</code> :</p>
+<pre><code class="language-turtle">@prefix rdf: &lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#&gt; .
+@prefix rdfs: &lt;http://www.w3.org/2000/01/rdf-schema#&gt; .
+@prefix : &lt;http://purl.org/stuff/transmissions/&gt; .
+
+:sparqlstore-to-html a :Transmission ;
+   :pipe (:p10 :p20 :p30  :p40 :p50  :p55  :p60 :p70
+          :p80  :p90 :p100) .
+
+:p10 a :SPARQLSelect ;
+     :settings :selectArticles .
+
+:p20 a :ForEach ;
+    :settings :resultIterator .
+
+:p30 a :Restructure ;
+    :settings :prepArticle .
+
+:p40 a :MarkdownToHTML ;
+    :settings :mdHTML .
+
+:p50 a :Templater ;
+    :settings :articleContentTemplate .
+
+# store the HTML snippet
+:p55 a :SPARQLUpdate ;
+     :settings :updateArticleHTML .
+
+# make the page
+:p60 a :Templater ;
+    :settings :articlePageTemplate .
+
+:p70 a :PathOps ;
+  :settings :filenameConstructor .
+
+:p80 a :PathOps ;
+  :settings :filenameExtension .
+
+:p90 a :FileWriter ;
+  :settings :htmlField .
+
+:p100 a :SPARQLUpdate ;
+     :settings :recordRendering .
+</code></pre>
+<p>Each of the <code>:settings</code> objects is a little block of statements. Each of the processors in the pipeline is a JS module.
+But each part <em>is</em> constructed simply, and I do have tolerable debugging facilities in place. It&#39;s just a bloody drag to trace through the pipeline nodes to find where I&#39;ve done something stupid in path resolution.
+Hey ho. Claudio tells me it&#39;s walk time again.
+When we get back I may just have play with some of the other stuff that&#39;s cluttering up the office right now.</p>
+<p><img src="/images/2025-06/office2.jpeg" alt="another view of my office featuring confusing things">
+ </p>
+
+</article>
+<p class="post-title h-cinzel">
+    <a href="http://danny.ayers.name/entries/2025-06-03_journal.html">
+        Journal 2025-06-03
+    </a>
+</p> <em></em>
+    </body>
+</html>

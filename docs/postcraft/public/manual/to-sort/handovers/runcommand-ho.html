@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <link rel="stylesheet" href="/css/fonts.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/grid-columns.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/style.css" type="text/css"/>
+        <title>RunCommand Processor Handover</title>
+    </head>
+    <!-- POST PAGE TEMPLATE -->
+    <body>
+    <strong></strong><em></em>
+        <header id="entry-header">
+            <h1 class="post-title h-cinzel">
+                
+            </h1>
+        </header>
+        <!-- ARTICLE CONTENT -->
+
+<article class="post-content">
+    <h1>RunCommand Processor Handover</h1>
+<h2>Purpose &amp; Security Model</h2>
+<p>RunCommand executes shell commands with security constraints:</p>
+<ul>
+<li>Allowlist of permitted commands</li>
+<li>Blocklist of dangerous patterns</li>
+<li>Configurable timeout</li>
+<li>No shell expansion/interpolation</li>
+</ul>
+<h2>Configuration</h2>
+<pre><code class="language-javascript">{
+  allowedCommands: [&#39;echo&#39;, &#39;ls&#39;], // Whitelist
+  blockedPatterns: [&#39;rm&#39;, &#39;|&#39;, &#39;;&#39;], // Dangerous patterns
+  timeout: 5000, // ms before termination
+  simples: true // Flag for simple mode
+}
+</code></pre>
+<h2>Key Files</h2>
+<ul>
+<li><code>/src/processors/unsafe/RunCommand.js</code> - Main implementation</li>
+<li><code>/src/applications/test_runcommand/</code> - Test application</li>
+<li><code>/tests/unit/RunCommand.spec.js</code> - Unit tests</li>
+</ul>
+<h2>Key Methods</h2>
+<ul>
+<li><code>validateCommand()</code> - Security checks</li>
+<li><code>executeCommand()</code> - Executes via child_process.exec</li>
+<li><code>initializeSecurity()</code> - Loads security config</li>
+<li><code>process()</code> - Main processor method</li>
+</ul>
+<h2>RDF Representation</h2>
+<pre><code class="language-turtle">@prefix rdf: &lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#&gt; .
+@prefix rdfs: &lt;http://www.w3.org/2000/01/rdf-schema#&gt; .
+@prefix trm: &lt;http://purl.org/stuff/transmission/&gt; .
+@prefix t: &lt;http://hyperdata.it/transmissions/&gt; .
+
+t:RunCommandConfig a trm:ServiceConfig ;
+    rdfs:label &quot;Run command configuration&quot; ;
+    trm:allowedCommands (&quot;echo&quot; &quot;ls&quot;) ;
+    trm:blockedPatterns (&quot;rm&quot; &quot;|&quot; &quot;;&quot;) ;
+    trm:timeout &quot;5000&quot;^^xsd:integer .
+</code></pre>
+<h2>Usage Example</h2>
+<pre><code class="language-javascript">const runCommand = new RunCommand({
+  allowedCommands: [&#39;echo&#39;],
+  timeout: 5000
+});
+
+const message = { command: &#39;echo &quot;Hello&quot;&#39; };
+await runCommand.process(message);
+</code></pre>
+<h2>Current Status</h2>
+<ul>
+<li>Implemented: Basic security, timeout, allowlist/blocklist</li>
+<li>Needed: stdin handling, env vars, working dir config</li>
+<li>Issues: Timeout test reliability</li>
+</ul>
+<h2>Critical Points</h2>
+<ul>
+<li>Always validate commands before execution</li>
+<li>Never allow shell expansion</li>
+<li>Maintain strict allowlist enforcement</li>
+<li>Handle timeouts gracefully</li>
+<li>Log all command executions</li>
+</ul>
+<h2>Recent Changes</h2>
+<ol>
+<li>Added timeout handling</li>
+<li>Improved security validation</li>
+<li>Added RDF config support</li>
+<li>Enhanced error handling</li>
+</ol>
+<h2>Known Limitations</h2>
+<ul>
+<li>No stdin support</li>
+<li>Limited environment control</li>
+<li>No shell features (pipes, redirects)</li>
+<li>Basic error reporting</li>
+</ul>
+
+</article>
+<p class="post-title h-cinzel">
+    <a href="https://hyperdata.it/manual/to-sort/handovers/runcommand-ho.html">
+        RunCommand Processor Handover
+    </a>
+</p> <em></em>
+    </body>
+</html>

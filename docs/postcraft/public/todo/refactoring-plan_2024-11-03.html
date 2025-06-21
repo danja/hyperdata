@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <link rel="stylesheet" href="/css/fonts.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/grid-columns.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/style.css" type="text/css"/>
+        <title>Transmissions Codebase Reorganization Plan</title>
+    </head>
+    <!-- POST PAGE TEMPLATE -->
+    <body>
+    <strong></strong><em></em>
+        <header id="entry-header">
+            <h1 class="post-title h-cinzel">
+                
+            </h1>
+        </header>
+        <!-- ARTICLE CONTENT -->
+
+<article class="post-content">
+    <h1>Transmissions Codebase Reorganization Plan</h1>
+<p>chat around /home/danny/github-danny/hyperdata/workspaces/hyperdata/chat-archives/md/5d94/2024-11-03_e7e.md</p>
+<h2>ME</h2>
+<h1><a href="https://claude.ai/chat/5d949a8b-d60c-42c7-90f4-6b26752cd9fd">Reorganizing Transmissions Codebase for Modular Development</a></h1>
+<p>a2b22596-e275-4711-bc35-dcd0c79c9768</p>
+<p>We need to reorganise the codebase, generally separating concerns so that it will be easier to manage development of the system. Below are the requirements, roughly stated. Please read and compare with the existing code in your project knowledge to come up with a systematic plan to implementing these. Then express the plan in small practical instructions, editing steps etc I can make, and show me these in an artifact document for me to go through.  </p>
+<p>The core of the system will involve the <code>Director</code> managing the creation and execution of an <code>Application</code>. An <code>Application</code> will contain a set of <code>Transmission</code> definitions (which may be interconnected). When an <code>Application</code> is applied to a <em>target</em> (a filesystem system location, a URL or other identifier) it will read details of the local source data (specified in a <code>manifest.ttl</code>) so an instance of the <code>Application</code> can be applied.</p>
+<ol>
+<li><code>run.js</code>, assisted by <code>Dispatch</code> parses command line arguments, initializes a <code>Director</code>, to which it passes instructions</li>
+<li><code>Director</code> should create a <code>TransmissionBuilder</code>, a <code>TransmissionRunner</code> a <code>Procurer</code> and a <code>Proctor</code></li>
+<li><code>Proctor</code> - TBD. (later it will take responsibility for reflection, self-examination, test &amp; documentation in a unified fashion)</li>
+<li><code>Director</code> will use <code>TransmissionBuilder</code> to populate <code>Application</code> using <code>Procurer</code> to resolve dependencies and load resources</li>
+<li><code>Procurer</code> will be responsible for reading and writing RDF data</li>
+<li>Once the <code>Application</code> has been prepared, <code>Director</code> should apply it to the supplied target.</li>
+</ol>
+<p>#:todo <code>CommandUtils</code> should be renamed <code>Dispatch</code>
+#:todo <code>CommandUtils</code> currently creates a <code>TransmissionRunner</code>, <code>Dispatch</code> should initialise a singleton <code>Director</code> and pass the instructions there
+#:todo <code>Proctor</code> implementation is not required yet, just a placeholder for now
+#:todo <code>Procurer</code> should replace <code>ApplicationManager</code>
+#:todo <code>Procurer</code> will be responsible for asset management, in the sense of dependency resolution and loading resources
+#:todo the <code>ModuleLoader</code> operations currently in <code>TransmissionBuilder</code>should be moved to <code>Procurer</code>
+#:todo the dataset reading and writing operations currently in <code>TransmissionBuilder</code>should be moved to <code>Procurer</code>
+At the moment only a single <code>transmissions.ttl</code> and <code>processors-config.ttl</code> is used. This will remain the default, but the infrastructure needs to be extended so that <code>transmissions.ttl</code> can include calls to launch transmissions defined in other files. Similarly  <code>processors-config.ttl</code> will specify other files that may be merged into the configuration model.</p>
+<hr>
+<ul>
+<li><strong>dataDir</strong> : src/applications/claude-json-converter/data</li>
+<li><strong>rootDir</strong> : claude-json-converter</li>
+<li><strong>applicationRootDir</strong> : claude-json-converter</li>
+<li><strong>tags</strong> : p10.p20.p30.p40.p50</li>
+<li><strong>done</strong> : false</li>
+<li><strong>meta</strong> : {
+&quot;conv_uuid&quot;: &quot;5d949a8b-d60c-42c7-90f4-6b26752cd9fd&quot;,
+&quot;conv_name&quot;: &quot;Reorganizing Transmissions Codebase for Modular Development&quot;,
+&quot;updated_at&quot;: &quot;2024-11-03T16:09:33.360751Z&quot;
+}</li>
+<li><strong>filepath</strong> : /home/danny/github-danny/hyperdata/docs/postcraft/content-raw/chat-archives/md/5d94/2024-11-03_a2b.md</li>
+</ul>
+<h2>Phase 1: Create New Core Classes</h2>
+<ol>
+<li>Create <code>src/core/Director.js</code>:</li>
+</ol>
+<pre><code class="language-javascript">class Director {
+  constructor() {
+    this.builder = new TransmissionBuilder();
+    this.runner = new TransmissionRunner();
+    this.procurer = new Procurer();
+    this.proctor = new Proctor();
+  }
+
+  async initializeApplication(args) {
+    const application = new Application();
+    await this.procurer.loadResources(application, args);
+    await this.builder.buildTransmissions(application);
+    return application;
+  }
+
+  async applyToTarget(application, target) {
+    await this.runner.execute(application, target);
+  }
+}
+</code></pre>
+<ol start="2">
+<li>Create <code>src/core/Application.js</code>:</li>
+</ol>
+<pre><code class="language-javascript">class Application {
+  constructor() {
+    this.transmissions = new Map();
+    this.config = null;
+    this.manifest = null;
+  }
+
+  addTransmission(id, transmission) {
+    this.transmissions.set(id, transmission);
+  }
+}
+</code></pre>
+<ol start="3">
+<li>Create <code>src/core/Procurer.js</code>:</li>
+</ol>
+<pre><code class="language-javascript">class Procurer {
+  constructor() {
+    this.moduleLoader = ModuleLoaderFactory.createModuleLoader();
+  }
+
+  async loadResources(application, args) {
+    const config = await this.loadConfig(args.configPath);
+    const manifest = await this.loadManifest(args.target);
+    application.config = config;
+    application.manifest = manifest;
+  }
+}
+</code></pre>
+<h2>Phase 2: Refactor Existing Code</h2>
+<ol>
+<li>Rename and update <code>CommandUtils.js</code> to <code>Dispatch.js</code>:</li>
+</ol>
+<pre><code class="language-javascript">class Dispatch {
+  constructor() {
+    this.director = new Director();
+  }
+
+  async handleCommand(args) {
+    const application = await this.director.initializeApplication(args);
+    await this.director.applyToTarget(application, args.target);
+  }
+}
+</code></pre>
+<ol start="2">
+<li>Update <code>run.js</code>:</li>
+</ol>
+<pre><code class="language-javascript">import Dispatch from &#39;./src/core/Dispatch.js&#39;;
+
+const dispatch = new Dispatch();
+await dispatch.handleCommand(args);
+</code></pre>
+<h2>Phase 3: Move Functionality</h2>
+<ol>
+<li>Move module loading from TransmissionBuilder to Procurer:</li>
+</ol>
+<pre><code class="language-javascript">// In Procurer.js
+async loadModule(name) {
+  return this.moduleLoader.loadModule(name);
+}
+</code></pre>
+<ol start="2">
+<li>Move dataset operations from TransmissionBuilder to Procurer:</li>
+</ol>
+<pre><code class="language-javascript">// In Procurer.js
+async loadDataset(path) {
+  const stream = fromFile(path);
+  return await rdf.dataset().import(stream);
+}
+</code></pre>
+<h2>Phase 4: Implement Resource Resolution</h2>
+<ol>
+<li>Add resource resolution to Procurer:</li>
+</ol>
+<pre><code class="language-javascript">// In Procurer.js
+async resolveTransmissionFiles(basePath) {
+  const files = await this.findTransmissionFiles(basePath);
+  return this.mergeTransmissionFiles(files);
+}
+
+async resolveConfigFiles(basePath) {
+  const files = await this.findConfigFiles(basePath);
+  return this.mergeConfigFiles(files);
+}
+</code></pre>
+<h2>Migration Steps</h2>
+<ol>
+<li>Create new directory structure:</li>
+</ol>
+<pre><code>src/
+  core/
+    Director.js
+    Application.js
+    Procurer.js
+    Proctor.js
+    Dispatch.js
+  engine/  # Move existing engine code here
+  processors/ # Keep existing processors here
+</code></pre>
+<ol start="2">
+<li><p>Update imports in all files to reflect new structure</p>
+</li>
+<li><p>Create placeholder Proctor:</p>
+</li>
+</ol>
+<pre><code class="language-javascript">class Proctor {
+  constructor() {
+    // Placeholder for future implementation
+  }
+}
+</code></pre>
+<ol start="4">
+<li>Update tests to use new structure</li>
+</ol>
+<h2>Testing Strategy</h2>
+<ol>
+<li>Create unit tests for new core classes</li>
+<li>Update existing integration tests</li>
+<li>Add new integration tests for multi-file transmissions</li>
+<li>Verify resource resolution with test cases</li>
+</ol>
+
+</article>
+<p class="post-title h-cinzel">
+    <a href="https://hyperdata.it/todo/refactoring-plan_2024-11-03.html">
+        Transmissions Codebase Reorganization Plan
+    </a>
+</p> <em></em>
+    </body>
+</html>

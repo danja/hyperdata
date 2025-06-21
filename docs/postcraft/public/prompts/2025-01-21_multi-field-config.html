@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <link rel="stylesheet" href="/css/fonts.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/grid-columns.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/style.css" type="text/css"/>
+        <title>Job Overview</title>
+    </head>
+    <!-- POST PAGE TEMPLATE -->
+    <body>
+    <strong></strong><em></em>
+        <header id="entry-header">
+            <h1 class="post-title h-cinzel">
+                
+            </h1>
+        </header>
+        <!-- ARTICLE CONTENT -->
+
+<article class="post-content">
+    <p> use existing codebase patterns
+conventions</p>
+<h1>Job Overview</h1>
+<p>I would like to replace the <code>getProperty(property, fallback)</code> method in <code>src/processors/base/Processor.js</code> with <code>getValues(property, fallback)</code> so that multiple property values can be supported. This should return an array of values. If there is only one value, it should be an array containing the same as what <code>getProperty</code> currently provides.</p>
+<h1>Procedure</h1>
+<p>To achieve this I would like to start with a step-by-step, test-driven refactoring. First functionality around <code>getProperty()</code>, <code>  getPropertyFromSettings()</code> etc. should be delegated to <code>src/processors/base/ProcessorSettings.js</code>. Then the <code>getValues(property, fallback)</code> method should be added to <code>src/processors/base/Processor.js</code>, delegating to <code>src/processors/base/ProcessorSettings.js</code>. Then a replacement for <code>getProperty()</code> should call <code>getValues()</code> returning the first value of the array (if it exists). Before every change a corresponding Jasmine test should be created.</p>
+<h1>Example Functionality</h1>
+<p>Currently the <code>packer</code> application uses a <code>StringFilter</code> processor defined in <code>src/processors/text/StringFilter.js</code>.</p>
+<p>The pipeline in <code>src/applications/packer/transmissions.ttl</code> includes this reference :</p>
+<pre><code class="language-turtle">:p20 a :StringFilter ;
+    trn:settings :filterConfig .
+</code></pre>
+<p>There are corresponding settings in <code>src/applications/packer/config.ttl</code> :</p>
+<pre><code class="language-turtle">:filterConfig a :ConfigSet ;
+    :settings :filterDefaults ;
+    :includePatterns &quot;*.txt,*.md,*.js,*.jsx,*.ts,*.tsx,*.json,*.html,*.css&quot; ;
+    :excludePatterns &quot;node_modules/*,dist/*,build/*,.git/*&quot; .
+</code></pre>
+<p>The behaviour on <code>:excludePatterns</code> here should remain exactly as it is now. But this alternative expression should be give the equivalent result :</p>
+<pre><code class="language-turtle">:filterConfig a :ConfigSet ;
+    :settings :filterDefaults ;
+    :includePatterns &quot;*.txt,*.md,*.js,*.jsx,*.ts,*.tsx,*.json,*.html,*.css&quot; ;
+    :excludePattern &quot;node_modules/*&quot; ;
+    :excludePattern &quot;dist/*&quot; ;
+    :excludePattern &quot;build/*&quot; ;
+    :excludePattern &quot;.git/*&quot; .
+</code></pre>
+<p>Now check project knowledge to see how things currently work. Then give a lot of thought about how the above can be achieved in a systematic fashion. Then create a list of necessary steps. After double-checking the list is consistent with the requirements start the necessary code changes. All code listings should be rendered as individual artifacts containing full source code with an appropriate title and the path of the target source file made clear.  </p>
+<hr>
+<p>npm test -- tests/unit/ProcessorSettings.spec.js
+ </p>
+
+</article>
+<p class="post-title h-cinzel">
+    <a href="https://hyperdata.it/prompts/2025-01-21_multi-field-config.html">
+        Job Overview
+    </a>
+</p> <em></em>
+    </body>
+</html>

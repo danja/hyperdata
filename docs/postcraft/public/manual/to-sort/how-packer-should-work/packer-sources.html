@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <link rel="stylesheet" href="/css/fonts.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/grid-columns.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/style.css" type="text/css"/>
+        <title>Packer Application Source Files</title>
+    </head>
+    <!-- POST PAGE TEMPLATE -->
+    <body>
+    <strong></strong><em></em>
+        <header id="entry-header">
+            <h1 class="post-title h-cinzel">
+                
+            </h1>
+        </header>
+        <!-- ARTICLE CONTENT -->
+
+<article class="post-content">
+    <h1>Packer Application Source Files</h1>
+<h2>Core Processing</h2>
+<pre><code>src/api/cli/run.js                          # Entry point, command line processing
+src/api/common/CommandUtils.js              # Command parsing and routing
+src/core/ApplicationManager.js              # Application lifecycle management
+src/core/TransmissionBuilder.js             # Pipeline construction from configs
+src/core/ModuleLoader.js                    # Dynamic processor loading
+src/core/ModuleLoaderFactory.js             # Processor module instantiation
+</code></pre>
+<h2>Pipeline Processors</h2>
+<pre><code>src/processors/fs/DirWalker.js              # Directory traversal
+src/processors/text/StringFilter.js         # File pattern matching
+src/processors/fs/FileReader.js             # File content loading
+src/processors/packer/FileContainer.js      # Content aggregation
+src/processors/util/CaptureAll.js           # Message capture
+src/processors/util/WhiteboardToMessage.js  # Message transformation
+src/processors/flow/Unfork.js              # Pipeline convergence
+src/processors/fs/FileWriter.js             # Output generation
+</code></pre>
+<h2>Configuration</h2>
+<pre><code>src/applications/packer/transmissions.ttl   # Pipeline definition
+src/applications/packer/config.ttl          # Processor configuration
+src/applications/packer/about.md            # Application documentation
+</code></pre>
+<h2>Base Classes &amp; Support</h2>
+<pre><code>src/engine/Transmission.js                  # Pipeline execution engine
+src/processors/base/Processor.js            # Base processor functionality
+src/processors/base/ProcessorSettings.js    # Configuration management
+</code></pre>
+<h2>Factories</h2>
+<pre><code>src/processors/fs/FsProcessorsFactory.js           # File system processors
+src/processors/text/TextProcessorsFactory.js       # Text processing
+src/processors/packer/PackerProcessorsFactory.js   # Packer-specific processors
+src/processors/util/UtilProcessorsFactory.js       # Utility processors
+src/processors/flow/FlowProcessorsFactory.js       # Flow control processors
+</code></pre>
+<h2>Utilities</h2>
+<pre><code>src/utils/ns.js                            # RDF namespace management
+src/utils/Logger.js                        # Logging infrastructure
+src/utils/footpath.js                      # Path resolution
+src/utils/GrapoiHelpers.js                 # RDF graph utilities
+</code></pre>
+
+</article>
+<p class="post-title h-cinzel">
+    <a href="https://hyperdata.it/manual/to-sort/how-packer-should-work/packer-sources.html">
+        Packer Application Source Files
+    </a>
+</p> <em></em>
+    </body>
+</html>

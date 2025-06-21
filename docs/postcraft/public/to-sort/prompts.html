@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <link rel="stylesheet" href="/css/fonts.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/grid-columns.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/style.css" type="text/css"/>
+        <title> 2024-07-06</title>
+    </head>
+    <!-- POST PAGE TEMPLATE -->
+    <body>
+    <strong></strong><em></em>
+        <header id="entry-header">
+            <h1 class="post-title h-cinzel">
+                
+            </h1>
+        </header>
+        <!-- ARTICLE CONTENT -->
+
+<article class="post-content">
+    <h4>2024-07-06</h4>
+<p>Currently the code is set up around passing messages of the form process(data, context) where data is a string and context is a dictionary.
+I wish to refactor the code under src such that the methods with a signature like this:</p>
+<pre><code>execute(data, context)
+enqueue(data, context)
+messageQueue.push({ data, context })
+</code></pre>
+<p>are changed to this:</p>
+<pre><code>execute(context)
+enqueue(context)
+messageQueue.push({ context })
+</code></pre>
+<p>to start I think it will be best to modify the code under src/applications to move the data argument into the context dictionary so: {data: data}
+Can you advise how best to proceed methodically, step-by-step?</p>
+<hr>
+<h2>Cursor</h2>
+<p>Please create a new jsconfig.json file for this project. Include everything relevant you find in this codebase. The project is in ES6 format. I wish to use intellisense in VSCode. Please add appropriate references to the libraries in use, including the typescript interface definitions in @types/grapoi.d.ts</p>
+<p>I wish to make intellisense aware of</p>
+<h2>Gemini</h2>
+<p>The code here successfully extracts a sequence of terms from a turtle rdf file. I would like it to also the class of each term. Here is the code :
+<a href="https://github.com/danja/transmissions/blob/main/src/mill/TransmissionBuilder.js">https://github.com/danja/transmissions/blob/main/src/mill/TransmissionBuilder.js</a>
+here is the RDF :
+<a href="https://github.com/danja/transmissions/blob/main/src/transmissions/string-pipe.ttl">https://github.com/danja/transmissions/blob/main/src/transmissions/string-pipe.ttl</a></p>
+<hr>
+<p>JS Code interpreter on ChatGPT</p>
+<p>Please keep your responses to a minimum, only show code listings that include your changes. I will upload an ES6 project as a zip file. Please extract the files and save to /mnt/data/
+It is in early stages of development and does not work. We need to fix it and get it to support the following functionality.
+The purpose of the code is to apply a processing pipeline to text. Services define the individual nodes which are instantiated by dependency injection. The connections between nodes will given declaratively using Connector.js. Here the code should read a file, apply a process to it and save it again. Please examine the code and write tests that will confirm this behaviour. Then fix the code to operate correctly. I will upload the code again. After creating anything new or modifying code, please save to to /mnt/data/ and provide me with a link and await confirmation that I have downloaded. Give extremely concise status messages only. After every step, stop and ask me for confirmation. I will pay you $20/month.</p>
+<hr>
+<p>Please keep your responses to a minimum, only show code listings that include your changes. I will upload an ES6 project as a zip file. Please extract the files and save to /mnt/data/ then load it into Deno and execute run.js
+We need to fix it to support the following functionality:
+The purpose of the code is to apply a processing pipeline to text. Services define the individual nodes which are instantiated by dependency injection. The aim is to make everything very loosely-coupled. Later the pipeline topology will be defined declaratively. For a minimal configuration the code should now use a pipeline to take a string, apply a process to it and print the result. After creating anything new or modifying code, please save to to /mnt/data/ and provide me with a link and await confirmation that I have downloaded. Give extremely concise status messages only. After every step, stop and ask me for confirmation. I will pay you $20/month.</p>
+<hr>
+<p>Can you please zip the current versions and save to /mnt/data/ and provide me with a link and await confirmation that I have downloaded.</p>
+<hr>
+<p>Please keep your responses to a minimum, only show code listings that include your changes. I will upload an ES6 project as a zip file. Begin by checking the environment by loading the code into Deno and executing run.js The purpose of the code is to apply a processing pipeline to text. Services define the individual nodes which are instantiated by dependency injection. The aim is to make everything very loosely-coupled. For a minimal configuration the code should now use a pipeline to take a string, apply a process to it and print the result. Right now it works, but the names of the services and the connection topology is hardcoded. This should be done declaratively. The JSON &#39;simplepipe&#39; in run.js contains a list of the nodes that should be connected and the order of the list gives the sequence. Please modify the code of ServiceContainer to support this. After creating anything new or modifying code, please save to to /mnt/data/ and provide me with a link and await confirmation that I have downloaded. Then load the code into Deno and execute run.js
+Give extremely concise status messages only. After every step, stop and ask me for confirmation. I will pay you $20/month.</p>
+<hr>
+<p>tests broken on Deno</p>
+<p>Please keep your responses to a minimum, only show code listings that include your changes. I will upload an ES6 project as a zip file. Begin by loading the code into Deno and executing run.js Fix any bugs then zip all the files and save to /mnt/data/ and give me a download link. The purpose of the code is to apply a processing pipeline to text. Services define the individual nodes which are instantiated by dependency injection. The aim is to make everything very loosely-coupled. For a minimal configuration the code should now use a pipeline to take a string, apply a process to it and print the result. simplepipe.json contains a list of the nodes that should be connected and the order of the list gives the sequence. After creating anything new or modifying code, please save to to /mnt/data/ and provide me with a link and await confirmation that I have downloaded. Then load the code into Deno and execute run.js
+Give extremely concise status messages only. After every step, stop and ask me for confirmation. I will pay you $20/month.</p>
+<hr>
+<p>Can you extract the &#39;simplepipe&#39; definition into a separate JSON file and modify code appropriately.</p>
+<hr>
+<p>Please keep your responses to a minimum, only show code listings that include your changes. I will upload an ES6 project as a zip file. Check the environment by loading the code into Deno and executing run.js The purpose of the code is to apply a processing pipeline to text. Services define the individual nodes which are instantiated by dependency injection. The aim is to make everything very loosely-coupled. For a minimal configuration the code should now use a pipeline to take a string, apply a process to it and print the result.</p>
+<p>After creating anything new or modifying code, please save to to /mnt/data/ and provide me with a link and await confirmation that I have downloaded. Then load the code into Deno and execute run.js
+Give extremely concise status messages only. After every step, stop and ask me for confirmation. I will pay you $20/month.</p>
+<p>Please make a test script for each class using vanilla Javascript. Then make a runner to run all the tests and try them individually. Then zip the latest versions of all files, save to /mnt/data/ and provide me with a link and await confirmation that I have downloaded.</p>
+<hr>
+<p>Can you check for places where the code made be refactored to make it easier to understand and maintain. The aim is for things to be loosely-coupled, where appropriate defined declaratively in a separate json file where and to use dependency injection. Consider higher-level functions and design patterns like factory for the service class creation, but only if they would improve the code.</p>
+<hr>
+<p>Follow these steps one at a time, executing run.js after each step and checking the output before continuing:</p>
+<ol>
+<li>Ensure ES6 module syntax is used throughout.</li>
+<li>Extract the pipeline construction, with definitions based on the pipeline configuration, from ServiceContainer into a seperate class Pipeline.</li>
+<li>Refactor the service creation parts to use the factory design pattern
+Then zip the latest versions of all files, save to /mnt/data/ and provide me with a link and await confirmation that I have downloaded.</li>
+</ol>
+<p>(re-upload)</p>
+<p>I will upload a revised version of the code. Please extract the files and save to /mnt/data/ then load it into Deno and execute run.js to check environment.
+Then follow these steps one at a time, executing run.js after each step and checking the output before continuing:</p>
+<ol>
+<li><p>Integrate the Pipeline class into the ServiceContainer class, replacing redundant constructor code.</p>
+</li>
+<li><p>Incorporate the ServiceFactory class into the ServiceContainer class, replacing redundant constructor code.</p>
+</li>
+<li><p>Integrate Logger.js into the system and add logging at appropriate places.
+Then zip the latest versions of all files, save to /mnt/data/ and provide me with a link and await confirmation that I have downloaded.</p>
+<hr>
+</li>
+</ol>
+<p>restart</p>
+<p>Please keep your responses to a minimum, only show code listings that include your changes. I will upload an ES6 project as a zip file. Check the environment by loading the code into Deno and executing run.js The purpose of the code is to apply a processing pipeline to text. Services define the individual nodes which are instantiated by dependency injection. The aim is to make everything very loosely-coupled. For a minimal configuration the code should now use a pipeline to take a string, apply a process to it and print the result.</p>
+<p>Only give me extremely concise status messages. Implement the createService(type, config) factory method in di/ServiceFactory.js to support the Connector class in di/Connector.js. Check the syntax as you go along. After code changes, zip the latest versions of all files, save to /mnt/data/ and provide me with a link and await confirmation that I have downloaded.</p>
+<hr>
+<p>Now make a list of each of the classes found in the services directory. Examine each and look for commonalities. Then implement support for each in di/ServiceFactory.js</p>
+<p>Use synchronous methods. Check the syntax as you go along.
+After code changes, zip the latest versions of all files, save to /mnt/data/ and provide me with a link and await confirmation that I have downloaded.</p>
+<hr>
+<p>RENAMED</p>
+<p>The program flow should be as follows:</p>
+<ol>
+<li>run.js will create an instance of the Transmission class, giving it the name of the configuration file, eg. simplepipe.json</li>
+<li>the Transmission class will load the configuration from file</li>
+<li></li>
+</ol>
+<p>DependencyInjector class, Injectable interface, ServiceContainer class, ServiceFactory class</p>
+<p>The goal now is to incorporate the ServiceFactory class from di/ServiceFactory.js into the ServiceContainer class from di/ServiceContainer.js, replacing redundant constructor code. Review the relevant code and form a plan of several steps. Divide the code integration plan itself into small steps. Use synchronous methods. Then proceed to carry out the steps. Check the syntax as you go along. After code changes, zip the latest versions of all files, save to /mnt/data/ and provide me with a link and await confirmation that I have downloaded.</p>
+<p>RESTART</p>
+<p>Please keep your responses to a minimum, only show code listings that include your changes. I will upload an ES6 project as a zip file. Check the environment by loading the code into Deno and executing run.js The purpose of the code is to apply a processing pipeline to text. Services define the individual nodes which are instantiated by dependency injection. The aim is to make everything very loosely-coupled. For a minimal configuration the code should now use a pipeline to take a string, apply a process to it and print the result.</p>
+<p>I would like you to modify getService(serviceName) in di/ServiceContainer.js to delegate to the ServiceFactory class in di/ServiceFactory.js to create the services. Check the syntax as you go along. After code changes, zip the latest versions of all files, save to /mnt/data/ and provide me with a link and await confirmation that I have downloaded.</p>
+<hr>
+<p>Please keep your responses to a minimum, only show code listings that include your changes. I will upload an ES6 project as a zip file. Check the environment by loading the code into Deno and executing run.js</p>
+<p>The following task should be approached by first making a list of small, incremental steps.
+In the code, getService(serviceName) in di/ServiceContainer.js should delegate to the ServiceFactory class in di/ServiceFactory.js to create the services. Currently getService method in ServiceContainer.js is using the service name to create an instance via the ServiceFactory, but it&#39;s not passing any configuration data to the createService method of ServiceFactory. Please modify the getService method to pass the appropriate configuration to the ServiceFactory.</p>
+<p>Check the syntax as you go along. After code changes, zip the latest versions of all files, save to /mnt/data/ and provide me with a link and await confirmation that I have downloaded. Don&#39;t try running it yet.</p>
+<p>Now execute run.js and check the output is &#39;hello world!&#39;. Fix any problems. After code changes, zip the latest versions of all files, save to /mnt/data/ and provide me with a link and await confirmation that I have downloaded.</p>
+<p>STOPPPPPPP need to redo that ^^^^</p>
+<p>be silent apart from short status messages</p>
+<hr>
+<p>aside</p>
+<p>Please be silent apart from short status messages. I will upload an ES6 project as a zip file. The purpose of the code is to apply a processing pipeline to text. Services define the individual nodes which are instantiated by dependency injection.
+Load the code into Deno and execute run.js
+First carefully identify the cause of the errors through analysis. simplepipe.json is correct, so the problem must be in the code. When done, zip the latest versions of all files, save to /mnt/data/ and provide me with a link and await confirmation that I have downloaded. Be silent apart from short status messages.</p>
+<p>and take note of the errors. Add logging messages to help identify the cause of the errors. Check the syntax as you go along. After making these changes, zip the latest versions of all files, save to /mnt/data/ and provide me with a link and await confirmation that I have downloaded. Don&#39;t try running it again yet. Be silent apart from short status messages.</p>
+<p>...
+Downloaded, thanks.
+I would you to carry out a refactoring that will need a plan of small, incremental steps. It involves the Transmission class in di/Transmission.js, ServiceContainer class in di/ServiceContainer.js and SimplePipe in transmissions/SimplePipe.js The aim is to decouple the components and have the system constructed at run time based on a configuration file such as simplepipe.json
+This will involve reimplementing the functionality of SimplePipe in a generic way that will be created at runtime.
+The Transmission class will construct an abstract model of the topology derived from a json file such as simplepipe.json.
+The ServiceContainer class will be responsible for creating the concrete services, creating the flow described in the Transmission and executing it.
+Now create a list of small, incremental steps to carry out this refactoring.</p>
+<p>Now work through the steps, be silent apart from short status messages. After code changes, zip the latest versions of all files, save to /mnt/data/ and provide me with a link and await confirmation that I have downloaded.</p>
+<hr>
+<p>replace SimplePipe with a dynamically created Transmission instance determined by</p>
+<p>. , class in di/ServiceContainer.js</p>
+<p>creating the services, ServiceContainer class in
+The Transmission class in di/Transmission.js will takes responsibility for containing an abstract model of the topology derived from a json file such as simplepipe.json. The ServiceContainer class will also be responsible for creating the services, class in di/ServiceContainer.js</p>
+<p>creating the services, ServiceContainer class in</p>
+<p>. Check the syntax as you go along. After code changes, zip the latest versions of all files, save to /mnt/data/ and provide me with a link and await confirmation that I have downloaded.</p>
+<p>Now execute run.js and check the output is &#39;hello world!&#39;. Fix any problems.
+After code changes, zip the latest versions of all files, save to /mnt/data/ and provide me with a link and await confirmation that I have downloaded.</p>
+<hr>
+<h2>Proceeding with these adjustments now.</h2>
+<p>Don&#39;t tell me anything until you have completed the following steps.
+Integrate the Pipeline class into the ServiceContainer class. Check the syntax as you go along.
+Execute run.js and check the output. Fix any problems.
+Zip the latest versions of all files, save to /mnt/data/ and provide me with a link and await confirmation that I have downloaded.</p>
+<p>Don&#39;t tell me anything until you have completed the following steps.
+Examine SimplePipe and suggest ways to use the external simplepipe.json file to define the pipeline declaratively and remove the hardcoded names.</p>
+<p>Don&#39;t tell me anything until you have completed the following steps.
+Integrate Logger.js into the system and add logging at appropriate places. Check the syntax as you go along.
+Execute run.js and check the output. Fix any problems.
+Zip the latest versions of all files, save to /mnt/data/ and provide me with a link and await confirmation that I have downloaded.</p>
+<hr>
+<h3>Docs</h3>
+<ul>
+<li>Introduction</li>
+<li>API</li>
+<li>tutorial</li>
+<li>examples</li>
+</ul>
+<p>Please add comments to the code files suitable for JSDoc. Follow best practices. Only add comments where the code isn&#39;t self-explanatory.
+Execute run.js and check the output. Fix any problems.
+Zip the latest versions of all files, save to /mnt/data/ and provide me with a link and await confirmation that I have downloaded.</p>
+<h3>bindings</h3>
+<h3>RDF</h3>
+<p>Here is a Javascript file, t2j.js. Save it to /mnt/data/
+The job is to implement the method convert(), which will take a string in Turtle RDF syntax and convert it to JSON-LD. The code will in ES6 format. This will be achieved by following these steps:</p>
+<ol>
+<li>initiate Deno with the following libraries: readable-stream, @rdfjs/data-model, @rdfjs/serializer-turtle, @rdfjs/serializer-jsonld</li>
+<li>run the current t2j.js to check the environment. If there are any errors, make the necessary adjustments to the environment so that it is working without errors.</li>
+<li>Implement the convert() method in t2j.js</li>
+<li>Save the latest version of t2j.js to /mnt/data/ and provide me with a link and await confirmation that I have downloaded.</li>
+</ol>
+<p>and execute it with Deno. Then check the output. Fix any problems. After code changes, zip the latest versions of all files, save to /mnt/data/ and provide me with a link and await confirmation that I have downloaded.
+ </p>
+
+</article>
+<p class="post-title h-cinzel">
+    <a href="https://hyperdata.it/to-sort/prompts.html">
+         2024-07-06
+    </a>
+</p> <em></em>
+    </body>
+</html>

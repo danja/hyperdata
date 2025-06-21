@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <link rel="stylesheet" href="/css/fonts.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/grid-columns.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/style.css" type="text/css"/>
+        <title>HTTP Server Implementation Plan</title>
+    </head>
+    <!-- POST PAGE TEMPLATE -->
+    <body>
+    <strong></strong><em></em>
+        <header id="entry-header">
+            <h1 class="post-title h-cinzel">
+                
+            </h1>
+        </header>
+        <!-- ARTICLE CONTENT -->
+
+<article class="post-content">
+    <h1>HTTP Server Implementation Plan</h1>
+<h2>1. Core Components</h2>
+<h3>HttpServer Processor</h3>
+<ul>
+<li>Extends base Processor class</li>
+<li>Manages worker thread for server</li>
+<li>Handles graceful shutdown</li>
+<li>Implements required interfaces</li>
+</ul>
+<h3>Worker Thread Implementation</h3>
+<ul>
+<li>Express server setup</li>
+<li>Static file serving </li>
+<li>Shutdown endpoint</li>
+<li>Message passing with main thread</li>
+</ul>
+<h3>Configuration</h3>
+<ul>
+<li>Port (default 4000)</li>
+<li>Base URL path (/transmissions/test/)</li>
+<li>Static file path</li>
+<li>Allowed methods</li>
+</ul>
+<h2>2. Implementation Steps</h2>
+<h3>Step 1: HttpServer Class</h3>
+<pre><code class="language-javascript">import { Worker } from &#39;worker_threads&#39;
+import { EventEmitter } from &#39;events&#39;
+import logger from &#39;../../utils/Logger.js&#39;
+import Processor from &#39;../base/Processor.js&#39;
+import ns from &#39;../../utils/ns.js&#39;
+
+class HttpServer extends Processor {
+  constructor(config) {
+    super(config)
+    this.port = this.getPropertyFromMyConfig(ns.trm.port) || 4000
+    this.basePath = this.getPropertyFromMyConfig(ns.trm.basePath) || &#39;/transmissions/test/&#39;
+    this.worker = null
+  }
+  
+  async process(message) {
+    // Start server worker
+    // Handle messages/shutdown
+    // Emit completion
+  }
+  
+  async shutdown() {
+    // Graceful shutdown logic
+  }
+}
+</code></pre>
+<h3>Step 3: Express Server Worker Logic</h3>
+<pre><code class="language-javascript">// In separate worker.js
+import express from &#39;express&#39;
+import { parentPort } from &#39;worker_threads&#39;
+
+const app = express()
+
+app.post(&#39;/shutdown&#39;, (req, res) =&gt; {
+  res.send(&#39;Shutting down...&#39;)
+  parentPort.postMessage(&#39;shutdown&#39;)
+})
+
+app.use(&#39;/transmissions/test/&#39;, express.static(staticPath))
+
+app.listen(port)
+</code></pre>
+<h3>Step 4: Configuration Format</h3>
+<pre><code class="language-turtle">@prefix trm: &lt;http://purl.org/stuff/transmission/&gt; .
+@prefix t: &lt;http://hyperdata.it/transmissions/&gt; .
+
+t:ServerConfig a trm:ServiceConfig ;
+    trm:port 4000 ;
+    trm:basePath &quot;/transmissions/test/&quot; ;
+    trm:staticPath &quot;data/input&quot; .
+</code></pre>
+<h2>3. Testing Plan</h2>
+<ol>
+<li>Basic server startup</li>
+<li>Static file serving</li>
+<li>Shutdown endpoint</li>
+<li>Worker thread communication</li>
+<li>Graceful shutdown</li>
+<li>Configuration handling</li>
+</ol>
+<h2>4. Integration Points</h2>
+<ul>
+<li>WorkerPool.js integration for worker management</li>
+<li>Processor lifecycle hooks</li>
+<li>Message passing protocols</li>
+<li>Configuration parsing</li>
+</ul>
+<h2>5. Error Handling</h2>
+<ul>
+<li>Worker startup failures</li>
+<li>Port conflicts</li>
+<li>Static file access errors</li>
+<li>Shutdown timing issues</li>
+</ul>
+<h2>6. Deployment Structure</h2>
+<pre><code>src/
+  processors/
+    http/
+      HttpServer.js
+      worker.js
+  applications/
+    test_http-server/
+      config.ttl
+      transmissions.ttl
+      data/
+        input/
+          index.html
+</code></pre>
+<h2>7. Next Steps</h2>
+<ol>
+<li>Implement HttpServer.js base structure</li>
+<li>Create worker thread implementation</li>
+<li>Add configuration handling</li>
+<li>Implement shutdown logic</li>
+<li>Add error handling</li>
+<li>Create test application</li>
+<li>Write integration tests</li>
+<li>Document API and usage</li>
+</ol>
+
+</article>
+<p class="post-title h-cinzel">
+    <a href="https://hyperdata.it/manual/to-sort/handovers/http-server/http-server-implementation-plan.html">
+        HTTP Server Implementation Plan
+    </a>
+</p> <em></em>
+    </body>
+</html>

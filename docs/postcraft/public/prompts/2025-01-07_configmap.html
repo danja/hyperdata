@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <link rel="stylesheet" href="/css/fonts.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/grid-columns.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/style.css" type="text/css"/>
+        <title>Configmap</title>
+    </head>
+    <!-- POST PAGE TEMPLATE -->
+    <body>
+    <strong></strong><em></em>
+        <header id="entry-header">
+            <h1 class="post-title h-cinzel">
+                
+            </h1>
+        </header>
+        <!-- ARTICLE CONTENT -->
+
+<article class="post-content">
+    <p> I&#39;ve introduced a bug somewhere such that the application <code>src/applications/postcraft-only-render</code> doesn&#39;t work correctly. The immediate issue seems to be that the <code>src/processors/fs/DirWalker.js</code> process isn&#39;t receiving the correct paths. These should come from the application-level settings in <code>src/applications/postcraft-only-render/config.ttl</code>, and/or the target supplied at the command line, eg.</p>
+<pre><code class="language-sh">./trans postcraft-only-render ../postcraft/danny.ayers.name
+</code></pre>
+<p>and/or the manifest found there <code>../postcraft/danny.ayers.name/manifest.ttl</code>.
+There is also an underlying problem to fix, that the config interpretation is currently fairly hardcoded in <code>src/processors/rdf/ConfigMap.js</code>. This I&#39;d like to be handled more declaratively such that it uses values from the config RDF somehow.
+How do you suggest I proceed?
+ </p>
+
+</article>
+<p class="post-title h-cinzel">
+    <a href="https://hyperdata.it/prompts/2025-01-07_configmap.html">
+        Configmap
+    </a>
+</p> <em></em>
+    </body>
+</html>

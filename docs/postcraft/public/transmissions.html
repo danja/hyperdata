@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <link rel="stylesheet" href="/css/fonts.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/grid-columns.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/style.css" type="text/css"/>
+        <title> Transmissions - for my sanity, to go in docs</title>
+    </head>
+    <!-- POST PAGE TEMPLATE -->
+    <body>
+    <strong></strong><em></em>
+        <header id="entry-header">
+            <h1 class="post-title h-cinzel">
+                
+            </h1>
+        </header>
+        <!-- ARTICLE CONTENT -->
+
+<article class="post-content">
+    <h2>Transmissions - for my sanity, to go in docs</h2>
+<p>Silly. The other day I moved some tests out of the way temporarily, forgot to put them back. Also got seriously mixed up with my naming of things.</p>
+<p>Good prompt for a refactor.</p>
+<p>interesting :</p>
+<p>LOG_LEVEL=debug TRACE=1 ./trans config-setting-target tests/applications/config-setting-target</p>
+<p><strong>HERE</strong>
+The app has :</p>
+<p>app.configDataset
+app.transDataset
+app.targetDataset</p>
+<p>only <strong>app</strong> is passed around</p>
+<h2>Terminology</h2>
+<h3>Message</h3>
+<h3>Processor</h3>
+<h3>Transmission</h3>
+<p><code>transmissions.ttl</code></p>
+<h3>Settings</h3>
+<p>derived from</p>
+<p>Order of precedence,  :</p>
+<ol>
+<li><em>message</em></li>
+<li><code>tt.ttl</code> - target definition</li>
+<li><code>transmissions.ttl</code> - transmissions definition</li>
+<li><code>config.ttl</code> - default configuration</li>
+</ol>
+<h3>App</h3>
+<ul>
+<li>a runnable set of transmissions</li>
+</ul>
+<h3>Target</h3>
+<ul>
+<li>the datasource on which the application should be run</li>
+</ul>
+<hr>
+
+</article>
+<p class="post-title h-cinzel">
+    <a href="https://hyperdata.it/content/transmissions.html">
+         Transmissions - for my sanity, to go in docs
+    </a>
+</p> <em></em>
+    </body>
+</html>

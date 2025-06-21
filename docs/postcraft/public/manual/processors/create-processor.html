@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <link rel="stylesheet" href="/css/fonts.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/grid-columns.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/style.css" type="text/css"/>
+        <title>Transmissions : how to create a new processor</title>
+    </head>
+    <!-- POST PAGE TEMPLATE -->
+    <body>
+    <strong></strong><em></em>
+        <header id="entry-header">
+            <h1 class="post-title h-cinzel">
+                
+            </h1>
+        </header>
+        <!-- ARTICLE CONTENT -->
+
+<article class="post-content">
+    <h1>Transmissions : how to create a new processor</h1>
+<h2>Overview</h2>
+<ol>
+<li>Plan Requirements</li>
+</ol>
+<h3>Notes</h3>
+<ul>
+<li>anticipate several iterations, first pass may be a rough hack</li>
+<li>balance support for edge cases against immediate need</li>
+</ul>
+<h2>Plan Requirements</h2>
+<ul>
+<li>review definition of a Processor</li>
+<li>express required functionality in any form</li>
+<li>review, check level of decomposition - reusability</li>
+<li>check existing processors for similar functionality</li>
+<li>determine target location</li>
+<li>determine Processor Signature</li>
+</ul>
+<h2>Create Processor</h2>
+<ul>
+<li>make a copy of <code>src/processors/example-group</code> if a new group is required, or <code>src/processors/example-group/ExampleProcessor.js</code> if an existing group is suitable. Place copy and rename as appropriate.</li>
+</ul>
+<h2>Example</h2>
+<ol>
+<li>Plan Requirements</li>
+</ol>
+<p>I need to escape literal content going into a SPARQL query. I may well need escaping for Turtle at some point, so might as well include a facility to choose format. This level of functionality seems good for a Processor. There is a <code>StringReplace</code> that&#39;s close to what&#39;s needed here, but for now at least it&#39;ll be easier to make a Processor dedicated to escaping. That&#39;s in a good target group : <code>src/processors/text/</code> (this is the kind of thing I want in the core set of processors). I&#39;ll call the new processor <code>:Escaper</code>, hence <code>src/processors/text/Escaper.js</code>.</p>
+<p>src/processors/text/TextProcessorsFactory.js in the imports and the type tests.</p>
+<pre><code class="language-javascript">import Escaper from &#39;./Escaper.js&#39;
+...
+    if (type.equals(ns.trn.Escaper)) {
+        return new Escaper(config)
+    }
+</code></pre>
+
+</article>
+<p class="post-title h-cinzel">
+    <a href="https://hyperdata.it/manual/processors/create-processor.html">
+        Transmissions : how to create a new processor
+    </a>
+</p> <em></em>
+    </body>
+</html>

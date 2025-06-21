@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <link rel="stylesheet" href="/css/fonts.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/grid-columns.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/style.css" type="text/css"/>
+        <title>refactoring-rdf-model.md</title>
+    </head>
+    <!-- POST PAGE TEMPLATE -->
+    <body>
+    <strong></strong><em></em>
+        <header id="entry-header">
+            <h1 class="post-title h-cinzel">
+                
+            </h1>
+        </header>
+        <!-- ARTICLE CONTENT -->
+
+<article class="post-content">
+    <p> I like the modeling, but the syntax is verbose. Is there a way of specifying a logical mapping, using either OWL2 or N3 reasoning, so when given the input :</p>
+<pre><code class="language-turtle">@prefix rdf: &lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#&gt; .
+@prefix trm: &lt;http://purl.org/stuff/transmission/&gt; .
+@prefix : &lt;http://hyperdata.it/transmissions/&gt; .
+
+:stringpipe a trm:Pipeline ;
+    trm:pipe (:s1 :s2 :s3) .
+
+:s1 a :StringSource .
+:s2 a :AppendProcess .
+:s3 a :StringSink .
+</code></pre>
+<p>this will lead to the output :</p>
+<pre><code class="language-turtle">@prefix rdf: &lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#&gt; .
+@prefix ppl: &lt;http://purl.org/stuff/pipeline/&gt; .
+@prefix : &lt;http://example.org/pipeline#&gt; .
+
+:myPipeline a ppl:Pipeline ;
+    ppl:firstStage :stage1 .
+
+:stage1 a ppl:Stage ;
+    ppl:processor :StringSource ;
+    ppl:next :stage2 .
+
+:stage2 a ppl:Stage ;
+    ppl:processor :AppendProcess ;
+    ppl:next :stage3 .
+
+:stage3 a ppl:Stage ;
+    ppl:processor :StringSink .
+</code></pre>
+<pre><code>@prefix rdf: &lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#&gt; .
+@prefix trm: &lt;http://purl.org/stuff/transmission/&gt; .
+@prefix : &lt;http://hyperdata.it/transmissions/&gt; .
+
+:github_list_pipeline a trm:Pipeline ;
+    trm:pipe (:p10 :p20 :p30 :p40) .
+
+:p10 a :GitHubList .
+:p20 a :JSONWalker .
+:p30 a :HttpGet .
+:p40 a :FileWriter .
+</code></pre>
+
+</article>
+<p class="post-title h-cinzel">
+    <a href="https://hyperdata.it/manual/to-sort/transmission-model/refactoring-rdf-model.html">
+        refactoring-rdf-model.md
+    </a>
+</p> <em></em>
+    </body>
+</html>

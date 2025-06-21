@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <link rel="stylesheet" href="/css/fonts.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/grid-columns.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/style.css" type="text/css"/>
+        <title>Journal 2025-06-05</title>
+    </head>
+    <!-- POST PAGE TEMPLATE -->
+    <body>
+    <strong></strong><em></em>
+        <header id="entry-header">
+            <h1 class="post-title h-cinzel">
+                
+            </h1>
+        </header>
+        <!-- ARTICLE CONTENT -->
+
+<article class="post-content">
+    <h1>Journal 2025-06-05</h1>
+<p>You should be able to talk to all apps, surely..?</p>
+<p>For some interpretation of <em>talk</em>.</p>
+<h2>The Joy of REPL</h2>
+<p><em>Read-Eval-Print-Loop</em></p>
+<p>I do have a GUI in progress for #:transmissions, but that&#39;ll most just be an editor for now. Some of the things I&#39;ve been trying recently are a bit of a pain just using the command-line directly :</p>
+<p><img src="/images/2025-06/eye-run.png" alt="screenshot of a debug log of a reasoner"></p>
+<p>That a bit of fun I was having with the <a href="https://github.com/eyereasoner/eye">Eye reasoner</a>. It became clear I needed a bit more interactivity. Bring on the <a href="https://en.wikipedia.org/wiki/Read%E2%80%93eval%E2%80%93print_loop">REPL</a>!</p>
+<p><img src="/images/2025-06/repl.png" alt="screenshot of an interactive chat"></p>
+<p>That was playing with bits like this :</p>
+<pre><code class="language-sh">import clients from &#39;hyperdata-clients&#39;;
+
+const client = createClient(provider, clientOptions)
+const response = await client.chat([
+            { role: &#39;user&#39;, content: message.content }
+        ])
+</code></pre>
+
+</article>
+<p class="post-title h-cinzel">
+    <a href="http://danny.ayers.name/entries/2025-06-05_journal.html">
+        Journal 2025-06-05
+    </a>
+</p> <em></em>
+    </body>
+</html>

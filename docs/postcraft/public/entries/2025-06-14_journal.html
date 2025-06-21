@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <link rel="stylesheet" href="/css/fonts.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/grid-columns.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/style.css" type="text/css"/>
+        <title>Journal 2025-06-14</title>
+    </head>
+    <!-- POST PAGE TEMPLATE -->
+    <body>
+    <strong></strong><em></em>
+        <header id="entry-header">
+            <h1 class="post-title h-cinzel">
+                
+            </h1>
+        </header>
+        <!-- ARTICLE CONTENT -->
+
+<article class="post-content">
+    <h1>Journal 2025-06-14</h1>
+<h2>Remind me why I&#39;m doing this...</h2>
+<p>I had one of those moments just now. I&#39;ve intermittently put a lot of time into <a href="https://github.com/danja/semem">Semem</a>, my <em>Semantic Memory</em> thing. The sessions have got increasingly intense, it went something like this :</p>
+<ol>
+<li><strong>Rough scaffolding implementation</strong> - a setup that included embeddings for <em>semantic search</em> plus using an LLM for concept extraction. It also had a bit of support for a temporal dimension, short-term &amp; long-term memory (I lifted what I could from the design of <a href="https://github.com/caspianmoon/memoripy">Memoripy</a>, given I&#39;m using Node JS). I got a SPARQL store client in there, but wasn&#39;t really doing anything with it at this stage, data was mostly JSON.</li>
+<li><strong><a href="https://github.com/danja/ragno">Ragno</a> ontology design</strong> - I needed a <strong>model of a knowledgebase</strong> to build from. I went through several back-of-envelope cycles with it, the usual malarky of trying to pin things down to keep some semblence of control while still leaving things open enough to allow serendipity to play. Then I stumbled on the <a href="https://github.com/Terry-Xu-666/NodeRAG">NodeRAG</a> paper. Aha! <em>This</em> is what I want. Except they had things quite tightly pinned down, and the notion of <strong>non-retrievable resources</strong> on the Semantic Web? <strong>Nah.</strong> So I kinda merged the floppy thing I already had with this more rigid thing, implemented the basic structures.
+A huge bonus with the paper was that it outlines a bunch of different algorithms for working with knowledgebases.</li>
+<li><strong>Ragno implementation</strong> - with considerable help from Claude I set about implementing them in the Semem environment. Lots of cycles. Claude is such a fibber about when things are complete &amp; working. After a long journey through the gaslighting, I believe most, if perhaps not all, work.</li>
+<li><strong><a href="https://github.com/danja/zpt">ZPT</a> ontology design</strong> - that&#39;s <strong>Zoom, Pan, Tilt</strong>, not as Claude kept insisting in the docs <strong>Zero-point traversal</strong>. I looked that up, very much expecting it to be a thing, it makes sense for a curve, though <em>traversal</em> hints at this other form of graphs. Apparently not. Claude&#39;s imagination. <em>If it becomes a thing in <strong>quantum</strong> in the next year or two, I&#39;m joining a monastery.</em> <strong>Zoom, Pan, Tilt</strong> is for <strong>knowledgebase navigation</strong>, using those cinematic analogies. I&#39;d had it sketched out for a while. Finding the NodeRAG paper was also serendipitous in helping me think about this separately from the core knowledgebase description. (<strong>foraging for the win!</strong>) Maybe not orthogonally, but at least loosely-coupled.
+Being still fresh from the Ragno implementation I rolled with the momentum, got this bashed out. Again, I believe it <em>mostly</em> works - all the demo scripts (under <a href="https://github.com/danja/semem/tree/main/examples">examples/</a>) have worked at least once. <em>Heh, except those under <code>pending</code>, haven&#39;t a clue where I&#39;m up to with those.</em></li>
+<li><strong>MCP Implementation</strong> - I&#39;d already got approximate HTTP API endpoints in place (along with very sketchy UI for trying things out), and even a first-pass, untested MCP. But it became increasingly obvious this was something I needed to do a bit more properly. Dual function : selectively expose the stuff under the hood for sanity-checking, plus <strong>it might actually be useful</strong>.</li>
+</ol>
+<p>Which brings me back to my starting point. <strong>Useful for what..?!</strong></p>
+<p>I spend so much time making tools to make tools (ditto in real life) I forgot the original motivation.</p>
+<p><em>Benchmarks! The primary goal of all modern software!</em></p>
+<p>Ok, that was it, <strong>Personal Knowledge Management</strong>. Which may be project specific, relatively narrow domain. Not one size fits all. I play around with music and associated technology, have all kinds of other little hobby (and house-related) projects on the go. I&#39;ve <em>thousands</em> of bookmarked links relating to this stuff. I&#39;ve got loads of my own notes scattered all over the place, backups of intermittent blog posting going back a couple of decades. This is all knowledge that could potentially help me with my activities, if only I could access it in a useful way.</p>
+<p>Yeah, so. How do I get all the material into my <em>soon to be</em> knowledgebase? Well, the other project I&#39;ve been putting the <em>other</em> bulk of my time into is <a href="https://github.com/danja/transmissions">Transmissions</a>, a pipeliney thing into for just such operations. That too is mostly in place/rather fragile in places.</p>
+<p>I&#39;m going to be spending the next few weeks (until 2025-07-03) at least making a note of loose strings in my <a href="https://github.com/danja/tensegrity">tensegrity structure of projects</a>. Then I&#39;m going to try to avoid this stuff for a month.  </p>
+<p>Wish me luck.</p>
+<p>PS. I have a <strong>Use Case</strong> : use Semem to help write a paper about...<strong>Semem!</strong> #:dogfood
+ </p>
+
+</article>
+<p class="post-title h-cinzel">
+    <a href="http://danny.ayers.name/entries/2025-06-14_journal.html">
+        Journal 2025-06-14
+    </a>
+</p> <em></em>
+    </body>
+</html>
