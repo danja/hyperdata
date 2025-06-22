@@ -36,6 +36,122 @@
                 <!-- ARTICLE CONTENT -->
 
 <article class="post-content">
+    <h1>Semem on the server</h1>
+<p>I just went to do something unrelated with Claude chat in the browser and noticed that I&#39;d already added a pointer to Semem MCP running on localhost. Claude can&#39;t see it, so I guess the connection must be made server-side. Ok, let me run Semem MCP on a server. It <em>should</em> be doable using <code>npx semem-mcp</code>, but I want the whole shebang on the server anyway, so I&#39;ll go the long way round.</p>
+<p>It should just take :</p>
+<pre><code class="language-sh">cd ~/hyperdata
+git clone https://github.com/danja/semem.git
+cd semem
+npm install
+npm run mcp:http
+# or node mcp/http-server.js
+</code></pre>
+<p>But the version of node I have on the server is a bit old, so:</p>
+<pre><code class="language-sh">sudo npm install n -g
+n stable
+node --version
+# v22.16.0
+</code></pre>
+<p>I&#39;d better set it up through the nginx proxy to get https:</p>
+<pre><code class="language-sh">nano /etc/nginx/sites-available/semem.conf
+</code></pre>
+<pre><code class="language-sh">server {
+    server_name semem.tensegrity.it;
+
+    location / {
+        proxy_pass http://127.0.0.1:3000;
+        proxy_set_header Host $host;
+    }
+    listen 80;
+}
+</code></pre>
+<p>Add a DNS entry :</p>
+<pre><code class="language-sh">semem 10800 IN CNAME tensegrity.it.
+</code></pre>
+<pre><code class="language-sh">ln -s /etc/nginx/sites-available/semem.conf /etc/nginx/sites-enabled/semem.conf
+nginx -t
+systemctl restart nginx
+certbot
+</code></pre>
+<p>Hmm. Bad gateway. Let me try it on port 4600 and make it 127.0.0.1 rather than localhost just in case:</p>
+<pre><code class="language-sh">MCP_PORT=4600 MCP_HOST=127.0.0.1 node mcp/http-server.js
+</code></pre>
+<p>Locally :</p>
+<pre><code class="language-sh">curl https://semem.tensegrity.it/health
+
+{&quot;status&quot;:&quot;healthy&quot;,&quot;timestamp&quot;:&quot;2025-06-22T10:17:25.243Z&quot;,&quot;services&quot;:{&quot;memoryManager&quot;:true,&quot;config&quot;:true},&quot;sessions&quot;:0}
+</code></pre>
+<p>Yay!
+ </p>
+
+</article>
+<p class="post-title h-cinzel">
+    <a href="https://hyperdata.it/entries/2025-06-22_semem-server.html">
+        Semem on the server
+    </a>
+</p> <em></em><!-- ARTICLE CONTENT -->
+
+<article class="post-content">
+    <h1>Semem/Claude MCP Workflows</h1>
+<p>At least some of the Semem tools are now exposed over MCP.  They can be made available in Claude Code by using :</p>
+<pre><code class="language-sh">claude mcp add semem npx semem-mcp
+</code></pre>
+<p>Right now I really need to take a step back. I&#39;ve got a lot of example files that have run at least once:</p>
+<pre><code class="language-sh">find ~/hyperdata/semem/examples -type f | wc -l
+79
+</code></pre>
+<p>There&#39;s a good chance many of those no longer work following recent changes in places like the config. I got a bit impatient with tests.</p>
+<pre><code class="language-sh">Test Files  84 failed | 72 passed | 8 skipped (164)
+Tests  589 failed | 1001 passed | 98 skipped (1688)
+Errors  3 errors
+</code></pre>
+<p>Hmm, I see some are trying to call the Semem HTTP server. Ok, with it running :</p>
+<pre><code class="language-sh">Test Files  84 failed | 72 passed | 8 skipped (164)
+Tests  590 failed | 1000 passed | 98 skipped (1688)
+Errors  2 errors
+</code></pre>
+<p>Claude had a go at orchestrating workflows. I was curious to see if this might be a good approach because issuing a simple(ish) command like :</p>
+<pre><code class="language-prompt">run the enhanced-research-workflow tool on the content of brain-gpt-paper.md
+</code></pre>
+<p>- would be a neat kind of interaction. But Claude got stuck at this level. After trying and failing to run the workflow directly, it went on to run the individual tools it uses. I asked for the list, below. This is informative. A little confusing because the naming has got a bit obfuscated that to some (unnecessary) name mapping Claude inserted in there. But I should be able to pick out the pieces, look at doing the same workflow using Semem&#39;s HTTP API, orchestrated by <a href="https://github.com/danja/transmissions">Transmissions</a>.</p>
+<blockquote>
+Tool List in the Workflow
+
+<p>According to the search results, the enhanced-research-workflow tries to execute these tools in sequence:</p>
+<ol>
+<li>semem_switch_storage_backend - Initialize SPARQL storage</li>
+<li>research_ingest_documents - Enhanced document ingestion (custom tool)</li>
+<li>semem_extract_concepts - Extract domain-focused concepts</li>
+<li>ragno_decompose_corpus - Build knowledge graph with embeddings</li>
+<li>ragno_analyze_graph - Comprehensive graph analysis</li>
+<li>research_generate_insights - Generate insights (custom tool)</li>
+<li>hybrid_search - Setup hybrid search capabilities (custom tool)</li>
+<li>semem_generate_response - Generate executive summary</li>
+<li>capture_user_feedback - Initialize feedback learning (custom tool)</li>
+</ol>
+<p>Tool Mapping System</p>
+<p>The workflow uses a tool mapping system located in:
+File: /flow/hyperdata/semem/mcp/lib/workflow-orchestrator.js</p>
+<p>This orchestrator maps workflow tool names to actual MCP tool implementations using the TOOL_MAPPING object and adds the mcp__semem__ prefix for standard tools.</p>
+<p>Custom Tool Implementations</p>
+<p>The custom tools (like research_ingest_documents, research_generate_insights, etc.) are implemented in:
+File: /flow/hyperdata/semem/mcp/tools/research-workflow-tools.js</p>
+<p>The error you encountered (&quot;Required tool not available&quot;) occurs because the workflow orchestrator expects these custom tools to be available, but they may not be
+properly registered or implemented in the current MCP server setup.</p>
+</blockquote>
+There's also a log on my desktop under :
+```
+~/.cache/claude-cli-nodejs/-flow-hyperdata-semem/mcp-logs-semem
+```
+ 
+</article>
+<p class="post-title h-cinzel">
+    <a href="https://hyperdata.it/entries/2025-06-22_mcp-workflows.html">
+        Semem/Claude MCP Workflows
+    </a>
+</p> <em></em><!-- ARTICLE CONTENT -->
+
+<article class="post-content">
     <h1>Tensegrity Suite</h1>
 <p><strong>Main components</strong></p>
 <ul>
@@ -189,41 +305,6 @@ atuin  evb       hyperdata-clients  node-flow                               tbox
 <p class="post-title h-cinzel">
     <a href="https://hyperdata.it/entries/2025-06-11_test.html">
         2025-06-11 Test
-    </a>
-</p> <em></em><!-- ARTICLE CONTENT -->
-
-<article class="post-content">
-    <h1>Log 2025-06-09</h1>
-<p>A test
- </p>
-
-</article>
-<p class="post-title h-cinzel">
-    <a href="https://hyperdata.it/entries/2025-06-09_log.html">
-        Log 2025-06-09
-    </a>
-</p> <em></em><!-- ARTICLE CONTENT -->
-
-<article class="post-content">
-    <h1>Tidying up Squirt</h1>
-<p>Will it be possible to promote the Turtle Editor, SPARQL Query and Graph View tabs of Atuin into main tabs in Squirt? If not, what exports/changes do you think will be needed in the Atuin lib to make it possible? I maintain it, just tell me what&#39;s needed.
-Some layout changes please.
-Can you modify the tabs into this order :</p>
-<ol>
-<li>Post</li>
-<li>Chat</li>
-<li>Wiki</li>
-<li>Turtle</li>
-<li>SPARQL</li>
-<li>Profile</li>
-<li>Settings
-You can remove the Developer tab entirely.</li>
-</ol>
-
-</article>
-<p class="post-title h-cinzel">
-    <a href="https://hyperdata.it/entries/2025-06-07_squirt-prompts.html">
-        Tidying up Squirt
     </a>
 </p> <em></em>
             </article>

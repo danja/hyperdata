@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <link rel="stylesheet" href="/css/fonts.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/grid-columns.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/style.css" type="text/css"/>
+        <title>Semem on the server</title>
+    </head>
+    <!-- POST PAGE TEMPLATE -->
+    <body>
+    <strong></strong><em></em>
+        <header id="entry-header">
+            <h1 class="post-title h-cinzel">
+                
+            </h1>
+        </header>
+        <!-- ARTICLE CONTENT -->
+
+<article class="post-content">
+    <h1>Semem on the server</h1>
+<p>I just went to do something unrelated with Claude chat in the browser and noticed that I&#39;d already added a pointer to Semem MCP running on localhost. Claude can&#39;t see it, so I guess the connection must be made server-side. Ok, let me run Semem MCP on a server. It <em>should</em> be doable using <code>npx semem-mcp</code>, but I want the whole shebang on the server anyway, so I&#39;ll go the long way round.</p>
+<p>It should just take :</p>
+<pre><code class="language-sh">cd ~/hyperdata
+git clone https://github.com/danja/semem.git
+cd semem
+npm install
+npm run mcp:http
+# or node mcp/http-server.js
+</code></pre>
+<p>But the version of node I have on the server is a bit old, so:</p>
+<pre><code class="language-sh">sudo npm install n -g
+n stable
+node --version
+# v22.16.0
+</code></pre>
+<p>I&#39;d better set it up through the nginx proxy to get https:</p>
+<pre><code class="language-sh">nano /etc/nginx/sites-available/semem.conf
+</code></pre>
+<pre><code class="language-sh">server {
+    server_name semem.tensegrity.it;
+
+    location / {
+        proxy_pass http://127.0.0.1:3000;
+        proxy_set_header Host $host;
+    }
+    listen 80;
+}
+</code></pre>
+<p>Add a DNS entry :</p>
+<pre><code class="language-sh">semem 10800 IN CNAME tensegrity.it.
+</code></pre>
+<pre><code class="language-sh">ln -s /etc/nginx/sites-available/semem.conf /etc/nginx/sites-enabled/semem.conf
+nginx -t
+systemctl restart nginx
+certbot
+</code></pre>
+<p>Hmm. Bad gateway. Let me try it on port 4600 and make it 127.0.0.1 rather than localhost just in case:</p>
+<pre><code class="language-sh">MCP_PORT=4600 MCP_HOST=127.0.0.1 node mcp/http-server.js
+</code></pre>
+<p>Locally :</p>
+<pre><code class="language-sh">curl https://semem.tensegrity.it/health
+
+{&quot;status&quot;:&quot;healthy&quot;,&quot;timestamp&quot;:&quot;2025-06-22T10:17:25.243Z&quot;,&quot;services&quot;:{&quot;memoryManager&quot;:true,&quot;config&quot;:true},&quot;sessions&quot;:0}
+</code></pre>
+<p>Yay!
+ </p>
+
+</article>
+<p class="post-title h-cinzel">
+    <a href="https://hyperdata.it/entries/2025-06-22_semem-server.html">
+        Semem on the server
+    </a>
+</p> <em></em>
+    </body>
+</html>
