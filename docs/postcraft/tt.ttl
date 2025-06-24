@@ -36,7 +36,7 @@
     :rawDir "content/raw" ;
     :renderPath "" ; # should probably come at render time
     :baseURI <https://tensegrity.it/content/> ;
-    :graph <http://hyperdata.it/content> ;
+    :graph <http://tensegrity.it/content> ;
     :creatorName "Danny" ;
     :creatorURI <http://danny.ayers.name/me> .
 

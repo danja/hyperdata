@@ -65,12 +65,30 @@ certbot
 
 {&quot;status&quot;:&quot;healthy&quot;,&quot;timestamp&quot;:&quot;2025-06-22T10:17:25.243Z&quot;,&quot;services&quot;:{&quot;memoryManager&quot;:true,&quot;config&quot;:true},&quot;sessions&quot;:0}
 </code></pre>
-<p>Yay!
+<p>Yay!</p>
+<p>Oh.</p>
+<p>I forgot that it&#39;s currently relying on Ollama locally.</p>
+<p>I&#39;d already got support for different chat providers, but not embeddings providers, that was quasi-hardcoded to Ollama. So I&#39;ve added a bit to <a href="https://github.com/danja/hyperdata-clients">hyperdata-clients</a> and updated the relevant bits of Semem. Which is bound to break things.</p>
+<p>PS. Things might be fixed enough.</p>
+<p>I&#39;ve made a script containing just :</p>
+<pre><code class="language-sh">#!/bin/bash
+
+MCP_PORT=4600 MCP_HOST=127.0.0.1 node mcp/http-server.js
+</code></pre>
+<p>so then -</p>
+<pre><code class="language-sh"> pm2 start start-mcp.sh --name semem-mcp --watch
+</code></pre>
+<p>and it&#39;s visible from MCP Inspector locally,</p>
+<ul>
+<li><a href="https://semem.tensegrity.it/mcp">https://semem.tensegrity.it/mcp</a></li>
+<li>Streamable HTTP</li>
+</ul>
+<p>But broken. Hey ho. Next Claude Code cycle.
  </p>
 
 </article>
 <p class="post-title h-cinzel">
-    <a href="https://hyperdata.it/entries/2025-06-22_semem-server.html">
+    <a href="https://tensegrity.it/entries/2025-06-22_semem-server.html">
         Semem on the server
     </a>
 </p> <em></em>
