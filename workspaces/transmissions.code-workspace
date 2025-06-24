@@ -2,6 +2,9 @@
 	"folders": [
 		{
 			"path": "../../transmissions"
+		},
+		{
+			"path": "../../trans-apps"
 		}
 	],
 	"settings": {}
