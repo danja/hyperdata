@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <link rel="stylesheet" href="/css/fonts.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/grid-columns.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/style.css" type="text/css"/>
+        <title>Journal 2025-06-28</title>
+    </head>
+    <!-- POST PAGE TEMPLATE -->
+    <body>
+    <strong></strong><em></em>
+        <header id="entry-header">
+            <h1 class="post-title h-cinzel">
+                
+            </h1>
+        </header>
+        <!-- ARTICLE CONTENT -->
+
+<article class="post-content">
+    <h1>Journal 2025-06-28</h1>
+<h2>Semem Auth</h2>
+<p>I finally got around to moving SPARQL server credentials to <code>.env</code>. That&#39;s picked up by <code>src/Config.js</code> along with <code>config/config.json</code> andso it begins...</p>
+<p>Auth wasn&#39;t something I was going to bother with at this stage, but while working on the HTTP API at some point Claude slipped in the use of an API key, which I&#39;ve shifted into <code>.env</code>. The implementation looked ok so I went with it. Forgetting that if the API needs auth, the existing clients won&#39;t work.</p>
+<p>The HTTP API bits were really sketchy anyway, not remotely consistent. So I went back over them and they should now be ok, with <code>examples/http-api</code> in sync.</p>
+<p>Which means it&#39;s now time to revisit -</p>
+<h2>Semem UI</h2>
+<p>It has loads of tabs which currently either don&#39;t do <em>anything</em>, or are not quite right yet. And now they all need adjusting to take into account the auth. But I&#39;ve now got all the CLI examples as reference, so it shouldn&#39;t be too difficult to get things working in the GUI.</p>
+<p>In the same way <strong>CLI examples can act as integration tests</strong>, so <strong>GUI can act as tutorial</strong>.</p>
+<p>Which is what I need desperately myself, to figure out how to wire all this stuff up. After the initial conceptual designs I left an awful lot to Claude and I&#39;m very uncertain about a lot that&#39;s happening under the hood. It does seem to be as I wanted architecturally, but I haven&#39;t much clue about the detail.
+ </p>
+
+</article>
+<p class="post-title h-cinzel">
+    <a href="https://tensegrity.it/entries/2025-06-28_journal.html">
+        Journal 2025-06-28
+    </a>
+</p> <em></em>
+    </body>
+</html>

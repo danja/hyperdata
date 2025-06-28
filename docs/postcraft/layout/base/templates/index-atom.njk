@@ -1,34 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
-    <title>Rawer</title>
-    <subtitle>Latest updates</subtitle>
-    <link href="{{ site.url }}/feed/" rel="self" />
-    <link href="{{ site.url }}" />
-    <id>{{ site.url }}</id>
-    <updated>{{ now | date('YYYY-MM-DDTHH:mm:ssZ') }}</updated>
+    <title>Hyperdata Recent Articles</title>
+    <subtitle>Latest articles from the knowledge base</subtitle>
+    <link href="https://hyperdata.it/atom.xml" rel="self" />
+    <link href="https://hyperdata.it" />
+    <id>https://hyperdata.it/atom.xml</id>
+    <updated>{{ contentBlocks.created | default('2025-06-27T00:00:00Z') | date('YYYY-MM-DDTHH:mm:ssZ') }}</updated>
     <author>
-        <name>{{ site.author.name }}</name>
-        <email>{{ site.author.email }}</email>
+        <name>Danny Ayers</name>
+        <email>danny.ayers@gmail.com</email>
     </author>
     
-    {% for post in collections.posts | reverse %}
     <entry>
-        <title>{{ post.data.title }}</title>
-        <link href="{{ site.url }}{{ post.url }}" />
-        <link rel="alternate" type="text/html" href="{{ site.url }}{{ post.url }}" />
-        <id>urn:uuid:{{ post.date | date('YYYY-MM-DD') }}-{{ post.fileSlug }}</id>
-        <published>{{ post.date | date('YYYY-MM-DDTHH:mm:ssZ') }}</published>
-        <updated>{{ post.date | date('YYYY-MM-DDTHH:mm:ssZ') }}</updated>
-        <summary>{{ post.data.summary | default(post.data.title) }}</summary>
+        <title>Recent Articles Collection</title>
+        <link href="https://hyperdata.it/" />
+        <link rel="alternate" type="text/html" href="https://hyperdata.it/" />
+        <id>https://hyperdata.it/recent-articles</id>
+        <published>{{ contentBlocks.created | default('2025-06-27T00:00:00Z') | date('YYYY-MM-DDTHH:mm:ssZ') }}</published>
+        <updated>{{ contentBlocks.created | default('2025-06-27T00:00:00Z') | date('YYYY-MM-DDTHH:mm:ssZ') }}</updated>
+        <summary>Collection of recent articles from Hyperdata knowledge base</summary>
         <content type="xhtml">
             <div xmlns="http://www.w3.org/1999/xhtml">
-                {{ post.templateContent | safe }}
+                {{ contentBlocks.content | safe }}
             </div>
         </content>
         <author>
-            <name>{{ site.author.name }}</name>
-            <email>{{ site.author.email }}</email>
+            <name>Danny Ayers</name>
+            <email>danny.ayers@gmail.com</email>
         </author>
     </entry>
-    {% endfor %}
 </feed>

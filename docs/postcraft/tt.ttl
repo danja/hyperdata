@@ -199,8 +199,7 @@
 ### create Atom index
 
 :prepAtom a :ConfigSet  ;
-    :rename :pa1  .
-        # for content
+    :rename (:pa1)  .
         :pa1   :pre    "accumulator" ;
               :post "contentBlocks.content"  .
 
