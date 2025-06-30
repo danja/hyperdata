@@ -2,6 +2,12 @@
   "folders": [
     {
       "path": "../../semem"
+    },
+    {
+      "path": "../../zpt"
+    },
+    {
+      "path": "../../ragno"
     }
   ],
   "settings": {}
