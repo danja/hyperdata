@@ -54,16 +54,18 @@ It used the delightfully named <code>RelationshipBuilder.js</code> which has the
 <li>Composite Scoring - weighted combination of the above</li>
 </ul>
 <p>The last two stages followed the same pattern as those in Version 1, the ZPT idea used to filter the available info, this provided context for an LLM to (hopefully) answer the question.</p>
-<p>The implementation of this workflow is described in <a href="https://danja.github.io/semem/manual/beerqa-2.html">beerqa-2</a>.</p>
+<p>The implementation of this workflow is described in <a href="https://danja.github.io/semem/manual/beerqa-2.html">BeerQA Enhanced Workflow</a>.</p>
 <p>Summary : results were more promising, a couple (out of 100) of questions were given moderately acceptable answers. It was fairly clear what was lacking...</p>
 <p><strong>Need more datas!</strong></p>
 <h2>Version 3 : as above, plus Wikidata</h2>
 <p>Again, this built on the above, with an additional step inserted to query Wikidata on concepts extracted by the above (rather confusingly in implementation, it went into the ZPT navigation step).</p>
 <p>Results were considerably better, in a sense. The addition of Wikidata info made a big difference in the quality of the final result. A couple more questions did get more tolerable answers, but more significantly - <strong>observation</strong> - many of the results described what information they lacked in order to answer the questions.</p>
+<p>Implementation described in <a href="https://danja.github.io/semem/manual/beerqa-wikidata.html">BeerQA Enhanced Workflow v2 + Wikidata Integration</a>.</p>
 <h2>Version 4 : as above, plus feedback loops</h2>
 <p>The observation made this a necessary thing to try. Ask the LLM looking at the results to judge if there was information missing - which was pretty obvious from the shape of the responses. If so, <strong>rewrite those parts as new questions</strong> and resubmit into the sequence for further augmentation with info from Wikipedia &amp; Wikidata.</p>
 <p>This is a very time consuming procedure (I do need to check what delays I&#39;ve got in place, I did go mega-cautious on rate limiting to be on the safe side). Because of this, so far I&#39;ve only run the full workflow on 3 questions. But the answers to those were <strong>very compelling</strong>.</p>
-<p>I&#39;m not going to try a longer run until after refactoring, checking the limits etc, so everything is a lot more controllable, a little more optimal timewise. But I&#39;m reasonably confident that the approach - that I hadn&#39;t even thought of when I started with the workflow at the top of this page - works.
+<p>I&#39;m not going to try a longer run until after refactoring, checking the limits etc, so everything is a lot more controllable, a little more optimal timewise. But I&#39;m reasonably confident that the approach - that I hadn&#39;t even thought of when I started with the workflow at the top of this page - works.</p>
+<p>Current implementation described in <a href="https://danja.github.io/semem/manual/beerqa-feedback.html">BeerQA Iterative Feedback Workflow (v3)</a>
  </p>
 
 </article>
