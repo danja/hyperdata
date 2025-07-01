@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <link rel="stylesheet" href="/css/fonts.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/grid-columns.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/style.css" type="text/css"/>
+        <title>Feedback is All You Need (for multi-hop RAG)</title>
+    </head>
+    <!-- POST PAGE TEMPLATE -->
+    <body>
+    <strong></strong><em></em>
+        <header id="entry-header">
+            <h1 class="post-title h-cinzel">
+                
+            </h1>
+        </header>
+        <!-- ARTICLE CONTENT -->
+
+<article class="post-content">
+    <h1>Feedback is All You Need (for multi-hop RAG)</h1>
+<p>Yesterday I got to an unplanned proof-of-concept with <a href="https://github.com/danja/semem">Semem</a> (<em>&quot;Semantic Web Memory for Intelligent Agents&quot;</em>). I haven&#39;t looked closely at code detail yet, so Claude might be tricking me here and there, but the following is how I believe things are working. <em>I am in the process of refactoring the code to be more modular/reusable, so any bits of delusion should soon become clear.</em></p>
+<p>I was experimenting with a workflow on real data, from the <a href="https://beerqa.github.io/">BeerQA</a> dataset. This contains a stack of multi-hop questions with answers, intended as training data, plus a set of questions without answers for test purposes. I was looking at the test questions.
+A construct that has proven key is <code>ragno:Corpuscle</code>, where a <em>corpuscle</em> is a small part of a corpus. It&#39;s quite loosely defined, probably best though of as a bag of <em>stuff</em>.</p>
+<h2>Version 1 : concept extraction; Wikipedia augmentation</h2>
+<p>The workflow went like this :</p>
+<ol>
+<li>Read the data and create initial question corpuscles in the knowledge graph</li>
+<li>Enhance corpuscles with vector embeddings and extracted concepts (using LLM)</li>
+<li>Search Wikipedia on the concepts, with HyDE* fallback</li>
+<li>Identify Wikipedia targets that may relate to questions using similarity search and concept matching</li>
+<li>Fetch full Wikipedia pages, convert to markdown, generate embeddings and update corpuscles accordingly</li>
+<li>Filter corpuscles according to relevance (using Zoom, Pan, Tilt navigation)</li>
+<li>Create a prompt from the initial question with context from the discovered corpuscles, and get the LLM to complete</li>
+</ol>
+<p>* the HyDE algorithm is about generating a hypothetical answer to a question, and using this to find additional relevant information via similarity matching. Here it was used to generate more candidate concepts for Wikipedia search.</p>
+<p>This workflow kind-of worked. The only <em>slight</em> issue was that out of the 100 questions attempted, it only looked like one or two had even barely useful answers. This wasn&#39;t expected because there should have been enough info to produce at least a few reasonable responses.</p>
+<p>The implementation of this workflow is described in <a href="https://danja.github.io/semem/manual/beerqa.html">BeerQA Workflow</a>.</p>
+<h2>Version 2 : as above plus relationships and analytics</h2>
+<p>The operations involved here are a bit mixed up, but the first part was about augmenting the graph.
+It used the delightfully named <code>RelationshipBuilder.js</code> which has the ability to :</p>
+<ul>
+<li>find similarity relationships (using the already-created embeddings)</li>
+<li>match entities between question and content</li>
+<li>make connections between extracted concepts</li>
+<li>create community bridges to enhance graph connectivity</li>
+</ul>
+<p>The second part did relevance ranking on what was in the store so far, doing :</p>
+<ul>
+<li>K-core decomposition to identify structurally important nodes</li>
+<li>Centrality Analysis to calculate &quot;betweenness&quot;</li>
+<li>Composite Scoring - weighted combination of the above</li>
+</ul>
+<p>The last two stages followed the same pattern as those in Version 1, the ZPT idea used to filter the available info, this provided context for an LLM to (hopefully) answer the question.</p>
+<p>The implementation of this workflow is described in <a href="https://danja.github.io/semem/manual/beerqa-2.html">beerqa-2</a>.</p>
+<p>Summary : results were more promising, a couple (out of 100) of questions were given moderately acceptable answers. It was fairly clear what was lacking...</p>
+<p><strong>Need more datas!</strong></p>
+<h2>Version 3 : as above, plus Wikidata</h2>
+<p>Again, this built on the above, with an additional step inserted to query Wikidata on concepts extracted by the above (rather confusingly in implementation, it went into the ZPT navigation step).</p>
+<p>Results were considerably better, in a sense. The addition of Wikidata info made a big difference in the quality of the final result. A couple more questions did get more tolerable answers, but more significantly - <strong>observation</strong> - many of the results described what information they lacked in order to answer the questions.</p>
+<h2>Version 4 : as above, plus feedback loops</h2>
+<p>The observation made this a necessary thing to try. Ask the LLM looking at the results to judge if there was information missing - which was pretty obvious from the shape of the responses. If so, <strong>rewrite those parts as new questions</strong> and resubmit into the sequence for further augmentation with info from Wikipedia &amp; Wikidata.</p>
+<p>This is a very time consuming procedure (I do need to check what delays I&#39;ve got in place, I did go mega-cautious on rate limiting to be on the safe side). Because of this, so far I&#39;ve only run the full workflow on 3 questions. But the answers to those were <strong>very compelling</strong>.</p>
+<p>I&#39;m not going to try a longer run until after refactoring, checking the limits etc, so everything is a lot more controllable, a little more optimal timewise. But I&#39;m reasonably confident that the approach - that I hadn&#39;t even thought of when I started with the workflow at the top of this page - works.
+ </p>
+
+</article>
+<p class="post-title h-cinzel">
+    <a href="https://tensegrity.it/entries/2025-07-01_feedback.html">
+        Feedback is All You Need (for multi-hop RAG)
+    </a>
+</p> <em></em>
+    </body>
+</html>
