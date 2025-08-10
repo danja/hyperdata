@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <link rel="stylesheet" href="/css/fonts.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/grid-columns.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/style.css" type="text/css"/>
+        <title>MCP Revisited</title>
+    </head>
+    <!-- POST PAGE TEMPLATE -->
+    <body>
+    <strong></strong><em></em>
+        <header id="entry-header">
+            <h1 class="post-title h-cinzel">
+                
+            </h1>
+        </header>
+        <!-- ARTICLE CONTENT -->
+
+<article class="post-content">
+    <h1>MCP Revisited</h1>
+<p>While in the process of experimenting, the MCP provision has got overcomplicated. Which is kinda funny given that I&#39;ve barely played with it. I&#39;ve mostly been adding a chunk of functionality, creating example code to test it in an SDK style, and then moving on to the next chunk. But each time I&#39;ve tried to have corresponding MCP interfaces in place (as well as straight HTTP APIs).
+This has led to <em>so much cruft...</em></p>
+<p>To simplify, the plan is to focus on 5 verbs and state.
+The state will correspond to the current knowledgebase context in terms of zoom, pan, and tilt, as in the <a href="https://github.com/danja/zpt">ZPT Ontology</a>.</p>
+<p>The verbs will allow a caller to :</p>
+<ul>
+<li>tell - add resources to the system with minimal subsequent processing</li>
+<li>ask - query the system</li>
+<li>augment - run operations such as concept extraction to parts of the knowledgebase that are relevant to the current context</li>
+<li>zoom - provide the level of abstraction at which to work</li>
+<li>pan - the subject domain of interest</li>
+<li>tilt - the filter through which to view the knowledgebase</li>
+</ul>
+<p>The implementations in a first pass will be wrappers around existing code. Claude Code is now having a crack - it did reckon it was done, until (naturally) it tried running the tests.</p>
+<blockquote>
+<p>I see the issue! The server.tool() method doesn&#39;t exist.
+ </p>
+</blockquote>
+
+</article>
+<p class="post-title h-cinzel">
+    <a href="https://tensegrity.it/entries/2025-07-31_mcp.html">
+        MCP Revisited
+    </a>
+</p> <em></em>
+    </body>
+</html>
