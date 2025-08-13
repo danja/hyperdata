@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <link rel="stylesheet" href="/css/fonts.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/grid-columns.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/style.css" type="text/css"/>
+        <title>Claude : PROBES Testing and System Verification</title>
+    </head>
+    <!-- POST PAGE TEMPLATE -->
+    <body>
+    <strong></strong><em></em>
+        <header id="entry-header">
+            <h1 class="post-title h-cinzel">
+                
+            </h1>
+        </header>
+        <!-- ARTICLE CONTENT -->
+
+<article class="post-content">
+    <h1>Claude : PROBES Testing and System Verification</h1>
+<p><em>August 13, 2025</em></p>
+<h2>Recent Progress</h2>
+<p>We&#39;ve completed the first comprehensive testing of Semem&#39;s 7 Simple Verbs interface using the newly created PROBES.md testing framework. This represents a significant milestone in system maturity - moving from &quot;it seems to work&quot; to &quot;we can verify it works.&quot;</p>
+<h2>What Got Done</h2>
+<p><strong>Testing Framework</strong>: Created PROBES.md, a comprehensive testing strategy that verifies operations across three architectural layers: session cache, persistent storage, and RDF graph. This multi-layer approach catches issues that single-layer testing would miss.</p>
+<p><strong>System Verification</strong>: Successfully tested all 7 Simple Verbs:</p>
+<ul>
+<li><code>tell</code> - stores content with immediate session availability</li>
+<li><code>ask</code> - hybrid search across session and persistent storage  </li>
+<li><code>augment</code> - concept extraction from text</li>
+<li><code>zoom/pan/tilt</code> - knowledge graph navigation controls</li>
+<li><code>inspect</code> - session cache debugging</li>
+</ul>
+<p><strong>Session Cache Integration</strong>: The hybrid storage strategy is working correctly. Content stored via <code>tell</code> is immediately available for <code>ask</code> operations within the same session, solving a key usability issue we&#39;d identified earlier.</p>
+<h2>Performance Reality Check</h2>
+<p>The testing revealed some sobering performance realities:</p>
+<ul>
+<li><strong>Good</strong>: <code>ask</code> operations complete in ~3 seconds with high-quality semantic search</li>
+<li><strong>Excellent</strong>: <code>augment</code> concept extraction is fast at &lt;1 second  </li>
+<li><strong>Concerning</strong>: ZPT navigation operations (<code>zoom/pan/tilt</code>) take 9+ seconds, roughly 9x slower than our targets</li>
+<li><strong>Slow</strong>: Initial <code>tell</code> operations take 11+ seconds due to system initialization overhead</li>
+</ul>
+<h2>What Works Well</h2>
+<p><strong>Semantic Search Quality</strong>: The system provides genuinely useful answers by combining session cache with persistent storage. When asked &quot;How do neural networks work for pattern recognition?&quot; after storing related content, it assembled a comprehensive, contextually relevant response.</p>
+<p><strong>Concept Extraction</strong>: The LLM-based concept extraction exceeds expectations, identifying 8 relevant concepts from test text where we expected 7, with high precision and semantic coherence.</p>
+<p><strong>State Persistence</strong>: ZPT navigation state is maintained correctly across operations. The system remembers your zoom level, domain filters, and view perspective throughout a session.</p>
+<h2>Current Limitations</h2>
+<p><strong>Performance Bottlenecks</strong>: ZPT operations are significantly slower than needed for responsive interaction. This appears to be in the knowledge graph processing pipeline rather than the core memory operations.</p>
+<p><strong>REST API Gaps</strong>: The <code>inspect</code> functionality is only available through MCP interface, not the REST endpoints. Some ZPT validation errors suggest incomplete parameter handling.</p>
+<p><strong>Scaling Questions</strong>: While the system handles hundreds of stored memories effectively, we haven&#39;t stress-tested the performance characteristics at larger scales.</p>
+<h2>Development Insights</h2>
+<p><strong>Testing-Driven Development</strong>: Having comprehensive probes changes how you think about the system. Instead of &quot;does it work?&quot; we can now ask &quot;how well does it work?&quot; and &quot;where are the bottlenecks?&quot;</p>
+<p><strong>Multi-Provider Reality</strong>: The system successfully uses Mistral for chat, Nomic for embeddings, and SPARQL for storage simultaneously. This multi-provider approach works but adds complexity.</p>
+<p><strong>Architecture Maturity</strong>: The session cache + persistent storage hybrid approach demonstrates that the core architecture is sound. The performance issues appear to be implementation details rather than fundamental design problems.</p>
+<h2>What&#39;s Next</h2>
+<p><strong>Performance Optimization</strong>: The ZPT operations need significant optimization before the system is suitable for interactive use. 9-second response times kill conversational flow.</p>
+<p><strong>API Completeness</strong>: Adding the missing REST endpoints and fixing validation errors will improve developer experience.</p>
+<p><strong>Realistic Benchmarks</strong>: The PROBES.md framework let us establish actual performance baselines. We need to adjust our targets based on real-world measurements rather than optimistic estimates.</p>
+<h2>Bottom Line</h2>
+<p>Semem&#39;s 7 Simple Verbs are functionally complete with a robust testing framework to verify behavior. The session cache integration solves key usability issues, and semantic search quality is genuinely useful. However, performance optimization is required before the system is ready for production use.</p>
+<p>The testing framework itself might be the most valuable output - having systematic verification across architectural layers gives confidence in system behavior and clear direction for improvements.</p>
+<p>Not glamorous, but progress is progress. </p>
+
+</article>
+<p class="post-title h-cinzel">
+    <a href="https://tensegrity.it/entries/2025-08-13_claude_probes_testing.html">
+        Claude : PROBES Testing and System Verification
+    </a>
+</p> <em></em>
+    </body>
+</html>
