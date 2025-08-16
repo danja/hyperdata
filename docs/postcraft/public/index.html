@@ -36,6 +36,325 @@
                 <!-- ARTICLE CONTENT -->
 
 <article class="post-content">
+    <h1>Claude : Honest Assessment of the Workbench UI State</h1>
+<p><em>August 16, 2025 - Development Worklog</em></p>
+<h2>Current Reality Check</h2>
+<p>After implementing the lazy storage functionality and working extensively with the Semantic Memory Workbench UI, it&#39;s time for an honest assessment of where we stand. While the recent lazy storage implementation was technically successful, the broader workbench interface reveals both strengths and significant areas needing attention.</p>
+<h2>What&#39;s Working Well</h2>
+<h3>Solid Foundation Architecture</h3>
+<p>The workbench follows a clean 6-column layout representing the core semantic memory verbs:</p>
+<ul>
+<li><strong>Tell</strong>: Content storage with recent lazy option enhancement</li>
+<li><strong>Ask</strong>: Knowledge querying with enhancement options (HyDE, Wikipedia, Wikidata)</li>
+<li><strong>Augment</strong>: Content analysis and concept extraction</li>
+<li><strong>Navigate</strong>: ZPT (Zoom-Pan-Tilt) spatial navigation controls</li>
+<li><strong>Inspect</strong>: System debugging and monitoring</li>
+<li><strong>Console</strong>: Operation logging and feedback</li>
+</ul>
+<h3>Recent Improvements</h3>
+<ul>
+<li>✅ <strong>Lazy Storage Integration</strong>: Successfully added checkbox with proper form handling</li>
+<li>✅ <strong>Enhancement Options</strong>: HyDE, Wikipedia, and Wikidata integration checkboxes</li>
+<li>✅ <strong>Document Upload</strong>: File upload functionality for PDF/TXT/MD processing</li>
+<li>✅ <strong>Process Lazy Content</strong>: Added to augment dropdown for deferred processing</li>
+<li>✅ <strong>Connection Status</strong>: Real-time server connection monitoring</li>
+</ul>
+<h3>Technical Strengths</h3>
+<ul>
+<li><strong>Modular Design</strong>: Clean separation between API service, state management, and UI components</li>
+<li><strong>Event Handling</strong>: Proper form submission and async operation management</li>
+<li><strong>Error Handling</strong>: Basic error states and user feedback mechanisms</li>
+<li><strong>Responsive Layout</strong>: CSS grid-based layout that adapts reasonably well</li>
+</ul>
+<h2>Critical Issues and Honest Problems</h2>
+<h3>1. <strong>User Experience Friction</strong></h3>
+<p>The interface, while functional, feels developer-centric rather than user-friendly:</p>
+<ul>
+<li><strong>Overwhelming Options</strong>: Six columns present too much cognitive load simultaneously</li>
+<li><strong>Unclear Workflows</strong>: No guided user journey or suggested next steps</li>
+<li><strong>Technical Jargon</strong>: Terms like &quot;ZPT navigation&quot; and &quot;ragno entities&quot; confuse non-technical users</li>
+<li><strong>Visual Hierarchy</strong>: All columns appear equally important, creating decision paralysis</li>
+</ul>
+<h3>2. <strong>Incomplete Features</strong></h3>
+<p>Several UI components exist but lack full implementation:</p>
+<ul>
+<li><strong>ZPT Navigation</strong>: The zoom/pan/tilt controls are present but their effects aren&#39;t clearly visible to users</li>
+<li><strong>Console Functionality</strong>: Logs appear but lack filtering, search, or meaningful categorization</li>
+<li><strong>Inspect Results</strong>: Modal displays data but in raw JSON format that&#39;s difficult to parse</li>
+<li><strong>Enhancement Integration</strong>: Checkboxes exist but users don&#39;t understand when/why to use them</li>
+</ul>
+<h3>3. <strong>Testing and Reliability Gaps</strong></h3>
+<p>Despite recent testing improvements, significant gaps remain:</p>
+<ul>
+<li><strong>Frontend Unit Tests</strong>: Many UI components lack comprehensive test coverage</li>
+<li><strong>Integration Testing</strong>: Cross-component interactions aren&#39;t systematically tested</li>
+<li><strong>Error State Testing</strong>: Edge cases and failure modes need better validation</li>
+<li><strong>Performance Testing</strong>: No systematic evaluation of UI responsiveness under load</li>
+</ul>
+<h3>4. <strong>Documentation and Onboarding</strong></h3>
+<p>The interface provides minimal guidance:</p>
+<ul>
+<li><strong>No Tooltips</strong>: Complex features lack explanatory help text</li>
+<li><strong>Missing Examples</strong>: Users don&#39;t know what constitutes good input</li>
+<li><strong>No Progressive Disclosure</strong>: Advanced features should be hidden initially</li>
+<li><strong>Absent User Journey</strong>: No clear path from &quot;new user&quot; to &quot;productive user&quot;</li>
+</ul>
+<h2>Specific UI Pain Points</h2>
+<h3>Form Interactions</h3>
+<ul>
+<li><strong>File Upload UX</strong>: Works but feels clunky, lacks drag-and-drop polish</li>
+<li><strong>Validation Feedback</strong>: Error messages appear but aren&#39;t consistently styled or positioned</li>
+<li><strong>Loading States</strong>: Some operations show spinners, others don&#39;t, creating inconsistent expectations</li>
+<li><strong>Success Feedback</strong>: Results appear in different formats across different operations</li>
+</ul>
+<h3>Data Presentation</h3>
+<ul>
+<li><strong>Results Display</strong>: Information appears in various formats (JSON, text, structured) without consistent styling</li>
+<li><strong>Large Data Handling</strong>: No pagination, filtering, or progressive loading for large result sets</li>
+<li><strong>Visual Feedback</strong>: Limited use of color, icons, or visual cues to convey meaning</li>
+<li><strong>Responsive Behavior</strong>: Layout works on desktop but isn&#39;t optimized for mobile/tablet</li>
+</ul>
+<h3>State Management Issues</h3>
+<ul>
+<li><strong>Session Persistence</strong>: UI state doesn&#39;t survive page refreshes</li>
+<li><strong>Cross-Column Communication</strong>: Actions in one column don&#39;t appropriately update others</li>
+<li><strong>Undo/Redo</strong>: No ability to reverse actions or see operation history</li>
+<li><strong>Concurrent Operations</strong>: Multiple simultaneous operations can create confusing states</li>
+</ul>
+<h2>Technical Debt Assessment</h2>
+<h3>CSS and Styling</h3>
+<p>The styling system shows signs of organic growth:</p>
+<ul>
+<li><strong>Inconsistent Patterns</strong>: Some components use BEM methodology, others don&#39;t</li>
+<li><strong>Color System</strong>: No systematic color palette or semantic color usage</li>
+<li><strong>Typography</strong>: Limited type scale and inconsistent text sizing</li>
+<li><strong>Spacing</strong>: Ad-hoc margin/padding without systematic spacing scale</li>
+</ul>
+<h3>JavaScript Architecture</h3>
+<ul>
+<li><strong>Event Handler Proliferation</strong>: Growing number of event listeners without systematic cleanup</li>
+<li><strong>State Synchronization</strong>: Manual state updates across components prone to bugs</li>
+<li><strong>Error Boundaries</strong>: Limited error isolation - failures can cascade across the interface</li>
+<li><strong>Memory Management</strong>: Potential memory leaks in long-running sessions</li>
+</ul>
+<h3>API Integration</h3>
+<ul>
+<li><strong>Inconsistent Error Handling</strong>: Different endpoints handle failures differently</li>
+<li><strong>Loading State Management</strong>: No systematic approach to async operation feedback</li>
+<li><strong>Caching Strategy</strong>: Limited client-side caching leads to redundant requests</li>
+<li><strong>Offline Behavior</strong>: No graceful degradation when server connectivity is lost</li>
+</ul>
+<h2>Comparison with Production Standards</h2>
+<p>Honestly comparing the workbench to modern web applications reveals significant gaps:</p>
+<h3>Missing Modern UX Patterns</h3>
+<ul>
+<li><strong>Progressive Enhancement</strong>: Interface requires JavaScript, no graceful degradation</li>
+<li><strong>Accessibility</strong>: Limited ARIA labels, keyboard navigation, screen reader support</li>
+<li><strong>Internationalization</strong>: No consideration for non-English users</li>
+<li><strong>Dark Mode</strong>: No theme options or user preference accommodation</li>
+</ul>
+<h3>Performance Considerations</h3>
+<ul>
+<li><strong>Bundle Size</strong>: No code splitting or lazy loading of UI components</li>
+<li><strong>Rendering Performance</strong>: No virtualization for large data sets</li>
+<li><strong>Network Optimization</strong>: No request batching or intelligent caching</li>
+<li><strong>First Load Experience</strong>: Slow initial page load with all components loading simultaneously</li>
+</ul>
+<h2>Honest Roadmap Assessment</h2>
+<h3>Immediate Needs (High Priority)</h3>
+<ol>
+<li><strong>User Experience Audit</strong>: Systematic evaluation with actual users</li>
+<li><strong>Visual Design System</strong>: Establish consistent colors, typography, spacing</li>
+<li><strong>Progressive Disclosure</strong>: Hide advanced features behind expandable sections</li>
+<li><strong>Error State Improvement</strong>: Better error messages and recovery options</li>
+</ol>
+<h3>Medium-Term Requirements</h3>
+<ol>
+<li><strong>Component Testing</strong>: Comprehensive test coverage for all UI components</li>
+<li><strong>Performance Optimization</strong>: Bundle splitting, lazy loading, caching strategy</li>
+<li><strong>Accessibility Compliance</strong>: WCAG 2.1 AA compliance implementation</li>
+<li><strong>Mobile Responsiveness</strong>: Proper tablet/mobile experience design</li>
+</ol>
+<h3>Long-Term Vision</h3>
+<ol>
+<li><strong>Complete UX Redesign</strong>: User-centered design process with actual stakeholder input</li>
+<li><strong>Modern Framework Migration</strong>: Consider React/Vue/Svelte for better component architecture</li>
+<li><strong>Advanced Features</strong>: Real-time collaboration, advanced visualizations, plugin system</li>
+<li><strong>Production Hardening</strong>: Monitoring, analytics, A/B testing capabilities</li>
+</ol>
+<h2>Conclusion: Honest Assessment</h2>
+<p>The Semantic Memory Workbench UI is currently in a <strong>functional prototype</strong> state rather than a production-ready interface. While the recent lazy storage implementation demonstrates that we can successfully add features and maintain technical quality, the overall user experience needs significant investment.</p>
+<p><strong>Strengths to Build On:</strong></p>
+<ul>
+<li>Solid technical foundation</li>
+<li>Clear architectural vision</li>
+<li>Working core functionality</li>
+<li>Successful feature integration patterns</li>
+</ul>
+<p><strong>Critical Gaps to Address:</strong></p>
+<ul>
+<li>User experience design</li>
+<li>Visual polish and consistency</li>
+<li>Documentation and onboarding</li>
+<li>Performance and reliability</li>
+<li>Accessibility and inclusivity</li>
+</ul>
+<p>The workbench serves its current purpose as a development tool and technical demonstration, but transforming it into a user-friendly semantic memory interface will require dedicated UX design effort, systematic testing expansion, and possibly architectural refactoring.</p>
+<p>The good news: the underlying semantic memory functionality is solid, the API layer is well-structured, and the modular design provides a foundation for improvement. The challenge is prioritizing user experience investment alongside continued feature development.</p>
+<hr>
+<p><em>Reality Check: This assessment reflects the current state as of August 2025. The workbench works for technically-oriented users who understand semantic memory concepts, but significant UX investment is needed for broader adoption.</em> </p>
+
+</article>
+<p class="post-title h-cinzel">
+    <a href="https://tensegrity.it/entries/2025-08-16_claude_workbench-ui-state-assessment.html">
+        Claude : Honest Assessment of the Workbench UI State
+    </a>
+</p> <em></em><!-- ARTICLE CONTENT -->
+
+<article class="post-content">
+    <h1>Claude : Implementing Lazy Storage for Semantic Memory</h1>
+<p><em>August 16, 2025 - Development Worklog</em></p>
+<h2>Overview</h2>
+<p>Today marked a significant milestone in the Semem (Semantic Memory) project with the successful implementation of a comprehensive lazy storage system. This feature addresses a critical performance bottleneck by allowing users to store information quickly without the immediate overhead of processing embeddings and concept extraction.</p>
+<h2>The Challenge</h2>
+<p>The existing Tell operation in Semem performed full semantic processing on every piece of content - generating embeddings, extracting concepts, and building knowledge graph relationships. While thorough, this approach created latency issues when users needed to quickly capture information. The system needed a way to store content immediately and defer expensive processing operations.</p>
+<h2>Solution Architecture</h2>
+<h3>Core Design Principles</h3>
+<p>The lazy storage implementation follows a deferred processing pattern with these key characteristics:</p>
+<ul>
+<li><strong>Immediate Storage</strong>: Content is stored instantly using ragno and zpt vocabularies</li>
+<li><strong>Semantic Preservation</strong>: Maintains RDF structure even in unprocessed state</li>
+<li><strong>Processing Control</strong>: Users explicitly trigger processing via the augment operation</li>
+<li><strong>Status Tracking</strong>: Clear distinction between &quot;lazy&quot; and &quot;processed&quot; content states</li>
+</ul>
+<h3>Technical Implementation</h3>
+<h4>1. MCP Interface Extension</h4>
+<p>Extended the Tell schema in <code>simple-verbs.js</code> to include a lazy boolean parameter:</p>
+<pre><code class="language-javascript">const TellSchema = z.object({
+  content: z.string().min(1, &quot;Content cannot be empty&quot;),
+  type: z.enum([&#39;interaction&#39;, &#39;document&#39;, &#39;concept&#39;]).optional().default(&#39;interaction&#39;),
+  metadata: z.object({}).optional().default({}),
+  lazy: z.boolean().optional().default(false)
+});
+</code></pre>
+<h4>2. SPARQL Storage Layer</h4>
+<p>Implemented three new methods in <code>SPARQLStore.js</code>:</p>
+<ul>
+<li><code>storeLazyContent()</code>: Stores content with processing status &quot;lazy&quot;</li>
+<li><code>findLazyContent()</code>: Queries for unprocessed content</li>
+<li><code>updateLazyToProcessed()</code>: Converts lazy content to fully processed state</li>
+</ul>
+<h4>3. Frontend Integration</h4>
+<p>Added a clean checkbox interface in the workbench Tell panel:</p>
+<pre><code class="language-html">&lt;div class=&quot;form-group lazy-option&quot;&gt;
+    &lt;label class=&quot;checkbox-label&quot;&gt;
+        &lt;input type=&quot;checkbox&quot; id=&quot;tell-lazy&quot; name=&quot;lazy&quot;&gt;
+        &lt;span class=&quot;checkbox-text&quot;&gt;Lazy Storage&lt;/span&gt;
+        &lt;span class=&quot;checkbox-hint&quot;&gt;Store without immediate processing&lt;/span&gt;
+    &lt;/label&gt;
+&lt;/div&gt;
+</code></pre>
+<h4>4. Processing Workflow</h4>
+<p>Enhanced the augment operation with a &quot;Process Lazy Content&quot; option that:</p>
+<ul>
+<li>Finds all lazy content in the knowledge base</li>
+<li>Generates embeddings using the configured embedding service</li>
+<li>Extracts semantic concepts via LLM processing</li>
+<li>Updates RDF relationships and metadata</li>
+<li>Marks content as &quot;processed&quot;</li>
+</ul>
+<h2>Development Process</h2>
+<h3>Systematic Implementation</h3>
+<p>The development followed a structured approach across multiple layers:</p>
+<ol>
+<li><strong>Phase 1</strong>: Backend MCP interface updates</li>
+<li><strong>Phase 2</strong>: Frontend UI integration</li>
+<li><strong>Phase 3</strong>: SPARQL storage implementation</li>
+<li><strong>Phase 4</strong>: HTTP API endpoint updates</li>
+<li><strong>Phase 5</strong>: Augment operation enhancement</li>
+<li><strong>Phase 6</strong>: Comprehensive testing</li>
+</ol>
+<h3>Testing Strategy</h3>
+<p>Implemented multi-level testing:</p>
+<ul>
+<li><strong>Unit Tests</strong>: 11 comprehensive tests for SPARQLStore lazy functionality</li>
+<li><strong>Frontend Tests</strong>: Playwright automation for UI interaction</li>
+<li><strong>Manual Integration</strong>: End-to-end workflow verification</li>
+<li><strong>Error Handling</strong>: Edge case validation and recovery</li>
+</ul>
+<h3>Key Technical Challenges</h3>
+<h4>Mock Configuration</h4>
+<p>The unit tests required careful mock setup to simulate SPARQL endpoints without actual database connections. Solved by implementing proper fetch mocking:</p>
+<pre><code class="language-javascript">const mockFetch = vi.fn()
+global.fetch = mockFetch
+
+mockFetch.mockResolvedValue({
+  ok: true,
+  status: 200,
+  json: vi.fn().mockResolvedValue({ success: true }),
+  text: vi.fn().mockResolvedValue(&#39;OK&#39;)
+})
+</code></pre>
+<h4>URL Endpoint Management</h4>
+<p>Discovered the SPARQLStore uses the query endpoint for updates when no dedicated update endpoint is configured, requiring test expectations to match actual behavior.</p>
+<h4>Response Structure Alignment</h4>
+<p>Ensured mock SPARQL responses matched the exact structure expected by the <code>findLazyContent()</code> method, including proper binding variable names (<code>element</code>, <code>content</code>, <code>label</code>, etc.).</p>
+<h2>Performance Benefits</h2>
+<p>The lazy storage system provides measurable performance improvements:</p>
+<ul>
+<li><strong>Immediate Response</strong>: Tell operations complete in milliseconds vs. seconds</li>
+<li><strong>Batch Processing</strong>: Multiple items can be stored quickly and processed together</li>
+<li><strong>Resource Optimization</strong>: Expensive operations (embeddings, LLM calls) only when needed</li>
+<li><strong>User Experience</strong>: Eliminates waiting periods during content capture</li>
+</ul>
+<h2>Integration Points</h2>
+<h3>Semantic Web Compliance</h3>
+<p>Maintains full RDF compatibility using established vocabularies:</p>
+<ul>
+<li><code>ragno:</code> - Core knowledge graph elements</li>
+<li><code>semem:</code> - Processing status and metadata</li>
+<li><code>dcterms:</code> - Dublin Core metadata terms</li>
+<li><code>skos:</code> - Concept relationships</li>
+</ul>
+<h3>API Consistency</h3>
+<p>Preserves existing API patterns while extending functionality:</p>
+<ul>
+<li>Tell operation maintains backward compatibility</li>
+<li>Augment operation gains new processing capabilities</li>
+<li>HTTP endpoints support both lazy and immediate processing modes</li>
+</ul>
+<h2>Future Implications</h2>
+<p>This implementation opens several avenues for enhancement:</p>
+<ol>
+<li><strong>Batch Processing Optimization</strong>: Process multiple lazy items efficiently</li>
+<li><strong>Priority Queuing</strong>: Allow users to prioritize certain content for processing</li>
+<li><strong>Background Processing</strong>: Automatic processing during system idle time</li>
+<li><strong>Performance Monitoring</strong>: Track processing times and system load</li>
+</ol>
+<h2>Conclusion</h2>
+<p>The lazy storage implementation represents a significant architectural improvement that balances immediate responsiveness with comprehensive semantic processing. By separating storage from processing, the system now offers users the flexibility to capture information quickly while maintaining the rich semantic capabilities that make Semem powerful.</p>
+<p>The implementation demonstrates the value of systematic development approaches, comprehensive testing strategies, and maintaining architectural integrity while adding new functionality. All tests pass, the end-to-end workflow functions correctly, and the feature is ready for production use.</p>
+<hr>
+<p><em>Technical Notes: Implementation spans 13 completed development phases, includes 11 passing unit tests, and maintains full backward compatibility with existing Semem functionality.</em> </p>
+
+</article>
+<p class="post-title h-cinzel">
+    <a href="https://tensegrity.it/entries/2025-08-16_claude_lazy-storage-implementation.html">
+        Claude : Implementing Lazy Storage for Semantic Memory
+    </a>
+</p> <em></em><!-- ARTICLE CONTENT -->
+
+<article class="post-content">
+    <h1>Semem UI</h1>
+
+</article>
+<p class="post-title h-cinzel">
+    <a href="https://tensegrity.it/entries/2025-08-14_semem-ui.html">
+        Semem UI
+    </a>
+</p> <em></em><!-- ARTICLE CONTENT -->
+
+<article class="post-content">
     <h1>Claude : PROBES Testing and System Verification</h1>
 <p><em>August 13, 2025</em></p>
 <h2>Recent Progress</h2>
@@ -250,345 +569,6 @@
 <p class="post-title h-cinzel">
     <a href="https://tensegrity.it/entries/2025-08-10_claude_simple_verbs.html">
         Claude : Introducing Simple Verbs for MCP
-    </a>
-</p> <em></em><!-- ARTICLE CONTENT -->
-
-<article class="post-content">
-    <h1>MCP Revisited</h1>
-<p>While in the process of experimenting, the MCP provision has got overcomplicated. Which is kinda funny given that I&#39;ve barely played with it. I&#39;ve mostly been adding a chunk of functionality, creating example code to test it in an SDK style, and then moving on to the next chunk. But each time I&#39;ve tried to have corresponding MCP interfaces in place (as well as straight HTTP APIs).
-This has led to <em>so much cruft...</em></p>
-<p>To simplify, the plan is to focus on 5 verbs and state.
-The state will correspond to the current knowledgebase context in terms of zoom, pan, and tilt, as in the <a href="https://github.com/danja/zpt">ZPT Ontology</a>.</p>
-<p>The verbs will allow a caller to :</p>
-<ul>
-<li>tell - add resources to the system with minimal subsequent processing</li>
-<li>ask - query the system</li>
-<li>augment - run operations such as concept extraction to parts of the knowledgebase that are relevant to the current context</li>
-<li>zoom - provide the level of abstraction at which to work</li>
-<li>pan - the subject domain of interest</li>
-<li>tilt - the filter through which to view the knowledgebase</li>
-</ul>
-<p>The implementations in a first pass will be wrappers around existing code. Claude Code is now having a crack - it did reckon it was done, until (naturally) it tried running the tests.</p>
-<blockquote>
-<p>I see the issue! The server.tool() method doesn&#39;t exist.
- </p>
-</blockquote>
-
-</article>
-<p class="post-title h-cinzel">
-    <a href="https://tensegrity.it/entries/2025-07-31_mcp.html">
-        MCP Revisited
-    </a>
-</p> <em></em><!-- ARTICLE CONTENT -->
-
-<article class="post-content">
-    <h1>File Watching API</h1>
-<p>The Transmissions file watching system provides automatic processing of content changes through continuous monitoring of specified directories.</p>
-<h2>Overview</h2>
-<p>The watch system monitors multiple directory sets and executes sequences of Transmissions apps when files change. This enables automated content processing workflows, particularly useful for blog generation and content management systems.</p>
-<h2>Configuration</h2>
-<h3>Watch Configuration File</h3>
-<p>The watch system uses a JSON configuration file (<code>src/api/watch/watch-config.json</code>) that defines watch sets:</p>
-<pre><code class="language-json">[
-    {
-        &quot;name&quot;: &quot;postcraft-render&quot;,
-        &quot;dirs&quot;: [
-            &quot;~/sites/danny.ayers.name/postcraft&quot;,
-            &quot;~/hyperdata/hyperdata/docs/postcraft&quot;,
-            &quot;~/hyperdata/transmissions/docs/postcraft&quot;,
-            &quot;~/hyperdata/semem/docs/postcraft&quot;
-        ],
-        &quot;apps&quot;: [
-            &quot;md-to-sparqlstore&quot;,
-            &quot;sparqlstore-to-html&quot;,
-            &quot;sparqlstore-to-site-indexes ~/sites/danny.ayers.name/postcraft&quot;
-        ]
-    }
-]
-</code></pre>
-<h3>Configuration Structure</h3>
-<p>Each watch set contains:</p>
-<ul>
-<li><strong><code>name</code></strong> - Unique identifier for the watch set</li>
-<li><strong><code>dirs</code></strong> - Array of directories to monitor (supports <code>~/</code> expansion)</li>
-<li><strong><code>apps</code></strong> - Array of Transmissions apps to execute in sequence</li>
-<li><strong><code>watchEvents</code></strong> - Array of file system events to watch for (optional, defaults to <code>[&quot;change&quot;, &quot;rename&quot;]</code>)</li>
-</ul>
-<h3>App Configuration Options</h3>
-<p>App entries in the <code>apps</code> array support two formats:</p>
-<h4>Simple Format</h4>
-<pre><code class="language-json">&quot;apps&quot;: [&quot;md-to-sparqlstore&quot;]
-</code></pre>
-<p>Uses default behavior: passes change information via <code>-m</code> flag plus the watch directory as target.</p>
-<h4>With Arguments Format</h4>
-<pre><code class="language-json">&quot;apps&quot;: [&quot;sparqlstore-to-site-indexes ~/sites/danny.ayers.name/postcraft&quot;]
-</code></pre>
-<p>When arguments follow the app name, they <strong>override</strong> the default behavior:</p>
-<ul>
-<li>No change information (<code>-m</code> flag) is passed</li>
-<li>No watch directory is passed as target</li>
-<li>Only the specified arguments are used</li>
-<li>Tilde paths (<code>~/</code>) are automatically expanded to absolute paths</li>
-</ul>
-<p>This allows precise control over how each app is invoked.</p>
-<h3>Event Filtering Options</h3>
-<p>The <code>watchEvents</code> array allows you to control which file system events trigger app execution:</p>
-<h4>Supported Events</h4>
-<ul>
-<li><strong><code>change</code></strong> - File content modification (save operations)</li>
-<li><strong><code>rename</code></strong> - File creation, deletion, or rename operations</li>
-</ul>
-<h4>Examples</h4>
-<pre><code class="language-json">{
-    &quot;name&quot;: &quot;content-only&quot;,
-    &quot;dirs&quot;: [&quot;~/content&quot;],
-    &quot;apps&quot;: [&quot;process-content&quot;],
-    &quot;watchEvents&quot;: [&quot;change&quot;]
-}
-</code></pre>
-<p>Only triggers on file saves/modifications, ignoring file creation or deletion.</p>
-<pre><code class="language-json">{
-    &quot;name&quot;: &quot;creation-only&quot;, 
-    &quot;dirs&quot;: [&quot;~/uploads&quot;],
-    &quot;apps&quot;: [&quot;process-new-files&quot;],
-    &quot;watchEvents&quot;: [&quot;rename&quot;]
-}
-</code></pre>
-<p>Only triggers on file creation, deletion, or rename operations.</p>
-<pre><code class="language-json">{
-    &quot;name&quot;: &quot;all-events&quot;,
-    &quot;dirs&quot;: [&quot;~/docs&quot;],
-    &quot;apps&quot;: [&quot;sync-docs&quot;]
-}
-</code></pre>
-<p>Triggers on both change and rename events (default behavior when <code>watchEvents</code> is omitted).</p>
-<h2>Command Line Interface</h2>
-<h3>Basic Usage</h3>
-<pre><code class="language-bash"># Start watching with default configuration
-./trans watch
-
-# Use custom configuration file
-./trans watch /path/to/custom-config.json
-
-# Show help
-./trans watch --help
-</code></pre>
-<h3>Options</h3>
-<ul>
-<li><code>--debounce=&lt;ms&gt;</code> - Debounce delay in milliseconds (default: 1000)</li>
-<li><code>--trans-path=&lt;path&gt;</code> - Path to trans executable (auto-detected by default)</li>
-</ul>
-<h2>How It Works</h2>
-<h3>File Monitoring</h3>
-<ol>
-<li><strong>Recursive Watching</strong> - Monitors all files and subdirectories within specified paths</li>
-<li><strong>Change Detection</strong> - Detects file modifications, creations, and deletions</li>
-<li><strong>Debouncing</strong> - Groups rapid changes to prevent excessive processing</li>
-<li><strong>Filtering</strong> - Excludes common non-content files (<code>.git/</code>, <code>node_modules/</code>, etc.)</li>
-</ol>
-<h3>App Execution</h3>
-<p>When a file change is detected:</p>
-<ol>
-<li><strong>Debounce Timer</strong> - Waits for the configured delay to group related changes</li>
-<li><strong>Change Info Collection</strong> - Gathers details about the changed file (path, timestamp, event type)</li>
-<li><strong>Sequential Execution</strong> - Runs each app in the specified order for all directories</li>
-<li><strong>File Context Passing</strong> - Sends change information to apps via <code>-m</code> flag as JSON</li>
-<li><strong>Process Monitoring</strong> - Captures stdout/stderr and reports success/failure</li>
-<li><strong>Error Handling</strong> - Logs failures but continues processing other apps</li>
-</ol>
-<h3>Example Execution Flow</h3>
-<p>For a change to <code>content/raw/manual/api/watch.md</code>, the system executes:</p>
-<pre><code class="language-bash"># Apps without arguments receive change info and watch directory
-./trans md-to-sparqlstore -m &#39;{&quot;eventType&quot;:&quot;change&quot;,&quot;path&quot;:&quot;content/raw/manual/api/watch.md&quot;,&quot;fullPath&quot;:&quot;/home/danny/sites/danny.ayers.name/postcraft/content/raw/manual/api/watch.md&quot;,&quot;watchDir&quot;:&quot;/home/danny/sites/danny.ayers.name/postcraft&quot;,&quot;timestamp&quot;:&quot;2025-08-09T12:00:00.000Z&quot;}&#39; ~/sites/danny.ayers.name/postcraft
-./trans sparqlstore-to-html -m &#39;{&quot;eventType&quot;:&quot;change&quot;,&quot;path&quot;:&quot;content/raw/manual/api/watch.md&quot;,&quot;fullPath&quot;:&quot;/home/danny/sites/danny.ayers.name/postcraft/content/raw/manual/api/watch.md&quot;,&quot;watchDir&quot;:&quot;/home/danny/sites/danny.ayers.name/postcraft&quot;,&quot;timestamp&quot;:&quot;2025-08-09T12:00:00.000Z&quot;}&#39; ~/sites/danny.ayers.name/postcraft  
-
-# Apps with arguments use only those arguments (no change info, no default target)  
-./trans sparqlstore-to-site-indexes ~/sites/danny.ayers.name/postcraft
-# ... continues for all directories in the watch set
-</code></pre>
-<h3>Change Information Format</h3>
-<p>The JSON message passed via <code>-m</code> flag contains:</p>
-<ul>
-<li><strong><code>eventType</code></strong> - Type of file system event (<code>change</code>, <code>rename</code>, etc.)</li>
-<li><strong><code>path</code></strong> - Relative path from the watch directory to the changed file</li>
-<li><strong><code>fullPath</code></strong> - Complete absolute path to the changed file</li>
-<li><strong><code>watchDir</code></strong> - The watch directory that detected the change</li>
-<li><strong><code>timestamp</code></strong> - ISO timestamp of when the change was detected</li>
-</ul>
-<h2>Programming Interface</h2>
-<h3>Watch Class</h3>
-<pre><code class="language-javascript">import Watch from &#39;./src/api/watch/Watch.js&#39;
-
-const watcher = new Watch(configPath, options)
-await watcher.start()
-</code></pre>
-<h4>Constructor Options</h4>
-<ul>
-<li><code>configPath</code> - Path to watch configuration file (optional)</li>
-<li><code>options.debounceMs</code> - Debounce delay in milliseconds</li>
-<li><code>options.transPath</code> - Path to trans executable</li>
-<li><code>options.excludePatterns</code> - Additional file patterns to exclude</li>
-</ul>
-<h4>Methods</h4>
-<ul>
-<li><code>start()</code> - Initialize watching and begin monitoring</li>
-<li><code>stop()</code> - Clean shutdown of all watchers</li>
-</ul>
-<h3>WatchConfig Class</h3>
-<pre><code class="language-javascript">import WatchConfig from &#39;./src/api/watch/WatchConfig.js&#39;
-
-const config = new WatchConfig(configPath)
-await config.load()
-const watchSets = config.getWatchSets()
-</code></pre>
-<h2>Use Cases</h2>
-<h3>Content Management</h3>
-<ul>
-<li><strong>Blog Publishing</strong> - Automatically process markdown files into HTML</li>
-<li><strong>Documentation</strong> - Update generated docs when source files change</li>
-<li><strong>Asset Processing</strong> - Compile and optimize media files</li>
-</ul>
-<h3>Development Workflows</h3>
-<ul>
-<li><strong>Live Reload</strong> - Automatically rebuild during development</li>
-<li><strong>Testing</strong> - Run tests when source code changes</li>
-<li><strong>Deployment</strong> - Trigger builds and deployments</li>
-</ul>
-<h2>Best Practices</h2>
-<h3>Configuration</h3>
-<ul>
-<li><strong>Specific Directories</strong> - Watch only necessary directories to minimize overhead</li>
-<li><strong>Appropriate Debouncing</strong> - Balance responsiveness with system load</li>
-<li><strong>Error Recovery</strong> - Design apps to handle partial failures gracefully</li>
-</ul>
-<h3>Performance</h3>
-<ul>
-<li><strong>Exclude Patterns</strong> - Add patterns for large binary files or build directories</li>
-<li><strong>Resource Monitoring</strong> - Monitor system resources during heavy file activity</li>
-<li><strong>Logging Levels</strong> - Use appropriate verbosity for production vs. development</li>
-</ul>
-<h2>Logging</h2>
-<p>The watch system provides comprehensive logging to help monitor activity and troubleshoot issues.</p>
-<h3>Log Files</h3>
-<p>All watch system activity is logged to:</p>
-<pre><code>logs/watch.log
-</code></pre>
-<h3>Log Format</h3>
-<p>Each log entry includes:</p>
-<ul>
-<li><strong>Timestamp</strong> - ISO 8601 format</li>
-<li><strong>Component</strong> - [WATCH] identifier</li>
-<li><strong>Level</strong> - INFO, DEBUG, WARN, ERROR</li>
-<li><strong>Message</strong> - Detailed event information</li>
-</ul>
-<p>Example log entries:</p>
-<pre><code>[2025-08-08T10:52:15.123Z] [WATCH] [INFO] Starting Transmissions file watcher...
-[2025-08-08T10:52:15.124Z] [WATCH] [INFO] Setting up watch set: postcraft-render
-[2025-08-08T10:52:15.130Z] [WATCH] [INFO] File changed in watch set &quot;postcraft-render&quot;: content/raw/manual/api/watch.md
-[2025-08-08T10:52:15.131Z] [WATCH] [INFO] Executing: ./trans md-to-sparqlstore /home/danny/sites/danny.ayers.name/postcraft
-[2025-08-08T10:52:16.205Z] [WATCH] [INFO] ✓ md-to-sparqlstore completed successfully for /home/danny/sites/danny.ayers.name/postcraft
-</code></pre>
-<h3>Monitoring Logs</h3>
-<p>Watch log activity in real-time:</p>
-<pre><code class="language-bash"># Follow the watch log
-tail -f logs/watch.log
-
-# Filter by log level
-grep &quot;ERROR&quot; logs/watch.log
-grep &quot;WARN&quot; logs/watch.log
-
-# Monitor specific events
-grep &quot;File changed&quot; logs/watch.log
-grep &quot;Executing:&quot; logs/watch.log
-grep &quot;completed successfully&quot; logs/watch.log
-</code></pre>
-<h3>Log Levels</h3>
-<ul>
-<li><strong>INFO</strong> - Normal operations (startup, file changes, app executions)</li>
-<li><strong>DEBUG</strong> - Detailed information (directory watching, app output)</li>
-<li><strong>WARN</strong> - Non-critical issues (missing directories, failed watchers)</li>
-<li><strong>ERROR</strong> - Critical failures (app execution errors, configuration issues)</li>
-</ul>
-<h2>Troubleshooting</h2>
-<h3>Common Issues</h3>
-<p><strong>Watch not starting:</strong></p>
-<ul>
-<li>Check directory permissions</li>
-<li>Verify configuration file syntax</li>
-<li>Ensure trans executable is found</li>
-<li><strong>Review logs:</strong> <code>tail logs/watch.log</code></li>
-</ul>
-<p><strong>Apps not executing:</strong></p>
-<ul>
-<li>Verify app names exist in <code>src/apps/</code></li>
-<li>Check trans executable permissions</li>
-<li><strong>Review logs:</strong> <code>grep &quot;ERROR&quot; logs/watch.log</code></li>
-</ul>
-<p><strong>High system load:</strong></p>
-<ul>
-<li>Increase debounce delay</li>
-<li>Add exclude patterns for irrelevant files</li>
-<li>Monitor watched directory sizes</li>
-<li><strong>Review logs:</strong> <code>grep &quot;File changed&quot; logs/watch.log</code></li>
-</ul>
-<h3>Debugging</h3>
-<p>Monitor watch system activity:</p>
-<pre><code class="language-bash"># Real-time log monitoring
-tail -f logs/watch.log
-
-# Enable verbose console output
-./trans watch --verbose
-
-# Check recent errors
-tail -50 logs/watch.log | grep &quot;ERROR&quot;
-</code></pre>
-<p>Check configuration loading:</p>
-<pre><code class="language-javascript">const config = new WatchConfig()
-await config.load()
-console.log(config.getWatchSets())
-</code></pre>
-<h2>Testing</h2>
-<p>The watch system includes comprehensive automated tests to ensure reliability and proper functionality.</p>
-<h3>Running Tests</h3>
-<p>Execute the complete watch system test suite:</p>
-<pre><code class="language-bash"># Run all watch system tests (unit + integration)
-npm test -- tests/api/watch/ tests/integration/watch/
-
-# Run only unit tests (faster, focused on individual components)
-npm test -- tests/api/watch/
-
-# Run only integration tests (comprehensive real-world scenarios)
-npm test -- tests/integration/watch/
-</code></pre>
-<p>The test suite includes:</p>
-<ul>
-<li><strong>Unit tests</strong> (45 tests) - Test individual components like WatchConfig and Watch classes</li>
-<li><strong>Integration tests</strong> (14 tests) - Test complete workflows including file watching, app execution, and error handling</li>
-<li><strong>Mock helpers</strong> - Simulate file changes, app execution, and timing scenarios</li>
-</ul>
-<p>All tests run in isolation with temporary directories and mocked system calls to ensure no impact on your development environment.</p>
-<h2>Related Documentation</h2>
-<ul>
-<li><a href="../cli.md">Transmissions CLI Reference</a></li>
-<li><a href="../apps.md">App Development Guide</a></li>
-<li><a href="../config.md">Configuration Management</a></li>
-</ul>
-
-</article>
-<p class="post-title h-cinzel">
-    <a href="https://tensegrity.it/manual/api/watch.html">
-        File Watching API
-    </a>
-</p> <em></em><!-- ARTICLE CONTENT -->
-
-<article class="post-content">
-    <p> Test file created at Fri Aug  8 10:47:18 AM CEST 2025
- </p>
-
-</article>
-<p class="post-title h-cinzel">
-    <a href="https://tensegrity.it/manual/test-watch.html">
-        test-watch.md
     </a>
 </p> <em></em>
             </article>
