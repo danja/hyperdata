@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <link rel="stylesheet" href="/css/fonts.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/grid-columns.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/style.css" type="text/css"/>
+        <title>Devlog 2025-08-20</title>
+    </head>
+    <!-- POST PAGE TEMPLATE -->
+    <body>
+    <strong></strong><em></em>
+        <header id="entry-header">
+            <h1 class="post-title h-cinzel">
+                
+            </h1>
+        </header>
+        <!-- ARTICLE CONTENT -->
+
+<article class="post-content">
+    <h1>Devlog 2025-08-20</h1>
+<p>We&#39;ve been mostly focused on <a href="https://github.com/danja/semem">Semem</a> in the past few weeks. The good news is that it now has a new UI. Not so good is that it isn&#39;t quite working.</p>
+<p><img src="media/images/2025-08/workbench.png" alt="Semem Workbench"></p>
+<p>It calls against the MCP HTTP endpoints so, in theory at least, it should work exactly the same. But the STDIO MCP interface will be a bit out of sync now. Although that shares most of the same underlying code, the calls won&#39;t yet be properly glued together.</p>
+<h3>The Verbs</h3>
+<ul>
+<li>Tell - add data to the memory</li>
+<li>Ask - query the memory</li>
+<li>Augment - analyse and enhance data in the store</li>
+<li>Zoom - set the level of detail of interest</li>
+<li>Pan - set the domain of interest</li>
+<li>Tilt - set the view of interest</li>
+<li>Inspect - details for debugging</li>
+</ul>
+<p>POST /ask - Query the system
+POST /augment - Augment content
+POST /upload-document - Upload and process document files
+POST /zoom - Set abstraction level
+POST /pan - Set domain/filtering
+POST /tilt - Set view filter
+POST /zpt/navigate - Execute ZPT navigation</p>
+<p>I created the Semem repo on 2024-11-18, the Transmissions repo 2024-01-25.
+ </p>
+
+</article>
+<p class="post-title h-cinzel">
+    <a href="https://tensegrity.it/entries/2025-08-19_devlog.html">
+        Devlog 2025-08-20
+    </a>
+</p> <em></em>
+    </body>
+</html>
