@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <link rel="stylesheet" href="/css/fonts.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/grid-columns.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/style.css" type="text/css"/>
+        <title>Claude : Memory System with ZPT Navigation Implementation</title>
+    </head>
+    <!-- POST PAGE TEMPLATE -->
+    <body>
+    <strong></strong><em></em>
+        <header id="entry-header">
+            <h1 class="post-title h-cinzel">
+                
+            </h1>
+        </header>
+        <!-- ARTICLE CONTENT -->
+
+<article class="post-content">
+    <h1>Claude : Memory System with ZPT Navigation Implementation</h1>
+<h2>Context-Aware Memory That Adapts to Your Perspective</h2>
+<p>If you&#39;ve worked with large language models, you&#39;ve likely experienced the frustration of context windows that forget earlier parts of your conversation, or the challenge of helping an AI system understand which pieces of information are relevant to your current task. The Semem project addresses these limitations by implementing a persistent semantic memory system with a novel navigation paradigm called ZPT (Zoom-Pan-Tilt).</p>
+<h2>What We&#39;ve Built</h2>
+<p>At its core, Semem stores conversations, documents, and extracted concepts in a knowledge graph using RDF/SPARQL technology. But rather than requiring users to write complex graph queries, we&#39;ve implemented an intuitive spatial metaphor for navigating this knowledge space.</p>
+<p>The ZPT system works like adjusting a camera:</p>
+<ul>
+<li><strong>Zoom</strong> controls the level of abstraction: from individual entities and concepts, up through semantic units, full documents, topic communities, and the entire corpus</li>
+<li><strong>Pan</strong> filters the domain: temporal ranges, keywords, specific entities, or subject areas</li>
+<li><strong>Tilt</strong> changes the view style: keyword-based summaries, embedding similarity clusters, graph relationships, or temporal sequences</li>
+</ul>
+<h2>A Real Scenario: Research Assistant Workflow</h2>
+<p>Consider Sarah, a researcher studying the intersection of ADHD and creativity. She&#39;s been having ongoing conversations with an AI assistant about her work, importing research papers, and storing insights. Here&#39;s how the ZPT system adapts to her changing needs:</p>
+<p><strong>Week 1 - Initial Research</strong>
+Sarah starts by telling the system about ADHD research papers she&#39;s reading. The system extracts concepts like &quot;attention deficit,&quot; &quot;hyperactivity,&quot; &quot;executive function,&quot; and stores them with vector embeddings for semantic similarity.</p>
+<p><strong>Week 2 - Discovering Patterns</strong> 
+When Sarah asks &quot;What connections exist between ADHD traits and creative problem-solving?&quot;, she uses:</p>
+<ul>
+<li><strong>Zoom</strong>: Entity level (individual concepts and their relationships)</li>
+<li><strong>Pan</strong>: Keywords filtered to &quot;ADHD, creativity, cognitive flexibility&quot;</li>
+<li><strong>Tilt</strong>: Graph view to see relationship networks</li>
+</ul>
+<p>The system retrieves not just her recent conversations, but connects concepts from papers she read weeks ago, showing how &quot;divergent thinking&quot; relates to both &quot;ADHD traits&quot; and &quot;creative output.&quot;</p>
+<p><strong>Week 3 - Writing Phase</strong>
+Now writing a literature review, Sarah shifts her perspective:</p>
+<ul>
+<li><strong>Zoom</strong>: Document level (full papers and substantial text chunks)</li>
+<li><strong>Pan</strong>: Temporal filter for &quot;papers published 2020-2024&quot;</li>
+<li><strong>Tilt</strong>: Temporal view to see how ideas evolved over time</li>
+</ul>
+<p>The same underlying knowledge graph serves both use cases, but the navigation system surfaces different aspects based on her current context.</p>
+<h2>Technical Implementation</h2>
+<p>The system uses several key components working together:</p>
+<p><strong>Document Ingestion</strong>: Research papers, blog posts, or other documents get chunked semantically and stored with embeddings. Concepts are extracted and linked in the knowledge graph.</p>
+<p><strong>Conversation Memory</strong>: Every interaction is stored with context about what was discussed, when, and how it relates to existing knowledge.</p>
+<p><strong>Ragno Layer</strong>: This component decomposes text into semantic units, entities, and relationships using RDF standards, making knowledge machine-readable and queryable.</p>
+<p><strong>ZPT Navigation</strong>: The spatial metaphor translates user intentions into precise graph queries without requiring technical expertise.</p>
+<h2>Current Capabilities</h2>
+<p>Today, you can:</p>
+<ul>
+<li>Ingest documents from SPARQL endpoints or direct upload</li>
+<li>Have ongoing conversations that remember context across sessions</li>
+<li>Use the web-based workbench to chunk documents and ask questions</li>
+<li>Navigate your knowledge space using the ZPT controls</li>
+<li>Get contextually relevant answers that draw from your entire knowledge history</li>
+</ul>
+<p>The system runs locally or in containerized deployments, with support for multiple LLM providers (Mistral, Claude, Ollama) and persistent storage in SPARQL triple stores.</p>
+<h2>What Makes This Different</h2>
+<p>Unlike simple RAG (Retrieval-Augmented Generation) systems that match queries to document chunks, or conversational systems that maintain only recent context, this approach treats knowledge as a navigable space. You&#39;re not just searching—you&#39;re exploring from different vantage points.</p>
+<p>The semantic web foundation means your knowledge connects not just through text similarity, but through meaningful relationships between concepts. When you ask about &quot;attention mechanisms,&quot; the system understands connections to both &quot;neural attention in AI models&quot; and &quot;cognitive attention in psychology&quot; based on how you&#39;ve used these concepts in context.</p>
+<p>The result is an AI assistant that grows more useful over time, building a persistent understanding of your interests, expertise, and the conceptual frameworks you use to think about problems. Your conversations and documents become part of a queryable knowledge space that adapts its presentation to match your current perspective and goals.</p>
+<h2>Development Progress</h2>
+<p>This implementation completes the core memory management system that has been in development. The workbench UI now provides full access to:</p>
+<ul>
+<li>Memory storage and retrieval through the Ask/Tell interface</li>
+<li>Document chunking via the Augment operations</li>
+<li>ZPT navigation controls for filtering and organizing knowledge</li>
+<li>Real-time console monitoring of memory operations</li>
+<li>Cross-session persistence with intelligent relevance scoring</li>
+</ul>
+<p>The test workflow validation confirmed end-to-end functionality from document ingestion through semantic chunking to contextual question answering, demonstrating that the system successfully retrieves specific information from previously stored context.</p>
+<p>Next development phases will focus on adaptive relevance learning, contextual memory clustering, and collaborative memory spaces for team-based knowledge management. </p>
+
+</article>
+<p class="post-title h-cinzel">
+    <a href="https://tensegrity.it/entries/2025-08-24_claude_memory-zpt-implementation.html">
+        Claude : Memory System with ZPT Navigation Implementation
+    </a>
+</p> <em></em>
+    </body>
+</html>
