@@ -36,6 +36,36 @@
                 <!-- ARTICLE CONTENT -->
 
 <article class="post-content">
+    <h1>Semem, Know Thyself</h1>
+<p>In use, <a href="https://github.com/danja/semem/">Semem</a> is mostly intended to manage memories accumulated on the fly, relevant to the task at hand. A combination of uploaded docs, interaction history and inferences made. But background knowledge is desirable. Ok, there will be plenty provided by the LLM in use by Semem and there are external connectors to query Wikipedia and Wikidata. But that leaves the question of more local, maybe project-specific info. How does that get into the system? What if we want Semem to be aware of its own documentation?</p>
+<h2>SPARQL Store as Integration Point</h2>
+<p>Semem has facilities for querying SPARQL stores - it&#39;s a big part of the core functionality, that&#39;s where the knowledge graphs live. So if the material of interest can be placed in such a store, it should be relatively straightforward to access.</p>
+<p>Another project in the <a href="https://github.com/danja/tensegrity">Tensegrity Stack</a> is <a href="https://github.com/danja/transmissions">Transmissions</a>, my pipeliney thing. And guess what, I&#39;ve already got a pipeline for walking a directory tree, looking for markdown files and POSTing them into a SPARQL store.</p>
+<p>Claude Code has helped me put together the code to pull data from a remote SPARQL store into that of Semem. In this particular instance Semem is using a local Fuseki store, the same one I&#39;m using with Transmissions locally. Named graphs are used to keep things independent. This does mean there&#39;ll be redundancy, but I think it&#39;ll be worth it for the sake of loose coupling. </p>
+<pre><code class="language-sh">node examples/ingestion/SPARQLIngest.js --endpoint &quot;http://localhost:3030/semem/query&quot; --template blog-articles --graph &quot;http://tensegrity.it/semem&quot;
+</code></pre>
+<h2>Markdown to SPARQL Store</h2>
+<p>Note to self, these are the bits I&#39;ve created (in the Semem codebase) for the Transmissions side of the operation.</p>
+<ul>
+<li><code>./del-semem-graph.sh</code> - utility to clear the graph, this is handy for testing</li>
+<li><code>docs/tt.ttl</code> - the configuration (paths, graph names etc) for the Transmission</li>
+<li><code>docs/endpoints.json</code> - the store defn</li>
+<li><code>scripts/transmissions.sh</code> - this runs the Transmission pipeline <code>md-to-sparqlstore</code>, all it contains is :</li>
+</ul>
+<pre><code class="language-sh">cd ~/hyperdata/transmissions # my local path
+./trans -v md-to-sparqlstore ~/hyperdata/semem/docs
+</code></pre>
+<p>The Transmissions part worked ok (confirmed by querying the store via Fuseki&#39;s UI). Right now the ingestion part is running. It is taking <em>a very long time</em>.</p>
+<p>I&#39;ve far from finished confirming that all the parts of the system are working correctly. A meta-issue is that the <strong>operations are really slow</strong>. This is understandable - there&#39;s a lot going on, what with SPARQL queries, embeddings being juggled as well as remote LLM chat completion calls (I&#39;m using Mistral free tier). My next step has to be to set up some metrics, locate the bottlenecks... Ha, is obvious without looking - remote LLM calls. I need to figure out which of these have to happen in real time, which I can have running in the background (queue/scheduler needed).  </p>
+
+</article>
+<p class="post-title h-cinzel">
+    <a href="https://tensegrity.it/entries/2025-08-30_know-thyself.html">
+        Semem, Know Thyself
+    </a>
+</p> <em></em><!-- ARTICLE CONTENT -->
+
+<article class="post-content">
     <h1>Claude : Memory System with ZPT Navigation Implementation</h1>
 <h2>Context-Aware Memory That Adapts to Your Perspective</h2>
 <p>If you&#39;ve worked with large language models, you&#39;ve likely experienced the frustration of context windows that forget earlier parts of your conversation, or the challenge of helping an AI system understand which pieces of information are relevant to your current task. The Semem project addresses these limitations by implementing a persistent semantic memory system with a novel navigation paradigm called ZPT (Zoom-Pan-Tilt).</p>
@@ -263,182 +293,6 @@ POST /zpt/navigate - Execute ZPT navigation</p>
 <p class="post-title h-cinzel">
     <a href="https://tensegrity.it/entries/2025-08-19_devlog.html">
         Devlog 2025-08-20
-    </a>
-</p> <em></em><!-- ARTICLE CONTENT -->
-
-<article class="post-content">
-    <h1>Claude : Honest Assessment of the Workbench UI State</h1>
-<p><em>August 16, 2025 - Development Worklog</em></p>
-<h2>Current Reality Check</h2>
-<p>After implementing the lazy storage functionality and working extensively with the Semantic Memory Workbench UI, it&#39;s time for an honest assessment of where we stand. While the recent lazy storage implementation was technically successful, the broader workbench interface reveals both strengths and significant areas needing attention.</p>
-<h2>What&#39;s Working Well</h2>
-<h3>Solid Foundation Architecture</h3>
-<p>The workbench follows a clean 6-column layout representing the core semantic memory verbs:</p>
-<ul>
-<li><strong>Tell</strong>: Content storage with recent lazy option enhancement</li>
-<li><strong>Ask</strong>: Knowledge querying with enhancement options (HyDE, Wikipedia, Wikidata)</li>
-<li><strong>Augment</strong>: Content analysis and concept extraction</li>
-<li><strong>Navigate</strong>: ZPT (Zoom-Pan-Tilt) spatial navigation controls</li>
-<li><strong>Inspect</strong>: System debugging and monitoring</li>
-<li><strong>Console</strong>: Operation logging and feedback</li>
-</ul>
-<h3>Recent Improvements</h3>
-<ul>
-<li>✅ <strong>Lazy Storage Integration</strong>: Successfully added checkbox with proper form handling</li>
-<li>✅ <strong>Enhancement Options</strong>: HyDE, Wikipedia, and Wikidata integration checkboxes</li>
-<li>✅ <strong>Document Upload</strong>: File upload functionality for PDF/TXT/MD processing</li>
-<li>✅ <strong>Process Lazy Content</strong>: Added to augment dropdown for deferred processing</li>
-<li>✅ <strong>Connection Status</strong>: Real-time server connection monitoring</li>
-</ul>
-<h3>Technical Strengths</h3>
-<ul>
-<li><strong>Modular Design</strong>: Clean separation between API service, state management, and UI components</li>
-<li><strong>Event Handling</strong>: Proper form submission and async operation management</li>
-<li><strong>Error Handling</strong>: Basic error states and user feedback mechanisms</li>
-<li><strong>Responsive Layout</strong>: CSS grid-based layout that adapts reasonably well</li>
-</ul>
-<h2>Critical Issues and Honest Problems</h2>
-<h3>1. <strong>User Experience Friction</strong></h3>
-<p>The interface, while functional, feels developer-centric rather than user-friendly:</p>
-<ul>
-<li><strong>Overwhelming Options</strong>: Six columns present too much cognitive load simultaneously</li>
-<li><strong>Unclear Workflows</strong>: No guided user journey or suggested next steps</li>
-<li><strong>Technical Jargon</strong>: Terms like &quot;ZPT navigation&quot; and &quot;ragno entities&quot; confuse non-technical users</li>
-<li><strong>Visual Hierarchy</strong>: All columns appear equally important, creating decision paralysis</li>
-</ul>
-<h3>2. <strong>Incomplete Features</strong></h3>
-<p>Several UI components exist but lack full implementation:</p>
-<ul>
-<li><strong>ZPT Navigation</strong>: The zoom/pan/tilt controls are present but their effects aren&#39;t clearly visible to users</li>
-<li><strong>Console Functionality</strong>: Logs appear but lack filtering, search, or meaningful categorization</li>
-<li><strong>Inspect Results</strong>: Modal displays data but in raw JSON format that&#39;s difficult to parse</li>
-<li><strong>Enhancement Integration</strong>: Checkboxes exist but users don&#39;t understand when/why to use them</li>
-</ul>
-<h3>3. <strong>Testing and Reliability Gaps</strong></h3>
-<p>Despite recent testing improvements, significant gaps remain:</p>
-<ul>
-<li><strong>Frontend Unit Tests</strong>: Many UI components lack comprehensive test coverage</li>
-<li><strong>Integration Testing</strong>: Cross-component interactions aren&#39;t systematically tested</li>
-<li><strong>Error State Testing</strong>: Edge cases and failure modes need better validation</li>
-<li><strong>Performance Testing</strong>: No systematic evaluation of UI responsiveness under load</li>
-</ul>
-<h3>4. <strong>Documentation and Onboarding</strong></h3>
-<p>The interface provides minimal guidance:</p>
-<ul>
-<li><strong>No Tooltips</strong>: Complex features lack explanatory help text</li>
-<li><strong>Missing Examples</strong>: Users don&#39;t know what constitutes good input</li>
-<li><strong>No Progressive Disclosure</strong>: Advanced features should be hidden initially</li>
-<li><strong>Absent User Journey</strong>: No clear path from &quot;new user&quot; to &quot;productive user&quot;</li>
-</ul>
-<h2>Specific UI Pain Points</h2>
-<h3>Form Interactions</h3>
-<ul>
-<li><strong>File Upload UX</strong>: Works but feels clunky, lacks drag-and-drop polish</li>
-<li><strong>Validation Feedback</strong>: Error messages appear but aren&#39;t consistently styled or positioned</li>
-<li><strong>Loading States</strong>: Some operations show spinners, others don&#39;t, creating inconsistent expectations</li>
-<li><strong>Success Feedback</strong>: Results appear in different formats across different operations</li>
-</ul>
-<h3>Data Presentation</h3>
-<ul>
-<li><strong>Results Display</strong>: Information appears in various formats (JSON, text, structured) without consistent styling</li>
-<li><strong>Large Data Handling</strong>: No pagination, filtering, or progressive loading for large result sets</li>
-<li><strong>Visual Feedback</strong>: Limited use of color, icons, or visual cues to convey meaning</li>
-<li><strong>Responsive Behavior</strong>: Layout works on desktop but isn&#39;t optimized for mobile/tablet</li>
-</ul>
-<h3>State Management Issues</h3>
-<ul>
-<li><strong>Session Persistence</strong>: UI state doesn&#39;t survive page refreshes</li>
-<li><strong>Cross-Column Communication</strong>: Actions in one column don&#39;t appropriately update others</li>
-<li><strong>Undo/Redo</strong>: No ability to reverse actions or see operation history</li>
-<li><strong>Concurrent Operations</strong>: Multiple simultaneous operations can create confusing states</li>
-</ul>
-<h2>Technical Debt Assessment</h2>
-<h3>CSS and Styling</h3>
-<p>The styling system shows signs of organic growth:</p>
-<ul>
-<li><strong>Inconsistent Patterns</strong>: Some components use BEM methodology, others don&#39;t</li>
-<li><strong>Color System</strong>: No systematic color palette or semantic color usage</li>
-<li><strong>Typography</strong>: Limited type scale and inconsistent text sizing</li>
-<li><strong>Spacing</strong>: Ad-hoc margin/padding without systematic spacing scale</li>
-</ul>
-<h3>JavaScript Architecture</h3>
-<ul>
-<li><strong>Event Handler Proliferation</strong>: Growing number of event listeners without systematic cleanup</li>
-<li><strong>State Synchronization</strong>: Manual state updates across components prone to bugs</li>
-<li><strong>Error Boundaries</strong>: Limited error isolation - failures can cascade across the interface</li>
-<li><strong>Memory Management</strong>: Potential memory leaks in long-running sessions</li>
-</ul>
-<h3>API Integration</h3>
-<ul>
-<li><strong>Inconsistent Error Handling</strong>: Different endpoints handle failures differently</li>
-<li><strong>Loading State Management</strong>: No systematic approach to async operation feedback</li>
-<li><strong>Caching Strategy</strong>: Limited client-side caching leads to redundant requests</li>
-<li><strong>Offline Behavior</strong>: No graceful degradation when server connectivity is lost</li>
-</ul>
-<h2>Comparison with Production Standards</h2>
-<p>Honestly comparing the workbench to modern web applications reveals significant gaps:</p>
-<h3>Missing Modern UX Patterns</h3>
-<ul>
-<li><strong>Progressive Enhancement</strong>: Interface requires JavaScript, no graceful degradation</li>
-<li><strong>Accessibility</strong>: Limited ARIA labels, keyboard navigation, screen reader support</li>
-<li><strong>Internationalization</strong>: No consideration for non-English users</li>
-<li><strong>Dark Mode</strong>: No theme options or user preference accommodation</li>
-</ul>
-<h3>Performance Considerations</h3>
-<ul>
-<li><strong>Bundle Size</strong>: No code splitting or lazy loading of UI components</li>
-<li><strong>Rendering Performance</strong>: No virtualization for large data sets</li>
-<li><strong>Network Optimization</strong>: No request batching or intelligent caching</li>
-<li><strong>First Load Experience</strong>: Slow initial page load with all components loading simultaneously</li>
-</ul>
-<h2>Honest Roadmap Assessment</h2>
-<h3>Immediate Needs (High Priority)</h3>
-<ol>
-<li><strong>User Experience Audit</strong>: Systematic evaluation with actual users</li>
-<li><strong>Visual Design System</strong>: Establish consistent colors, typography, spacing</li>
-<li><strong>Progressive Disclosure</strong>: Hide advanced features behind expandable sections</li>
-<li><strong>Error State Improvement</strong>: Better error messages and recovery options</li>
-</ol>
-<h3>Medium-Term Requirements</h3>
-<ol>
-<li><strong>Component Testing</strong>: Comprehensive test coverage for all UI components</li>
-<li><strong>Performance Optimization</strong>: Bundle splitting, lazy loading, caching strategy</li>
-<li><strong>Accessibility Compliance</strong>: WCAG 2.1 AA compliance implementation</li>
-<li><strong>Mobile Responsiveness</strong>: Proper tablet/mobile experience design</li>
-</ol>
-<h3>Long-Term Vision</h3>
-<ol>
-<li><strong>Complete UX Redesign</strong>: User-centered design process with actual stakeholder input</li>
-<li><strong>Modern Framework Migration</strong>: Consider React/Vue/Svelte for better component architecture</li>
-<li><strong>Advanced Features</strong>: Real-time collaboration, advanced visualizations, plugin system</li>
-<li><strong>Production Hardening</strong>: Monitoring, analytics, A/B testing capabilities</li>
-</ol>
-<h2>Conclusion: Honest Assessment</h2>
-<p>The Semantic Memory Workbench UI is currently in a <strong>functional prototype</strong> state rather than a production-ready interface. While the recent lazy storage implementation demonstrates that we can successfully add features and maintain technical quality, the overall user experience needs significant investment.</p>
-<p><strong>Strengths to Build On:</strong></p>
-<ul>
-<li>Solid technical foundation</li>
-<li>Clear architectural vision</li>
-<li>Working core functionality</li>
-<li>Successful feature integration patterns</li>
-</ul>
-<p><strong>Critical Gaps to Address:</strong></p>
-<ul>
-<li>User experience design</li>
-<li>Visual polish and consistency</li>
-<li>Documentation and onboarding</li>
-<li>Performance and reliability</li>
-<li>Accessibility and inclusivity</li>
-</ul>
-<p>The workbench serves its current purpose as a development tool and technical demonstration, but transforming it into a user-friendly semantic memory interface will require dedicated UX design effort, systematic testing expansion, and possibly architectural refactoring.</p>
-<p>The good news: the underlying semantic memory functionality is solid, the API layer is well-structured, and the modular design provides a foundation for improvement. The challenge is prioritizing user experience investment alongside continued feature development.</p>
-<hr>
-<p><em>Reality Check: This assessment reflects the current state as of August 2025. The workbench works for technically-oriented users who understand semantic memory concepts, but significant UX investment is needed for broader adoption.</em> </p>
-
-</article>
-<p class="post-title h-cinzel">
-    <a href="https://tensegrity.it/entries/2025-08-16_claude_workbench-ui-state-assessment.html">
-        Claude : Honest Assessment of the Workbench UI State
     </a>
 </p> <em></em>
             </article>

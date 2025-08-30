@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <link rel="stylesheet" href="/css/fonts.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/grid-columns.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/style.css" type="text/css"/>
+        <title>Semem, Know Thyself</title>
+    </head>
+    <!-- POST PAGE TEMPLATE -->
+    <body>
+    <strong></strong><em></em>
+        <header id="entry-header">
+            <h1 class="post-title h-cinzel">
+                
+            </h1>
+        </header>
+        <!-- ARTICLE CONTENT -->
+
+<article class="post-content">
+    <h1>Semem, Know Thyself</h1>
+<p>In use, <a href="https://github.com/danja/semem/">Semem</a> is mostly intended to manage memories accumulated on the fly, relevant to the task at hand. A combination of uploaded docs, interaction history and inferences made. But background knowledge is desirable. Ok, there will be plenty provided by the LLM in use by Semem and there are external connectors to query Wikipedia and Wikidata. But that leaves the question of more local, maybe project-specific info. How does that get into the system? What if we want Semem to be aware of its own documentation?</p>
+<h2>SPARQL Store as Integration Point</h2>
+<p>Semem has facilities for querying SPARQL stores - it&#39;s a big part of the core functionality, that&#39;s where the knowledge graphs live. So if the material of interest can be placed in such a store, it should be relatively straightforward to access.</p>
+<p>Another project in the <a href="https://github.com/danja/tensegrity">Tensegrity Stack</a> is <a href="https://github.com/danja/transmissions">Transmissions</a>, my pipeliney thing. And guess what, I&#39;ve already got a pipeline for walking a directory tree, looking for markdown files and POSTing them into a SPARQL store.</p>
+<p>Claude Code has helped me put together the code to pull data from a remote SPARQL store into that of Semem. In this particular instance Semem is using a local Fuseki store, the same one I&#39;m using with Transmissions locally. Named graphs are used to keep things independent. This does mean there&#39;ll be redundancy, but I think it&#39;ll be worth it for the sake of loose coupling. </p>
+<pre><code class="language-sh">node examples/ingestion/SPARQLIngest.js --endpoint &quot;http://localhost:3030/semem/query&quot; --template blog-articles --graph &quot;http://tensegrity.it/semem&quot;
+</code></pre>
+<h2>Markdown to SPARQL Store</h2>
+<p>Note to self, these are the bits I&#39;ve created (in the Semem codebase) for the Transmissions side of the operation.</p>
+<ul>
+<li><code>./del-semem-graph.sh</code> - utility to clear the graph, this is handy for testing</li>
+<li><code>docs/tt.ttl</code> - the configuration (paths, graph names etc) for the Transmission</li>
+<li><code>docs/endpoints.json</code> - the store defn</li>
+<li><code>scripts/transmissions.sh</code> - this runs the Transmission pipeline <code>md-to-sparqlstore</code>, all it contains is :</li>
+</ul>
+<pre><code class="language-sh">cd ~/hyperdata/transmissions # my local path
+./trans -v md-to-sparqlstore ~/hyperdata/semem/docs
+</code></pre>
+<p>The Transmissions part worked ok (confirmed by querying the store via Fuseki&#39;s UI). Right now the ingestion part is running. It is taking <em>a very long time</em>.</p>
+<p>I&#39;ve far from finished confirming that all the parts of the system are working correctly. A meta-issue is that the <strong>operations are really slow</strong>. This is understandable - there&#39;s a lot going on, what with SPARQL queries, embeddings being juggled as well as remote LLM chat completion calls (I&#39;m using Mistral free tier). My next step has to be to set up some metrics, locate the bottlenecks... Ha, is obvious without looking - remote LLM calls. I need to figure out which of these have to happen in real time, which I can have running in the background (queue/scheduler needed).  </p>
+
+</article>
+<p class="post-title h-cinzel">
+    <a href="https://tensegrity.it/entries/2025-08-30_know-thyself.html">
+        Semem, Know Thyself
+    </a>
+</p> <em></em>
+    </body>
+</html>
