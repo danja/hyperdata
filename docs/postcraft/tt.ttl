@@ -94,7 +94,7 @@
 
 :updateArticleHTML a :ConfigSet ;
 #:loglevel "debug" ;
-    :delay "100" ;
+    :delay "500" ;
     :dataBlock "contentBlocks" ;
    # :escape true ;
     :templateFilename "system/sparql-templates/save-html-chunk.njk" ;
@@ -130,7 +130,7 @@
 
 :recordRendering a :ConfigSet ;
 #:loglevel "debug" ;
-    :delay "100" ;
+    :delay "500" ;
     :dataBlock "contentBlocks" ;
     :templateFilename "system/sparql-templates/record-rendering.njk" ;
     :endpointSettings "system/endpoints.json" ;
