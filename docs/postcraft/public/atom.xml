@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>Hyperdata Recent Articles</title>
+  <id>https://hyperdata.it/atom.xml</id>
+  <updated>2025-10-24T18:44:50.340Z</updated>
+  <link href="https://hyperdata.it/atom.xml" rel="self" />
+  <link href="https://hyperdata.it" />
+  <subtitle>Latest articles from the knowledge base</subtitle>
+  <author>
+    <name>Danny Ayers</name>
+    <email>danny.ayers@gmail.com</email>
+  </author>
+</feed>
