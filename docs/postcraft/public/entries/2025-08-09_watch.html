@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <link rel="stylesheet" href="/css/fonts.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/grid-columns.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/style.css" type="text/css"/>
+        <title>Watch</title>
+    </head>
+    <!-- POST PAGE TEMPLATE -->
+    <body>
+    <a href="https://danny.ayers.name">Home</a>
+    <strong></strong><em></em>
+        <header id="entry-header">
+            <h1 class="post-title h-cinzel">
+                
+            </h1>
+        </header>
+        <!-- ARTICLE CONTENT -->
+
+<article class="post-content">
+    <h1>Watch</h1>
+<p>Postcraft, my massively overengineered static site builder just got a bit more complicated (but a lot more efficient). It&#39;s actually a series of apps (<em>&quot;transmissions&quot;</em>) using <a href="https://github.com/danja/transmissions">Transmissions</a>, my pipeliney thing. This is what they used to do :</p>
+<ul>
+<li><strong>md-to-sparqlstore</strong> - walked a given dir on my local fs, reading all the markdown files, posting these off to a SPARQL store</li>
+<li><strong>sparqlstore-to-html</strong> - queries the SPARQL store and renders the individual results as HTML pages</li>
+<li><strong>sparqlstore-to-site-indexes</strong> - ditto, to make an <code>index.html</code> of recent posts</li>
+</ul>
+<p>For every new blog post I made, every single one of the hundreds of existing posts also got re-processed. Not very efficient.</p>
+<p>So I&#39;ve added a filesystem <strong>Watch</strong> service. When a file changes, then it goes through the processing.
+When I say <em>I</em>, Claude Code did most of the work. I have looked at node&#39;s <code>watch</code> before and it is relatively straightforward to use. But there was a fair bit of textbook-like code that needed implementing. Now I have a <code>watch-config.json</code> that looks like this:</p>
+<pre><code class="language-json">[
+    {
+        &quot;name&quot;: &quot;postcraft-render&quot;,
+        &quot;dirs&quot;: [
+            &quot;~/sites/danny.ayers.name/postcraft/content/raw&quot;
+        ],
+        &quot;apps&quot;: [
+            &quot;md-to-store ~/sites/danny.ayers.name/postcraft&quot;,
+            &quot;store-to-html  ~/sites/danny.ayers.name/postcraft&quot;,
+            &quot;sparqlstore-to-site-indexes  ~/sites/danny.ayers.name/postcraft&quot;
+        ],
+        &quot;watchEvents&quot;: [
+            &quot;change&quot;
+        ]
+    }
+]
+</code></pre>
+<p>It watches <code>dirs</code> and on changed files triggers a call to the <code>apps</code> in sequence. The path given with each app is the location of a <code>tt.ttl</code> file which contains the settings for the app. Here&#39;s the core of the <code>transmissions.ttl</code> for <code>md-to-store</code> :</p>
+<pre><code class="language-turtle">:md-to-store a :Transmission ;
+   :pipe (:p10 :p20 :p30 :p40 :p50) .
+
+:p10 a :Restructure ;
+     :settings :prepFilename .
+
+:p20 a :FileReader ;
+     :settings :readerSet .
+
+:p30 a :Escaper .
+
+:p40 a :MakeEntry ;
+     :settings :entryExtras .
+
+:p50 a :SPARQLUpdate ;
+     :settings :storeArticle .
+</code></pre>
+<p>Here are the statements for the settings for <code>Restructure</code> process :</p>
+<pre><code class="language-turtle">:prepFilename a :ConfigSet  ;
+    :rename (:pf1)  .
+        :pf1    :pre    &quot;sourcePath&quot; ;
+                :post   &quot;sourceFile&quot;  .
+</code></pre>
+<p><code>Restructure</code> modifies the shape of the data, a message passed along the <del>pipeline</del> transmission in the form of a JSON object. It&#39;s needed here because the <strong>watch</strong> system does a call using <code>sourcePath</code> as the name of the changed file, but the <code>Filereader</code> process expects a <code>sourceFile</code>. </p>
+<p>Like I said, this is all seriously over-engineered for a static site builder. But the component processors like <code>Restructure</code> and <code>Filereader</code> have no direct coupling and are totally reusable. A major reason for applying this to the static site builder is that the posts going into the SPARQL store are now part of my <em>Personal Knowledgebase</em>. Using that is over in the realm of <a href="https://github.com/danja/semem">Semem</a>.</p>
+<p>Having said all that, what I don&#39;t have yet is an easy way of tidying up. I created lots of blog entries in setting this up, the only reliable way I have for cleaning now is to empty the graph in the SPARQL store and run the process-everything transmissions. Hey ho.
+ </p>
+
+</article>
+<p class="post-title h-cinzel">
+    <a href="http://danny.ayers.name/entries/2025-08-09_watch.html">
+        Watch
+    </a>
+</p> <em></em>
+    </body>
+</html>

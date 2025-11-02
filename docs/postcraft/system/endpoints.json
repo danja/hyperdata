@@ -1,17 +1,17 @@
 [
     {
-        "name": "hyperdata.it query",
+        "name": "danny.ayers.name query",
         "type": "query",
-        "url": "https://fuseki.hyperdata.it/hyperdata.it/query",
+        "url": "https://fuseki.hyperdata.it/danny.ayers.name/query",
         "credentials": {
             "user": "admin",
             "password": "admin123"
         }
     },
     {
-        "name": "hyperdata.it update",
+        "name": "danny.ayers.name update",
         "type": "update",
-        "url": "https://fuseki.hyperdata.it/hyperdata.it/update",
+        "url": "https://fuseki.hyperdata.it/danny.ayers.name/update",
         "credentials": {
             "user": "admin",
             "password": "admin123"

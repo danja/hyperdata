@@ -1,13 +1,197 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
-  <title>Hyperdata Recent Articles</title>
+  <title>Hyperdata - Recent Articles</title>
   <id>https://hyperdata.it/atom.xml</id>
-  <updated>2025-10-24T18:44:50.340Z</updated>
+  <updated>2025-11-02T10:58:06.280Z</updated>
   <link href="https://hyperdata.it/atom.xml" rel="self" />
   <link href="https://hyperdata.it" />
-  <subtitle>Latest articles from the knowledge base</subtitle>
+  <subtitle>Latest articles from hyperdata</subtitle>
   <author>
     <name>Danny Ayers</name>
     <email>danny.ayers@gmail.com</email>
   </author>
+  <entry>
+    <title>Flues</title>
+    <id>http://danny.ayers.name/entries/2025-10-15_flues</id>
+    <updated>2025-10-15T14:37:51.713Z</updated>
+    <link href="http://danny.ayers.name/entries/2025-10-15_flues" />
+    <published>2025-10-15T14:37:51.713Z</published>
+    <author>
+      <name>Danny Ayers</name>
+      <email>danny.ayers@gmail.com</email>
+    </author>
+    <content type="xhtml">
+      <div xmlns="http://www.w3.org/1999/xhtml">
+        <!-- ARTICLE CONTENT -->
+        <article class="post-content">
+            <h1>Flues</h1>
+        <p>I&#39;ve put a couple of physical modelling synths online, have a play. The first was an attempt to emulate a clarinet. Second version &quot;Stove&quot; is more general. Both monophonic. You will have to experiment with the knobs to find anything remotely realistic. Stove supports MIDI in. Docs &amp; code are nearby : <a href="https://danja.github.io/flues/">https://danja.github.io/flues/</a>
+         </p>
+        </article>
+        <p class="post-title h-cinzel">
+            <a href="http://danny.ayers.name/entries/2025-10-15_flues.html">
+                Flues
+            </a>
+        </p> <em></em>
+      </div>
+    </content>
+  </entry>
+  <entry>
+    <title>Semem Progress Report</title>
+    <id>http://danny.ayers.name/entries/2025-09-05_semem-progress</id>
+    <updated>2025-09-05T08:42:55.022Z</updated>
+    <link href="http://danny.ayers.name/entries/2025-09-05_semem-progress" />
+    <published>2025-09-05T08:42:55.022Z</published>
+    <author>
+      <name>Danny Ayers</name>
+      <email>danny.ayers@gmail.com</email>
+    </author>
+    <content type="xhtml">
+      <div xmlns="http://www.w3.org/1999/xhtml">
+        <!-- ARTICLE CONTENT -->
+        <article class="post-content">
+            <h1>Semem Progress Report</h1>
+        <p>tl;dr - my Semantic Web Memory for Intelligent Agents is now kinda deployable</p>
+        <p>I&#39;ve just passed a little milestone with this project so time to take stock. The milestone is getting the thing to run on a machine other than my office desktop - I&#39;ve got it on my server at <a href="https://semem.tensegrity.it/">semem.tensegrity.it</a> It&#39;s running in a Docker container which proved a little challenging because it uses Facebook&#39;s <a href="https://github.com/facebookresearch/faiss">faiss</a> for similarity measures, and though I&#39;m using Node.js throughout, that depends on native libs which have to be built first time around. But <strong>it worked!</strong></p>
+        <p><em>To some relative measure of worked.</em>
+        Thing is, although I&#39;ve been very principled about architecture <em>in my head</em> (this is an Ontology-Driven Design, <strong>ODD</strong>, for heaven&#39;s sake), I&#39;ve been delegating an awful lot of the donkey work to Claude Code, with all that entails. But this is very much an experiment, a research project. A big part of this is about figuring out the methodologies for using AI assistants in dev.</p>
+        <p>I&#39;ve been working on Semem for about 10? months now, but it is really just the latest phase in something I&#39;ve been working on for 25? years : <strong>a knowledge management system that works for me!</strong> I have lots of projects on the go all the time but am terribly undisciplined about things and have a terrible memory.
+         </p>
+        </article>
+        <p class="post-title h-cinzel">
+            <a href="http://danny.ayers.name/entries/2025-09-05_semem-progress.html">
+                Semem Progress Report
+            </a>
+        </p> <em></em>
+      </div>
+    </content>
+  </entry>
+  <entry>
+    <title>2024-10-09</title>
+    <id>http://danny.ayers.name/todo/2024-10-09</id>
+    <updated>2025-09-05T07:54:26.420Z</updated>
+    <link href="http://danny.ayers.name/todo/2024-10-09" />
+    <published>2025-09-05T07:54:26.420Z</published>
+    <author>
+      <name>Danny Ayers</name>
+      <email>danny.ayers@gmail.com</email>
+    </author>
+    <content type="xhtml">
+      <div xmlns="http://www.w3.org/1999/xhtml">
+        <!-- ARTICLE CONTENT -->
+        <article class="post-content">
+            <h1>2024-10-09</h1>
+        <p>#:todo</p>
+        <h2>needs internet</h2>
+        <p>download - repo + docs</p>
+        <ul>
+        <li>inkle</li>
+        <li>eye</li>
+        <li>ionic</li>
+        <li>capacitor</li>
+        <li>games engine</li>
+        </ul>
+        </article>
+        <p class="post-title h-cinzel">
+            <a href="http://danny.ayers.name/todo/2024-10-09.html">
+                2024-10-09
+            </a>
+        </p> <em></em>
+      </div>
+    </content>
+  </entry>
+  <entry>
+    <title>Danny&amp;#92;&amp;#39;s Top Level To Do List</title>
+    <id>http://danny.ayers.name/todo/index</id>
+    <updated>2025-09-05T07:54:26.420Z</updated>
+    <link href="http://danny.ayers.name/todo/index" />
+    <published>2025-09-05T07:54:26.420Z</published>
+    <author>
+      <name>Danny Ayers</name>
+      <email>danny.ayers@gmail.com</email>
+    </author>
+    <content type="xhtml">
+      <div xmlns="http://www.w3.org/1999/xhtml">
+        <!-- ARTICLE CONTENT -->
+        <article class="post-content">
+            <h1>Danny&#39;s Top Level To Do List</h1>
+        <ul>
+        <li><input disabled="" type="checkbox"> visualization : like <a href="http://localhost/farelo/src/TurtleEditor/">http://localhost/farelo/src/TurtleEditor/</a></li>
+        </ul>
+        <p>Priorities :</p>
+        <ul>
+        <li><p>Basic Postcraft</p>
+        </li>
+        <li><p>FOAF-Archive</p>
+        </li>
+        <li><p>Retire old server</p>
+        </li>
+        <li><p>Backups</p>
+        </li>
+        </ul>
+        <p>copy server-setup elsewhere +</p>
+        <p>after FOAF-Archive is at v1, then :</p>
+        <ul>
+        <li>transmissions major refactor</li>
+        <li>LlamaIndex/memary/SPARQL connector</li>
+        </ul>
+        <h3>Server</h3>
+        <p>add nginx entries</p>
+        <p>certbot</p>
+        <p>grab stuff off old server</p>
+        <p>/etc
+        /home
+        /var/www</p>
+        <p>???</p>
+        <h3>Bits</h3>
+        <p>my first rdf-dev post?</p>
+        <p>add transmissions.hyperdata.it</p>
+        <p>DNS, added :</p>
+        <ul>
+        <li><input disabled="" type="checkbox"> foaf.hyperdata.it</li>
+        <li><input disabled="" type="checkbox"> treadmill.hyperdata.it</li>
+        <li><input disabled="" type="checkbox"> postcraft.hyperdata.it</li>
+        <li>kia.hyperdata.it</li>
+        <li><input disabled="" type="checkbox"> strandz.hyperdata.it</li>
+        <li><input disabled="" type="checkbox"> farelo.hyperdata.it</li>
+        </ul>
+        </article>
+        <p class="post-title h-cinzel">
+            <a href="http://danny.ayers.name/todo/index.html">
+                Danny&#92;&#39;s Top Level To Do List
+            </a>
+        </p> <em></em>
+      </div>
+    </content>
+  </entry>
+  <entry>
+    <title>Postcraft Next Steps</title>
+    <id>http://danny.ayers.name/todo/postcraft-next-steps</id>
+    <updated>2025-09-05T07:54:26.420Z</updated>
+    <link href="http://danny.ayers.name/todo/postcraft-next-steps" />
+    <published>2025-09-05T07:54:26.420Z</published>
+    <author>
+      <name>Danny Ayers</name>
+      <email>danny.ayers@gmail.com</email>
+    </author>
+    <content type="xhtml">
+      <div xmlns="http://www.w3.org/1999/xhtml">
+        <!-- ARTICLE CONTENT -->
+        <article class="post-content">
+            <h1>Postcraft Next Steps</h1>
+        <ul>
+        <li>Fix post order on index page</li>
+        <li>Delete cache transmission... command line arg needed.</li>
+        <li>recent entries</li>
+        <li>collapser</li>
+        </ul>
+        </article>
+        <p class="post-title h-cinzel">
+            <a href="http://danny.ayers.name/todo/postcraft-next-steps.html">
+                Postcraft Next Steps
+            </a>
+        </p> <em></em>
+      </div>
+    </content>
+  </entry>
 </feed>

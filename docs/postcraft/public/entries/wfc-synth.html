@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <link rel="stylesheet" href="/css/fonts.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/grid-columns.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/style.css" type="text/css"/>
+        <title>Wave Function Collapse for Sounds</title>
+    </head>
+    <!-- POST PAGE TEMPLATE -->
+    <body>
+    <a href="https://danny.ayers.name">Home</a>
+    <strong></strong><em></em>
+        <header id="entry-header">
+            <h1 class="post-title h-cinzel">
+                
+            </h1>
+        </header>
+        <!-- ARTICLE CONTENT -->
+
+<article class="post-content">
+    <h1>Wave Function Collapse for Sounds</h1>
+<p>An LV2 plugin.</p>
+<p>Repo : <a href="https://github.com/danja/collapse-lv2">https://github.com/danja/collapse-lv2</a></p>
+<p>Demo : <a href="https://www.youtube.com/watch?v=aXFnkI-dZOA">YouTube</a> (hope that works, I got a copyright warning)</p>
+<p>It generates signal based on what it&#39;s seen, is a kind of machine learning lite. It&#39;s very noisy. Which is what I was hoping for. Aside from the obvious noise use, it <em>may</em> be useful as waveform shaper.</p>
+<p>I stumbled on <a href="https://github.com/mxgmn/WaveFunctionCollapse">WaveFunctionCollapse</a>, &quot;This program generates bitmaps that are locally similar to the input bitmap.&quot;. It occurred to me that the same algorithm might be usable on audio streams. I wrote a long prompt for <a href="https://www.deepseek.com/en">DeepSeek</a> which had a good long discussion with itself before producing the material below. This I passed to <a href="https://claude.ai/new">Claude chat</a> together with the instructions for it to make an <a href="https://en.wikipedia.org/wiki/LV2">LV2 plugin</a> for me. I want to use it in <a href="https://www.reaper.fm/">Reaper</a>, my DAW of choice.
+(I&#39;ve already had a go at <strong>vibe coding</strong> with <a href="https://github.com/danja/amen-chaos">amen-chaos</a> and <a href="https://github.com/danja/midi-chaos-amen">midi-chaos-amen</a> with considerable success, as far as I took them). Claude gave me some patchy files which I stuck up at <a href="https://github.com/danja/collapse-lv2">GitHub</a> before setting <a href="https://www.anthropic.com/claude-code">Claude Code</a> on them.</p>
+<p><del>So far I&#39;ve not got anything usable, I ran out of Claude tokens. Apparently <a href="https://codeassist.google/">Google Gemini</a> for coding is now free, so I may give that a shot later.</del> Gemini was slow. Went back to Claude and now <strong>it works!</strong></p>
+<p>Anyhow, below is what DeepSeek gave me, it has the basic idea. <del>I&#39;ve a feeling it won&#39;t be any good without taking into account the periodicity of the input. This could potentially operate at the waveform level, or (depending on how it performs) over beats or bars. Dunno.</del></p>
+<p>I added period detection with autocorrelation in at the start. It&#39;s very picky about which settings will actually produce a processed output. But it really messes things up, which is exactly what I was hoping for.</p>
+<hr>
+<p>To apply the wave function collapse (WFC) technique to audio waveforms in near real-time, we reinterpret the grid-based approach for time-series data. Here&#39;s a conceptual adaptation and JavaScript implementation:</p>
+<h3>Core Concept Adaptation:</h3>
+<ol>
+<li><p><strong>Grid Representation</strong>:</p>
+<ul>
+<li><strong>X-axis</strong>: Represents time (one cycle or window of the waveform).</li>
+<li><strong>Y-axis</strong>: Represents <strong>quantized amplitude levels</strong> (discrete buckets for continuous sample values).</li>
+<li><strong>Z-axis (optional)</strong>: Encodes <strong>local patterns</strong> (e.g., sequences of amplitude changes).</li>
+</ul>
+</li>
+<li><p><strong>Pattern Extraction</strong>:</p>
+<ul>
+<li>Slice the input waveform into overlapping windows (e.g., 10-sample segments).</li>
+<li>Quantize amplitudes (e.g., 256 levels) to create discrete &quot;tiles&quot;.</li>
+<li>Catalog valid neighbor transitions (e.g., which 10-sample blocks can follow each other).</li>
+</ul>
+</li>
+<li><p><strong>Real-Time Generation</strong>:</p>
+<ul>
+<li>Maintain a &quot;collapsing&quot; buffer of recent samples (context window).</li>
+<li>For each new sample, resolve constraints by selecting valid patterns that match the context.</li>
+<li>Output the next sample from the chosen pattern.</li>
+</ul>
+</li>
+</ol>
+<hr>
+<h3>JavaScript Implementation:</h3>
+<pre><code class="language-javascript">class WaveformWFC {
+  constructor(inputSamples, patternSize = 10, quantLevels = 256) {
+    this.patternSize = patternSize;
+    this.quantLevels = quantLevels;
+    this.patterns = new Map(); // pattern -&gt; {nextPatterns: Set, count: number}
+
+    // Quantize input [-1, 1] to discrete levels
+    this.quantize = (sample) =&gt;
+      Math.max(0, Math.min(quantLevels - 1,
+        Math.floor((sample + 1) * quantLevels / 2)));
+
+    this.dequantize = (level) =&gt;
+      (level / (quantLevels - 1)) * 2 - 1;
+
+    this.extractPatterns(inputSamples);
+  }
+
+  extractPatterns(samples) {
+    // Build patterns from sliding windows
+    for (let i = 0; i &lt; samples.length - this.patternSize; i++) {
+      const window = samples.slice(i, i + this.patternSize);
+      const quantPattern = window.map(s =&gt; this.quantize(s));
+      const key = quantPattern.join(&#39;,&#39;);
+
+      // Track pattern frequency and allowed successors
+      if (!this.patterns.has(key)) {
+        this.patterns.set(key, { nextPatterns: new Set(), count: 0 });
+      }
+      const data = this.patterns.get(key);
+      data.count++;
+
+      // Record valid next pattern (overlapping window)
+      if (i &lt; samples.length - this.patternSize - 1) {
+        const nextWindow = samples.slice(i + 1, i + this.patternSize + 1);
+        const nextKey = nextWindow.map(s =&gt; this.quantize(s)).join(&#39;,&#39;);
+        data.nextPatterns.add(nextKey);
+      }
+    }
+  }
+
+  generateSample(context) {
+    // Quantize recent context (patternSize - 1 samples)
+    const quantContext = context.map(s =&gt; this.quantize(s));
+    const contextKey = quantContext.join(&#39;,&#39;);
+
+    // Find patterns starting with current context
+    const candidates = [];
+    for (const [pattern, data] of this.patterns) {
+      const patternArr = pattern.split(&#39;,&#39;).map(Number);
+      const matchesContext = quantContext.every(
+        (val, i) =&gt; val === patternArr[i]
+      );
+
+      if (matchesContext) {
+        // Weight by occurrence frequency
+        for (let i = 0; i &lt; data.count; i++) {
+          candidates.push(patternArr[patternArr.length - 1]); // Last sample in pattern
+        }
+      }
+    }
+
+    // Fallback: Random sample if no candidates
+    if (candidates.length === 0) {
+      return Math.random() * 2 - 1; // [-1, 1]
+    }
+
+    // Random weighted selection
+    const nextLevel = candidates[Math.floor(Math.random() * candidates.length)];
+    return this.dequantize(nextLevel);
+  }
+}
+
+// Usage Example
+const audioContext = new AudioContext();
+const inputSamples = [...]; // Float32Array from source audio
+
+const wfc = new WaveformWFC(inputSamples);
+const outputBuffer = new Float32Array(44100); // 1sec buffer
+let context = new Array(wfc.patternSize - 1).fill(0); // Initial silence
+
+for (let i = 0; i &lt; outputBuffer.length; i++) {
+  outputBuffer[i] = wfc.generateSample(context);
+
+  // Update context (remove oldest, add new sample)
+  context.shift();
+  context.push(outputBuffer[i]);
+}
+
+// Play generated audio
+const buffer = audioContext.createBuffer(1, outputBuffer.length, 44100);
+buffer.copyToChannel(outputBuffer, 0);
+const source = audioContext.createBufferSource();
+source.buffer = buffer;
+source.connect(audioContext.destination);
+source.start();
+</code></pre>
+<h3>Key Optimizations for Real-Time:</h3>
+<ol>
+<li><strong>Context Hashing</strong>:<ul>
+<li>Precompute lookup tables for quantized context keys to candidate patterns.</li>
+</ul>
+</li>
+<li><strong>Approximate Matching</strong>:<ul>
+<li>Use Euclidean distance thresholds for noisy inputs.</li>
+</ul>
+</li>
+<li><strong>Pattern Pruning</strong>:<ul>
+<li>Discard low-frequency patterns to reduce state space.</li>
+</ul>
+</li>
+<li><strong>Overlap Handling</strong>:<ul>
+<li>Generate samples in blocks (e.g., 128 samples) to amortize lookup costs.</li>
+</ul>
+</li>
+</ol>
+<h3>How Structure is Preserved:</h3>
+<ol>
+<li><strong>Local Constraints</strong>:<ul>
+<li>Transition rules enforce that amplitude sequences (e.g., attack-decay in notes) replicate input behaviors.</li>
+</ul>
+</li>
+<li><strong>Global Coherence</strong>:<ul>
+<li>Weighted pattern selection maintains statistical properties (e.g., amplitude distribution).</li>
+</ul>
+</li>
+<li><strong>Continuity</strong>:<ul>
+<li>Overlapping context buffers prevent discontinuities between generated segments.</li>
+</ul>
+</li>
+</ol>
+<p>This approach mirrors WFC&#39;s constraint-solving in a temporal domain, transforming input waveforms into novel outputs with similar micro/macro structures.
+ </p>
+
+</article>
+<p class="post-title h-cinzel">
+    <a href="http://danny.ayers.name/entries/wfc-synth.html">
+        Wave Function Collapse for Sounds
+    </a>
+</p> <em></em>
+    </body>
+</html>

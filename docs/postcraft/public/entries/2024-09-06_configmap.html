@@ -11,6 +11,7 @@
     </head>
     <!-- POST PAGE TEMPLATE -->
     <body>
+    <a href="https://danny.ayers.name">Home</a>
     <strong></strong><em></em>
         <header id="entry-header">
             <h1 class="post-title h-cinzel">
@@ -118,7 +119,7 @@ DeadEnd  at (s10.SM.s20.SM2.DE) DE
 # POST CONTENT
 t:PostContent a pc:ContentGroup ;
     rdfs:label &quot;entries&quot; ;
-    pc:site &lt;https://danny.ayers.name/&gt; ;
+    pc:site &lt;https://danny.ayers.name&gt; ;
     pc:subdir &quot;home&quot; ; # better property name?
     fs:sourceDirectory &quot;content-raw/entries&quot; ; # SOURCE DIR HERE journal, entries
     fs:targetDirectory &quot;cache/entries&quot; ;
@@ -126,13 +127,13 @@ t:PostContent a pc:ContentGroup ;
 
 # POST PAGES
 t:PostPages a pc:ContentGroup ;
-    pc:site &lt;https://danny.ayers.name/&gt; ;
+    pc:site &lt;https://danny.ayers.name&gt; ;
     fs:targetDirectory &quot;public/home/entries&quot; ;
     pc:template &quot;layouts/mediocre/templates/entry-page_template.njk&quot; .
 
 # MAIN PAGE
 t:IndexPage a pc:ContentGroup ; # TODO naming!
-    pc:site &lt;https://danny.ayers.name/&gt; ;
+    pc:site &lt;https://danny.ayers.name&gt; ;
     fs:filepath &quot;public/home/index.html&quot; ;
     pc:template &quot;layouts/mediocre/templates/index-page_template.njk&quot; .
 </code></pre>

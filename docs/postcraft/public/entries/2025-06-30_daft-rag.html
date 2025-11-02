@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <link rel="stylesheet" href="/css/fonts.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/grid-columns.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/style.css" type="text/css"/>
+        <title>Daft RAG</title>
+    </head>
+    <!-- POST PAGE TEMPLATE -->
+    <body>
+    <a href="https://danny.ayers.name">Home</a>
+    <strong></strong><em></em>
+        <header id="entry-header">
+            <h1 class="post-title h-cinzel">
+                
+            </h1>
+        </header>
+        <!-- ARTICLE CONTENT -->
+
+<article class="post-content">
+    <h1>Daft RAG</h1>
+<p>After 8 months of concerted effort, I have invented a new paradigm for open-domain question answering systems.</p>
+<p>Here is the question:</p>
+<p><strong>Which University, The University of Saskatchewan or The University of Detroit Mercy was founded first?</strong></p>
+<p>If I ask <a href="https://chat.mistral.ai/">Mistral Chat</a> it responds :</p>
+<blockquote>
+<p>The University of Detroit Mercy was founded first. It was established in 1877. The University of Saskatchewan was founded later, in 1907.</p>
+</blockquote>
+<p><a href="https://github.com/danja/semem">Semem</a>, my oh-so-sophisticated <em>Semantic Web Memory for Intelligent Agents</em> (which along with a lot of other things uses Wikipedia calls and <code>mistral-small-latest</code> under the hood) says :</p>
+<blockquote>
+<p>The University of Detroit Mercy was founded first, in 1990. The University of Saskatchewan was founded later, in 1907.</p>
+</blockquote>
+<p>According to Wikipedia :</p>
+<ul>
+<li><a href="https://en.wikipedia.org/wiki/University_of_Detroit_Mercy">The University of Detroit Mercy</a> was founded in 1877</li>
+<li><a href="https://en.wikipedia.org/wiki/University_of_Saskatchewan">The University of Saskatchewan</a> was founded in 1907</li>
+</ul>
+<p>It&#39;s ok, this result was actually very pleasing. I have only just started kicking the tyres of what&#39;s been implemented. The graph (in a SPARQL store) is getting very nicely populated/augmented using a bunch of different algorithms and the retrieval steps are basically working. It looks like the issue here is simply that the generated <em>corpuscles</em> (what I&#39;m calling little bits of a corpus) are not being <code>SELECT</code>ed properly to go into the final results.</p>
+<p>PS. Yes, it was a mismatch between the shape of the query and the shape of the graph. After fixing that, for this question Semem now gives :</p>
+<blockquote>
+<p>The provided context does not contain information about the founding dates of the University of Saskatchewan or the University of Detroit Mercy. Therefore, I cannot answer this question based on the given context.</p>
+</blockquote>
+<p>Which is <em>a</em> correct answer.</p>
+<p>Even more pleasing is the result of one of the other test questions :</p>
+<p><strong>Are Sorghastrum and Artabotrys found in the same areas?</strong></p>
+<blockquote>
+<p>Based on the provided context, there is no information suggesting that Sorghastrum and Artabotrys are found in the same areas. The context only provides specific details about Sorghastrum in Paraguay and some species of Artabotrys, but it does not indicate any overlap in their habitats or geographical distribution. Therefore, I cannot confirm whether they are found in the same areas.</p>
+</blockquote>
+<p>Ok, Mistral chat gave a much more detailed answer in 1s after having done a Web search. But I&#39;m still calling this a win.</p>
+<p>Here is <a href="https://danja.github.io/semem/manual/beerqa-2.html">BeerQA Enhanced Workflow (v2)</a>
+ </p>
+
+</article>
+<p class="post-title h-cinzel">
+    <a href="http://danny.ayers.name/entries/2025-06-30_daft-rag.html">
+        Daft RAG
+    </a>
+</p> <em></em>
+    </body>
+</html>

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <link rel="stylesheet" href="/css/fonts.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/grid-columns.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/style.css" type="text/css"/>
+        <title>Voltage Controlled Motor Module</title>
+    </head>
+    <!-- POST PAGE TEMPLATE -->
+    <body>
+    <a href="https://danny.ayers.name">Home</a>
+    <strong></strong><em></em>
+        <header id="entry-header">
+            <h1 class="post-title h-cinzel">
+                
+            </h1>
+        </header>
+        <!-- ARTICLE CONTENT -->
+
+<article class="post-content">
+    <h1>Voltage Controlled Motor Module</h1>
+<p>Demo vid : <a href="https://www.youtube.com/watch?v=KZEP5wFOWAk">VCMM</a></p>
+<p>Schematic :</p>
+<p><img src="/images/2025-06/motor-module-schematic.jpeg" alt="schematic"></p>
+<p>This worked on the 3rd attempt. First try, nothing happened but one transistor got hot. Then I discovered I&#39;d got the collector wires the wrong way around. I thought I must have fried the transistors, but maybe not, after I&#39;d replaced them I experimented a bit more. My estimate for a resistor to go in series with the motor had been way out (120R), it needed something <em>really</em> low. But it occurred to me that an inductance should work there, and I had a old PCB (from a satellite tuner PSU) on the desk next to me with the perfect candidate. I&#39;d got the old board there for the 1000uF 16v caps. I didn&#39;t bother breadboarding, went straight to stripboard. It would either work or not. The components that were candidates for tweaking were easy access.</p>
+<p><img src="/images/2025-06/motor-module.jpeg" alt="pcb"></p>
+<p>This time it actually worked. After trying it for a few seconds I felt to see if the transistors were getting warm. Burnt my fingers. Motors really aren&#39;t my thing. So I made a couple of little heatsinks and hooked it up to the modular for the vid.</p>
+<p>I think what I&#39;ll do is try it with a PSU of its own next. With a dummy load first, to see if the circuit is behaving as I&#39;d expected. I really don&#39;t get why it should be drawing so much current with such a farty little motor, unless the transistors are biased on when they shouldn&#39;t be. Dunno. The motor is the main unknown for me.
+ </p>
+
+</article>
+<p class="post-title h-cinzel">
+    <a href="http://danny.ayers.name/entries/2025-06-25_motor-module.html">
+        Voltage Controlled Motor Module
+    </a>
+</p> <em></em>
+    </body>
+</html>

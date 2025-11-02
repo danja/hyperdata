@@ -2,11 +2,15 @@
 <html lang="en">
 
 <head>
-    <title>Tensegrity</title>
+    <title>Danny Ayers - Recent Articles</title>
 
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="description" content="Recent articles from danny.ayers.name">
+
+    <!-- Feed autodiscovery -->
+    <link rel="alternate" type="application/atom+xml" title="Atom Feed" href="/atom.xml" />
 
     <!-- #:todo remove when stable -->
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
@@ -18,23 +22,92 @@
     <link rel="stylesheet" href="/css/style.css" type="text/css" />
     <link rel="stylesheet" href="/css/menu.css" type="text/css" />
 
+    <style>
+        /* Additional index-specific styling */
+        .articles {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .article-list-item {
+            margin-bottom: 3rem;
+            padding-bottom: 2rem;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .article-list-item:last-child {
+            border-bottom: none;
+        }
+
+        .article-list-item h2 {
+            margin-top: 0;
+            margin-bottom: 0.5rem;
+        }
+
+        .article-meta {
+            color: #666;
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+
+        .feed-subscribe {
+            background: #f5f5f5;
+            padding: 1rem;
+            border-radius: 4px;
+            margin-bottom: 2rem;
+        }
+
+        .feed-subscribe a {
+            color: #ff6600;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .feed-subscribe a:hover {
+            text-decoration: underline;
+        }
+    </style>
+
 </head>
 
 <body>
     <header id="main-header">
         <h1 class="h-title">
-           The Tensegrity Stack
+           Raw<em>er</em>
         </h1>
     </header>
     <div class="grid-container">
         <div class="main-grid-item directory">
-            <p><strong><a href="https://github.com/danja/tensegrity">GitHub</a></strong></p>
-            <p></p>
+            <p><strong>Nearby</strong></p>
+            <ul>
+                <li><a href="https://github.com/danja/tensegrity">Tensegrity</a> - <em>current code projects</em></li>
+                <li><a href="https://danja.github.io/hillside/">Hillside</a> - <em>some recent tunes with visuals</em></li>
+                <li><a href="https://hyperdata.it">hyperdata.it</a> - <em>earlier projects</em></li>
+                <li><a href="https://semem.tensegrity.it">Semem Demo</a></li>
+            </ul>
+
+            <div class="feed-subscribe">
+                <p>📡 <a href="/atom.xml">Subscribe via Atom Feed</a></p>
+            </div>
         </div>
         <div class="main-grid-item articles">
-            <article>
-                {{content|safe}}
-            </article>
+            {% if entries and (entries | length) %}
+                {% for article in entries %}
+                <article class="article-list-item">
+                    <h2>{{ article.title }}</h2>
+                    {% if article.published %}
+                    <div class="article-meta">
+                        Published: {{ article.published }}
+                    </div>
+                    {% endif %}
+                    <div class="article-content">
+                        {{ article.content | safe }}
+                    </div>
+                </article>
+                {% endfor %}
+            {% else %}
+                <p>No recent articles available.</p>
+            {% endif %}
         </div>
         <div class="main-grid-item about">
             <!--
