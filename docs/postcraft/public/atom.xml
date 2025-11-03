@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
   <title>Hyperdata - Recent Articles</title>
   <id>https://hyperdata.it/atom.xml</id>
-  <updated>2025-11-02T10:58:06.280Z</updated>
+  <updated>2025-11-03T09:51:42.748Z</updated>
   <link href="https://hyperdata.it/atom.xml" rel="self" />
   <link href="https://hyperdata.it" />
   <subtitle>Latest articles from hyperdata</subtitle>
@@ -10,6 +10,113 @@
     <name>Danny Ayers</name>
     <email>danny.ayers@gmail.com</email>
   </author>
+  <entry>
+    <title>What have I been doing recently?</title>
+    <id>http://danny.ayers.name/entries/2025-10-30_what</id>
+    <updated>2025-10-30T09:11:25.448Z</updated>
+    <link href="http://danny.ayers.name/entries/2025-10-30_what" />
+    <published>2025-10-30T09:11:25.448Z</published>
+    <author>
+      <name>Danny Ayers</name>
+      <email>danny.ayers@gmail.com</email>
+    </author>
+    <content type="xhtml">
+      <div xmlns="http://www.w3.org/1999/xhtml">
+        <!-- ARTICLE CONTENT -->
+        <article class="post-content">
+            <h1>What have I been doing recently?</h1>
+        <ul>
+        <li><p>Building Feed Aggregator with Transmissions : <a href="https://github.com/danja/transmissions/tree/main/src/apps/newsmonitor">NewsMonitor</a></p>
+        </li>
+        <li><p>Synth Experiments : <a href="https://danja.github.io/flues/">Flues</a></p>
+        </li>
+        <li><p>Music visualization experiments : <a href="https://danja.github.io/hillside/">Hillside</a></p>
+        </li>
+        <li><p>BPM Finder app : <a href="https://github.com/danja/bpm">bpm</a></p>
+        </li>
+        <li><p>Music room fun : eg. <a href="https://youtu.be/gelhekbv1nw">Some What</a></p>
+        </li>
+        </ul>
+        <p>What I&#39;ve not been doing is clearing the jungle outside or tidying the pigsty inside.
+         </p>
+        </article>
+        <p class="post-title h-cinzel">
+            <a href="http://danny.ayers.name/entries/2025-10-30_what.html">
+                What have I been doing recently?
+            </a>
+        </p> <em></em>
+      </div>
+    </content>
+  </entry>
+  <entry>
+    <title> Modular</title>
+    <id>http://danny.ayers.name/articles/instruments</id>
+    <updated>2025-10-21T14:53:36.102Z</updated>
+    <link href="http://danny.ayers.name/articles/instruments" />
+    <published>2025-10-21T14:53:36.102Z</published>
+    <author>
+      <name>Danny Ayers</name>
+      <email>danny.ayers@gmail.com</email>
+    </author>
+    <content type="xhtml">
+      <div xmlns="http://www.w3.org/1999/xhtml">
+        <!-- ARTICLE CONTENT -->
+        <article class="post-content">
+            <h2>Modular</h2>
+        <h3>Rack 1</h3>
+        <h4>Row 1</h4>
+        <ol>
+        <li>Doepfer A-192-2 : CV/Gate to MIDI</li>
+        <li>Wasp Synth </li>
+        <li>Homemade Distortion</li>
+        </ol>
+        <h4>Row 2</h4>
+        <ol start="4">
+        <li>Neutron Synth</li>
+        <li>Homemade LPG</li>
+        </ol>
+        <h3>Row 3</h3>
+        <ol start="6">
+        <li>182 Sequencer</li>
+        <li>182 Sequencer</li>
+        <li>Abacus (Maths)</li>
+        <li>140 ADSR/ADSR/LFO</li>
+        <li>Doepfer A-156 Quantizer </li>
+        <li>Doepfer A-135-2 Quad VCA/Mixer</li>
+        </ol>
+        <h3>Rack 2</h3>
+        <h4>Row 1</h4>
+        <ol start="12">
+        <li>CM1A MIDI to CV/Trig</li>
+        <li>PP1 Pitch to MIDI</li>
+        <li>150 Ring Mod/S&amp;H/LFO</li>
+        <li>Victor VCO</li>
+        <li>110 VCO/VCF/VCA</li>
+        <li>VC16 Vocoder</li>
+        </ol>
+        <h4>Row 2</h4>
+        <ol start="18">
+        <li>297 Mixers/Portamentos</li>
+        <li>Swords Filters</li>
+        <li>Antidote Karplus-Strong</li>
+        <li>Skies Granular Synth</li>
+        <li>172 Phaser/Delay/LFO/Gate Delay</li>
+        </ol>
+        <h4>Row 4</h4>
+        <ol start="23">
+        <li>Homemade Attenuators/Amplifiers</li>
+        <li>Eq/Mixer</li>
+        <li>Space FX</li>
+        </ol>
+        </article>
+        <p class="post-title h-cinzel">
+            <a href="http://danny.ayers.name/articles/instruments.html">
+                 Modular
+            </a>
+        </p> <em></em>
+      </div>
+    </content>
+  </entry>
   <entry>
     <title>Flues</title>
     <id>http://danny.ayers.name/entries/2025-10-15_flues</id>
@@ -95,100 +202,6 @@
         <p class="post-title h-cinzel">
             <a href="http://danny.ayers.name/todo/2024-10-09.html">
                 2024-10-09
-            </a>
-        </p> <em></em>
-      </div>
-    </content>
-  </entry>
-  <entry>
-    <title>Danny&amp;#92;&amp;#39;s Top Level To Do List</title>
-    <id>http://danny.ayers.name/todo/index</id>
-    <updated>2025-09-05T07:54:26.420Z</updated>
-    <link href="http://danny.ayers.name/todo/index" />
-    <published>2025-09-05T07:54:26.420Z</published>
-    <author>
-      <name>Danny Ayers</name>
-      <email>danny.ayers@gmail.com</email>
-    </author>
-    <content type="xhtml">
-      <div xmlns="http://www.w3.org/1999/xhtml">
-        <!-- ARTICLE CONTENT -->
-        <article class="post-content">
-            <h1>Danny&#39;s Top Level To Do List</h1>
-        <ul>
-        <li><input disabled="" type="checkbox"> visualization : like <a href="http://localhost/farelo/src/TurtleEditor/">http://localhost/farelo/src/TurtleEditor/</a></li>
-        </ul>
-        <p>Priorities :</p>
-        <ul>
-        <li><p>Basic Postcraft</p>
-        </li>
-        <li><p>FOAF-Archive</p>
-        </li>
-        <li><p>Retire old server</p>
-        </li>
-        <li><p>Backups</p>
-        </li>
-        </ul>
-        <p>copy server-setup elsewhere +</p>
-        <p>after FOAF-Archive is at v1, then :</p>
-        <ul>
-        <li>transmissions major refactor</li>
-        <li>LlamaIndex/memary/SPARQL connector</li>
-        </ul>
-        <h3>Server</h3>
-        <p>add nginx entries</p>
-        <p>certbot</p>
-        <p>grab stuff off old server</p>
-        <p>/etc
-        /home
-        /var/www</p>
-        <p>???</p>
-        <h3>Bits</h3>
-        <p>my first rdf-dev post?</p>
-        <p>add transmissions.hyperdata.it</p>
-        <p>DNS, added :</p>
-        <ul>
-        <li><input disabled="" type="checkbox"> foaf.hyperdata.it</li>
-        <li><input disabled="" type="checkbox"> treadmill.hyperdata.it</li>
-        <li><input disabled="" type="checkbox"> postcraft.hyperdata.it</li>
-        <li>kia.hyperdata.it</li>
-        <li><input disabled="" type="checkbox"> strandz.hyperdata.it</li>
-        <li><input disabled="" type="checkbox"> farelo.hyperdata.it</li>
-        </ul>
-        </article>
-        <p class="post-title h-cinzel">
-            <a href="http://danny.ayers.name/todo/index.html">
-                Danny&#92;&#39;s Top Level To Do List
-            </a>
-        </p> <em></em>
-      </div>
-    </content>
-  </entry>
-  <entry>
-    <title>Postcraft Next Steps</title>
-    <id>http://danny.ayers.name/todo/postcraft-next-steps</id>
-    <updated>2025-09-05T07:54:26.420Z</updated>
-    <link href="http://danny.ayers.name/todo/postcraft-next-steps" />
-    <published>2025-09-05T07:54:26.420Z</published>
-    <author>
-      <name>Danny Ayers</name>
-      <email>danny.ayers@gmail.com</email>
-    </author>
-    <content type="xhtml">
-      <div xmlns="http://www.w3.org/1999/xhtml">
-        <!-- ARTICLE CONTENT -->
-        <article class="post-content">
-            <h1>Postcraft Next Steps</h1>
-        <ul>
-        <li>Fix post order on index page</li>
-        <li>Delete cache transmission... command line arg needed.</li>
-        <li>recent entries</li>
-        <li>collapser</li>
-        </ul>
-        </article>
-        <p class="post-title h-cinzel">
-            <a href="http://danny.ayers.name/todo/postcraft-next-steps.html">
-                Postcraft Next Steps
             </a>
         </p> <em></em>
       </div>
