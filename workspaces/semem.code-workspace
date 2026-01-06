@@ -4,7 +4,13 @@
       "path": "../../semem"
     },
     {
-      "path": "../../../github/dogalog"
+      "path": "../../zpt"
+    },
+    {
+      "path": "../../ragno"
+    },
+    {
+      "path": "../../tia"
     }
   ],
   "settings": {}
