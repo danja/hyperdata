@@ -5,6 +5,15 @@
 		},
 		{
 			"path": "../../trans-apps"
+		},
+		{
+			"path": "../../postcraft"
+		},
+		{
+			"path": "../../../sites/danny.ayers.name/postcraft"
+		},
+		{
+			"path": "../../../sites/danny.ayers.name"
 		}
 	],
 	"settings": {}
