@@ -8,6 +8,9 @@
 		},
 		{
 			"path": "../../../github/DaisyExamples"
+		},
+		{
+			"path": "../../../github/eurorack/rings"
 		}
 	],
 	"settings": {}
